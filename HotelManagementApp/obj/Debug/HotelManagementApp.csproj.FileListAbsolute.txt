@@ -25,3 +25,9 @@ C:\dev\projects\laptrinhtrucquan\HotelManagementApp\HotelManagementApp\obj\Debug
 C:\dev\projects\laptrinhtrucquan\HotelManagementApp\HotelManagementApp\obj\Debug\ResourceXAML\MainResource.baml
 C:\dev\projects\laptrinhtrucquan\HotelManagementApp\HotelManagementApp\obj\Debug\View\LoginView.baml
 C:\dev\projects\laptrinhtrucquan\HotelManagementApp\HotelManagementApp\obj\Debug\GeneratedInternalTypeHelper.g.cs
+C:\dev\projects\laptrinhtrucquan\HotelManagementApp\HotelManagementApp\obj\Debug\UserControlUI\ControlBarUC.g.cs
+C:\dev\projects\laptrinhtrucquan\HotelManagementApp\HotelManagementApp\obj\Debug\UserControlUI\ControlBarUC.baml
+C:\dev\projects\laptrinhtrucquan\HotelManagementApp\HotelManagementApp\bin\Debug\Microsoft.Expression.Interactions.dll
+C:\dev\projects\laptrinhtrucquan\HotelManagementApp\HotelManagementApp\bin\Debug\System.Windows.Interactivity.dll
+C:\dev\projects\laptrinhtrucquan\HotelManagementApp\HotelManagementApp\bin\Debug\Microsoft.Expression.Interactions.xml
+C:\dev\projects\laptrinhtrucquan\HotelManagementApp\HotelManagementApp\bin\Debug\System.Windows.Interactivity.xml

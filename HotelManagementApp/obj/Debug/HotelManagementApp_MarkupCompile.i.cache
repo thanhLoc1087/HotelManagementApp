@@ -10,11 +10,11 @@ none
 false
 DEBUG;TRACE
 C:\dev\projects\laptrinhtrucquan\HotelManagementApp\HotelManagementApp\App.xaml
-3377816103
+42012065321
 
-9-1863371275
-15-1713010779
-MainWindow.xaml;ResourceXAML\MainResource.xaml;View\LoginView.xaml;
+11-1773363315
+17-1720976533
+MainWindow.xaml;ResourceXAML\MainResource.xaml;UserControlUI\ControlBarUC.xaml;View\LoginView.xaml;
 
-False
+True
 
