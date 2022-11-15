@@ -1,7 +1,13 @@
-﻿
+﻿C:\dev\projects\laptrinhtrucquan\HotelManagementApp\HotelManagementApp\obj\Debug\GeneratedInternalTypeHelper.g.cs
 FC:\dev\projects\laptrinhtrucquan\HotelManagementApp\HotelManagementApp\App.xaml;;
 FC:\dev\projects\laptrinhtrucquan\HotelManagementApp\HotelManagementApp\MainWindow.xaml;;
 FC:\dev\projects\laptrinhtrucquan\HotelManagementApp\HotelManagementApp\ResourceXAML\MainResource.xaml;;
 FC:\dev\projects\laptrinhtrucquan\HotelManagementApp\HotelManagementApp\UserControlUI\ControlBarUC.xaml;;
-FC:\dev\projects\laptrinhtrucquan\HotelManagementApp\HotelManagementApp\View\LoginView.xaml;;
+FC:\dev\projects\laptrinhtrucquan\HotelManagementApp\HotelManagementApp\View\LoginWindow.xaml;;
+FC:\dev\projects\laptrinhtrucquan\HotelManagementApp\HotelManagementApp\View\PaymentWindow.xaml;;
+FC:\dev\projects\laptrinhtrucquan\HotelManagementApp\HotelManagementApp\View\SingleBedRoom\SingleBedroomWindow.xaml;;
+FC:\dev\projects\laptrinhtrucquan\HotelManagementApp\HotelManagementApp\View\SingleBedRoom\SingleBedroomBillWindow.xaml;;
+FC:\dev\projects\laptrinhtrucquan\HotelManagementApp\HotelManagementApp\View\SingleBedRoom\SingleBedroomEditWindow.xaml;;
+FC:\dev\projects\laptrinhtrucquan\HotelManagementApp\HotelManagementApp\View\SingleBedRoom\SingleBedRoomFastBookingWindow.xaml;;
+FC:\dev\projects\laptrinhtrucquan\HotelManagementApp\HotelManagementApp\View\SingleBedRoom\SingleBedroomInfoWindow.xaml;;
 

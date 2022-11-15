@@ -1,0 +1,485 @@
+﻿<Window x:Class="HotelManagementApp.View.PaymentWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:i="http://schemas.microsoft.com/xaml/behaviors"
+        xmlns:i1="http://schemas.microsoft.com/expression/2010/interactivity"
+        xmlns:i2="http://schemas.microsoft.com/expression/2010/interactions"
+        xmlns:local="clr-namespace:HotelManagementApp.View"
+        xmlns:uc="clr-namespace:HotelManagementApp.UserControlUI"
+        xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+        mc:Ignorable="d"
+        x:Name="PaymentView"
+        Title="Hotel Management"
+        Background="#FFEEE9FA"
+        FontFamily="{DynamicResource MaterialDesignFont}"
+        ResizeMode="NoResize"
+        TextElement.FontSize="13"
+        TextElement.FontWeight="Regular"
+        TextElement.Foreground="{DynamicResource MaterialDesignBody}"
+        TextOptions.TextFormattingMode="Ideal"
+        TextOptions.TextRenderingMode="Auto"
+        WindowStartupLocation="CenterScreen"
+        WindowStyle="None"
+        Width="592"
+        Height="700">
+    <Grid>
+
+        <Grid.RowDefinitions>
+            <RowDefinition Height="40" />
+            <RowDefinition Height="100" />
+            <RowDefinition Height="120" />
+            <RowDefinition />
+            <RowDefinition Height="180" />
+            <RowDefinition Height="30" />
+        </Grid.RowDefinitions>
+        <Grid Grid.Row="0">
+            <uc:ControlBarUC Tag="{Binding Title, ElementName=BillWindow}" />
+        </Grid>
+
+        <Grid Grid.Row="1"
+              Margin="0"
+              Background="Transparent">
+            <TextBlock Margin="0,0,50,0"
+                       HorizontalAlignment="Right"
+                       VerticalAlignment="Top"
+                       FontFamily="Segoe UI Black"
+                       FontSize="32"
+                       FontStretch="UltraExpanded"
+                       FontWeight="Black"
+                       Foreground="Black"
+                       Text="BILL"
+                       TextWrapping="Wrap" />
+            <Grid Width="280"
+                  Height="70"
+                  Margin="40,15,0,0"
+                  HorizontalAlignment="Left"
+                  VerticalAlignment="Top">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="40" />
+                    <ColumnDefinition />
+                </Grid.ColumnDefinitions>
+                <Image Width="60"
+                       Height="60"
+                       HorizontalAlignment="Center"
+                       VerticalAlignment="Center" />
+                <StackPanel Grid.Column="1"
+                            Margin="0,0,0,0">
+                    <TextBlock x:Name="txbFieldNameBrand"
+                               Grid.Column="1"
+                               Margin="0,8,0,0"
+                               HorizontalAlignment="Left"
+                               VerticalAlignment="Bottom"
+                               FontFamily="Microsoft PhagsPa"
+                               FontSize="22"
+                               FontWeight="Bold"
+                               Foreground="Black"
+                               Text="Trúma Hề Hotel"
+                               TextWrapping="Wrap" />
+                    <TextBlock Grid.Column="1"
+                               Margin="0,0,0,0"
+                               HorizontalAlignment="Left"
+                               VerticalAlignment="Bottom"
+                               FontWeight="Medium"
+                               Foreground="Gray"
+                               Text="#ThicklaChoi"
+                               TextWrapping="Wrap" />
+                </StackPanel>
+            </Grid>
+            <Rectangle Width="188"
+                       Height="25"
+                       HorizontalAlignment="Left"
+                       VerticalAlignment="Bottom"
+                       Fill="MediumPurple"
+                       StrokeThickness="0" />
+            <Rectangle Width="18"
+                       Height="18"
+                       Margin="179,0,0,3"
+                       HorizontalAlignment="Left"
+                       VerticalAlignment="Bottom"
+                       Fill="MediumPurple"
+                       RenderTransformOrigin="0.5,0.5"
+                       StrokeThickness="0">
+                <Rectangle.RenderTransform>
+                    <TransformGroup>
+                        <ScaleTransform />
+                        <SkewTransform />
+                        <RotateTransform Angle="225" />
+                        <TranslateTransform />
+                    </TransformGroup>
+                </Rectangle.RenderTransform>
+            </Rectangle>
+            <TextBlock Margin="30,0,0,3"
+                       HorizontalAlignment="Left"
+                       VerticalAlignment="Bottom"
+                       FontSize="14"
+                       FontWeight="SemiBold"
+                       Foreground="Black"
+                       Text="Booking id: "
+                       TextWrapping="Wrap" />
+            <TextBlock x:Name="txbIdBooking"
+                       Margin="129,0,0,3"
+                       HorizontalAlignment="Left"
+                       VerticalAlignment="Bottom"
+                       FontSize="14"
+                       FontWeight="SemiBold"
+                       Foreground="Black"
+                       TextWrapping="Wrap" />
+            <Grid Width="160"
+                  Margin="0,0,40,10"
+                  HorizontalAlignment="Right"
+                  VerticalAlignment="Bottom">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition />
+                    <ColumnDefinition />
+                </Grid.ColumnDefinitions>
+                <StackPanel>
+                    <TextBlock Margin="0"
+                               VerticalAlignment="Bottom"
+                               FontSize="13"
+                               FontWeight="SemiBold"
+                               Foreground="Black"
+                               Text="Date: "
+                               TextWrapping="Wrap" />
+                    <TextBlock Margin="0"
+                               VerticalAlignment="Bottom"
+                               FontSize="13"
+                               FontWeight="SemiBold"
+                               Foreground="Black"
+                               Text="Check - in"
+                               TextWrapping="Wrap" />
+                    <TextBlock Margin="0"
+                               VerticalAlignment="Bottom"
+                               FontSize="13"
+                               FontWeight="SemiBold"
+                               Foreground="Black"
+                               Text="Check - out"
+                               TextWrapping="Wrap" />
+                </StackPanel>
+                <StackPanel Grid.Column="1">
+                    <TextBlock x:Name="txbDateBooking"
+                               Margin="0"
+                               VerticalAlignment="Bottom"
+                               FontSize="13"
+                               FontWeight="SemiBold"
+                               Foreground="Black"
+                               Text="{Binding DateBooking}"
+                               TextAlignment="Right"
+                               TextWrapping="Wrap" />
+                    <TextBlock x:Name="txbCheckInTime"
+                               Margin="0"
+                               VerticalAlignment="Bottom"
+                               FontSize="13"
+                               FontWeight="SemiBold"
+                               Foreground="Black"
+                               TextAlignment="Right"
+                               TextWrapping="Wrap" />
+                    <TextBlock x:Name="txbCheckOutTime"
+                               Margin="0"
+                               VerticalAlignment="Bottom"
+                               FontSize="13"
+                               FontWeight="SemiBold"
+                               Foreground="Black"
+                               TextAlignment="Right"
+                               TextWrapping="Wrap" />
+                </StackPanel>
+            </Grid>
+        </Grid>
+        <StackPanel Grid.Row="2"
+                    Width="280"
+                    Margin="33,0,0,0"
+                    HorizontalAlignment="Left"
+                    VerticalAlignment="Center">
+            <TextBlock Margin="0"
+                       HorizontalAlignment="Left"
+                       FontWeight="Bold"
+                       Foreground="Black"
+                       Text="Customer info:"
+                       TextWrapping="Wrap" />
+            <TextBlock x:Name="txbCustomerName"
+                       FontSize="16"
+                       FontWeight="Bold"
+                       Foreground="Black"
+                       TextWrapping="Wrap" />
+            <TextBlock x:Name="txbCustomerPhoneNumber"
+                       Margin="0,2,0,0"
+                       FontSize="13"
+                       FontWeight="SemiBold"
+                       Foreground="Black"
+                       TextWrapping="Wrap" />
+        </StackPanel>
+        <StackPanel Grid.Row="2"
+                    Width="250"
+                    Height="35"
+                    Margin="0,0,20,0"
+                    HorizontalAlignment="Right"
+                    VerticalAlignment="Center">
+            <TextBlock x:Name="txbNameField"
+                       Width="200"
+                       Margin="0,0,20,0"
+                       HorizontalAlignment="Right"
+                       VerticalAlignment="Center"
+                       FontSize="30"
+                       FontStretch="SemiExpanded"
+                       FontWeight="SemiBold"
+                       Foreground="Black" />
+        </StackPanel>
+        <Grid Grid.Row="5"
+              Background="Transparent">
+            <Rectangle Width="188"
+                       Margin="0"
+                       HorizontalAlignment="Left"
+                       Fill="MediumPurple"
+                       StrokeThickness="0" />
+            <Rectangle Width="22"
+                       Height="22"
+                       Margin="177,0,0,2.8"
+                       HorizontalAlignment="Left"
+                       VerticalAlignment="Bottom"
+                       Fill="MediumPurple"
+                       RenderTransformOrigin="0.5,0.5"
+                       StrokeThickness="0">
+                <Rectangle.RenderTransform>
+                    <TransformGroup>
+                        <ScaleTransform />
+                        <SkewTransform />
+                        <RotateTransform Angle="225" />
+                        <TranslateTransform />
+                    </TransformGroup>
+                </Rectangle.RenderTransform>
+            </Rectangle>
+            <TextBlock Margin="30,0,0,0"
+                       HorizontalAlignment="Left"
+                       VerticalAlignment="Center"
+                       FontSize="14"
+                       FontWeight="SemiBold"
+                       Foreground="Black"
+                       Text="Have a nice day"
+                       TextWrapping="Wrap" />
+        </Grid>
+        <Grid Grid.Row="3">
+            <Border Width="auto"
+                    Height="auto"
+                    Margin="10,0,20,10"
+                    Background="Snow"
+                    CornerRadius="20">
+                <Border.BitmapEffect>
+                    <DropShadowBitmapEffect Opacity="1.2"
+                                            ShadowDepth="3"
+                                            Softness="0.4"
+                                            Color="#FF4F00FF" />
+                </Border.BitmapEffect>
+                <Grid x:Name="stkBillInfo"
+                      Width="auto"
+                      Height="auto"
+                      HorizontalAlignment="Left"
+                      VerticalAlignment="Top"
+                      Background="{x:Null}">
+
+                    <DataGrid x:Name="DG_goodListbooking"
+                              Width="550"
+                              Margin="35,0,50,0"
+                              HorizontalAlignment="Center"
+                              VerticalAlignment="Top"
+                              Background="Transparent"
+                              IsReadOnly="True" />
+
+
+                </Grid>
+            </Border>
+        </Grid>
+        <Grid Grid.Row="4">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="300" />
+                <ColumnDefinition />
+                <ColumnDefinition Width="30" />
+            </Grid.ColumnDefinitions>
+            <TextBlock x:Name="txbTotal"
+                       Grid.Column="1"
+                       Margin="0,69,0,0"
+                       HorizontalAlignment="Right"
+                       VerticalAlignment="Top"
+                       Panel.ZIndex="1"
+                       FontSize="16"
+                       FontWeight="SemiBold"
+                       Foreground="Black"
+                       TextAlignment="Right"
+                       TextWrapping="Wrap" />
+            <Rectangle Grid.Column="1"
+                       Width="242"
+                       Height="30"
+                       Margin="0,65,0,0"
+                       HorizontalAlignment="Right"
+                       VerticalAlignment="Top"
+                       Fill="MediumPurple"
+                       StrokeThickness="0" />
+            <Rectangle Grid.Column="2"
+                       Width="21.5"
+                       Height="21.5"
+                       Margin="-11,69.2,0,0"
+                       HorizontalAlignment="Left"
+                       VerticalAlignment="Top"
+                       Fill="MediumPurple"
+                       RenderTransformOrigin="0.5,0.5"
+                       StrokeThickness="0">
+                <Rectangle.RenderTransform>
+                    <TransformGroup>
+                        <ScaleTransform />
+                        <SkewTransform />
+                        <RotateTransform Angle="225" />
+                        <TranslateTransform />
+                    </TransformGroup>
+                </Rectangle.RenderTransform>
+            </Rectangle>
+            <TextBlock Grid.Column="1"
+                       Margin="0,70,130,0"
+                       HorizontalAlignment="Right"
+                       VerticalAlignment="Top"
+                       Panel.ZIndex="1"
+                       FontSize="14"
+                       FontWeight="SemiBold"
+                       Foreground="Black"
+                       Text="Total payment:"
+                       TextAlignment="Right"
+                       TextWrapping="Wrap" />
+            <StackPanel Width="260"
+                        Margin="30,0,0,0"
+                        HorizontalAlignment="Left"
+                        VerticalAlignment="Center">
+                <TextBlock FontSize="16"
+                           FontWeight="Black"
+                           Foreground="Black"
+                           Text="About"
+                           TextWrapping="Wrap" />
+                <TextBlock x:Name="txbFieldName"
+                           Margin="0,2,0,0"
+                           FontWeight="Bold"
+                           Foreground="Black"
+                           Text="Hotel: Trúma Hề"
+                           TextWrapping="Wrap" />
+                <TextBlock x:Name="txbAddress"
+                           MaxHeight="48"
+                           Margin="0,0,0,2"
+                           FontWeight="SemiBold"
+                           Foreground="Black"
+                           Text="324 St. Hòa Hưng, Ward 12, District 10,   Ho Chi Minh City"
+                           TextTrimming="WordEllipsis"
+                           TextWrapping="Wrap" />
+                <TextBlock x:Name="txbPhoneNumber"
+                           Margin="0"
+                           FontWeight="SemiBold"
+                           Foreground="Black"
+                           Text="09199999"
+                           TextWrapping="Wrap" />
+                <Grid Margin="0,10,0,0"
+                      VerticalAlignment="Bottom">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="95" />
+                        <ColumnDefinition />
+                    </Grid.ColumnDefinitions>
+                    <TextBlock Margin="0"
+                               FontWeight="SemiBold"
+                               Foreground="Black"
+                               Text="Staff name:"
+                               TextWrapping="Wrap" />
+                    <TextBlock x:Name="txbEmployeeName"
+                               Grid.Column="1"
+                               Margin="0"
+                               FontWeight="SemiBold"
+                               Foreground="Black"
+                               Text="VKH"
+                               TextTrimming="WordEllipsis"
+                               TextWrapping="Wrap" />
+                </Grid>
+            </StackPanel>
+            <Button x:Name="btnConfirm"
+                    Grid.Column="1"
+                    Width="100"
+                    Height="25"
+                    Margin="0,0,0,20"
+                    Padding="0"
+                    HorizontalAlignment="Right"
+                    VerticalAlignment="Bottom"
+                    Background="OrangeRed"
+                    
+                    Content="CONFIRM" />
+            <!--Click="Confirm_Click"-->
+            <Button x:Name="Cancelbtn"
+                    Grid.Column="1"
+                    Width="100"
+                    Height="25"
+                    Margin="10,0,0,20"
+                    HorizontalAlignment="Left"
+                    VerticalAlignment="Bottom"
+                    
+                    CommandParameter="{Binding ElementName=Pay1}"
+                    Content="CANCEL">
+                <!--Click="Cancelbtn_Click"-->
+                <i1:Interaction.Triggers>
+                    <i1:EventTrigger EventName="Click">
+                        <i2:CallMethodAction MethodName="Close"
+                                             TargetObject="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=Window}}" />
+                    </i1:EventTrigger>
+                </i1:Interaction.Triggers>
+            </Button>
+            <Grid Grid.Column="1"
+                  Width="235"
+                  Margin="0,15,0,0"
+                  HorizontalAlignment="Right"
+                  VerticalAlignment="Top">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="70" />
+                    <ColumnDefinition />
+                </Grid.ColumnDefinitions>
+                <StackPanel Grid.Column="0"
+                            Width="100"
+                            HorizontalAlignment="Left"
+                            VerticalAlignment="Top">
+                    <TextBlock Width="auto"
+                               Margin="0"
+                               HorizontalAlignment="Left"
+                               VerticalAlignment="Top"
+                               FontSize="14"
+                               FontWeight="SemiBold"
+                               Foreground="Black"
+                               Text="Good total"
+                               TextAlignment="Right"
+                               TextWrapping="Wrap" />
+                    <TextBlock Margin="0"
+                               HorizontalAlignment="Left"
+                               VerticalAlignment="Top"
+                               FontSize="14"
+                               FontWeight="SemiBold"
+                               Foreground="Black"
+                               Text="Room price"
+                               TextAlignment="Right"
+                               TextWrapping="Wrap" />
+                </StackPanel>
+                <StackPanel Grid.Column="1"
+                            HorizontalAlignment="Right"
+                            VerticalAlignment="Top">
+                    <TextBlock x:Name="txbgoodspricetotal"
+                               Margin="0"
+                               HorizontalAlignment="Right"
+                               VerticalAlignment="Top"
+                               FontSize="14"
+                               FontWeight="SemiBold"
+                               Foreground="Black"
+                               Text="{Binding Good_total}"
+                               TextAlignment="Right"
+                               TextWrapping="Wrap" />
+                    <TextBlock x:Name="txbfieldprice"
+                               Margin="0"
+                               HorizontalAlignment="Right"
+                               VerticalAlignment="Top"
+                               FontSize="14"
+                               FontWeight="SemiBold"
+                               Foreground="Black"
+                               TextAlignment="Right"
+                               TextWrapping="Wrap" />
+                </StackPanel>
+            </Grid>
+        </Grid>
+    </Grid>
+</Window>

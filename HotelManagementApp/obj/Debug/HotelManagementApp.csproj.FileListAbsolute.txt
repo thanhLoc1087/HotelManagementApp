@@ -21,9 +21,7 @@ C:\dev\projects\laptrinhtrucquan\HotelManagementApp\HotelManagementApp\obj\Debug
 C:\dev\projects\laptrinhtrucquan\HotelManagementApp\HotelManagementApp\obj\Debug\HotelManagementApp.csproj.CopyComplete
 C:\dev\projects\laptrinhtrucquan\HotelManagementApp\HotelManagementApp\obj\Debug\HotelManagementApp.exe
 C:\dev\projects\laptrinhtrucquan\HotelManagementApp\HotelManagementApp\obj\Debug\HotelManagementApp.pdb
-C:\dev\projects\laptrinhtrucquan\HotelManagementApp\HotelManagementApp\obj\Debug\View\LoginView.g.cs
 C:\dev\projects\laptrinhtrucquan\HotelManagementApp\HotelManagementApp\obj\Debug\ResourceXAML\MainResource.baml
-C:\dev\projects\laptrinhtrucquan\HotelManagementApp\HotelManagementApp\obj\Debug\View\LoginView.baml
 C:\dev\projects\laptrinhtrucquan\HotelManagementApp\HotelManagementApp\obj\Debug\GeneratedInternalTypeHelper.g.cs
 C:\dev\projects\laptrinhtrucquan\HotelManagementApp\HotelManagementApp\obj\Debug\UserControlUI\ControlBarUC.g.cs
 C:\dev\projects\laptrinhtrucquan\HotelManagementApp\HotelManagementApp\obj\Debug\UserControlUI\ControlBarUC.baml
@@ -31,3 +29,17 @@ C:\dev\projects\laptrinhtrucquan\HotelManagementApp\HotelManagementApp\bin\Debug
 C:\dev\projects\laptrinhtrucquan\HotelManagementApp\HotelManagementApp\bin\Debug\System.Windows.Interactivity.dll
 C:\dev\projects\laptrinhtrucquan\HotelManagementApp\HotelManagementApp\bin\Debug\Microsoft.Expression.Interactions.xml
 C:\dev\projects\laptrinhtrucquan\HotelManagementApp\HotelManagementApp\bin\Debug\System.Windows.Interactivity.xml
+C:\dev\projects\laptrinhtrucquan\HotelManagementApp\HotelManagementApp\obj\Debug\View\SingleBedRoom\SingleBedroomWindow.g.cs
+C:\dev\projects\laptrinhtrucquan\HotelManagementApp\HotelManagementApp\obj\Debug\View\SingleBedRoom\SingleBedroomBillWindow.g.cs
+C:\dev\projects\laptrinhtrucquan\HotelManagementApp\HotelManagementApp\obj\Debug\View\SingleBedRoom\SingleBedroomEditWindow.g.cs
+C:\dev\projects\laptrinhtrucquan\HotelManagementApp\HotelManagementApp\obj\Debug\View\SingleBedRoom\SingleBedRoomFastBookingWindow.g.cs
+C:\dev\projects\laptrinhtrucquan\HotelManagementApp\HotelManagementApp\obj\Debug\View\SingleBedRoom\SingleBedroomInfoWindow.g.cs
+C:\dev\projects\laptrinhtrucquan\HotelManagementApp\HotelManagementApp\obj\Debug\View\SingleBedRoom\SingleBedroomWindow.baml
+C:\dev\projects\laptrinhtrucquan\HotelManagementApp\HotelManagementApp\obj\Debug\View\SingleBedRoom\SingleBedroomBillWindow.baml
+C:\dev\projects\laptrinhtrucquan\HotelManagementApp\HotelManagementApp\obj\Debug\View\SingleBedRoom\SingleBedroomEditWindow.baml
+C:\dev\projects\laptrinhtrucquan\HotelManagementApp\HotelManagementApp\obj\Debug\View\SingleBedRoom\SingleBedRoomFastBookingWindow.baml
+C:\dev\projects\laptrinhtrucquan\HotelManagementApp\HotelManagementApp\obj\Debug\View\SingleBedRoom\SingleBedroomInfoWindow.baml
+C:\dev\projects\laptrinhtrucquan\HotelManagementApp\HotelManagementApp\obj\Debug\View\LoginWindow.g.cs
+C:\dev\projects\laptrinhtrucquan\HotelManagementApp\HotelManagementApp\obj\Debug\View\LoginWindow.baml
+C:\dev\projects\laptrinhtrucquan\HotelManagementApp\HotelManagementApp\obj\Debug\View\PaymentWindow.g.cs
+C:\dev\projects\laptrinhtrucquan\HotelManagementApp\HotelManagementApp\obj\Debug\View\PaymentWindow.baml

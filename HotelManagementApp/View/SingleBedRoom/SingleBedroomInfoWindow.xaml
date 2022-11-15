@@ -1,0 +1,150 @@
+﻿<Window x:Class="HotelManagementApp.View.SingleBedroomInfoWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:HotelManagementApp.View"
+        xmlns:uc="clr-namespace:HotelManagementApp.UserControlUI"
+        xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+        mc:Ignorable="d"
+        x:Name="SingleBedRoomInfo"
+        Title="Hotel Management"
+        Background="#FFEEE9FA"
+        FontFamily="{DynamicResource MaterialDesignFont}"
+        ResizeMode="NoResize"
+        TextElement.FontSize="13"
+        TextElement.FontWeight="Regular"
+        TextElement.Foreground="{DynamicResource MaterialDesignBody}"
+        TextOptions.TextFormattingMode="Ideal"
+        TextOptions.TextRenderingMode="Auto"
+        WindowStyle="None"
+        Width="1300"
+        Height="800">
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="auto" />
+            <RowDefinition Height="40" />
+            <RowDefinition />
+        </Grid.RowDefinitions>
+        <Grid Grid.Row="0">
+            <uc:ControlBarUC Grid.ColumnSpan="2"
+                             Tag="{Binding Title, ElementName=MainView}" />
+        </Grid>
+        <Grid Grid.Row="1">
+            <TextBlock x:Name="TitleTxt"
+                       HorizontalAlignment="Center"
+                       VerticalAlignment="Center"
+                       FontSize="20"
+                       FontWeight="Bold"
+                       Foreground="#8c9aa1" />
+        </Grid>
+        <Grid Grid.Row="2">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="auto" />
+                <RowDefinition Height="auto" />
+                <RowDefinition />
+            </Grid.RowDefinitions>
+
+            <materialDesign:Card Grid.Row="0"
+                                 Margin="5">
+                <WrapPanel Margin="0,0,0,10">
+                    <TextBox x:Name="txbIdroom"
+                             Margin="5,5,15,5"
+                             materialDesign:HintAssist.Hint="Id room"
+                             IsReadOnly="True"
+                             Style="{StaticResource MaterialDesignFloatingHintTextBox}" />
+                    <TextBox x:Name="txbCusName"
+                             Margin="5,5,15,5"
+                             materialDesign:HintAssist.Hint="Customer name"
+                             Style="{StaticResource MaterialDesignFloatingHintTextBox}"
+                             Text="{Binding AddCustomerName, UpdateSourceTrigger=PropertyChanged}" />
+                    <TextBox x:Name="txbCusPhone"
+                             Margin="5,5,15,5"
+                             materialDesign:HintAssist.Hint="Phone number"
+                             Style="{StaticResource MaterialDesignFloatingHintTextBox}"
+                             Text="{Binding AddCustomerPhone, UpdateSourceTrigger=PropertyChanged}" />
+                    <TextBox x:Name="txbCusCCCD"
+                             Margin="5,5,15,5"
+                             materialDesign:HintAssist.Hint="CCCD"
+                             Style="{StaticResource MaterialDesignFloatingHintTextBox}"
+                             Text="{Binding AddCustomerCCCD, UpdateSourceTrigger=PropertyChanged}" />
+                    <TextBox x:Name="txbCusNationality"
+                             Margin="5,5,15,5"
+                             materialDesign:HintAssist.Hint="Nationality"
+                             Style="{StaticResource MaterialDesignFloatingHintTextBox}"
+                             Text="{Binding AddCustomerNationality, UpdateSourceTrigger=PropertyChanged}" />
+                    <DatePicker x:Name="date"
+                                Width="100"
+                                Margin="5,5,15,5"
+                                VerticalAlignment="Center"
+                                materialDesign:HintAssist.Hint="Date"
+                                SelectedDate="{Binding AddDate}"
+                                Style="{StaticResource MaterialDesignFloatingHintDatePicker}" />
+                    <materialDesign:TimePicker x:Name="checkintime_picker"
+                                               Margin="20,9,5,0"
+                                               HorizontalAlignment="Center"
+                                               VerticalAlignment="Center"
+                                               materialDesign:HintAssist.Hint="Check in time"
+                                               Is24Hours="True"
+                                               SelectedTime="{Binding AddCheckInTime}" />
+                    <materialDesign:TimePicker x:Name="checkouttime_picker"
+                                               Margin="10,9,0,0"
+                                               HorizontalAlignment="Center"
+                                               VerticalAlignment="Center"
+                                               materialDesign:HintAssist.Hint="Check out time"
+                                               Is24Hours="True"
+                                               SelectedTime="{Binding AddCheckOutTime}" />
+                </WrapPanel>
+            </materialDesign:Card>
+
+            <materialDesign:Card Grid.Row="1"
+                                 Margin="5">
+                <WrapPanel>
+                    <Button Width="100"
+                            Margin="20"
+                            Command="{Binding AddBookingCommand}"
+                            Content="Add"/>
+                    <!--Click="Button_Add"-->
+                    <Button Width="100"
+                            Margin="20"
+                            Command="{Binding EditBookingCommand}"
+                            Content="Edit" />
+                    <Button Width="100"
+                            Margin="20"
+                            Command="{Binding DeleteBookingCommand}"
+                            Content="Delete" />
+                </WrapPanel>
+            </materialDesign:Card>
+
+            <materialDesign:Card Grid.Row="2"
+                                 Margin="5"
+                                 VerticalAlignment="Stretch">
+                <ScrollViewer VerticalScrollBarVisibility="Auto">
+                    <ListView ItemsSource="{Binding ListWithID}"
+                              SelectedItem="{Binding SelectedItemBooking, Mode=OneWayToSource}">
+                        <ListView.View>
+                            <GridView>
+                                <GridViewColumn DisplayMemberBinding="{Binding Id}"
+                                                Header="Id" />
+                                <GridViewColumn DisplayMemberBinding="{Binding CustomerName}"
+                                                Header="Customer name" />
+                                <GridViewColumn DisplayMemberBinding="{Binding CustomerPhoneNumber}"
+                                                Header="Customer phone number" />
+                                <GridViewColumn DisplayMemberBinding="{Binding Date, StringFormat='dd/MM/yyyy'}"
+                                                Header="Date" />
+                                <GridViewColumn DisplayMemberBinding="{Binding CheckInTime, StringFormat='HH:mm'}"
+                                                Header="Check in time" 
+                                                Width="150" />
+                                <GridViewColumn DisplayMemberBinding="{Binding CheckOutTime, StringFormat='HH:mm'}"
+                                                Header="Check out time"
+                                                Width="160" />
+                                <GridViewColumn DisplayMemberBinding="{Binding Status}"
+                                                Header="Status" />
+                            </GridView>
+                        </ListView.View>
+                    </ListView>
+                </ScrollViewer>
+            </materialDesign:Card>
+        </Grid>
+    </Grid>
+</Window>

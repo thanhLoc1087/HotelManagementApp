@@ -4,9 +4,8 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:HotelManagementApp"
-        mc:Ignorable="d"        
-        xmlns:i ="http://schemas.microsoft.com/expression/2010/interactivity"
-       
+        mc:Ignorable="d"
+        xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
         xmlns:uc="clr-namespace:HotelManagementApp.UserControlUI"
         xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
         TextElement.Foreground="{DynamicResource MaterialDesignBody}"
@@ -15,29 +14,1979 @@
         TextOptions.TextFormattingMode="Ideal"
         TextOptions.TextRenderingMode="Auto"
         ResizeMode="NoResize"
-        WindowStyle="None"       
-        Background="{DynamicResource MaterialDesignPaper}"
-        FontFamily="{DynamicResource MaterialDesignFont}"        
+        WindowStyle="None"
+        FontFamily="{DynamicResource MaterialDesignFont}"
         DataContext="{StaticResource MainVm}"
-        Name="MainView"
-        Title="Hotel Management Application" Height="450" Width="800">
-    
+        Name="MainMenuWindow"
+        Title="Hotel Management Application"
+        Width="1300"
+        Height="700">
+
+    <Window.Background>
+
+        <ImageBrush ImageSource="Images/background.jpg" />
+
+    </Window.Background>
+
     <i:Interaction.Triggers>
         <i:EventTrigger EventName="Loaded">
-            <i:InvokeCommandAction 
-                Command="{Binding LoadedWindowCommand}">
+            <i:InvokeCommandAction Command="{Binding LoadedWindowCommand}"
+                                   CommandParameter="{Binding ElementName=MainMenuWindow}">
             </i:InvokeCommandAction>
         </i:EventTrigger>
     </i:Interaction.Triggers>
-    
+
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="auto"></RowDefinition>
             <RowDefinition></RowDefinition>
         </Grid.RowDefinitions>
         <Grid Grid.Row="0">
-            <uc:ControlBarUC Tag="{Binding Title, ElementName=MainView}"></uc:ControlBarUC>
+            <uc:ControlBarUC Tag="{Binding Title, ElementName=MainWindow}"></uc:ControlBarUC>
+        </Grid>
+        <Grid Grid.Row="1">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="99*" />
+                <ColumnDefinition Width="101*" />
+            </Grid.ColumnDefinitions>
+            <TabControl Grid.ColumnSpan="2"
+                        Margin="0,0,0,0.2"
+                        materialDesign:ColorZoneAssist.Mode="PrimaryMid"
+                        materialDesign:ShadowAssist.ShadowDepth="Depth0"
+                        Background="Transparent"
+                        BorderBrush="Transparent"
+                        BorderThickness="0"
+                        SnapsToDevicePixels="True"
+                        Style="{StaticResource MaterialDesignNavigatilRailTabControl}"
+                        TabStripPlacement="Left">
+                <!--SelectionChanged="TabControl_SelectionChanged"-->
+
+                <TabItem>
+
+                    <TabItem.Header>
+
+                        <StackPanel Width="auto"
+                                    Height="auto">
+                            <materialDesign:PackIcon Width="30"
+                                                     Height="30"
+                                                     HorizontalAlignment="Center"
+                                                     Kind="ViewDashboard" />
+                            <TextBlock HorizontalAlignment="Center"
+                                       Text="Main" />
+                        </StackPanel>
+                    </TabItem.Header>
+                    <!--  MainUI start here  -->
+                    <Grid>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="250" />
+                            <RowDefinition Height="*" />
+
+                        </Grid.RowDefinitions>
+                        <Grid Grid.Row="0">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="400" />
+                                <ColumnDefinition Width="400" />
+                                <ColumnDefinition Width="400" />
+                            </Grid.ColumnDefinitions>
+                            <Grid Grid.Column="0">
+                                <materialDesign:Card Margin="25"
+                                                     Padding="8"
+                                                     materialDesign:ShadowAssist.ShadowDepth="Depth5"
+                                                     Foreground="{x:Null}">
+
+                                    <materialDesign:Card.Background>
+                                        <LinearGradientBrush StartPoint="0.5,0"
+                                                             EndPoint="0.5,1">
+                                            <GradientStop Offset="1"
+                                                          Color="#FF7D27FF" />
+                                            <GradientStop Color="#FFBB2086" />
+                                        </LinearGradientBrush>
+                                    </materialDesign:Card.Background>
+
+                                </materialDesign:Card>
+                                <Label x:Name="label_money"
+                                       Width="93"
+                                       Height="64"
+                                       Margin="150,147,0,0"
+                                       HorizontalAlignment="Left"
+                                       VerticalAlignment="Top"
+                                       Content="">
+                                    <Label.Background>
+                                        <ImageBrush ImageSource="Images/money.png"
+                                                    Stretch="Uniform" />
+                                    </Label.Background>
+                                </Label>
+                                <Label x:Name="label_income"
+                                       Width="346"
+                                       Height="39"
+                                       Margin="26,39,0,0"
+                                       HorizontalAlignment="Left"
+                                       VerticalAlignment="Top"
+                                       HorizontalContentAlignment="Center"
+                                       Content="ALL INCOME IN VND"
+                                       FontSize="24"
+                                       FontWeight="Bold"
+                                       Foreground="#DDF9F9F9" />
+                                <Label x:Name="income"
+                                       Width="344"
+                                       Height="31"
+                                       Margin="28,105,0,0"
+                                       HorizontalAlignment="Left"
+                                       VerticalAlignment="Top"
+                                       HorizontalContentAlignment="Center"
+                                       VerticalContentAlignment="Center"
+                                       FontSize="22"
+                                       FontWeight="Bold"
+                                       Foreground="#DDF9F9F9" />
+                                <!--Content="{Binding Alltimerevenue}"-->
+
+                            </Grid>
+                            <Grid Grid.Column="1">
+                                <materialDesign:Card Margin="25"
+                                                     Padding="8"
+                                                     materialDesign:ShadowAssist.ShadowDepth="Depth5"
+                                                     Foreground="{x:Null}">
+
+                                    <materialDesign:Card.Background>
+                                        <LinearGradientBrush StartPoint="0.5,0"
+                                                             EndPoint="0.5,1">
+                                            <GradientStop Color="#FFF51C40" />
+                                            <GradientStop Offset="1"
+                                                          Color="#FFD89B65" />
+                                        </LinearGradientBrush>
+                                    </materialDesign:Card.Background>
+
+                                </materialDesign:Card>
+                                <Label x:Name="label_guesttext"
+                                       Width="347"
+                                       Height="39"
+                                       Margin="27,39,0,0"
+                                       HorizontalAlignment="Left"
+                                       VerticalAlignment="Top"
+                                       HorizontalContentAlignment="Center"
+                                       Content="THIS MONTH"
+                                       FontSize="24"
+                                       FontWeight="Bold"
+                                       Foreground="#DDF9F9F9" />
+                                <Label x:Name="label_guest"
+                                       Width="93"
+                                       Height="64"
+                                       Margin="147,149,0,0"
+                                       HorizontalAlignment="Left"
+                                       VerticalAlignment="Top"
+                                       Content="">
+                                    <Label.Background>
+                                        <ImageBrush ImageSource="Images/tags.png"
+                                                    Stretch="Uniform" />
+                                    </Label.Background>
+                                </Label>
+                                <Label x:Name="guest"
+                                       Width="344"
+                                       Height="33"
+                                       Margin="29,104,0,0"
+                                       HorizontalAlignment="Left"
+                                       VerticalAlignment="Top"
+                                       HorizontalContentAlignment="Center"
+                                       FontSize="22"
+                                       FontWeight="Bold"
+                                       Foreground="#DDF9F9F9" />
+                                <!--Content="{Binding ThisMonthRevenue}"-->
+                            </Grid>
+                            <Grid Grid.Column="2">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="0*" />
+                                    <ColumnDefinition />
+                                </Grid.ColumnDefinitions>
+                                <materialDesign:Card Margin="25,25,25,25"
+                                                     Padding="8"
+                                                     materialDesign:ShadowAssist.ShadowDepth="Depth5"
+                                                     Foreground="{x:Null}"
+                                                     Grid.ColumnSpan="2">
+
+                                    <materialDesign:Card.Background>
+                                        <LinearGradientBrush StartPoint="0.5,0"
+                                                             EndPoint="0.5,1">
+                                            <GradientStop Offset="1"
+                                                          Color="#FF016CFD" />
+                                            <GradientStop Color="#FF00E4FF" />
+                                        </LinearGradientBrush>
+                                    </materialDesign:Card.Background>
+
+                                </materialDesign:Card>
+                                <Label x:Name="label1_Copy"
+                                       Width="93"
+                                       Height="64"
+                                       Margin="156,145,0,0"
+                                       HorizontalAlignment="Left"
+                                       VerticalAlignment="Top"
+                                       Content=""
+                                       Grid.ColumnSpan="2">
+                                    <Label.Background>
+                                        <ImageBrush ImageSource="Images/dollar.png"
+                                                    Stretch="Uniform" />
+                                    </Label.Background>
+                                </Label>
+                                <Label x:Name="label_Copy4"
+                                       Width="342"
+                                       Height="39"
+                                       Margin="0,39,0,0"
+                                       HorizontalAlignment="Center"
+                                       VerticalAlignment="Top"
+                                       HorizontalContentAlignment="Center"
+                                       Content="ALL INCOME IN $"
+                                       FontSize="24"
+                                       FontWeight="Bold"
+                                       Foreground="#DDF9F9F9"
+                                       Grid.Column="1" />
+                                <Label x:Name="usd"
+                                       Width="344"
+                                       Height="33"
+                                       Margin="0,104,0,0"
+                                       HorizontalAlignment="Center"
+                                       VerticalAlignment="Top"
+                                       HorizontalContentAlignment="Center"
+                                       FontSize="22"
+                                       FontWeight="Bold"
+                                       Foreground="#DDF9F9F9"
+                                       RenderTransformOrigin="0.5,0.5"
+                                       Grid.Column="1">
+                                    <!--Content="{Binding AlltimerevenueUSD}"-->
+                                    <Label.RenderTransform>
+                                        <TransformGroup>
+                                            <ScaleTransform />
+                                            <SkewTransform />
+                                            <RotateTransform Angle="-0.549" />
+                                            <TranslateTransform />
+                                        </TransformGroup>
+                                    </Label.RenderTransform>
+                                </Label>
+                            </Grid>
+                        </Grid>
+                        <Grid Grid.Row="1">
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="74*" />
+                                <RowDefinition Height="133*" />
+                            </Grid.RowDefinitions>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="350" />
+                                <ColumnDefinition Width="*" />
+                            </Grid.ColumnDefinitions>
+                            <Grid Grid.RowSpan="2"
+                                  Grid.Column="0"
+                                  Margin="25,25,25.4,24.6">
+                                <materialDesign:Card Padding="8"
+                                                     materialDesign:ShadowAssist.ShadowDepth="Depth3"
+                                                     Foreground="{x:Null}"
+                                                     UniformCornerRadius="10" />
+                                <!--<Wpf:PieChart
+                                    DataTooltip="{x:Null}"
+                                    Hoverable="True"
+                                    InnerRadius="10"
+                                    LegendLocation="Bottom"
+                                    Series="{Binding SeriesCollection}" />-->
+                                <Button Width="100"
+                                        Margin="100,0,100.4,331.6"
+                                        Content="RELOAD" />
+                                <!--Command="{Binding ReloadStatictics}"-->
+                            </Grid>
+                            <Grid Grid.RowSpan="2"
+                                  Grid.Column="1"
+                                  Margin="24.6,25,25,24.6">
+                                <materialDesign:Card Padding="8"
+                                                     materialDesign:ShadowAssist.ShadowDepth="Depth3"
+                                                     Foreground="{x:Null}"
+                                                     UniformCornerRadius="10" />
+                                <!--<Wpf:CartesianChart LegendLocation="Right" Series="{Binding SeriesCollection1}">
+                                    <Wpf:CartesianChart.AxisY>
+                                        <Wpf:Axis Title="Income" LabelFormatter="{Binding YFormatter}" />
+                                    </Wpf:CartesianChart.AxisY>
+                                    <Wpf:CartesianChart.AxisX>
+                                        <Wpf:Axis Title="Month" Labels="{Binding Labels}" />
+                                    </Wpf:CartesianChart.AxisX>
+                                </Wpf:CartesianChart>-->
+
+                            </Grid>
+                        </Grid>
+                    </Grid>
+                </TabItem>
+                <TabItem>
+
+
+                    <TabItem.Header>
+
+                        <StackPanel Width="auto"
+                                    Height="auto">
+                            <i:Interaction.Triggers>
+                                <i:EventTrigger EventName="PreviewMouseLeftButtonDown">
+                                    <!--<i:InvokeCommandAction Command="{Binding Path=ReloadCommand}"/>-->
+                                </i:EventTrigger>
+                            </i:Interaction.Triggers>
+                            <materialDesign:PackIcon Width="30"
+                                                     Height="30"
+                                                     HorizontalAlignment="Center"
+                                                     Kind="RoomService" />
+                            <TextBlock HorizontalAlignment="Center"
+                                       Text="Service" />
+                        </StackPanel>
+                    </TabItem.Header>
+                    <Grid>
+
+
+                        <!--  Main  -->
+
+                        <Grid Grid.Row="0">
+
+
+
+                            <!--  Main  -->
+
+
+
+
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="2.5*" />
+                                <ColumnDefinition />
+                            </Grid.ColumnDefinitions>
+
+                            <!--  Danh sách hàng hóa  -->
+                            <Grid Grid.Column="0"
+                                  Margin="10">
+
+
+
+                                <!--  Filter và search  -->
+
+                                <TabControl Grid.RowSpan="2"
+                                            Margin="0,0,-0.2,-0.4"
+                                            materialDesign:ColorZoneAssist.Mode="PrimaryLight"
+                                            Style="{StaticResource MaterialDesignNavigatilRailTabControl}"
+                                            TabStripPlacement="Top">
+                                    <!--SelectionChanged="TabControl_SelectionChanged_1"-->
+
+                                    <!--  Nước uống  -->
+                                    <TabItem Width="840">
+                                        <TabItem.Header>
+                                            <StackPanel Width="auto"
+                                                        Height="auto">
+
+                                                <TextBlock HorizontalAlignment="Center"
+                                                           FontSize="30"
+                                                           FontWeight="bold"
+                                                           Text="MENU" />
+                                            </StackPanel>
+                                        </TabItem.Header>
+
+                                        <ItemsControl>
+                                            <!--ItemsSource="{Binding Listgood}"-->
+                                            <ItemsControl.ItemsPanel>
+                                                <ItemsPanelTemplate>
+                                                    <WrapPanel Background="white"
+                                                               Orientation="Horizontal" />
+                                                </ItemsPanelTemplate>
+                                            </ItemsControl.ItemsPanel>
+                                            <ItemsControl.ItemTemplate>
+                                                <DataTemplate>
+                                                    <!--<local:SellGoodsControl />-->
+                                                </DataTemplate>
+                                            </ItemsControl.ItemTemplate>
+                                            <ItemsControl.Template>
+                                                <ControlTemplate>
+                                                    <ScrollViewer>
+                                                        <!--Padding="{TemplateBinding Padding}"-->
+                                                        <ItemsPresenter />
+                                                    </ScrollViewer>
+
+                                                </ControlTemplate>
+                                            </ItemsControl.Template>
+                                        </ItemsControl>
+                                    </TabItem>
+                                </TabControl>
+                            </Grid>
+
+                            <!--  Đặt hàng  -->
+                            <Grid Grid.Column="1">
+
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="1*" />
+                                    <RowDefinition Height="8*" />
+                                    <RowDefinition Height="1*" />
+                                    <RowDefinition Height="1.5*" />
+
+                                </Grid.RowDefinitions>
+                                <!--  Tên sân  -->
+                                <Grid Grid.Row="0"
+                                      Grid.RowSpan="2"
+                                      Height="58"
+                                      Margin="0,0,0.2,461.2"
+                                      VerticalAlignment="Bottom">
+                                    <Rectangle Width="auto"
+                                               Height="40"
+                                               Margin="5,5,15,5"
+                                               RadiusX="6"
+                                               RadiusY="6"
+                                               Stroke="Gray" />
+                                    <ComboBox Width="300"
+                                              Height="25"
+                                              materialDesign:HintAssist.Hint="Field Name">
+                                        <!--ItemsSource="{Binding ListbookingCombobox}"
+                                              SelectedItem="{Binding FieldSelectedItem}"-->
+
+                                        <ComboBox.ItemTemplate>
+                                            <DataTemplate>
+                                                <!--<StackPanel Orientation="Horizontal">
+
+                                                    <TextBlock Text="{Binding field.name}" />
+                                                    <TextBlock Text="   |   " />
+                                                    <TextBlock Text="{Binding start_time, StringFormat='{}{0:h:mm tt}'}" />
+                                                    <TextBlock Text=" - " />
+                                                    <TextBlock Text="{Binding end_time, StringFormat='{}{0:h:mm tt}'}" />
+                                                </StackPanel>-->
+                                            </DataTemplate>
+                                        </ComboBox.ItemTemplate>
+                                    </ComboBox>
+
+                                </Grid>
+                                <Grid Grid.Row="1">
+                                    <Border CornerRadius="30">
+                                        <Grid>
+                                            <Grid.RowDefinitions>
+                                                <RowDefinition Height="1*" />
+                                                <RowDefinition Height="8*" />
+                                            </Grid.RowDefinitions>
+                                            <Grid Grid.Row="0">
+                                                <Grid.ColumnDefinitions>
+                                                    <ColumnDefinition Width="6*" />
+                                                    <ColumnDefinition Width="4*" />
+                                                </Grid.ColumnDefinitions>
+                                                <Grid Grid.Column="0">
+                                                    <TextBlock Margin="20,10,10,10"
+                                                               VerticalAlignment="Center"
+                                                               FontSize="20"
+                                                               FontWeight="DemiBold"
+                                                               Text="Current Order" />
+                                                </Grid>
+                                                <Grid Grid.Column="1">
+
+                                                    <Button Width="100"
+                                                            Background="#FFFFDDDD"
+                                                            BorderBrush="#FFFFDDDD"
+                                                            BorderThickness="0"
+                                                            Command="{Binding ClearAllCommand}"
+                                                            Content="Clear all"
+                                                            Foreground="Red"
+                                                            SnapsToDevicePixels="True" />
+                                                </Grid>
+                                            </Grid>
+                                            <Grid Grid.Row="1">
+                                                <ItemsControl ItemsSource="{Binding Listorder}">
+                                                    <ItemsControl.ItemsPanel>
+                                                        <ItemsPanelTemplate>
+                                                            <StackPanel Background="White"
+                                                                        Orientation="Vertical" />
+                                                        </ItemsPanelTemplate>
+                                                    </ItemsControl.ItemsPanel>
+                                                    <ItemsControl.ItemTemplate>
+                                                        <DataTemplate>
+                                                            <!--<local:ProductDetailsControl />-->
+                                                        </DataTemplate>
+                                                    </ItemsControl.ItemTemplate>
+                                                    <ItemsControl.Template>
+                                                        <ControlTemplate>
+                                                            <ScrollViewer Padding="{TemplateBinding Padding}">
+                                                                <ItemsPresenter />
+                                                            </ScrollViewer>
+
+                                                        </ControlTemplate>
+                                                    </ItemsControl.Template>
+                                                </ItemsControl>
+                                            </Grid>
+                                        </Grid>
+                                    </Border>
+                                </Grid>
+
+                                <!--  Tong tien  -->
+                                <Grid Grid.Row="2"
+                                      Margin="10,20,10,0">
+
+                                    <TextBlock Margin="20,5,10,0"
+                                               FontSize="24"
+                                               FontWeight="Bold"
+                                               Text="Total"
+                                               TextAlignment="Left" />
+                                    <TextBlock x:Name="total"
+                                               Margin="20,5,10,0"
+                                               Panel.ZIndex="1"
+                                               FontSize="24"
+                                               Foreground="White"
+                                               Text="{Binding total, StringFormat={}{0:N0} VND}"
+                                               TextAlignment="Right" />
+                                    <Rectangle Width="200"
+                                               Height="30"
+                                               Margin="0"
+                                               HorizontalAlignment="Right"
+                                               VerticalAlignment="Center"
+                                               Fill="#FF5656E7"
+                                               RadiusX="4"
+                                               RadiusY="4" />
+
+                                </Grid>
+                                <Grid Grid.Row="3">
+
+
+                                    <Button Grid.Column="0"
+                                            Width="300"
+                                            Height="45"
+                                            materialDesign:ButtonAssist.CornerRadius="5"
+                                            Command="{Binding OrderCommand}"
+                                            Style="{StaticResource MaterialDesignRaisedButton}"
+                                            ToolTip="MaterialDesignRaisedButton with Round Corners">
+                                        <StackPanel HorizontalAlignment="Stretch"
+                                                    VerticalAlignment="Stretch"
+                                                    Orientation="Horizontal">
+                                            <materialDesign:PackIcon Width="auto"
+                                                                     Height="20"
+                                                                     Kind="CurrencyUsd" />
+                                            <TextBlock HorizontalAlignment="Center"
+                                                       VerticalAlignment="Center"
+                                                       FontWeight="Bold"
+                                                       Text="ORDER" />
+
+
+                                        </StackPanel>
+                                    </Button>
+                                </Grid>
+                                <!--  Nút đặt hàng  -->
+                            </Grid>
+                        </Grid>
+
+
+                    </Grid>
+                </TabItem>
+                <TabItem>
+                    <TabItem.Header>
+                        <StackPanel Width="auto"
+                                    Height="auto">
+                            <materialDesign:PackIcon Width="30"
+                                                     Height="30"
+                                                     HorizontalAlignment="Center"
+                                                     Kind="CurrencyUsd" />
+                            <TextBlock HorizontalAlignment="Center"
+                                       Text="Payment" />
+                        </StackPanel>
+                    </TabItem.Header>
+                    <Grid x:Name="Grid_Button">
+
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="60*" />
+                            <RowDefinition Height="220*" />
+                            <RowDefinition Height="220*" />
+                            <RowDefinition Height="220*" />
+                        </Grid.RowDefinitions>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="133*" />
+                            <ColumnDefinition Width="133*" />
+                            <ColumnDefinition Width="133*" />
+                        </Grid.ColumnDefinitions>
+                        <Grid Grid.Row="1"
+                              Grid.Column="0">
+                            <Button x:Name="FB_Billbtb"
+                                    Width="200"
+                                    Height="150"
+                                    HorizontalAlignment="Center"
+                                    VerticalAlignment="Center"
+                                    Command="{Binding ShowWindowCommand_FB}">
+                                <Grid>
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="16*" />
+                                        <ColumnDefinition Width="65*" />
+                                    </Grid.ColumnDefinitions>
+                                    <Grid.RowDefinitions>
+                                        <RowDefinition Height="auto" />
+                                        <RowDefinition />
+                                    </Grid.RowDefinitions>
+                                    <materialDesign:PackIcon Grid.RowSpan="2"
+                                                             Grid.ColumnSpan="2"
+                                                             Width="82"
+                                                             Height="87"
+                                                             Margin="0,10,0,0"
+                                                             HorizontalAlignment="Center"
+                                                             VerticalAlignment="Center"
+                                                             Kind="BedSingle" />
+                                    <TextBlock Grid.RowSpan="2"
+                                               Grid.ColumnSpan="2"
+                                               Margin="13,105,13.8,3.4"
+                                               HorizontalAlignment="Center"
+                                               FontWeight="Bold">
+                                        Single Bedroom
+                                    </TextBlock>
+                                </Grid>
+
+                            </Button>
+                        </Grid>
+                        <Grid Grid.Row="2"
+                              Grid.Column="0">
+                            <Button x:Name="VL_billbtb"
+                                    Width="200"
+                                    Height="150"
+                                    HorizontalAlignment="Center"
+                                    VerticalAlignment="Center"
+                                    Command="{Binding ShowWindowCommand_VL}">
+                                <Grid>
+                                    <Grid.RowDefinitions>
+                                        <RowDefinition Height="auto" />
+                                        <RowDefinition />
+                                    </Grid.RowDefinitions>
+                                    <materialDesign:PackIcon Width="79"
+                                                             Height="109"
+                                                             FontSize="200"
+                                                             HorizontalAlignment="Center"
+                                                             VerticalAlignment="Center"
+                                                             Kind="BedDouble" />
+                                    <TextBlock Grid.RowSpan="2"
+                                               Margin="0,105,-0.338,4.277"
+                                               HorizontalAlignment="Center"
+                                               FontWeight="Bold">
+                                        Double Bedroom
+                                    </TextBlock>
+                                </Grid>
+                            </Button>
+                        </Grid>
+                        <Grid Grid.Row="3"
+                              Grid.Column="0">
+                            <Button x:Name="Bk_billbtb"
+                                    Width="200"
+                                    Height="150"
+                                    HorizontalAlignment="Center"
+                                    VerticalAlignment="Center"
+                                    Command="{Binding ShowWindowCommand_BK}">
+                                <Grid>
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="27*" />
+                                        <ColumnDefinition Width="56*" />
+                                    </Grid.ColumnDefinitions>
+                                    <Grid.RowDefinitions>
+                                        <RowDefinition Height="auto" />
+                                        <RowDefinition Height="22*" />
+                                        <RowDefinition Height="91*" />
+                                    </Grid.RowDefinitions>
+                                    <materialDesign:PackIcon Grid.Row="0"
+                                                             Grid.RowSpan="3"
+                                                             Grid.ColumnSpan="2"
+                                                             Width="81"
+                                                             Height="109"
+                                                             FontSize="200"
+                                                             FontWeight="ExtraBold"
+                                                             HorizontalAlignment="Center"
+                                                             VerticalAlignment="Center"
+                                                             Kind="BedEmpty" />
+                                    <TextBlock Grid.ColumnSpan="2"
+                                               Margin="15,74,0,0"
+                                               HorizontalAlignment="Center"
+                                               FontSize="14"
+                                               FontWeight="Bold"
+                                               Grid.Row="2">
+                                        Triple Bedroom
+                                    </TextBlock>
+                                </Grid>
+                            </Button>
+                        </Grid>
+                        <Grid Grid.Row="1"
+                              Grid.RowSpan="3"
+                              Grid.Column="1"
+                              Grid.ColumnSpan="2"
+                              Margin="0,20,20,20">
+                            <Border Grid.Column="0"
+                                    Width="auto"
+                                    Height="auto"
+                                    Margin="20,60,20,20"
+                                    Background="Snow"
+                                    BorderBrush="Black"
+                                    CornerRadius="20">
+                                <Border.BitmapEffect>
+                                    <DropShadowBitmapEffect Opacity="0.6"
+                                                            ShadowDepth="10"
+                                                            Softness="0.3"
+                                                            Color="Black" />
+                                </Border.BitmapEffect>
+
+
+                                <DataGrid Margin="0,0,0,0"
+                                          AlternatingRowBackground="LightGray"
+                                          AutoGenerateColumns="False"
+                                          Background="Transparent"
+                                          BorderBrush="{x:Null}"
+                                          FontSize="16"
+                                          HeadersVisibility="Column"
+                                          IsReadOnly="True"
+                                          ItemsSource="{Binding ListCustomerInfo}">
+                                    <DataGrid.Columns>
+                                        <DataGridTextColumn Binding="{Binding STT}"
+                                                            Header="  No" />
+                                        <DataGridTextColumn Binding="{Binding Baseinfo_CusName}"
+                                                            Header="Customer Name" />
+                                        <DataGridTextColumn Binding="{Binding Baseinfo_CusPhoneNum}"
+                                                            Header="Customer Phone" />
+                                        <DataGridTextColumn Binding="{Binding Baseinfo_SumCusMoneyAmount}"
+                                                            Header="Money Achive" />
+                                        <DataGridTextColumn Binding="{Binding Baseinfo_SumBillAmount}"
+                                                            Header="Bill Achive" />
+                                        <DataGridTextColumn Binding="{Binding Baseinfo_TypeCus}"
+                                                            Header="Member type" />
+
+                                    </DataGrid.Columns>
+
+                                </DataGrid>
+                            </Border>
+                        </Grid>
+
+
+                        <TextBlock Grid.Row="0"
+                                   Grid.Column="1"
+                                   Margin="0,0,0,-20"
+                                   HorizontalAlignment="Center"
+                                   VerticalAlignment="Top"
+                                   FontFamily="Bungee Inline"
+                                   FontSize="25"
+                                   FontWeight="Bold"
+                                   Text="PAYMENT" />
+                    </Grid>
+                </TabItem>
+                <TabItem>
+                    <TabItem.Header>
+                        <StackPanel Width="auto"
+                                    Height="auto">
+                            <materialDesign:PackIcon Width="30"
+                                                     Height="30"
+                                                     HorizontalAlignment="Center"
+                                                     Kind="DoorSlidingOpen" />
+                            <TextBlock HorizontalAlignment="Center"
+                                       Text="Booking" />
+                        </StackPanel>
+                    </TabItem.Header>
+                    <Grid>
+                        <Grid.RowDefinitions>
+                            <RowDefinition />
+                            <RowDefinition Height="30" />
+                        </Grid.RowDefinitions>
+
+                        <Grid Grid.Row="0">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition />
+                                <ColumnDefinition />
+                                <ColumnDefinition />
+                            </Grid.ColumnDefinitions>
+                            <Grid Grid.Column="0">
+                                <Button x:Name="FB"
+                                        Width="300"
+                                        Height="450"
+                                        HorizontalAlignment="Center"
+                                        VerticalAlignment="Center"
+                                        materialDesign:ButtonAssist.CornerRadius="100"
+                                        Command="{Binding ShowFootballFieldCommand}"
+                                        CommandParameter="{Binding ElementName=FB}">
+                                    <Grid>
+                                        <Grid.RowDefinitions>
+                                            <RowDefinition Height="auto" />
+                                            <RowDefinition />
+                                        </Grid.RowDefinitions>
+                                        <materialDesign:PackIcon Grid.Row="0"
+                                                                 Width="200"
+                                                                 Height="250"
+                                                                 FontSize="400"
+                                                                 FontWeight="ExtraBold"
+                                                                 Kind="BedSingle" />
+                                        <TextBlock Grid.Row="1"
+                                                   HorizontalAlignment="Center"
+                                                   FontSize="30"
+                                                   FontWeight="Bold">
+                                            Single Bedroom
+                                        </TextBlock>
+                                    </Grid>
+
+                                </Button>
+                            </Grid>
+                            <Grid Grid.Column="1">
+
+                                <Button x:Name="VL"
+                                        Width="300"
+                                        Height="450"
+                                        HorizontalAlignment="Center"
+                                        VerticalAlignment="Center"
+                                        materialDesign:ButtonAssist.CornerRadius="100"
+                                        Command="{Binding ShowVolleyballFieldCommand}"
+                                        CommandParameter="{Binding ElementName=VL}">
+                                    <Grid>
+                                        <Grid.RowDefinitions>
+                                            <RowDefinition Height="auto" />
+                                            <RowDefinition />
+                                        </Grid.RowDefinitions>
+                                        <materialDesign:PackIcon Grid.Row="0"
+                                                                 Width="200"
+                                                                 Height="250"
+                                                                 FontSize="400"
+                                                                 FontWeight="ExtraBold"
+                                                                 Kind="BedKing" />
+                                        <TextBlock Grid.Row="1"
+                                                   HorizontalAlignment="Center"
+                                                   FontSize="30"
+                                                   FontWeight="Bold">
+                                            Double Bedroom
+                                        </TextBlock>
+                                    </Grid>
+                                </Button>
+                            </Grid>
+                            <Grid Grid.Column="2">
+                                <Button x:Name="BS"
+                                        Width="300"
+                                        Height="450"
+                                        HorizontalAlignment="Center"
+                                        VerticalAlignment="Center"
+                                        materialDesign:ButtonAssist.CornerRadius="100"
+                                        Command="{Binding ShowBasketballFieldCommand}"
+                                        CommandParameter="{Binding ElementName=BS}">
+                                    <Grid>
+                                        <Grid.RowDefinitions>
+                                            <RowDefinition Height="auto" />
+                                            <RowDefinition />
+                                        </Grid.RowDefinitions>
+                                        <materialDesign:PackIcon Grid.Row="0"
+                                                                 Width="200"
+                                                                 Height="250"
+                                                                 FontSize="400"
+                                                                 FontWeight="ExtraBold"
+                                                                 Kind="BedEmpty" />
+                                        <TextBlock Grid.Row="1"
+                                                   HorizontalAlignment="Center"
+                                                   FontSize="30"
+                                                   FontWeight="Bold">
+                                            Triple Bedroom
+                                        </TextBlock>
+                                    </Grid>
+                                </Button>
+                            </Grid>
+
+
+                        </Grid>
+                        <Grid Grid.Row="1"
+                              Margin="31,341,30.6,53.8">
+                            <ProgressBar Margin="0,-20,0,26.723"
+                                         IsIndeterminate="True" />
+                        </Grid>
+                        <Grid Grid.Row="2" />
+                    </Grid>
+                </TabItem>
+                <TabItem>
+                    <TabItem.Header>
+                        <StackPanel Width="auto"
+                                    Height="auto">
+                            <materialDesign:PackIcon Width="30"
+                                                     Height="30"
+                                                     HorizontalAlignment="Center"
+                                                     Kind="PackageVariantClosed" />
+                            <TextBlock HorizontalAlignment="Center"
+                                       Text="Storage" />
+                        </StackPanel>
+                    </TabItem.Header>
+                    <Grid>
+
+
+                        <Grid Background="Transparent">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="6*" />
+                                <ColumnDefinition Width="4*" />
+                            </Grid.ColumnDefinitions>
+                            <Grid Grid.Column="0">
+
+                                <Border Margin="20,20,10,20"
+                                        Background="white"
+                                        CornerRadius="20"
+                                        Visibility="{Binding Visibility}">
+                                    <Border.Effect>
+                                        <DropShadowEffect ShadowDepth="1" />
+                                    </Border.Effect>
+                                    <Grid>
+                                        <Grid.RowDefinitions>
+                                            <RowDefinition Height="1*" />
+                                            <RowDefinition Height="9*" />
+                                        </Grid.RowDefinitions>
+                                        <Grid Grid.Row="0">
+                                            <materialDesign:PackIcon Width="20"
+                                                                     Height="20"
+                                                                     Margin="120,20,20,20"
+                                                                     VerticalAlignment="Center"
+                                                                     Kind="Magnify" />
+                                            <Rectangle Width="500"
+                                                       Height="40"
+                                                       Margin="0"
+                                                       RadiusX="6"
+                                                       RadiusY="6"
+                                                       Stroke="Gray" />
+                                            <TextBox x:Name="txtIs"
+                                                     Width="430"
+                                                     Height="40"
+                                                     Margin="55,0,10,0"
+                                                     Padding="0"
+                                                     VerticalAlignment="Center"
+                                                     HorizontalContentAlignment="Left"
+                                                     VerticalContentAlignment="Center"
+                                                     materialDesign:HintAssist.Hint="Search"
+                                                     BorderThickness="0"
+                                                     FontSize="17"
+                                                     FontWeight="SemiBold"
+                                                     Foreground="Gray"
+                                                     IsTabStop="False"
+                                                     MaxLines="1" />
+                                            <!--TextChanged="TextBox_TextChanged"-->
+
+                                        </Grid>
+                                        <Grid Grid.Row="1">
+
+
+
+                                            <DataGrid Name="DataGrid"
+                                                      Margin="10,10,10,10"
+                                                      AlternatingRowBackground="#FFF8EBF9"
+                                                      AutoGenerateColumns="False"
+                                                      Background="{x:Null}"
+                                                      CanUserAddRows="False"
+                                                      Focusable="False"
+                                                      IsReadOnly="True"
+                                                      IsSynchronizedWithCurrentItem="False"
+                                                      ItemsSource="{Binding Listgood}"
+                                                      SelectedItem="{Binding SelectedItem}">
+                                                <!--SelectionChanged="DataGrid_SelectionChanged"-->
+
+
+                                                <DataGrid.Columns>
+                                                    <DataGridTextColumn>
+                                                        <DataGridTextColumn.ElementStyle>
+                                                            <Style TargetType="TextBlock">
+                                                                <Setter Property="HorizontalAlignment"
+                                                                        Value="Center" />
+                                                            </Style>
+                                                        </DataGridTextColumn.ElementStyle>
+                                                    </DataGridTextColumn>
+                                                    <materialDesign:DataGridTextColumn Width="2*"
+                                                                                       Binding="{Binding id}"
+                                                                                       EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnPopupEditingStyle}"
+                                                                                       ElementStyle="{StaticResource MaterialDesignDataGridTextColumnStyle}"
+                                                                                       FontSize="15"
+                                                                                       FontWeight="Bold"
+                                                                                       Header="ID" />
+                                                    <materialDesign:DataGridTextColumn Width="2*"
+                                                                                       Binding="{Binding name}"
+                                                                                       EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnPopupEditingStyle}"
+                                                                                       ElementStyle="{StaticResource MaterialDesignDataGridTextColumnStyle}"
+                                                                                       Header="Name" />
+                                                    <materialDesign:DataGridTextColumn Width="1.5*"
+                                                                                       Binding="{Binding unit}"
+                                                                                       EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnPopupEditingStyle}"
+                                                                                       ElementStyle="{StaticResource MaterialDesignDataGridTextColumnStyle}"
+                                                                                       Header="Unit" />
+                                                    <materialDesign:DataGridTextColumn Width="1.5*"
+                                                                                       Binding="{Binding price, StringFormat={}{0:N0}}"
+                                                                                       EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnPopupEditingStyle}"
+                                                                                       ElementStyle="{StaticResource MaterialDesignDataGridTextColumnStyle}"
+                                                                                       Header="Price" />
+
+
+                                                </DataGrid.Columns>
+                                            </DataGrid>
+
+                                        </Grid>
+                                    </Grid>
+
+
+
+                                </Border>
+                            </Grid>
+
+
+                            <Grid Grid.Column="1">
+                                <Border Background="Transparent"
+                                        Visibility="{Binding Visibility}">
+                                    <Border Margin="10,20,20,20"
+                                            HorizontalAlignment="Stretch"
+                                            VerticalAlignment="Stretch"
+                                            Background="White"
+                                            CornerRadius="20">
+                                        <Border.Effect>
+                                            <DropShadowEffect ShadowDepth="1" />
+                                        </Border.Effect>
+                                        <Grid>
+                                            <Grid.RowDefinitions>
+                                                <RowDefinition Height="204*" />
+                                                <RowDefinition Height="325*" />
+                                                <RowDefinition Height="94*" />
+                                            </Grid.RowDefinitions>
+                                            <Grid Grid.Row="0"
+                                                  Margin="0,0,-0.2,1">
+                                                <Grid x:Name="grdSelectImg"
+                                                      Width="150"
+                                                      Height="150"
+                                                      Margin="10,30,0,0"
+                                                      HorizontalAlignment="Center"
+                                                      VerticalAlignment="Top">
+                                                    <Rectangle x:Name="recImage"
+                                                               Width="150"
+                                                               Height="142"
+                                                               Margin="0,10,0,-2"
+                                                               HorizontalAlignment="Left"
+                                                               VerticalAlignment="Top"
+                                                               RadiusX="4"
+                                                               RadiusY="4"
+                                                               Stroke="#5C0DAC"
+                                                               StrokeDashArray="4 2"
+                                                               StrokeThickness="4" />
+                                                    <Button x:Name="btnSelectImage"
+                                                            Width="120"
+                                                            Height="35"
+                                                            Margin="0,0,0,-56"
+                                                            Padding="0"
+                                                            HorizontalAlignment="Center"
+                                                            VerticalAlignment="Bottom"
+                                                            Command="{Binding SelectImageCommand}"
+                                                            CommandParameter="{Binding ElementName=grdSelectImg}"
+                                                            Content="Select Image"
+                                                            FocusVisualStyle="{x:Null}"
+                                                            FontSize="16"
+                                                            FontWeight="SemiBold"
+                                                            ToolTip="Chọn ảnh" />
+
+                                                    <materialDesign:PackIcon x:Name="iconImage"
+                                                                             Width="64"
+                                                                             Height="54"
+                                                                             Margin="43,49,43,0"
+                                                                             HorizontalAlignment="Center"
+                                                                             VerticalAlignment="Top"
+                                                                             Kind="FileImageOutline"
+                                                                             RenderTransformOrigin="0.444,1.03" />
+
+
+                                                </Grid>
+                                            </Grid>
+                                            <Grid x:Name="grdInfo"
+                                                  Grid.Row="1"
+                                                  Grid.RowSpan="2"
+                                                  Width="420"
+                                                  Height="290"
+                                                  Margin="20,55,20.8,0"
+                                                  HorizontalAlignment="Center"
+                                                  VerticalAlignment="Top">
+                                                <Grid Width="350"
+                                                      Height="40"
+                                                      Margin="0"
+                                                      VerticalAlignment="Top">
+                                                    <Label Height="32"
+                                                           Margin="0"
+                                                           HorizontalAlignment="Left"
+                                                           VerticalAlignment="Center"
+                                                           Content="ID"
+                                                           FontSize="18"
+                                                           FontWeight="SemiBold"
+                                                           Foreground="Black" />
+                                                    <Rectangle Width="230"
+                                                               Height="40"
+                                                               Margin="0"
+                                                               HorizontalAlignment="Right"
+                                                               RadiusX="6"
+                                                               RadiusY="6"
+                                                               Stroke="Gray" />
+                                                    <TextBox x:Name="txtId"
+                                                             Width="210"
+                                                             Height="40"
+                                                             Margin="0,0,10,0"
+                                                             Padding="0"
+                                                             HorizontalAlignment="Right"
+                                                             HorizontalContentAlignment="Left"
+                                                             VerticalContentAlignment="Center"
+                                                             materialDesign:HintAssist.Hint="ID"
+                                                             BorderThickness="0"
+                                                             Cursor="IBeam"
+                                                             FontSize="14"
+                                                             FontWeight="SemiBold"
+                                                             Foreground="Gray"
+                                                             IsReadOnly="true"
+                                                             MaxLines="1"
+                                                             Text="{Binding idgood, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" />
+                                                </Grid>
+
+                                                <Grid Width="350"
+                                                      Height="40"
+                                                      Margin="0,60,0,0"
+                                                      VerticalAlignment="Top">
+                                                    <Label Height="32"
+                                                           Margin="0"
+                                                           HorizontalAlignment="Left"
+                                                           VerticalAlignment="Center"
+                                                           Content="Name"
+                                                           FontSize="18"
+                                                           FontWeight="SemiBold"
+                                                           Foreground="Black" />
+                                                    <Rectangle Width="230"
+                                                               Height="40"
+                                                               Margin="0"
+                                                               HorizontalAlignment="Right"
+                                                               RadiusX="6"
+                                                               RadiusY="6"
+                                                               Stroke="Gray" />
+                                                    <TextBox x:Name="txtName"
+                                                             Width="210"
+                                                             Height="40"
+                                                             Margin="0,0,10,0"
+                                                             Padding="0"
+                                                             HorizontalAlignment="Right"
+                                                             HorizontalContentAlignment="Left"
+                                                             VerticalContentAlignment="Center"
+                                                             materialDesign:HintAssist.Hint="Name"
+                                                             BorderThickness="0"
+                                                             Cursor="IBeam"
+                                                             FontSize="14"
+                                                             FontWeight="SemiBold"
+                                                             Foreground="Gray"
+                                                             MaxLines="1"
+                                                             Text="{Binding namegood, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" />
+                                                </Grid>
+                                                <Grid Width="350"
+                                                      Height="40"
+                                                      Margin="0,120,0,0"
+                                                      VerticalAlignment="Top">
+                                                    <Label Height="32"
+                                                           Margin="0"
+                                                           HorizontalAlignment="Left"
+                                                           VerticalAlignment="Center"
+                                                           Content="Unit"
+                                                           FontSize="18"
+                                                           FontWeight="SemiBold"
+                                                           Foreground="Black" />
+                                                    <Rectangle Width="230"
+                                                               Height="40"
+                                                               Margin="0"
+                                                               HorizontalAlignment="Right"
+                                                               RadiusX="6"
+                                                               RadiusY="6"
+                                                               Stroke="Gray" />
+                                                    <TextBox x:Name="txtUnit"
+                                                             Width="210"
+                                                             Height="40"
+                                                             Margin="0,0,10,0"
+                                                             Padding="0"
+                                                             HorizontalAlignment="Right"
+                                                             HorizontalContentAlignment="Left"
+                                                             VerticalContentAlignment="Center"
+                                                             materialDesign:HintAssist.Hint="Unit"
+                                                             BorderThickness="0"
+                                                             Cursor="IBeam"
+                                                             FontSize="14"
+                                                             FontWeight="SemiBold"
+                                                             Foreground="Gray"
+                                                             MaxLines="1"
+                                                             Text="{Binding unitgood, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" />
+                                                </Grid>
+                                                <Grid Width="350"
+                                                      Height="40"
+                                                      Margin="0,180,0,0"
+                                                      VerticalAlignment="Top">
+                                                    <Label Height="32"
+                                                           Margin="0"
+                                                           HorizontalAlignment="Left"
+                                                           VerticalAlignment="Center"
+                                                           Content="Price"
+                                                           FontSize="18"
+                                                           FontWeight="SemiBold"
+                                                           Foreground="Black" />
+                                                    <Rectangle Width="230"
+                                                               Height="40"
+                                                               Margin="0"
+                                                               HorizontalAlignment="Right"
+                                                               RadiusX="6"
+                                                               RadiusY="6"
+                                                               Stroke="Gray" />
+                                                    <TextBox x:Name="txtUnitPrice"
+                                                             Width="210"
+                                                             Height="40"
+                                                             Margin="0,0,10,0"
+                                                             Padding="0"
+                                                             HorizontalAlignment="Right"
+                                                             HorizontalContentAlignment="Left"
+                                                             VerticalContentAlignment="Center"
+                                                             materialDesign:HintAssist.Hint="Price"
+                                                             BorderThickness="0"
+                                                             Cursor="IBeam"
+                                                             FontSize="14"
+                                                             FontWeight="SemiBold"
+                                                             Foreground="Gray"
+                                                             Text="{Binding pricegood, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, StringFormat={}{0:N0}}" />
+                                                </Grid>
+
+                                            </Grid>
+
+                                            <Grid Grid.Row="2"
+                                                  Height="40"
+                                                  Margin="0,2.2,-0.2,0"
+                                                  VerticalAlignment="Top">
+                                                <Grid.ColumnDefinitions>
+                                                    <ColumnDefinition Width="2*" />
+                                                    <ColumnDefinition Width="2*" />
+                                                    <ColumnDefinition Width="2*" />
+                                                </Grid.ColumnDefinitions>
+                                                <Grid Grid.Column="0">
+                                                    <Button x:Name="btnAdd"
+                                                            Width="100"
+                                                            Height="40"
+                                                            Padding="0"
+                                                            VerticalAlignment="Center"
+                                                            Background="#5C0DAC"
+                                                            Command="{Binding addCommand}"
+                                                            CommandParameter="{Binding ElementName=grdSelectImg}"
+                                                            Content="Add"
+                                                            FocusVisualStyle="{x:Null}"
+                                                            FontSize="18"
+                                                            IsDefault="True"
+                                                            ToolTip="Thêm" />
+                                                </Grid>
+                                                <Grid Grid.Column="1">
+                                                    <Button x:Name="btnEdit"
+                                                            Width="100"
+                                                            Height="40"
+                                                            Margin="0"
+                                                            Padding="0"
+                                                            HorizontalAlignment="Center"
+                                                            VerticalAlignment="Center"
+                                                            Background="#5C0DAC"
+                                                            Command="{Binding editCommand}"
+                                                            CommandParameter="{Binding ElementName=grdSelectImg}"
+                                                            Content="Edit"
+                                                            FocusVisualStyle="{x:Null}"
+                                                            FontSize="18"
+                                                            IsDefault="True"
+                                                            ToolTip="Sửa" />
+                                                </Grid>
+                                                <Grid Grid.Column="2">
+                                                    <Button x:Name="btnDelete"
+                                                            Width="100"
+                                                            Height="40"
+                                                            Margin="0"
+                                                            Padding="0"
+                                                            VerticalAlignment="Center"
+                                                            Background="#5C0DAC"
+                                                            Command="{Binding deleteCommand}"
+                                                            CommandParameter="{Binding ElementName=grdSelectImg}"
+                                                            Content="Delete"
+                                                            FocusVisualStyle="{x:Null}"
+                                                            FontSize="18"
+                                                            Style="{StaticResource MaterialDesignRaisedButton}"
+                                                            ToolTip="Xóa" />
+                                                </Grid>
+
+                                            </Grid>
+                                        </Grid>
+                                    </Border>
+                                </Border>
+                            </Grid>
+
+                        </Grid>
+
+
+
+                    </Grid>
+                </TabItem>
+                <TabItem>
+                    <TabItem.Header>
+                        <StackPanel Width="auto"
+                                    Height="auto">
+                            <!--DataContext="{StaticResource EmployeeVM}"-->
+                            <materialDesign:PackIcon Width="30"
+                                                     Height="30"
+                                                     HorizontalAlignment="Center"
+                                                     Kind="Person" />
+                            <TextBlock HorizontalAlignment="Center"
+                                       Text="Employee" />
+                        </StackPanel>
+                    </TabItem.Header>
+
+                    <!--  UI Employee Start Here  -->
+
+                    <Grid Background="Transparent">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="6*" />
+                            <ColumnDefinition Width="4*" />
+                        </Grid.ColumnDefinitions>
+                        <Grid Grid.Column="0">
+
+                            <Border Margin="20,20,10,20"
+                                    Background="white"
+                                    CornerRadius="20"
+                                    Visibility="{Binding Visibility}">
+                                <Border.Effect>
+                                    <DropShadowEffect ShadowDepth="1" />
+                                </Border.Effect>
+                                <Grid>
+                                    <Grid.RowDefinitions>
+                                        <RowDefinition Height="1*" />
+                                        <RowDefinition Height="9*" />
+                                    </Grid.RowDefinitions>
+                                    <Grid Grid.Row="0" />
+                                    <Grid Grid.Row="1">
+
+
+
+                                        <DataGrid Name="DataGrid1"
+                                                  Margin="10,10,10,10"
+                                                  AlternatingRowBackground="#FFF8EBF9"
+                                                  AutoGenerateColumns="False"
+                                                  Background="{x:Null}"
+                                                  CanUserAddRows="False"
+                                                  Focusable="False"
+                                                  IsReadOnly="True"
+                                                  IsSynchronizedWithCurrentItem="False"
+                                                  ItemsSource="{Binding Listemployee}"
+                                                  SelectedItem="{Binding SelectedItem}">
+                                            <!--SelectionChanged="DataGrid_SelectionChanged"-->
+                                            <!--DataContext="{StaticResource EmployeeVM}"-->
+                                            <i:Interaction.Triggers>
+                                                <i:EventTrigger EventName="SelectionChanged">
+                                                    <i:InvokeCommandAction Command="{Binding Path=ReloadCommand}"
+                                                                           CommandParameter="{Binding ElementName=grdSelectImg1}" />
+                                                </i:EventTrigger>
+                                            </i:Interaction.Triggers>
+
+
+
+                                            <DataGrid.Columns>
+                                                <DataGridTextColumn>
+                                                    <DataGridTextColumn.ElementStyle>
+                                                        <Style TargetType="TextBlock">
+                                                            <Setter Property="HorizontalAlignment"
+                                                                    Value="Center" />
+                                                        </Style>
+                                                    </DataGridTextColumn.ElementStyle>
+                                                </DataGridTextColumn>
+                                                <materialDesign:DataGridTextColumn Width="1*"
+                                                                                   Binding="{Binding id}"
+                                                                                   EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnPopupEditingStyle}"
+                                                                                   ElementStyle="{StaticResource MaterialDesignDataGridTextColumnStyle}"
+                                                                                   FontSize="15"
+                                                                                   FontWeight="Bold"
+                                                                                   Header="ID" />
+                                                <materialDesign:DataGridTextColumn Width="2*"
+                                                                                   Binding="{Binding name}"
+                                                                                   EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnPopupEditingStyle}"
+                                                                                   ElementStyle="{StaticResource MaterialDesignDataGridTextColumnStyle}"
+                                                                                   Header="Name" />
+                                                <materialDesign:DataGridTextColumn Width="1.5*"
+                                                                                   Binding="{Binding role}"
+                                                                                   EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnPopupEditingStyle}"
+                                                                                   ElementStyle="{StaticResource MaterialDesignDataGridTextColumnStyle}"
+                                                                                   Header="Role" />
+                                                <materialDesign:DataGridTextColumn Width="1.5*"
+                                                                                   Binding="{Binding salary, StringFormat={}{0:C}}"
+                                                                                   EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnPopupEditingStyle}"
+                                                                                   ElementStyle="{StaticResource MaterialDesignDataGridTextColumnStyle}"
+                                                                                   Header="Salary" />
+                                                <materialDesign:DataGridTextColumn Width="1.5*"
+                                                                                   Binding="{Binding phoneNumber}"
+                                                                                   EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnPopupEditingStyle}"
+                                                                                   ElementStyle="{StaticResource MaterialDesignDataGridTextColumnStyle}"
+                                                                                   Header="Phone" />
+                                                <materialDesign:DataGridTextColumn Width="1.5*"
+                                                                                   Binding="{Binding dateOfBirth, StringFormat='dd/MM/yyyy'}"
+                                                                                   EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnPopupEditingStyle}"
+                                                                                   ElementStyle="{StaticResource MaterialDesignDataGridTextColumnStyle}"
+                                                                                   Header="Birthday" />
+
+
+                                            </DataGrid.Columns>
+                                        </DataGrid>
+
+                                    </Grid>
+                                </Grid>
+
+
+
+                            </Border>
+                        </Grid>
+                        <!--DataContext="{StaticResource EmployeeVM}"-->
+                        <Grid Grid.Column="1">
+                            <Border Background="Transparent"
+                                    Visibility="{Binding Visibility}">
+                                <Border Margin="10,20,20,20"
+                                        HorizontalAlignment="Stretch"
+                                        VerticalAlignment="Stretch"
+                                        Background="White"
+                                        CornerRadius="20">
+                                    <Border.Effect>
+                                        <DropShadowEffect ShadowDepth="1" />
+                                    </Border.Effect>
+                                    <Grid>
+                                        <Grid.RowDefinitions>
+                                            <RowDefinition Height="204*" />
+                                            <RowDefinition Height="325*" />
+                                            <RowDefinition Height="94*" />
+                                        </Grid.RowDefinitions>
+                                        <Grid Grid.Row="0"
+                                              Margin="0,0,-0.2,1">
+                                            <Grid x:Name="grdSelectImg1"
+                                                  Width="150"
+                                                  Height="150"
+                                                  Margin="10,30,0,0"
+                                                  HorizontalAlignment="Center"
+                                                  VerticalAlignment="Top">
+                                                <Grid.Background>
+                                                    <ImageBrush ImageSource="{Binding imageemployee, UpdateSourceTrigger=PropertyChanged}" />
+                                                </Grid.Background>
+                                                <Rectangle x:Name="recImage1"
+                                                           Width="150"
+                                                           Height="153"
+                                                           Margin="0,0,0,-2"
+                                                           HorizontalAlignment="Left"
+                                                           VerticalAlignment="Top"
+                                                           RadiusX="4"
+                                                           RadiusY="4"
+                                                           Stroke="#5C0DAC"
+                                                           StrokeDashArray="4 2"
+                                                           StrokeThickness="4" />
+                                                <Button x:Name="btnSelectImage1"
+                                                        Width="120"
+                                                        Height="35"
+                                                        Margin="0,0,0,-56"
+                                                        Padding="0"
+                                                        HorizontalAlignment="Center"
+                                                        VerticalAlignment="Bottom"
+                                                        Command="{Binding SelectImageCommand}"
+                                                        CommandParameter="{Binding ElementName=grdSelectImg1}"
+                                                        Content="Select Avatar"
+                                                        FocusVisualStyle="{x:Null}"
+                                                        FontSize="16"
+                                                        FontWeight="SemiBold"
+                                                        ToolTip="Chọn ảnh" />
+
+                                            </Grid>
+                                        </Grid>
+                                        <Grid x:Name="grdInfo1"
+                                              Grid.Row="1"
+                                              Grid.RowSpan="2"
+                                              Width="420"
+                                              Height="290"
+                                              Margin="20,55,20.8,0"
+                                              HorizontalAlignment="Center"
+                                              VerticalAlignment="Top">
+
+                                            <Grid Width="350"
+                                                  Height="40"
+                                                  Margin="0,0,0,0"
+                                                  VerticalAlignment="Top">
+                                                <Label Height="32"
+                                                       Margin="0"
+                                                       HorizontalAlignment="Left"
+                                                       VerticalAlignment="Center"
+                                                       Content="Name"
+                                                       FontSize="18"
+                                                       FontWeight="SemiBold"
+                                                       Foreground="Black" />
+                                                <Rectangle Width="230"
+                                                           Height="40"
+                                                           Margin="0"
+                                                           HorizontalAlignment="Right"
+                                                           RadiusX="6"
+                                                           RadiusY="6"
+                                                           Stroke="Gray" />
+                                                <TextBox x:Name="txtName1"
+                                                         Width="210"
+                                                         Height="40"
+                                                         Margin="0,0,10,0"
+                                                         Padding="0"
+                                                         HorizontalAlignment="Right"
+                                                         HorizontalContentAlignment="Left"
+                                                         VerticalContentAlignment="Center"
+                                                         materialDesign:HintAssist.Hint="Name"
+                                                         BorderThickness="0"
+                                                         Cursor="IBeam"
+                                                         FontSize="14"
+                                                         FontWeight="SemiBold"
+                                                         Foreground="Gray"
+                                                         MaxLines="1"
+                                                         Text="{Binding nameemployee, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" />
+                                            </Grid>
+                                            <Grid Width="350"
+                                                  Height="40"
+                                                  Margin="0,50,0,0"
+                                                  VerticalAlignment="Top">
+                                                <Label Height="32"
+                                                       Margin="0"
+                                                       HorizontalAlignment="Left"
+                                                       VerticalAlignment="Center"
+                                                       Content="Role"
+                                                       FontSize="18"
+                                                       FontWeight="SemiBold"
+                                                       Foreground="Black" />
+                                                <Rectangle Width="230"
+                                                           Height="40"
+                                                           Margin="0"
+                                                           HorizontalAlignment="Right"
+                                                           RadiusX="6"
+                                                           RadiusY="6"
+                                                           Stroke="Gray" />
+                                                <TextBox x:Name="txtUnit1"
+                                                         Width="210"
+                                                         Height="40"
+                                                         Margin="0,0,10,0"
+                                                         Padding="0"
+                                                         HorizontalAlignment="Right"
+                                                         HorizontalContentAlignment="Left"
+                                                         VerticalContentAlignment="Center"
+                                                         materialDesign:HintAssist.Hint="Role"
+                                                         BorderThickness="0"
+                                                         Cursor="IBeam"
+                                                         FontSize="14"
+                                                         FontWeight="SemiBold"
+                                                         Foreground="Gray"
+                                                         MaxLines="1"
+                                                         Text="{Binding roleemployee, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" />
+                                            </Grid>
+                                            <Grid Width="350"
+                                                  Height="40"
+                                                  Margin="0,100,0,0"
+                                                  VerticalAlignment="Top">
+                                                <Label Height="32"
+                                                       Margin="0"
+                                                       HorizontalAlignment="Left"
+                                                       VerticalAlignment="Center"
+                                                       Content="Salary"
+                                                       FontSize="18"
+                                                       FontWeight="SemiBold"
+                                                       Foreground="Black" />
+                                                <Rectangle Width="230"
+                                                           Height="40"
+                                                           Margin="0"
+                                                           HorizontalAlignment="Right"
+                                                           RadiusX="6"
+                                                           RadiusY="6"
+                                                           Stroke="Gray" />
+                                                <TextBox x:Name="txtUnitPrice1"
+                                                         Width="210"
+                                                         Height="40"
+                                                         Margin="0,0,10,0"
+                                                         Padding="0"
+                                                         HorizontalAlignment="Right"
+                                                         HorizontalContentAlignment="Left"
+                                                         VerticalContentAlignment="Center"
+                                                         materialDesign:HintAssist.Hint="Salary"
+                                                         BorderThickness="0"
+                                                         Cursor="IBeam"
+                                                         FontSize="14"
+                                                         FontWeight="SemiBold"
+                                                         Foreground="Gray"
+                                                         Text="{Binding salaryemployee, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, StringFormat={}{0:C}}" />
+                                            </Grid>
+                                            <Grid Width="350"
+                                                  Height="40"
+                                                  Margin="0,150,0,0"
+                                                  VerticalAlignment="Top">
+                                                <Label Height="32"
+                                                       Margin="0"
+                                                       HorizontalAlignment="Left"
+                                                       VerticalAlignment="Center"
+                                                       Content="Phone"
+                                                       FontSize="18"
+                                                       FontWeight="SemiBold"
+                                                       Foreground="Black" />
+                                                <Rectangle Width="230"
+                                                           Height="40"
+                                                           Margin="0"
+                                                           HorizontalAlignment="Right"
+                                                           RadiusX="6"
+                                                           RadiusY="6"
+                                                           Stroke="Gray" />
+                                                <TextBox x:Name="txtPhone"
+                                                         Width="210"
+                                                         Height="40"
+                                                         Margin="0,0,10,0"
+                                                         Padding="0"
+                                                         HorizontalAlignment="Right"
+                                                         HorizontalContentAlignment="Left"
+                                                         VerticalContentAlignment="Center"
+                                                         materialDesign:HintAssist.Hint="Phone"
+                                                         BorderThickness="0"
+                                                         Cursor="IBeam"
+                                                         FontSize="14"
+                                                         FontWeight="SemiBold"
+                                                         Foreground="Gray"
+                                                         Text="{Binding phoneemployee, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+                                            </Grid>
+                                            <Grid Width="350"
+                                                  Height="40"
+                                                  Margin="0,200,0,0"
+                                                  VerticalAlignment="Top">
+                                                <Label Height="32"
+                                                       Margin="0"
+                                                       HorizontalAlignment="Left"
+                                                       VerticalAlignment="Center"
+                                                       Content="Birthday"
+                                                       FontSize="18"
+                                                       FontWeight="SemiBold"
+                                                       Foreground="Black" />
+                                                <Rectangle Width="230"
+                                                           Height="40"
+                                                           Margin="0"
+                                                           HorizontalAlignment="Right"
+                                                           RadiusX="6"
+                                                           RadiusY="6"
+                                                           Stroke="Gray" />
+                                                <TextBox x:Name="txtBirth"
+                                                         Width="210"
+                                                         Height="40"
+                                                         Margin="0,0,10,0"
+                                                         Padding="0"
+                                                         HorizontalAlignment="Right"
+                                                         HorizontalContentAlignment="Left"
+                                                         VerticalContentAlignment="Center"
+                                                         materialDesign:HintAssist.Hint="Birthday"
+                                                         BorderThickness="0"
+                                                         Cursor="IBeam"
+                                                         FontSize="14"
+                                                         FontWeight="SemiBold"
+                                                         Foreground="Gray"
+                                                         Text="{Binding dateOfBirthemployee, StringFormat='dd/MM/yyyy', Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+                                            </Grid>
+                                        </Grid>
+
+                                        <Grid Grid.Row="2"
+                                              Height="40"
+                                              Margin="0,2.2,-0.2,0"
+                                              VerticalAlignment="Top">
+                                            <Grid.ColumnDefinitions>
+                                                <ColumnDefinition Width="2*" />
+                                                <ColumnDefinition Width="2*" />
+                                                <ColumnDefinition Width="2*" />
+                                            </Grid.ColumnDefinitions>
+                                            <Grid Grid.Column="0">
+                                                <Button x:Name="btnAdd1"
+                                                        Width="100"
+                                                        Height="40"
+                                                        Padding="0"
+                                                        VerticalAlignment="Center"
+                                                        Background="#5C0DAC"
+                                                        Command="{Binding addCommand}"
+                                                        CommandParameter="{Binding ElementName=grdSelectImg1}"
+                                                        Content="Add"
+                                                        FocusVisualStyle="{x:Null}"
+                                                        FontSize="18"
+                                                        IsDefault="True"
+                                                        ToolTip="Thêm" />
+                                            </Grid>
+                                            <Grid Grid.Column="1">
+                                                <Button x:Name="btnEdit1"
+                                                        Width="100"
+                                                        Height="40"
+                                                        Margin="0"
+                                                        Padding="0"
+                                                        HorizontalAlignment="Center"
+                                                        VerticalAlignment="Center"
+                                                        Background="#5C0DAC"
+                                                        Command="{Binding editCommand}"
+                                                        CommandParameter="{Binding ElementName=grdSelectImg1}"
+                                                        Content="Edit"
+                                                        FocusVisualStyle="{x:Null}"
+                                                        FontSize="18"
+                                                        IsDefault="True"
+                                                        ToolTip="Sửa" />
+                                            </Grid>
+                                            <Grid Grid.Column="2">
+                                                <Button x:Name="btnDelete1"
+                                                        Width="100"
+                                                        Height="40"
+                                                        Margin="0"
+                                                        Padding="0"
+                                                        VerticalAlignment="Center"
+                                                        Background="#5C0DAC"
+                                                        Command="{Binding deleteCommand}"
+                                                        CommandParameter="{Binding ElementName=grdSelectImg1}"
+                                                        Content="Delete"
+                                                        FocusVisualStyle="{x:Null}"
+                                                        FontSize="18"
+                                                        Style="{StaticResource MaterialDesignRaisedButton}"
+                                                        ToolTip="Xóa" />
+                                            </Grid>
+
+                                        </Grid>
+                                    </Grid>
+                                </Border>
+                            </Border>
+                        </Grid>
+                    </Grid>
+
+                </TabItem>
+                <TabItem>
+                    <TabItem.Header>
+                        <StackPanel Width="auto"
+                                    Height="auto">
+                            <materialDesign:PackIcon Width="30"
+                                                     Height="30"
+                                                     HorizontalAlignment="Center"
+                                                     Kind="Settings" />
+                            <TextBlock HorizontalAlignment="Center"
+                                       Text="Settings" />
+                        </StackPanel>
+                    </TabItem.Header>
+                    <!--  Setting UI Start Here  -->
+                    <Grid>
+                        <Grid.RowDefinitions>
+
+                            <RowDefinition Height="70*" />
+                            <RowDefinition Height="500*" />
+                            <RowDefinition Height="100*" />
+                        </Grid.RowDefinitions>
+                        <Grid Grid.Row="0">
+                            <!--<TextBlock
+                                        Text="SETTINGS"
+                                        FontWeight="Bold"
+                                        FontSize="25"
+                                        FontFamily="Bungee Inline"
+                                        HorizontalAlignment="Center"></TextBlock>-->
+
+                        </Grid>
+                        <Grid Grid.Row="1">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="400" />
+                                <ColumnDefinition Width="400" />
+                                <ColumnDefinition Width="400" />
+
+                            </Grid.ColumnDefinitions>
+                            <Grid Grid.Column="0">
+                                <Grid.RowDefinitions>
+                                    <RowDefinition />
+                                    <RowDefinition />
+                                    <RowDefinition />
+                                </Grid.RowDefinitions>
+                                <Grid Grid.Row="0">
+                                    <materialDesign:Flipper>
+                                        <materialDesign:Flipper.FrontContent>
+                                            <Button Width="100"
+                                                    Height="auto"
+                                                    HorizontalAlignment="Center"
+                                                    VerticalAlignment="Center"
+                                                    Command="{x:Static materialDesign:Flipper.FlipCommand}">
+
+                                                <Grid>
+                                                    <Grid.ColumnDefinitions>
+                                                        <ColumnDefinition Width="16*" />
+                                                        <ColumnDefinition Width="65*" />
+                                                    </Grid.ColumnDefinitions>
+                                                    <Grid.RowDefinitions>
+                                                        <RowDefinition Height="50" />
+                                                        <RowDefinition />
+                                                    </Grid.RowDefinitions>
+                                                    <materialDesign:PackIcon Grid.RowSpan="2"
+                                                                             Grid.ColumnSpan="2"
+                                                                             Width="40"
+                                                                             Height="40"
+                                                                             HorizontalAlignment="Center"
+                                                                             VerticalAlignment="Bottom"
+                                                                             Kind="DeleteAlert" />
+                                                    <TextBlock Grid.RowSpan="2"
+                                                               Grid.ColumnSpan="2"
+                                                               HorizontalAlignment="Center"
+                                                               FontSize="12"
+                                                               FontWeight="Bold">
+                                                        CLEAR DATA
+                                                    </TextBlock>
+                                                </Grid>
+
+                                            </Button>
+                                        </materialDesign:Flipper.FrontContent>
+                                        <materialDesign:Flipper.BackContent>
+                                            <Button Width="184"
+                                                    Margin="8"
+                                                    Command="{Binding DeleteAllBillCommand}"
+                                                    Content="CONFIRM DELETE"
+                                                    Style="{StaticResource MaterialDesignFlatButton}" />
+                                        </materialDesign:Flipper.BackContent>
+                                    </materialDesign:Flipper>
+                                </Grid>
+                                <Grid Grid.Row="1">
+
+                                    <Button Width="225"
+                                            Height="105"
+                                            HorizontalAlignment="Center"
+                                            VerticalAlignment="Center"
+                                            materialDesign:ButtonAssist.CornerRadius="5"
+                                            Command="{Binding OpenBillReportWindow}">
+
+                                        <Grid>
+                                            <Grid.ColumnDefinitions>
+                                                <ColumnDefinition Width="20" />
+                                                <ColumnDefinition Width="150" />
+                                            </Grid.ColumnDefinitions>
+                                            <Grid.RowDefinitions>
+                                                <RowDefinition Height="60" />
+                                                <RowDefinition />
+                                            </Grid.RowDefinitions>
+                                            <materialDesign:PackIcon Grid.RowSpan="2"
+                                                                     Grid.ColumnSpan="2"
+                                                                     Width="65"
+                                                                     Height="65"
+                                                                     HorizontalAlignment="Center"
+                                                                     VerticalAlignment="Bottom"
+                                                                     FontWeight="Bold"
+                                                                     Kind="FileDocument" />
+                                            <TextBlock Grid.RowSpan="2"
+                                                       Grid.ColumnSpan="2"
+                                                       Width="150"
+                                                       HorizontalAlignment="Center"
+                                                       VerticalAlignment="Top"
+                                                       FontSize="25"
+                                                       FontWeight="Bold">
+                                                BILL REPORT
+                                            </TextBlock>
+                                        </Grid>
+
+                                    </Button>
+                                </Grid>
+                                <Grid Grid.Row="2">
+                                    <Button Width="225"
+                                            Height="105"
+                                            HorizontalAlignment="Center"
+                                            VerticalAlignment="Center"
+                                            materialDesign:ButtonAssist.CornerRadius="5"
+                                            Command="{Binding LogoutCommand}"
+                                            CommandParameter="{Binding ElementName=mainWindow}">
+
+                                        <Grid>
+                                            <Grid.ColumnDefinitions>
+                                                <ColumnDefinition Width="20" />
+                                                <ColumnDefinition Width="65*" />
+                                            </Grid.ColumnDefinitions>
+                                            <Grid.RowDefinitions>
+                                                <RowDefinition Height="60" />
+                                                <RowDefinition />
+                                            </Grid.RowDefinitions>
+                                            <materialDesign:PackIcon Grid.RowSpan="2"
+                                                                     Grid.ColumnSpan="2"
+                                                                     Width="65"
+                                                                     Height="65"
+                                                                     HorizontalAlignment="Center"
+                                                                     VerticalAlignment="Bottom"
+                                                                     FontWeight="Bold"
+                                                                     Kind="Logout" />
+                                            <TextBlock Grid.RowSpan="2"
+                                                       Grid.ColumnSpan="2"
+                                                       Width="108"
+                                                       HorizontalAlignment="Center"
+                                                       VerticalAlignment="Top"
+                                                       FontSize="25"
+                                                       FontWeight="Bold">
+                                                LOG OUT
+                                            </TextBlock>
+                                        </Grid>
+
+                                    </Button>
+                                </Grid>
+
+
+                            </Grid>
+                            <Grid Grid.Column="1">
+                                <materialDesign:Flipper HorizontalAlignment="Center"
+                                                        VerticalAlignment="Center">
+                                    <materialDesign:Flipper.FrontContent>
+                                        <Button Width="300"
+                                                Height="60"
+                                                materialDesign:ButtonAssist.CornerRadius="10"
+                                                Background="{DynamicResource PrimaryHueDarkBrush}"
+                                                Command="{x:Static materialDesign:Flipper.FlipCommand}"
+                                                Content="CHANGE PASSWORD"
+                                                Foreground="{DynamicResource PrimaryHueDarkForegroundBrush}"
+                                                Style="{StaticResource MaterialDesignFlatButton}" />
+                                    </materialDesign:Flipper.FrontContent>
+                                    <materialDesign:Flipper.BackContent>
+                                        <Grid Width="300"
+                                              Height="300">
+                                            <Grid.RowDefinitions>
+                                                <RowDefinition Height="Auto" />
+                                                <RowDefinition Height="*" />
+                                            </Grid.RowDefinitions>
+                                            <materialDesign:ColorZone Padding="6"
+                                                                      Mode="PrimaryDark">
+                                                <StackPanel Orientation="Horizontal">
+                                                    <Button HorizontalAlignment="Left"
+                                                            Command="{x:Static materialDesign:Flipper.FlipCommand}"
+                                                            Style="{StaticResource MaterialDesignToolButton}">
+                                                        <materialDesign:PackIcon HorizontalAlignment="Right"
+                                                                                 Kind="ArrowLeft" />
+                                                    </Button>
+                                                    <TextBlock Margin="8,0,0,0"
+                                                               VerticalAlignment="Center"
+                                                               Text="CHANGE PASSWORD" />
+                                                </StackPanel>
+                                            </materialDesign:ColorZone>
+                                            <Grid Grid.Row="1"
+                                                  Width="172"
+                                                  Margin="0,6,0,0"
+                                                  HorizontalAlignment="Center"
+                                                  VerticalAlignment="Top">
+                                                <!--DataContext="{StaticResource LoginVM}"-->
+                                                <Grid.RowDefinitions>
+                                                    <RowDefinition />
+                                                    <RowDefinition />
+                                                    <RowDefinition />
+                                                    <RowDefinition />
+                                                </Grid.RowDefinitions>
+                                                <TextBox Margin="0,12,0,0"
+                                                         materialDesign:HintAssist.Hint="Enter current password"
+                                                         materialDesign:HintAssist.IsFloating="True"
+                                                         Text="{Binding CurrentPassword}" />
+                                                <TextBox Grid.Row="1"
+                                                         Margin="0,12,0,0"
+                                                         materialDesign:HintAssist.Hint="Enter new password"
+                                                         materialDesign:HintAssist.IsFloating="True"
+                                                         Text="{Binding NewPassword}" />
+                                                <TextBox Grid.Row="2"
+                                                         Margin="0,12,0,0"
+                                                         materialDesign:HintAssist.Hint="Confirm new password"
+                                                         materialDesign:HintAssist.IsFloating="True"
+                                                         Text="{Binding ConfirmPassword}" />
+                                                <Button Grid.Row="3"
+                                                        Margin="0,12,0,0"
+                                                        Command="{Binding ChangepasswordCommand}"
+                                                        Content="CONFIRM"
+                                                        IsEnabled="{Binding DataContext.ControlsEnabled, RelativeSource={RelativeSource FindAncestor, AncestorType=Window}}"
+                                                        Style="{StaticResource MaterialDesignFlatDarkBgButton}"
+                                                        ToolTip="MaterialDesignFlatDarkButton" />
+                                            </Grid>
+                                        </Grid>
+                                    </materialDesign:Flipper.BackContent>
+                                </materialDesign:Flipper>
+                            </Grid>
+                            <Grid Grid.Column="2"
+                                  Margin="35">
+                                <GroupBox Background="AliceBlue"
+                                          Header="Hotel Management"
+                                          Style="{DynamicResource MaterialDesignCardGroupBox}">
+                                    <GroupBox.HeaderTemplate>
+                                        <DataTemplate>
+                                            <StackPanel Orientation="Horizontal">
+                                                <materialDesign:PackIcon Width="32"
+                                                                         Height="32"
+                                                                         VerticalAlignment="Center"
+                                                                         Kind="CityVariantOutline" />
+                                                <TextBlock Margin="8,0,0,0"
+                                                           VerticalAlignment="Center"
+                                                           Style="{StaticResource MaterialDesignSubtitle1TextBlock}"
+                                                           Text="{Binding}" />
+                                            </StackPanel>
+                                        </DataTemplate>
+                                    </GroupBox.HeaderTemplate>
+                                    <Image HorizontalAlignment="Center"
+                                           VerticalAlignment="Center" />
+                                    <!--Source="Image/Screenshot 2022-01-03 175325.png"-->
+                                </GroupBox>
+                            </Grid>
+
+                        </Grid>
+                    </Grid>
+                </TabItem>
+
+            </TabControl>
         </Grid>
     </Grid>
-
 </Window>

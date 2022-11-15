@@ -12,16 +12,26 @@ namespace HotelManagementApp.ViewModel
 {
     
     public class MainViewModel : BaseViewModel
-    {
-        public ICommand LoadedWindowCommand { get; set; }   
+    {      
         public bool IsLoaded = false;
+
+        public ICommand LoadedWindowCommand { get; set; }
+        //Load View
+        public ICommand ShowSingleBedroomWindow { get; set; }
         public MainViewModel()
         {
             LoadedWindowCommand = new RelayCommand<object>((p) => { return true; }, (p) =>
             {
                 IsLoaded = true;
-                LoginView loginView = new LoginView();
-                loginView.ShowDialog();
+                
+        
+            }
+            );
+
+            ShowSingleBedroomWindow = new RelayCommand<object>((p) => { return true; }, (p) =>
+            {
+             
+             
             }
             );
         }

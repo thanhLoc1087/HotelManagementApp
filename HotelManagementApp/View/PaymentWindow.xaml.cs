@@ -15,11 +15,11 @@ using System.Windows.Shapes;
 namespace HotelManagementApp.View
 {
     /// <summary>
-    /// Interaction logic for LoginView.xaml
+    /// Interaction logic for Payment.xaml
     /// </summary>
-    public partial class LoginView : Window
+    public partial class PaymentWindow : Window
     {
-        public LoginView()
+        public PaymentWindow()
         {
             InitializeComponent();
         }

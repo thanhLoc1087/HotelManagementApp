@@ -1,0 +1,143 @@
+﻿<Window x:Class="HotelManagementApp.View.SingleBedRoomFastBookingWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:HotelManagementApp.View"
+        xmlns:uc="clr-namespace:HotelManagementApp.UserControlUI"
+        xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+        mc:Ignorable="d"
+        Background="#FFEEE9FA"
+        FontFamily="{DynamicResource MaterialDesignFont}"
+        ResizeMode="NoResize"
+        TextElement.FontSize="13"
+        TextElement.FontWeight="Regular"
+        TextElement.Foreground="{DynamicResource MaterialDesignBody}"
+        TextOptions.TextFormattingMode="Ideal"
+        TextOptions.TextRenderingMode="Auto"
+        WindowStartupLocation="CenterScreen"
+        WindowStyle="None"
+        x:Name="SingleRoomFastBookingView"
+        Title="HotelManagement"
+        Width="600"
+        Height="300">
+    <Grid>
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="50" />
+                <RowDefinition Height="50" />
+                <RowDefinition />
+            </Grid.RowDefinitions>
+
+            <Grid Grid.Row="0">
+                <uc:ControlBarUC Tag="{Binding Title, ElementName=MainView}"></uc:ControlBarUC>
+            </Grid>
+            <TextBlock x:Name="txbSetField"
+                       Grid.Row="1"
+                       HorizontalAlignment="Center"
+                       FontSize="40"
+                       FontWeight="Bold"
+                       Text="Single Bedroom Fast booking"
+                       TextWrapping="Wrap" />
+            <Grid Grid.Row="2">
+                <WrapPanel Margin="76,0,-76,0.4">
+                    <Grid>
+                        <Grid.RowDefinitions>
+                            <RowDefinition />
+                            <RowDefinition />
+                            <RowDefinition />
+                            <RowDefinition />
+                            <RowDefinition />
+                            <RowDefinition />
+                        </Grid.RowDefinitions>
+                        <WrapPanel Grid.Row="0"
+                                   HorizontalAlignment="Center"
+                                   VerticalAlignment="Center">
+                            <Label Width="100"
+                                   Content="Name: " />
+                            <TextBox x:Name="addname"
+                                     Width="300"
+                                     Text="{Binding FBcustomername}" />
+                        </WrapPanel>
+                        <WrapPanel Grid.Row="1"
+                                   HorizontalAlignment="Center"
+                                   VerticalAlignment="Center">
+                            <Label Width="100"
+                                   Content="Phone: " />
+                            <TextBox x:Name="addsdt"
+                                     Width="300"
+                                     Text="{Binding FBcustomerphone}" />
+                        </WrapPanel>
+                        <WrapPanel Grid.Row="2">
+                            <Label Width="100"
+                                   VerticalAlignment="Center"
+                                   Content="Day: " />
+                            <DatePicker x:Name="dp"
+                                        Margin="0"
+                                        VerticalAlignment="Center"
+                                        materialDesign:HintAssist.Hint="Date"
+                                        SelectedDate="{Binding FBdate}"
+                                        Style="{StaticResource MaterialDesignFloatingHintDatePicker}" />
+                        </WrapPanel>
+                        <WrapPanel Grid.Row="3">
+                            <Label Width="100"
+                                   Content="Check in time:" />
+                            <materialDesign:TimePicker x:Name="startT_picker"
+                                                       HorizontalAlignment="Center"
+                                                       VerticalAlignment="Center"
+                                                       materialDesign:HintAssist.Hint="Check in time"
+                                                       Is24Hours="True"
+                                                       SelectedTime="{Binding FBcheckintime}" />
+                        </WrapPanel>
+                        <WrapPanel Grid.Row="4">
+                            <Label Width="100"
+                                   Content="Check out time:" />
+                            <materialDesign:TimePicker x:Name="endT_picker"
+                                                       Height="30"
+                                                       HorizontalAlignment="Center"
+                                                       VerticalAlignment="Center"
+                                                       materialDesign:HintAssist.Hint="Check out time"
+                                                       Is24Hours="True"
+                                                       SelectedTime="{Binding FBcheckouttime}" />
+                        </WrapPanel>
+                        <Grid Grid.Row="4"
+                              Grid.RowSpan="2"
+                              Margin="0,30,0,-54.6">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition />
+                                <ColumnDefinition />
+                            </Grid.ColumnDefinitions>
+                            <Button Grid.Column="0"
+                                    Width="128"
+                                    HorizontalAlignment="Center"
+                                    VerticalAlignment="Center"
+                                    HorizontalContentAlignment="Stretch"
+                                    materialDesign:ButtonAssist.CornerRadius="5"
+                                    Command="{Binding FastbookingCommand}">
+                                <TextBlock Margin="5,0,0,0"
+                                           HorizontalAlignment="Center"
+                                           VerticalAlignment="Center"
+                                           Text="Add" />
+                            </Button>
+                            <Button Grid.Column="2"
+                                    Width="128"
+                                    HorizontalAlignment="Center"
+                                    VerticalAlignment="Center"
+                                    HorizontalContentAlignment="Stretch"
+                                    materialDesign:ButtonAssist.CornerRadius="5"
+                                    >
+                                <!--Click="Button_Click"
+                                    Command="{Binding CancelCommand}"-->
+                                <TextBlock Margin="5,0,0,0"
+                                           HorizontalAlignment="Center"
+                                           VerticalAlignment="Center"
+                                           Text="Cancel" />
+                            </Button>
+                        </Grid>
+                    </Grid>
+                </WrapPanel>
+            </Grid>
+
+        </Grid>
+    </Grid>
+</Window>

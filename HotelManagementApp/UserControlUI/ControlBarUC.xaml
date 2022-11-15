@@ -18,52 +18,45 @@
         </i:EventTrigger>
     </i:Interaction.Triggers>
     <Grid>
-        <materialDesign:ColorZone
-            Background="#D9D9D9"
-            Padding="10">
+        <materialDesign:ColorZone Mode="PrimaryMid">
             <DockPanel>
-                <StackPanel DockPanel.Dock="Right" 
-                            Background="Transparent"
+                <StackPanel Background="Transparent"
+                            DockPanel.Dock="Right"
                             Orientation="Horizontal">
                     <StackPanel.Resources>
                         <Style TargetType="Button">
-                            <Setter Property="Margin" Value="10,0,10,50"></Setter>
-                            <Setter Property="Width" Value="35"></Setter>
-                            <Setter Property="Height" Value="35"></Setter>
+                            <Setter Property="Margin"
+                                    Value="2,4,2,4" />
+                            <Setter Property="Width"
+                                    Value="40" />
                         </Style>
                     </StackPanel.Resources>
-                    <Button
-                            Command="{Binding MinimizeWindowCommand}"
+                    <Button Command="{Binding MinimizeWindowCommand}"
                             CommandParameter="{Binding ElementName=ucControlBar}"
-                            Background="#D9D9D9"
-                            Content="{materialDesign:PackIcon Kind=Minus}"
-                            ToolBar.OverflowMode="AsNeeded"                       
-                            ToolTip="Minimize">
-                    </Button>
-                    <Button
-                            Command="{Binding MaximizeWindowCommand}"
-                            CommandParameter="{Binding ElementName=ucControlBar}"
-                            Background="#D9D9D9"
-                            Content="{materialDesign:PackIcon Kind=CropSquare}"
+                            Style="{StaticResource MaterialDesignFlatDarkButton}"
                             ToolBar.OverflowMode="AsNeeded"
-                            ToolTip="Maximize" >
+                            ToolTip="Đóng">
+                        <materialDesign:PackIcon Kind="WindowMinimize"
+                                                 Foreground="WhiteSmoke" />
                     </Button>
-                    <Button
-                            Command="{Binding CloseWindowCommand}"
+                    <Button Command="{Binding MaximizeWindowCommand}"
                             CommandParameter="{Binding ElementName=ucControlBar}"
-                            Background="#D9D9D9"
-                            Content="{materialDesign:PackIcon Kind=WindowClose}"
+                            Style="{StaticResource MaterialDesignFlatDarkButton}"
                             ToolBar.OverflowMode="AsNeeded"
-                            ToolTip="Close">
+                            ToolTip="Đóng">
+                        <materialDesign:PackIcon Kind="WindowMaximize"
+                                                 Foreground="WhiteSmoke" />
+                    </Button>
+                    <Button Command="{Binding CloseWindowCommand}"
+                            CommandParameter="{Binding ElementName=ucControlBar}"
+                            Style="{StaticResource MaterialDesignFlatDarkButton}"
+                            ToolBar.OverflowMode="AsNeeded"
+                            ToolTip="Đóng">
+                        <materialDesign:PackIcon Kind="WindowClose"
+                                                 Foreground="WhiteSmoke" />
                     </Button>
                 </StackPanel>
-                <StackPanel DockPanel.Dock="Left" Orientation="Horizontal">
-                    <TextBlock
-                                Margin="10,0,10,50"
-                                VerticalAlignment="Center"
-                                Text="{Binding Tag, ElementName=ucControlBar}"/>
-                </StackPanel >
             </DockPanel>
         </materialDesign:ColorZone>
-        </Grid>
+    </Grid>
 </UserControl>

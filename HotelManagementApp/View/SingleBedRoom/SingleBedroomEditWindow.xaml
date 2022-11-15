@@ -1,0 +1,77 @@
+﻿<Window x:Class="HotelManagementApp.View.SingleBedroomEditWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:HotelManagementApp.View"
+        xmlns:uc="clr-namespace:HotelManagementApp.UserControlUI"
+        xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+        mc:Ignorable="d"
+        x:Name="SingleBedroomEditView"
+        Title="Hotel Management"
+        FontFamily="{DynamicResource MaterialDesignFont}"
+        ResizeMode="NoResize"
+        TextElement.FontSize="13"
+        TextElement.FontWeight="Regular"
+        TextElement.Foreground="{DynamicResource MaterialDesignBody}"
+        TextOptions.TextFormattingMode="Ideal"
+        TextOptions.TextRenderingMode="Auto"
+        WindowStartupLocation="CenterScreen"
+        WindowStyle="None"
+        Background="#FFEEE9FA"
+        Width="800"
+        Height="600">
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="auto" />
+            <RowDefinition />
+        </Grid.RowDefinitions>
+        <Grid Grid.Row="0">
+            <uc:ControlBarUC Grid.ColumnSpan="2"
+                             Tag="{Binding Title, ElementName=MainView}" />
+        </Grid>
+        <Grid Grid.Row="1">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="120" />
+                <RowDefinition />
+            </Grid.RowDefinitions>
+
+            <materialDesign:Card Grid.Row="0"
+                                 Margin="20">
+                <WrapPanel Margin="0,0,0,10">
+                    <TextBox Margin="5,5,15,5"
+                             materialDesign:HintAssist.Hint="Room name"
+                             Style="{StaticResource MaterialDesignFloatingHintTextBox}"
+                             Text="{Binding RoomName, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" />
+                    <TextBox Margin="5,5,15,5"
+                             materialDesign:HintAssist.Hint="Room name"
+                             Style="{StaticResource MaterialDesignFloatingHintTextBox}"
+                             Text="{Binding RoomCondition, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" />
+                    <Button Width="100"
+                            Margin="20"
+                            Command="{Binding EditRoom}"
+                            Content="Edit" />
+                </WrapPanel>
+            </materialDesign:Card>
+            <materialDesign:Card Grid.Row="1"
+                                 Margin="20"
+                                 VerticalAlignment="Stretch">
+                <ScrollViewer VerticalScrollBarVisibility="Auto">
+                    <ListView ItemsSource="{Binding List}"
+                              SelectedItem="{Binding SelectedItem, Mode=TwoWay}">
+                        <ListView.View>
+                            <GridView>
+                                <GridViewColumn DisplayMemberBinding="{Binding id}"
+                                                Header="Id" />
+                                <GridViewColumn DisplayMemberBinding="{Binding name}"
+                                                Header="Room" />
+                                <GridViewColumn DisplayMemberBinding="{Binding condition}"
+                                                Header="Condition" />
+                            </GridView>
+                        </ListView.View>
+                    </ListView>
+                </ScrollViewer>
+            </materialDesign:Card>
+        </Grid>
+    </Grid>
+</Window>

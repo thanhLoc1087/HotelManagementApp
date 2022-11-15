@@ -75,8 +75,26 @@
     <Compile Include="ViewModel\BaseViewModel.cs" />
     <Compile Include="ViewModel\MainViewModel.cs" />
     <Compile Include="ViewModel\UserControlViewModel\ControlBarViewModel.cs" />
-    <Compile Include="View\LoginView.xaml.cs">
-      <DependentUpon>LoginView.xaml</DependentUpon>
+    <Compile Include="View\LoginWindow.xaml.cs">
+      <DependentUpon>LoginWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\PaymentWindow.xaml.cs">
+      <DependentUpon>PaymentWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\SingleBedRoom\SingleBedroomWindow.xaml.cs">
+      <DependentUpon>SingleBedroomWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\SingleBedRoom\SingleBedroomBillWindow.xaml.cs">
+      <DependentUpon>SingleBedroomBillWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\SingleBedRoom\SingleBedroomEditWindow.xaml.cs">
+      <DependentUpon>SingleBedroomEditWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\SingleBedRoom\SingleBedRoomFastBookingWindow.xaml.cs">
+      <DependentUpon>SingleBedRoomFastBookingWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\SingleBedRoom\SingleBedroomInfoWindow.xaml.cs">
+      <DependentUpon>SingleBedroomInfoWindow.xaml</DependentUpon>
     </Compile>
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
@@ -98,7 +116,31 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="View\LoginView.xaml">
+    <Page Include="View\LoginWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\PaymentWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\SingleBedRoom\SingleBedroomWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\SingleBedRoom\SingleBedroomBillWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\SingleBedRoom\SingleBedroomEditWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\SingleBedRoom\SingleBedRoomFastBookingWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\SingleBedRoom\SingleBedroomInfoWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -135,7 +177,10 @@
     <Folder Include="ViewModel\AppViewModel\" />
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="Images\login_background.png" />
+    <Resource Include="Images\background.jpg" />
+    <Resource Include="Images\dollar.png" />
+    <Resource Include="Images\money.png" />
+    <Resource Include="Images\tags.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Import Project="..\packages\MaterialDesignThemes.4.6.1\build\MaterialDesignThemes.targets" Condition="Exists('..\packages\MaterialDesignThemes.4.6.1\build\MaterialDesignThemes.targets')" />
