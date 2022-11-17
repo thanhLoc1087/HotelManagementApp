@@ -17,21 +17,21 @@ namespace HotelManagementApp.ViewModel
 
         public ICommand LoadedWindowCommand { get; set; }
         //Load View
-        public ICommand ShowSingleBedroomWindow { get; set; }
+        public ICommand ShowSingleBedroomWindowCommand { get; set; }
         public MainViewModel()
         {
             LoadedWindowCommand = new RelayCommand<object>((p) => { return true; }, (p) =>
             {
                 IsLoaded = true;
-                
-        
+                LoginWindow loginWindow =  new LoginWindow();
+                loginWindow.ShowDialog();
             }
             );
 
-            ShowSingleBedroomWindow = new RelayCommand<object>((p) => { return true; }, (p) =>
+            ShowSingleBedroomWindowCommand = new RelayCommand<object>((p) => { return true; }, (p) =>
             {
-             
-             
+                SingleBedroomWindow singleBedroomWindow = new SingleBedroomWindow();
+                singleBedroomWindow.ShowDialog();
             }
             );
         }

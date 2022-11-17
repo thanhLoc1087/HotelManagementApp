@@ -3,4 +3,5 @@
                     xmlns:viewmodel="clr-namespace:HotelManagementApp.ViewModel"
                     xmlns:local="clr-namespace:ResourceXAML">
     <viewmodel:MainViewModel x:Key="MainVm"></viewmodel:MainViewModel>
+    
 </ResourceDictionary>

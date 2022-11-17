@@ -10,11 +10,11 @@ none
 false
 DEBUG;TRACE
 C:\dev\projects\laptrinhtrucquan\HotelManagementApp\HotelManagementApp\App.xaml
-101476788272
+111245037901
 
-161408173801
+18-1329942866
 17-1720976533
-MainWindow.xaml;ResourceXAML\MainResource.xaml;UserControlUI\ControlBarUC.xaml;View\LoginWindow.xaml;View\PaymentWindow.xaml;View\SingleBedRoom\SingleBedroomWindow.xaml;View\SingleBedRoom\SingleBedroomBillWindow.xaml;View\SingleBedRoom\SingleBedroomEditWindow.xaml;View\SingleBedRoom\SingleBedRoomFastBookingWindow.xaml;View\SingleBedRoom\SingleBedroomInfoWindow.xaml;
+MainWindow.xaml;ResourceXAML\MainResource.xaml;UserControlUI\ControlBarUC.xaml;View\AddRoom.xaml;View\LoginWindow.xaml;View\PaymentWindow.xaml;View\SingleBedRoom\SingleBedroomWindow.xaml;View\SingleBedRoom\SingleBedroomBillWindow.xaml;View\SingleBedRoom\SingleBedroomEditWindow.xaml;View\SingleBedRoom\SingleBedRoomFastBookingWindow.xaml;View\SingleBedRoom\SingleBedroomInfoWindow.xaml;
 
 False
 

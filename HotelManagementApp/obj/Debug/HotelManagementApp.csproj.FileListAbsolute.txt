@@ -43,3 +43,5 @@ C:\dev\projects\laptrinhtrucquan\HotelManagementApp\HotelManagementApp\obj\Debug
 C:\dev\projects\laptrinhtrucquan\HotelManagementApp\HotelManagementApp\obj\Debug\View\LoginWindow.baml
 C:\dev\projects\laptrinhtrucquan\HotelManagementApp\HotelManagementApp\obj\Debug\View\PaymentWindow.g.cs
 C:\dev\projects\laptrinhtrucquan\HotelManagementApp\HotelManagementApp\obj\Debug\View\PaymentWindow.baml
+C:\dev\projects\laptrinhtrucquan\HotelManagementApp\HotelManagementApp\obj\Debug\View\AddRoom.g.cs
+C:\dev\projects\laptrinhtrucquan\HotelManagementApp\HotelManagementApp\obj\Debug\View\AddRoom.baml

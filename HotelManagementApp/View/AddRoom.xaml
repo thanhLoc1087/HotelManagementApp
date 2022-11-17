@@ -1,0 +1,133 @@
+﻿<Window x:Class="HotelManagementApp.View.AddRoom"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:HotelManagementApp.View"
+        xmlns:uc="clr-namespace:HotelManagementApp.UserControlUI"
+        xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+        mc:Ignorable="d"
+        Title="AddRoom"
+        Width="600"
+        Height="300"
+        Background="#FFEEE9FA"
+        FontFamily="{DynamicResource MaterialDesignFont}"
+        ResizeMode="NoResize"
+        TextElement.FontSize="13"
+        TextElement.FontWeight="Regular"
+        TextElement.Foreground="{DynamicResource MaterialDesignBody}"
+        TextOptions.TextFormattingMode="Ideal"
+        TextOptions.TextRenderingMode="Auto"
+        WindowStartupLocation="CenterScreen"
+        WindowStyle="None">
+    <Grid>
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="50" />
+                <RowDefinition Height="30" />
+                <RowDefinition />
+            </Grid.RowDefinitions>
+
+            <Grid Grid.Row="0">
+                <uc:ControlBarUC Grid.ColumnSpan="2"
+                                 Tag="{Binding Title, ElementName=MainWindow}" />
+            </Grid>
+            <TextBlock x:Name="txbSetRoom"
+                       Grid.Row="1"
+                       HorizontalAlignment="Center"
+                       VerticalAlignment="Center"
+                       FontSize="40"
+                       FontWeight="Bold"
+                       Text="Add room"
+                       TextWrapping="Wrap" />
+            <Grid Grid.Row="2">
+                <WrapPanel Margin="73,0,-73,0">
+                    <Grid>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="50" />
+                            <RowDefinition Height="50" />
+                            <RowDefinition Height="50" />
+                            <RowDefinition />
+                        </Grid.RowDefinitions>
+                        <WrapPanel Grid.Row="0"
+                                   HorizontalAlignment="Center"
+                                   VerticalAlignment="Center">
+                            <Label Width="100"
+                                   Content="Room name: " />
+                            <TextBox x:Name="Addname"
+                                     Width="300"
+                                     Text="{Binding AddRoomName}" />
+                        </WrapPanel>
+                        <WrapPanel Grid.Row="1"
+                                   HorizontalAlignment="Center"
+                                   VerticalAlignment="Center">
+                            <Label Width="100"
+                                   Content="Field type: " />
+                            <ComboBox x:Name="addtype"
+                                      Width="300"
+                                      IsReadOnly="False"
+                                      ItemsSource="{Binding Listfieldtype}"
+                                      SelectedItem="{Binding selecttedype, Mode=TwoWay}">
+
+                                <ComboBox.ItemTemplate>
+                                    <DataTemplate>
+                                        <StackPanel>
+                                            <TextBlock Text="{Binding name}" />
+                                        </StackPanel>
+                                    </DataTemplate>
+                                </ComboBox.ItemTemplate>
+                            </ComboBox>
+                        </WrapPanel>
+                        <WrapPanel Grid.Row="2"
+                                   HorizontalAlignment="Center"
+                                   VerticalAlignment="Center">
+                            <Label Width="100"
+                                   Content="Field condition: " />
+
+                            <ComboBox x:Name="addcondition"
+                                      Width="300"
+                                      IsReadOnly="True"
+                                      SelectedValue="{Binding selectcondition}"
+                                      SelectedValuePath="Content">
+                                <ComboBoxItem>Good</ComboBoxItem>
+                                <ComboBoxItem>Normal</ComboBoxItem>
+                                <ComboBoxItem>Repairing</ComboBoxItem>
+                            </ComboBox>
+                        </WrapPanel>
+                        <Grid Grid.Row="3">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition />
+                                <ColumnDefinition />
+                            </Grid.ColumnDefinitions>
+                            <Button Grid.Column="0"
+                                    Width="128"
+                                    HorizontalAlignment="Center"
+                                    VerticalAlignment="Center"
+                                    HorizontalContentAlignment="Stretch"
+                                    materialDesign:ButtonAssist.CornerRadius="5"
+                                    Command="{Binding AddFieldCommand}">
+                                <TextBlock Margin="5,0,0,0"
+                                           HorizontalAlignment="Center"
+                                           VerticalAlignment="Center"
+                                           Text="Add" />
+                            </Button>
+                            <Button Grid.Column="2"
+                                    Width="128"
+                                    HorizontalAlignment="Center"
+                                    VerticalAlignment="Center"
+                                    HorizontalContentAlignment="Stretch"
+                                    materialDesign:ButtonAssist.CornerRadius="5"
+                                    >
+                                <!--Click="btnThoat_Click"-->
+                                <TextBlock Margin="5,0,0,0"
+                                           HorizontalAlignment="Center"
+                                           VerticalAlignment="Center"
+                                           Text="Cancel" />
+                            </Button>
+                        </Grid>
+                    </Grid>
+                </WrapPanel>
+            </Grid>
+        </Grid>
+    </Grid>
+</Window>

@@ -130,6 +130,10 @@
                                                 Header="Customer name" />
                                 <GridViewColumn DisplayMemberBinding="{Binding CustomerPhoneNumber}"
                                                 Header="Customer phone number" />
+                                <GridViewColumn DisplayMemberBinding="{Binding CustomerCCCD}"
+                                                Header="Customer CCCD" />
+                                <GridViewColumn DisplayMemberBinding="{Binding CustomerNationality}"
+                                                Header="Customer nationality" />
                                 <GridViewColumn DisplayMemberBinding="{Binding Date, StringFormat='dd/MM/yyyy'}"
                                                 Header="Date" />
                                 <GridViewColumn DisplayMemberBinding="{Binding CheckInTime, StringFormat='HH:mm'}"

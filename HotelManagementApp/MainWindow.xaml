@@ -776,14 +776,15 @@
                                 <ColumnDefinition />
                             </Grid.ColumnDefinitions>
                             <Grid Grid.Column="0">
-                                <Button x:Name="FB"
+               
+                                <Button x:Name="SingleBR"
                                         Width="300"
                                         Height="450"
                                         HorizontalAlignment="Center"
                                         VerticalAlignment="Center"
                                         materialDesign:ButtonAssist.CornerRadius="100"
-                                        Command="{Binding ShowFootballFieldCommand}"
-                                        CommandParameter="{Binding ElementName=FB}">
+                                        Command="{Binding ShowSingleBedroomWindowCommand}"
+                                        CommandParameter="{Binding ElementName=SingleBR}">
                                     <Grid>
                                         <Grid.RowDefinitions>
                                             <RowDefinition Height="auto" />
@@ -807,14 +808,14 @@
                             </Grid>
                             <Grid Grid.Column="1">
 
-                                <Button x:Name="VL"
+                                <Button x:Name="DoubleBR"
                                         Width="300"
                                         Height="450"
                                         HorizontalAlignment="Center"
                                         VerticalAlignment="Center"
                                         materialDesign:ButtonAssist.CornerRadius="100"
-                                        Command="{Binding ShowVolleyballFieldCommand}"
-                                        CommandParameter="{Binding ElementName=VL}">
+                                        Command="{Binding ShowDouleBedroomWindowCommand}"
+                                        CommandParameter="{Binding ElementName=DoubleBR}">
                                     <Grid>
                                         <Grid.RowDefinitions>
                                             <RowDefinition Height="auto" />
@@ -836,14 +837,14 @@
                                 </Button>
                             </Grid>
                             <Grid Grid.Column="2">
-                                <Button x:Name="BS"
+                                <Button x:Name="TripleBR"
                                         Width="300"
                                         Height="450"
                                         HorizontalAlignment="Center"
                                         VerticalAlignment="Center"
                                         materialDesign:ButtonAssist.CornerRadius="100"
-                                        Command="{Binding ShowBasketballFieldCommand}"
-                                        CommandParameter="{Binding ElementName=BS}">
+                                        Command="{Binding ShowTripleBedroomWindowCommand}"
+                                        CommandParameter="{Binding ElementName=TripleBR}">
                                     <Grid>
                                         <Grid.RowDefinitions>
                                             <RowDefinition Height="auto" />
