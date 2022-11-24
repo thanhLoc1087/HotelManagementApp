@@ -1,0 +1,75 @@
+{
+  "runtimeTarget": {
+    "name": ".NETCoreApp,Version=v6.0",
+    "signature": ""
+  },
+  "compilationOptions": {},
+  "targets": {
+    ".NETCoreApp,Version=v6.0": {
+      "ConsoleApp1/1.0.0": {
+        "dependencies": {
+          "HotelManagementApp": "1.0.0"
+        },
+        "runtime": {
+          "ConsoleApp1.dll": {}
+        }
+      },
+      "HotelManagementApp/1.0.0": {
+        "runtime": {
+          "HotelManagementApp.exe": {}
+        }
+      },
+      "MaterialDesignThemes.Wpf/4.6.1.0": {
+        "runtime": {
+          "MaterialDesignThemes.Wpf.dll": {
+            "assemblyVersion": "4.6.1.0",
+            "fileVersion": "4.6.1.0"
+          }
+        }
+      },
+      "EntityFramework/6.0.0.0": {
+        "runtime": {
+          "EntityFramework.dll": {
+            "assemblyVersion": "6.0.0.0",
+            "fileVersion": "6.2.61023.0"
+          }
+        }
+      },
+      "MaterialDesignColors/2.0.9.0": {
+        "runtime": {
+          "MaterialDesignColors.dll": {
+            "assemblyVersion": "2.0.9.0",
+            "fileVersion": "2.0.9.0"
+          }
+        }
+      }
+    }
+  },
+  "libraries": {
+    "ConsoleApp1/1.0.0": {
+      "type": "project",
+      "serviceable": false,
+      "sha512": ""
+    },
+    "HotelManagementApp/1.0.0": {
+      "type": "project",
+      "serviceable": false,
+      "sha512": ""
+    },
+    "MaterialDesignThemes.Wpf/4.6.1.0": {
+      "type": "reference",
+      "serviceable": false,
+      "sha512": ""
+    },
+    "EntityFramework/6.0.0.0": {
+      "type": "reference",
+      "serviceable": false,
+      "sha512": ""
+    },
+    "MaterialDesignColors/2.0.9.0": {
+      "type": "reference",
+      "serviceable": false,
+      "sha512": ""
+    }
+  }
+}

@@ -7,7 +7,7 @@
         mc:Ignorable="d"
         
         xmlns:uc="clr-namespace:HotelManagementApp.UserControlUI"
-        xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+        xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes" xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
         TextElement.Foreground="{DynamicResource MaterialDesignBody}"
         TextElement.FontWeight="Regular"
         TextElement.FontSize="13"
@@ -18,6 +18,7 @@
         WindowStartupLocation="CenterScreen"    
         WindowStyle="None"
         ResizeMode="NoResize"
+        DataContext="{StaticResource LoginVm}"
         Title="Login" 
         Name="LoginScreenWindow"
         Width="350"
@@ -81,7 +82,7 @@
                         FontFamily="Champagne &amp; Limousines"
                         FontSize="18"
                         Style="{StaticResource MaterialDesignFloatingHintTextBox}"
-                        Text="{Binding UserName}" />
+                        Text="{Binding Username}" />
                     <PasswordBox
                         Name="FloatingPasswordBox"
                         Margin="0,10"
@@ -89,15 +90,16 @@
                         FontFamily="Champagne &amp; Limousines"
                         FontSize="18"
                         Style="{StaticResource MaterialDesignFloatingHintPasswordBox}">
-                        <!--<i:Interaction.Triggers>
+                        <i:Interaction.Triggers>
                             <i:EventTrigger EventName="PasswordChanged">
                                 <i:InvokeCommandAction Command="{Binding PasswordChangedCommand}" CommandParameter="{Binding ElementName=FloatingPasswordBox}" />
                             </i:EventTrigger>
-                        </i:Interaction.Triggers>-->
+                        </i:Interaction.Triggers>
                     </PasswordBox>
                 </StackPanel>
             </Grid>
             <Button
+                IsDefault="True"
                 Width="150"
                 Margin="100,0,100.4,69.8"
                 HorizontalAlignment="Center"
@@ -106,10 +108,10 @@
                 materialDesign:ButtonProgressAssist.IsIndicatorVisible="True"
                 materialDesign:ButtonProgressAssist.Value="-1"
                 Command="{Binding LoginCommand}"
-                CommandParameter="{Binding ElementName=loginWindow}"
+                CommandParameter="{Binding ElementName=LoginScreenWindow}"
                 Content="LOGIN"
                 IsEnabled="{Binding DataContext.ControlsEnabled, RelativeSource={RelativeSource FindAncestor, AncestorType=Window}}"
-                Style="{StaticResource MaterialDesignRaisedButton}" />
+                Style="{StaticResource MaterialDesignRaisedButton}"/>
             <TextBlock
                 Margin="30"
                 HorizontalAlignment="Center"

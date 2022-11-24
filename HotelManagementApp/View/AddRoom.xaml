@@ -62,7 +62,7 @@
                                    HorizontalAlignment="Center"
                                    VerticalAlignment="Center">
                             <Label Width="100"
-                                   Content="Field type: " />
+                                   Content="Room type: " />
                             <ComboBox x:Name="addtype"
                                       Width="300"
                                       IsReadOnly="False"
@@ -82,7 +82,7 @@
                                    HorizontalAlignment="Center"
                                    VerticalAlignment="Center">
                             <Label Width="100"
-                                   Content="Field condition: " />
+                                   Content="Room condition: " />
 
                             <ComboBox x:Name="addcondition"
                                       Width="300"

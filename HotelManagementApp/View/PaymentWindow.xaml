@@ -429,7 +429,7 @@
                   HorizontalAlignment="Right"
                   VerticalAlignment="Top">
                 <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="70" />
+                    <ColumnDefinition Width="80" />
                     <ColumnDefinition />
                 </Grid.ColumnDefinitions>
                 <StackPanel Grid.Column="0"

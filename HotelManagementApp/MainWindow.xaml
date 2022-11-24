@@ -791,6 +791,7 @@
                                             <RowDefinition />
                                         </Grid.RowDefinitions>
                                         <materialDesign:PackIcon Grid.Row="0"
+                                                                 HorizontalAlignment="Center"
                                                                  Width="200"
                                                                  Height="250"
                                                                  FontSize="400"
@@ -822,6 +823,7 @@
                                             <RowDefinition />
                                         </Grid.RowDefinitions>
                                         <materialDesign:PackIcon Grid.Row="0"
+                                                                 HorizontalAlignment="Center"
                                                                  Width="200"
                                                                  Height="250"
                                                                  FontSize="400"
@@ -851,6 +853,7 @@
                                             <RowDefinition />
                                         </Grid.RowDefinitions>
                                         <materialDesign:PackIcon Grid.Row="0"
+                                                                 HorizontalAlignment="Center" 
                                                                  Width="200"
                                                                  Height="250"
                                                                  FontSize="400"
@@ -1292,7 +1295,7 @@
 
                     </Grid>
                 </TabItem>
-                <TabItem>
+                <TabItem DataContext="{StaticResource StaffVm}">
                     <TabItem.Header>
                         <StackPanel Width="auto"
                                     Height="auto">
@@ -1341,10 +1344,8 @@
                                                   Focusable="False"
                                                   IsReadOnly="True"
                                                   IsSynchronizedWithCurrentItem="False"
-                                                  ItemsSource="{Binding Listemployee}"
+                                                  ItemsSource="{Binding StaffsList}"
                                                   SelectedItem="{Binding SelectedItem}">
-                                            <!--SelectionChanged="DataGrid_SelectionChanged"-->
-                                            <!--DataContext="{StaticResource EmployeeVM}"-->
                                             <i:Interaction.Triggers>
                                                 <i:EventTrigger EventName="SelectionChanged">
                                                     <i:InvokeCommandAction Command="{Binding Path=ReloadCommand}"
@@ -1364,37 +1365,37 @@
                                                     </DataGridTextColumn.ElementStyle>
                                                 </DataGridTextColumn>
                                                 <materialDesign:DataGridTextColumn Width="1*"
-                                                                                   Binding="{Binding id}"
+                                                                                   Binding="{Binding ID}"
                                                                                    EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnPopupEditingStyle}"
                                                                                    ElementStyle="{StaticResource MaterialDesignDataGridTextColumnStyle}"
                                                                                    FontSize="15"
                                                                                    FontWeight="Bold"
                                                                                    Header="ID" />
                                                 <materialDesign:DataGridTextColumn Width="2*"
-                                                                                   Binding="{Binding name}"
+                                                                                   Binding="{Binding Name}"
                                                                                    EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnPopupEditingStyle}"
                                                                                    ElementStyle="{StaticResource MaterialDesignDataGridTextColumnStyle}"
                                                                                    Header="Name" />
                                                 <materialDesign:DataGridTextColumn Width="1.5*"
-                                                                                   Binding="{Binding role}"
+                                                                                   Binding="{Binding Sex}"
                                                                                    EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnPopupEditingStyle}"
                                                                                    ElementStyle="{StaticResource MaterialDesignDataGridTextColumnStyle}"
-                                                                                   Header="Role" />
+                                                                                   Header="Sex" />
                                                 <materialDesign:DataGridTextColumn Width="1.5*"
-                                                                                   Binding="{Binding salary, StringFormat={}{0:C}}"
+                                                                                   Binding="{Binding CCCD, StringFormat={}{0:C}}"
                                                                                    EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnPopupEditingStyle}"
                                                                                    ElementStyle="{StaticResource MaterialDesignDataGridTextColumnStyle}"
-                                                                                   Header="Salary" />
+                                                                                   Header="CCCD" />
                                                 <materialDesign:DataGridTextColumn Width="1.5*"
-                                                                                   Binding="{Binding phoneNumber}"
+                                                                                   Binding="{Binding PhoneNumber}"
                                                                                    EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnPopupEditingStyle}"
                                                                                    ElementStyle="{StaticResource MaterialDesignDataGridTextColumnStyle}"
                                                                                    Header="Phone" />
                                                 <materialDesign:DataGridTextColumn Width="1.5*"
-                                                                                   Binding="{Binding dateOfBirth, StringFormat='dd/MM/yyyy'}"
+                                                                                   Binding="{Binding Role, StringFormat='dd/MM/yyyy'}"
                                                                                    EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnPopupEditingStyle}"
                                                                                    ElementStyle="{StaticResource MaterialDesignDataGridTextColumnStyle}"
-                                                                                   Header="Birthday" />
+                                                                                   Header="Role" />
 
 
                                             </DataGrid.Columns>
@@ -1409,34 +1410,34 @@
                         </Grid>
                         <!--DataContext="{StaticResource EmployeeVM}"-->
                         <Grid Grid.Column="1">
-                            <Border Background="Transparent"
+                                <Border Background="Transparent"
                                     Visibility="{Binding Visibility}">
-                                <Border Margin="10,20,20,20"
+                                    <Border Margin="10,20,20,20"
                                         HorizontalAlignment="Stretch"
                                         VerticalAlignment="Stretch"
                                         Background="White"
                                         CornerRadius="20">
-                                    <Border.Effect>
-                                        <DropShadowEffect ShadowDepth="1" />
-                                    </Border.Effect>
-                                    <Grid>
-                                        <Grid.RowDefinitions>
-                                            <RowDefinition Height="204*" />
-                                            <RowDefinition Height="325*" />
-                                            <RowDefinition Height="94*" />
-                                        </Grid.RowDefinitions>
-                                        <Grid Grid.Row="0"
+                                        <Border.Effect>
+                                            <DropShadowEffect ShadowDepth="1" />
+                                        </Border.Effect>
+                                        <Grid>
+                                            <Grid.RowDefinitions>
+                                                <RowDefinition Height="204*" />
+                                                <RowDefinition Height="325*" />
+                                                <RowDefinition Height="94*" />
+                                            </Grid.RowDefinitions>
+                                            <Grid Grid.Row="0"
                                               Margin="0,0,-0.2,1">
-                                            <Grid x:Name="grdSelectImg1"
+                                                <Grid x:Name="grdSelectImg1"
                                                   Width="150"
                                                   Height="150"
                                                   Margin="10,30,0,0"
                                                   HorizontalAlignment="Center"
                                                   VerticalAlignment="Top">
-                                                <Grid.Background>
-                                                    <ImageBrush ImageSource="{Binding imageemployee, UpdateSourceTrigger=PropertyChanged}" />
-                                                </Grid.Background>
-                                                <Rectangle x:Name="recImage1"
+                                                    <Grid.Background>
+                                                        <ImageBrush ImageSource="{Binding EmployeeImage, UpdateSourceTrigger=PropertyChanged}" />
+                                                    </Grid.Background>
+                                                    <Rectangle x:Name="recImage1"
                                                            Width="150"
                                                            Height="153"
                                                            Margin="0,0,0,-2"
@@ -1447,7 +1448,7 @@
                                                            Stroke="#5C0DAC"
                                                            StrokeDashArray="4 2"
                                                            StrokeThickness="4" />
-                                                <Button x:Name="btnSelectImage1"
+                                                    <Button x:Name="btnSelectImage1"
                                                         Width="120"
                                                         Height="35"
                                                         Margin="0,0,0,-56"
@@ -1462,9 +1463,9 @@
                                                         FontWeight="SemiBold"
                                                         ToolTip="Chọn ảnh" />
 
+                                                </Grid>
                                             </Grid>
-                                        </Grid>
-                                        <Grid x:Name="grdInfo1"
+                                            <Grid x:Name="grdInfo1"
                                               Grid.Row="1"
                                               Grid.RowSpan="2"
                                               Width="420"
@@ -1473,11 +1474,11 @@
                                               HorizontalAlignment="Center"
                                               VerticalAlignment="Top">
 
-                                            <Grid Width="350"
+                                                <Grid Width="350"
                                                   Height="40"
                                                   Margin="0,0,0,0"
                                                   VerticalAlignment="Top">
-                                                <Label Height="32"
+                                                    <Label Height="32"
                                                        Margin="0"
                                                        HorizontalAlignment="Left"
                                                        VerticalAlignment="Center"
@@ -1485,14 +1486,14 @@
                                                        FontSize="18"
                                                        FontWeight="SemiBold"
                                                        Foreground="Black" />
-                                                <Rectangle Width="230"
+                                                    <Rectangle Width="230"
                                                            Height="40"
                                                            Margin="0"
                                                            HorizontalAlignment="Right"
                                                            RadiusX="6"
                                                            RadiusY="6"
                                                            Stroke="Gray" />
-                                                <TextBox x:Name="txtName1"
+                                                    <TextBox x:Name="txtName1"
                                                          Width="210"
                                                          Height="40"
                                                          Margin="0,0,10,0"
@@ -1507,28 +1508,28 @@
                                                          FontWeight="SemiBold"
                                                          Foreground="Gray"
                                                          MaxLines="1"
-                                                         Text="{Binding nameemployee, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" />
-                                            </Grid>
-                                            <Grid Width="350"
+                                                         Text="{Binding Name, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"  />
+                                                </Grid>
+                                                <Grid Width="350"
                                                   Height="40"
                                                   Margin="0,50,0,0"
                                                   VerticalAlignment="Top">
-                                                <Label Height="32"
+                                                    <Label Height="32"
                                                        Margin="0"
                                                        HorizontalAlignment="Left"
                                                        VerticalAlignment="Center"
-                                                       Content="Role"
+                                                       Content="Sex"
                                                        FontSize="18"
                                                        FontWeight="SemiBold"
                                                        Foreground="Black" />
-                                                <Rectangle Width="230"
+                                                    <Rectangle Width="230"
                                                            Height="40"
                                                            Margin="0"
                                                            HorizontalAlignment="Right"
                                                            RadiusX="6"
                                                            RadiusY="6"
                                                            Stroke="Gray" />
-                                                <TextBox x:Name="txtUnit1"
+                                                    <TextBox x:Name="txtUnit1"
                                                          Width="210"
                                                          Height="40"
                                                          Margin="0,0,10,0"
@@ -1536,35 +1537,35 @@
                                                          HorizontalAlignment="Right"
                                                          HorizontalContentAlignment="Left"
                                                          VerticalContentAlignment="Center"
-                                                         materialDesign:HintAssist.Hint="Role"
+                                                         materialDesign:HintAssist.Hint="Sex"
                                                          BorderThickness="0"
                                                          Cursor="IBeam"
                                                          FontSize="14"
                                                          FontWeight="SemiBold"
                                                          Foreground="Gray"
                                                          MaxLines="1"
-                                                         Text="{Binding roleemployee, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" />
-                                            </Grid>
-                                            <Grid Width="350"
+                                                         Text="{Binding Sex, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" />
+                                                </Grid>
+                                                <Grid Width="350"
                                                   Height="40"
                                                   Margin="0,100,0,0"
                                                   VerticalAlignment="Top">
-                                                <Label Height="32"
+                                                    <Label Height="32"
                                                        Margin="0"
                                                        HorizontalAlignment="Left"
                                                        VerticalAlignment="Center"
-                                                       Content="Salary"
+                                                       Content="CCCD"
                                                        FontSize="18"
                                                        FontWeight="SemiBold"
                                                        Foreground="Black" />
-                                                <Rectangle Width="230"
+                                                    <Rectangle Width="230"
                                                            Height="40"
                                                            Margin="0"
                                                            HorizontalAlignment="Right"
                                                            RadiusX="6"
                                                            RadiusY="6"
                                                            Stroke="Gray" />
-                                                <TextBox x:Name="txtUnitPrice1"
+                                                    <TextBox x:Name="txtUnitPrice1"
                                                          Width="210"
                                                          Height="40"
                                                          Margin="0,0,10,0"
@@ -1572,19 +1573,19 @@
                                                          HorizontalAlignment="Right"
                                                          HorizontalContentAlignment="Left"
                                                          VerticalContentAlignment="Center"
-                                                         materialDesign:HintAssist.Hint="Salary"
+                                                         materialDesign:HintAssist.Hint="CCCD"
                                                          BorderThickness="0"
                                                          Cursor="IBeam"
                                                          FontSize="14"
                                                          FontWeight="SemiBold"
                                                          Foreground="Gray"
-                                                         Text="{Binding salaryemployee, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, StringFormat={}{0:C}}" />
-                                            </Grid>
-                                            <Grid Width="350"
+                                                         Text="{Binding CCCD, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, StringFormat={}{0:C}}" />
+                                                </Grid>
+                                                <Grid Width="350"
                                                   Height="40"
                                                   Margin="0,150,0,0"
                                                   VerticalAlignment="Top">
-                                                <Label Height="32"
+                                                    <Label Height="32"
                                                        Margin="0"
                                                        HorizontalAlignment="Left"
                                                        VerticalAlignment="Center"
@@ -1592,14 +1593,14 @@
                                                        FontSize="18"
                                                        FontWeight="SemiBold"
                                                        Foreground="Black" />
-                                                <Rectangle Width="230"
+                                                    <Rectangle Width="230"
                                                            Height="40"
                                                            Margin="0"
                                                            HorizontalAlignment="Right"
                                                            RadiusX="6"
                                                            RadiusY="6"
                                                            Stroke="Gray" />
-                                                <TextBox x:Name="txtPhone"
+                                                    <TextBox x:Name="txtPhone"
                                                          Width="210"
                                                          Height="40"
                                                          Margin="0,0,10,0"
@@ -1613,28 +1614,28 @@
                                                          FontSize="14"
                                                          FontWeight="SemiBold"
                                                          Foreground="Gray"
-                                                         Text="{Binding phoneemployee, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
-                                            </Grid>
-                                            <Grid Width="350"
+                                                         Text="{Binding PhoneNum, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+                                                </Grid>
+                                                <Grid Width="350"
                                                   Height="40"
                                                   Margin="0,200,0,0"
                                                   VerticalAlignment="Top">
-                                                <Label Height="32"
+                                                    <Label Height="32"
                                                        Margin="0"
                                                        HorizontalAlignment="Left"
                                                        VerticalAlignment="Center"
-                                                       Content="Birthday"
+                                                       Content="Role"
                                                        FontSize="18"
                                                        FontWeight="SemiBold"
                                                        Foreground="Black" />
-                                                <Rectangle Width="230"
+                                                    <Rectangle Width="230"
                                                            Height="40"
                                                            Margin="0"
                                                            HorizontalAlignment="Right"
                                                            RadiusX="6"
                                                            RadiusY="6"
                                                            Stroke="Gray" />
-                                                <TextBox x:Name="txtBirth"
+                                                    <TextBox x:Name="txtBirth"
                                                          Width="210"
                                                          Height="40"
                                                          Margin="0,0,10,0"
@@ -1642,27 +1643,27 @@
                                                          HorizontalAlignment="Right"
                                                          HorizontalContentAlignment="Left"
                                                          VerticalContentAlignment="Center"
-                                                         materialDesign:HintAssist.Hint="Birthday"
+                                                         materialDesign:HintAssist.Hint="Role"
                                                          BorderThickness="0"
                                                          Cursor="IBeam"
                                                          FontSize="14"
                                                          FontWeight="SemiBold"
                                                          Foreground="Gray"
-                                                         Text="{Binding dateOfBirthemployee, StringFormat='dd/MM/yyyy', Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+                                                         Text="{Binding Role, StringFormat='dd/MM/yyyy', Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+                                                </Grid>
                                             </Grid>
-                                        </Grid>
 
-                                        <Grid Grid.Row="2"
+                                            <Grid Grid.Row="2"
                                               Height="40"
                                               Margin="0,2.2,-0.2,0"
                                               VerticalAlignment="Top">
-                                            <Grid.ColumnDefinitions>
-                                                <ColumnDefinition Width="2*" />
-                                                <ColumnDefinition Width="2*" />
-                                                <ColumnDefinition Width="2*" />
-                                            </Grid.ColumnDefinitions>
-                                            <Grid Grid.Column="0">
-                                                <Button x:Name="btnAdd1"
+                                                <Grid.ColumnDefinitions>
+                                                    <ColumnDefinition Width="2*" />
+                                                    <ColumnDefinition Width="2*" />
+                                                    <ColumnDefinition Width="2*" />
+                                                </Grid.ColumnDefinitions>
+                                                <Grid Grid.Column="0">
+                                                    <Button x:Name="btnAdd1"
                                                         Width="100"
                                                         Height="40"
                                                         Padding="0"
@@ -1675,9 +1676,9 @@
                                                         FontSize="18"
                                                         IsDefault="True"
                                                         ToolTip="Thêm" />
-                                            </Grid>
-                                            <Grid Grid.Column="1">
-                                                <Button x:Name="btnEdit1"
+                                                </Grid>
+                                                <Grid Grid.Column="1">
+                                                    <Button x:Name="btnEdit1"
                                                         Width="100"
                                                         Height="40"
                                                         Margin="0"
@@ -1692,9 +1693,9 @@
                                                         FontSize="18"
                                                         IsDefault="True"
                                                         ToolTip="Sửa" />
-                                            </Grid>
-                                            <Grid Grid.Column="2">
-                                                <Button x:Name="btnDelete1"
+                                                </Grid>
+                                                <Grid Grid.Column="2">
+                                                    <Button x:Name="btnDelete1"
                                                         Width="100"
                                                         Height="40"
                                                         Margin="0"
@@ -1708,12 +1709,13 @@
                                                         FontSize="18"
                                                         Style="{StaticResource MaterialDesignRaisedButton}"
                                                         ToolTip="Xóa" />
-                                            </Grid>
+                                                </Grid>
 
+                                            </Grid>
                                         </Grid>
-                                    </Grid>
+                                    </Border>
                                 </Border>
-                            </Border>
+
                         </Grid>
                     </Grid>
 

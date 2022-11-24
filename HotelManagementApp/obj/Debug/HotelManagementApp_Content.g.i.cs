@@ -8,9 +8,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-[assembly: System.Windows.Resources.AssemblyAssociatedContentFileAttribute("images/background.jpg")]
-[assembly: System.Windows.Resources.AssemblyAssociatedContentFileAttribute("images/dollar.png")]
-[assembly: System.Windows.Resources.AssemblyAssociatedContentFileAttribute("images/money.png")]
-[assembly: System.Windows.Resources.AssemblyAssociatedContentFileAttribute("images/tags.png")]
+[assembly: System.Windows.Resources.AssemblyAssociatedContentFileAttribute("model/model1.context.tt")]
+[assembly: System.Windows.Resources.AssemblyAssociatedContentFileAttribute("model/model1.tt")]
 
 
