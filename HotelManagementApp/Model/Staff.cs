@@ -26,7 +26,7 @@ namespace HotelManagementApp.Model
         public string Sex { get; set; }
         public string CCCD { get; set; }
         public string PhoneNumber { get; set; }
-        public Nullable<bool> Role { get; set; }
+        public string Role { get; set; }
         public string ImageData { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]

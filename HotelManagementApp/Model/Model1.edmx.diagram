@@ -4,7 +4,7 @@
   <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
-      <Diagram DiagramId="0914d13dc7584db1a5bb3987e8e7570e" Name="Diagram1">
+      <Diagram DiagramId="f37d47f633b44953a80691b14d5a5cfa" Name="Diagram1">
         <EntityTypeShape EntityType="QuanLyKhachSan2Model.Account" Width="1.5" PointX="3" PointY="5" IsExpanded="true" />
         <EntityTypeShape EntityType="QuanLyKhachSan2Model.BillDetail" Width="1.5" PointX="6" PointY="4.5" IsExpanded="true" />
         <EntityTypeShape EntityType="QuanLyKhachSan2Model.Customer" Width="1.5" PointX="3.75" PointY="0.75" IsExpanded="true" />
@@ -14,7 +14,7 @@
         <EntityTypeShape EntityType="QuanLyKhachSan2Model.RoomsReservation" Width="1.5" PointX="8.25" PointY="8.5" IsExpanded="true" />
         <EntityTypeShape EntityType="QuanLyKhachSan2Model.RoomType" Width="1.5" PointX="8.25" PointY="11.5" IsExpanded="true" />
         <EntityTypeShape EntityType="QuanLyKhachSan2Model.Staff" Width="1.5" PointX="0.75" PointY="4.625" IsExpanded="true" />
-        <EntityTypeShape EntityType="QuanLyKhachSan2Model.sysdiagram" Width="1.5" PointX="14.5" PointY="2.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="QuanLyKhachSan2Model.sysdiagram" Width="1.5" PointX="0.75" PointY="1.25" IsExpanded="true" />
         <AssociationConnector Association="QuanLyKhachSan2Model.FK__Accounts__IDStaf__2EDAF651" ManuallyRouted="false" />
         <AssociationConnector Association="QuanLyKhachSan2Model.FK__Orders__IDBillDe__2BFE89A6" ManuallyRouted="false" />
         <AssociationConnector Association="QuanLyKhachSan2Model.FK_BillDetail_Customer_CustomerID" ManuallyRouted="false" />

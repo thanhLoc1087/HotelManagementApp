@@ -41,7 +41,7 @@
     <Property Name="Unit" Type="nvarchar(max)" />
     <Property Name="Price" Type="money" />
     <Property Name="ImageData" Type="nvarchar(max)" />
-    <Property Name="Type" Type="bit" />
+    <Property Name="Type" Type="nvarchar(max)" />
   </EntityType>
   <EntityType Name="Orders">
     <Key>
@@ -89,7 +89,7 @@
     <Property Name="Sex" Type="nvarchar(max)" Nullable="false" />
     <Property Name="CCCD" Type="nvarchar(max)" Nullable="false" />
     <Property Name="PhoneNumber" Type="nvarchar(max)" />
-    <Property Name="Role" Type="bit" />
+    <Property Name="Role" Type="nvarchar(max)" />
     <Property Name="ImageData" Type="nvarchar(max)" />
   </EntityType>
   <EntityType Name="sysdiagrams">

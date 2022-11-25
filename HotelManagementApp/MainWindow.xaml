@@ -1635,7 +1635,7 @@
                                                            RadiusX="6"
                                                            RadiusY="6"
                                                            Stroke="Gray" />
-                                                    <TextBox x:Name="txtBirth"
+                                                <ComboBox x:Name="txtBirth"
                                                          Width="210"
                                                          Height="40"
                                                          Margin="0,0,10,0"
@@ -1649,8 +1649,16 @@
                                                          FontSize="14"
                                                          FontWeight="SemiBold"
                                                          Foreground="Gray"
-                                                         Text="{Binding Role, StringFormat='dd/MM/yyyy', Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
-                                                </Grid>
+                                                         IsEditable="False"
+                                                         Text="{Binding Role, StringFormat='dd/MM/yyyy', Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">
+                                                    <ComboBoxItem>
+                                                        <TextBlock Text="Admin"/>
+                                                    </ComboBoxItem>
+                                                    <ComboBoxItem>
+                                                        <TextBlock Text="Staff"/>
+                                                    </ComboBoxItem>
+                                                </ComboBox>
+                                            </Grid>
                                             </Grid>
 
                                             <Grid Grid.Row="2"
@@ -1720,7 +1728,7 @@
                     </Grid>
 
                 </TabItem>
-                <TabItem>
+                <TabItem DataContext="{StaticResource SettingsVm}">
                     <TabItem.Header>
                         <StackPanel Width="auto"
                                     Height="auto">

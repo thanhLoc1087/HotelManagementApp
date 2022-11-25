@@ -47,7 +47,7 @@
     <Property Name="Unit" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
     <Property Name="Price" Type="Decimal" Precision="19" Scale="4" />
     <Property Name="ImageData" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
-    <Property Name="Type" Type="Boolean" />
+    <Property Name="Type" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
     <NavigationProperty Name="Orders" Relationship="Self.FK__Orders__IDFoodsA__2B0A656D" FromRole="FoodsAndServices" ToRole="Orders" />
   </EntityType>
   <EntityType Name="Order">
@@ -103,7 +103,7 @@
     <Property Name="Sex" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
     <Property Name="CCCD" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
     <Property Name="PhoneNumber" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
-    <Property Name="Role" Type="Boolean" />
+    <Property Name="Role" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
     <Property Name="ImageData" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
     <NavigationProperty Name="Accounts" Relationship="Self.FK__Accounts__IDStaf__2EDAF651" FromRole="Staffs" ToRole="Accounts" />
     <NavigationProperty Name="BillDetails" Relationship="Self.FK_BillDetail_Staff_StaffID" FromRole="Staffs" ToRole="BillDetails" />
