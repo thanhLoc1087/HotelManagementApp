@@ -248,7 +248,6 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="ImageStorage\FoodImg\" />
-    <Folder Include="ImageStorage\ServiceImg\" />
     <Folder Include="ImageStorage\StaffImg\" />
     <Folder Include="View\DoubleBedroom\" />
     <Folder Include="View\TripleBedRoom\" />

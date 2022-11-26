@@ -56,12 +56,13 @@ namespace HotelManagementApp.ViewModel
                     ImageSource = SelectedItem.ImageData;
                     if (ImageSource != null)
                     {
+                        string destinationDirectory = Directory.GetParent(Directory.GetCurrentDirectory()).Parent.FullName + ImageSource;
                         BitmapImage newBitmapImage = new BitmapImage();
-                        if(File.Exists(ImageSource))
+                        if(File.Exists(destinationDirectory))
                         {
                             newBitmapImage.BeginInit();
 
-                            newBitmapImage.StreamSource = new FileStream(ImageSource, FileMode.Open, FileAccess.Read);
+                            newBitmapImage.StreamSource = new FileStream(destinationDirectory, FileMode.Open, FileAccess.Read);
                             newBitmapImage.EndInit();
                             EmployeeImage = newBitmapImage;
                         }    
@@ -103,12 +104,11 @@ namespace HotelManagementApp.ViewModel
                     Sex = Sex,
                     PhoneNumber = PhoneNum,
                     Role = Role,
-                    ImageData = (EmployeeImage == null) ? null : _SelectedImagePath
                 };
                 DataProvider.Instance.DB.Staffs.Add(staff);
                 DataProvider.Instance.DB.SaveChanges();
-                var newStaff = DataProvider.Instance.DB.Staffs.Where(x => x.ID == staff.ID).FirstOrDefault();
-                addImage(newStaff);
+                addImage(staff);
+                DataProvider.Instance.DB.SaveChanges();
                 LoadStaffsList();
             });
 
@@ -172,8 +172,11 @@ namespace HotelManagementApp.ViewModel
             string destinationDirectory = Directory.GetParent(Directory.GetCurrentDirectory()).Parent.FullName;
             if(EmployeeImage != null)
             {
-                ImageSource = destinationDirectory + $"\\ImageStorage\\StaffImg\\staff{staff.ID}.png";
-                File.Copy(_SelectedImagePath, ImageSource);
+                staff.ImageData = $"\\ImageStorage\\StaffImg\\staff{staff.ID}.png";
+                var destination = destinationDirectory + staff.ImageData;
+                if (_SelectedImagePath == null)
+                    return;
+                File.Copy(_SelectedImagePath, destination, true);
             }
             else
             {

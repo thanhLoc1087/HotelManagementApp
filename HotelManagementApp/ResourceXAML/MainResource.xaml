@@ -5,6 +5,6 @@
     <viewmodel:LoginViewModel x:Key="LoginVm"></viewmodel:LoginViewModel>
     <viewmodel:SettingsViewModel x:Key="SettingsVm"></viewmodel:SettingsViewModel>
     <viewmodel:StaffViewModel x:Key="StaffVm"></viewmodel:StaffViewModel>
-    <!--<viewmodel:FoodsAndService x:Key="FoodVm"></viewmodel:FoodsAndService>-->
+    <viewmodel:FoodViewModel x:Key="FoodVm"></viewmodel:FoodViewModel>
     
 </ResourceDictionary>
