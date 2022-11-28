@@ -18,6 +18,7 @@ namespace HotelManagementApp.Model
         public string Username { get; set; }
         public string PasswordHash { get; set; }
         public Nullable<int> IDStaff { get; set; }
+        public bool Deleted { get; set; }
     
         public virtual Staff Staff { get; set; }
     }

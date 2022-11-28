@@ -13,6 +13,7 @@
           <Property Name="Username" Type="nvarchar(max)" />
           <Property Name="PasswordHash" Type="nvarchar(max)" />
           <Property Name="IDStaff" Type="int" />
+          <Property Name="Deleted" Type="bit" Nullable="false" />
         </EntityType>
         <EntityType Name="BillDetails">
           <Key>
@@ -36,6 +37,7 @@
           <Property Name="PhoneNumber" Type="nvarchar(max)" />
           <Property Name="Email" Type="nvarchar(max)" />
           <Property Name="Nationality" Type="nvarchar(max)" />
+          <Property Name="Deleted" Type="bit" Nullable="false" />
         </EntityType>
         <EntityType Name="FoodsAndServices">
           <Key>
@@ -47,6 +49,7 @@
           <Property Name="Price" Type="money" />
           <Property Name="ImageData" Type="nvarchar(max)" />
           <Property Name="Type" Type="nvarchar(max)" />
+          <Property Name="Deleted" Type="bit" Nullable="false" />
         </EntityType>
         <EntityType Name="Orders">
           <Key>
@@ -69,6 +72,7 @@
           <Property Name="IDRoomReservation" Type="int" Nullable="false" />
           <Property Name="Status" Type="nvarchar(max)" Nullable="false" />
           <Property Name="ImageData" Type="nvarchar(max)" />
+          <Property Name="Deleted" Type="bit" Nullable="false" />
         </EntityType>
         <EntityType Name="RoomsReservations">
           <Key>
@@ -96,6 +100,7 @@
           <Property Name="PhoneNumber" Type="nvarchar(max)" />
           <Property Name="Role" Type="nvarchar(max)" />
           <Property Name="ImageData" Type="nvarchar(max)" />
+          <Property Name="Deleted" Type="bit" Nullable="false" />
         </EntityType>
         <EntityType Name="sysdiagrams">
           <Key>
@@ -270,6 +275,7 @@
           <Property Name="Username" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
           <Property Name="PasswordHash" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
           <Property Name="IDStaff" Type="Int32" />
+          <Property Name="Deleted" Type="Boolean" Nullable="false" />
           <NavigationProperty Name="Staff" Relationship="Self.FK__Accounts__IDStaf__2EDAF651" FromRole="Accounts" ToRole="Staffs" />
         </EntityType>
         <EntityType Name="BillDetail">
@@ -298,6 +304,7 @@
           <Property Name="PhoneNumber" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
           <Property Name="Email" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
           <Property Name="Nationality" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="Deleted" Type="Boolean" Nullable="false" />
           <NavigationProperty Name="BillDetails" Relationship="Self.FK_BillDetail_Customer_CustomerID" FromRole="Customers" ToRole="BillDetails" />
         </EntityType>
         <EntityType Name="FoodsAndService">
@@ -310,6 +317,7 @@
           <Property Name="Price" Type="Decimal" Precision="19" Scale="4" />
           <Property Name="ImageData" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
           <Property Name="Type" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="Deleted" Type="Boolean" Nullable="false" />
           <NavigationProperty Name="Orders" Relationship="Self.FK__Orders__IDFoodsA__2B0A656D" FromRole="FoodsAndServices" ToRole="Orders" />
         </EntityType>
         <EntityType Name="Order">
@@ -335,6 +343,7 @@
           <Property Name="IDRoomReservation" Type="Int32" Nullable="false" />
           <Property Name="Status" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
           <Property Name="ImageData" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="Deleted" Type="Boolean" Nullable="false" />
           <NavigationProperty Name="RoomsReservation" Relationship="Self.FK_Room_RoomsReservation_RoomReservationID" FromRole="Rooms" ToRole="RoomsReservations" />
           <NavigationProperty Name="RoomType" Relationship="Self.FK_Room_RoomType_RoomTypeID" FromRole="Rooms" ToRole="RoomTypes" />
         </EntityType>
@@ -367,6 +376,7 @@
           <Property Name="PhoneNumber" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
           <Property Name="Role" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
           <Property Name="ImageData" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="Deleted" Type="Boolean" Nullable="false" />
           <NavigationProperty Name="Accounts" Relationship="Self.FK__Accounts__IDStaf__2EDAF651" FromRole="Staffs" ToRole="Accounts" />
           <NavigationProperty Name="BillDetails" Relationship="Self.FK_BillDetail_Staff_StaffID" FromRole="Staffs" ToRole="BillDetails" />
         </EntityType>
@@ -543,6 +553,7 @@
                 <ScalarProperty Name="Username" ColumnName="Username" />
                 <ScalarProperty Name="PasswordHash" ColumnName="PasswordHash" />
                 <ScalarProperty Name="IDStaff" ColumnName="IDStaff" />
+                <ScalarProperty Name="Deleted" ColumnName="Deleted" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -568,6 +579,7 @@
                 <ScalarProperty Name="PhoneNumber" ColumnName="PhoneNumber" />
                 <ScalarProperty Name="Email" ColumnName="Email" />
                 <ScalarProperty Name="Nationality" ColumnName="Nationality" />
+                <ScalarProperty Name="Deleted" ColumnName="Deleted" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -580,6 +592,7 @@
                 <ScalarProperty Name="Price" ColumnName="Price" />
                 <ScalarProperty Name="ImageData" ColumnName="ImageData" />
                 <ScalarProperty Name="Type" ColumnName="Type" />
+                <ScalarProperty Name="Deleted" ColumnName="Deleted" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -604,6 +617,7 @@
                 <ScalarProperty Name="IDRoomReservation" ColumnName="IDRoomReservation" />
                 <ScalarProperty Name="Status" ColumnName="Status" />
                 <ScalarProperty Name="ImageData" ColumnName="ImageData" />
+                <ScalarProperty Name="Deleted" ColumnName="Deleted" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -634,6 +648,7 @@
                 <ScalarProperty Name="PhoneNumber" ColumnName="PhoneNumber" />
                 <ScalarProperty Name="Role" ColumnName="Role" />
                 <ScalarProperty Name="ImageData" ColumnName="ImageData" />
+                <ScalarProperty Name="Deleted" ColumnName="Deleted" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

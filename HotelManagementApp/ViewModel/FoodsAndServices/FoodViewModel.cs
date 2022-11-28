@@ -136,7 +136,7 @@ namespace HotelManagementApp.ViewModel
         void LoadFoodList()
         {
             FoodsAndServicesList = new ObservableCollection<FoodsAndService>();
-            var foodList = DataProvider.Instance.DB.FoodsAndServices;
+            var foodList = DataProvider.Instance.DB.FoodsAndServices.Where(x => x.Deleted == false);
             foreach (var item in foodList)
             {
                 FoodsAndServicesList.Add(item);

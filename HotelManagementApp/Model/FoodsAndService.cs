@@ -26,6 +26,7 @@ namespace HotelManagementApp.Model
         public Nullable<decimal> Price { get; set; }
         public string ImageData { get; set; }
         public string Type { get; set; }
+        public bool Deleted { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Order> Orders { get; set; }

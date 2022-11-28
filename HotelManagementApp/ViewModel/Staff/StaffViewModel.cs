@@ -80,6 +80,7 @@ namespace HotelManagementApp.ViewModel
         public ICommand addCommand { get; set; }
         public ICommand SelectImageCommand { get; set; }
         public ICommand editCommand { get; set; }
+        public ICommand deleteCommand { get; set; }
         public StaffViewModel()
         {
             LoadStaffsList();
@@ -139,11 +140,28 @@ namespace HotelManagementApp.ViewModel
                 OnPropertyChanged();
                 LoadStaffsList();
             });
+            deleteCommand = new RelayCommand<object>((p) =>
+            {
+                if (SelectedItem == null)
+                {
+                    return false;
+                }
+                return true;
+            }, (p) =>
+            {
+                var staff = DataProvider.Instance.DB.Staffs.Where(x => x.ID == SelectedItem.ID).SingleOrDefault();
+                staff.Deleted = true;
+
+                DataProvider.Instance.DB.SaveChanges();
+
+                OnPropertyChanged();
+                LoadStaffsList();
+            });
         }
         void LoadStaffsList()
         {
             StaffsList = new ObservableCollection<Staff>();
-            var staffsList = DataProvider.Instance.DB.Staffs;
+            var staffsList = DataProvider.Instance.DB.Staffs.Where(x => x.Deleted == false);
             foreach (var item in staffsList)
             {
                 StaffsList.Add(item);

@@ -20,6 +20,7 @@ namespace HotelManagementApp.Model
         public int IDRoomReservation { get; set; }
         public string Status { get; set; }
         public string ImageData { get; set; }
+        public bool Deleted { get; set; }
     
         public virtual RoomsReservation RoomsReservation { get; set; }
         public virtual RoomType RoomType { get; set; }

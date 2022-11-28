@@ -16,5 +16,5 @@ D:\University\LTTQ\modified\HotelManagementApp\HotelManagementApp\App.xaml
 221193893482
 MainWindow.xaml;ResourceXAML\MainResource.xaml;UserControlUI\ControlBarUC.xaml;View\AddRoom.xaml;View\LoginWindow.xaml;View\PaymentWindow.xaml;View\SingleBedRoom\SingleBedroomWindow.xaml;View\SingleBedRoom\SingleBedroomBillWindow.xaml;View\SingleBedRoom\SingleBedroomEditWindow.xaml;View\SingleBedRoom\SingleBedRoomFastBookingWindow.xaml;View\SingleBedRoom\SingleBedroomInfoWindow.xaml;
 
-True
+False
 
