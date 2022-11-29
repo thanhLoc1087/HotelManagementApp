@@ -127,6 +127,7 @@
     <Compile Include="UserControlUI\ControlBarUC.xaml.cs">
       <DependentUpon>ControlBarUC.xaml</DependentUpon>
     </Compile>
+    <Compile Include="ViewModel\AddRoom\AddRoomViewModel.cs" />
     <Compile Include="ViewModel\BaseViewModel.cs" />
     <Compile Include="ViewModel\FoodsAndServices\FoodViewModel.cs" />
     <Compile Include="ViewModel\Login\LoginViewModel.cs" />
@@ -248,6 +249,7 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="ImageStorage\FoodImg\" />
+    <Folder Include="ImageStorage\RoomImg\" />
     <Folder Include="ImageStorage\StaffImg\" />
     <Folder Include="View\DoubleBedroom\" />
     <Folder Include="View\TripleBedRoom\" />

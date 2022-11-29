@@ -69,10 +69,10 @@
           <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="RoomNum" Type="nvarchar(max)" Nullable="false" />
           <Property Name="IDRoomType" Type="int" Nullable="false" />
-          <Property Name="IDRoomReservation" Type="int" Nullable="false" />
           <Property Name="Status" Type="nvarchar(max)" Nullable="false" />
           <Property Name="ImageData" Type="nvarchar(max)" />
           <Property Name="Deleted" Type="bit" Nullable="false" />
+          <Property Name="IDRoomsReservation" Type="int" />
         </EntityType>
         <EntityType Name="RoomsReservations">
           <Key>
@@ -88,6 +88,7 @@
           <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="Name" Type="nvarchar(max)" Nullable="false" />
           <Property Name="Price" Type="float" Nullable="false" />
+          <Property Name="Deleted" Type="bit" />
         </EntityType>
         <EntityType Name="Staffs">
           <Key>
@@ -176,20 +177,6 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_Room_RoomsReservation_RoomReservationID">
-          <End Role="RoomsReservations" Type="Self.RoomsReservations" Multiplicity="1">
-            <OnDelete Action="Cascade" />
-          </End>
-          <End Role="Rooms" Type="Self.Rooms" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="RoomsReservations">
-              <PropertyRef Name="ID" />
-            </Principal>
-            <Dependent Role="Rooms">
-              <PropertyRef Name="IDRoomReservation" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <Association Name="FK_Room_RoomType_RoomTypeID">
           <End Role="RoomTypes" Type="Self.RoomTypes" Multiplicity="1">
             <OnDelete Action="Cascade" />
@@ -215,6 +202,18 @@
             </Principal>
             <Dependent Role="RoomsReservations">
               <PropertyRef Name="IDBillDetail" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FL_RoomsReservations">
+          <End Role="RoomsReservations" Type="Self.RoomsReservations" Multiplicity="0..1" />
+          <End Role="Rooms" Type="Self.Rooms" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="RoomsReservations">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Rooms">
+              <PropertyRef Name="IDRoomsReservation" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -249,10 +248,6 @@
             <End Role="Staffs" EntitySet="Staffs" />
             <End Role="BillDetails" EntitySet="BillDetails" />
           </AssociationSet>
-          <AssociationSet Name="FK_Room_RoomsReservation_RoomReservationID" Association="Self.FK_Room_RoomsReservation_RoomReservationID">
-            <End Role="RoomsReservations" EntitySet="RoomsReservations" />
-            <End Role="Rooms" EntitySet="Rooms" />
-          </AssociationSet>
           <AssociationSet Name="FK_Room_RoomType_RoomTypeID" Association="Self.FK_Room_RoomType_RoomTypeID">
             <End Role="RoomTypes" EntitySet="RoomTypes" />
             <End Role="Rooms" EntitySet="Rooms" />
@@ -260,6 +255,10 @@
           <AssociationSet Name="FK_RoomsReservation_BillDetail_BillDetailID" Association="Self.FK_RoomsReservation_BillDetail_BillDetailID">
             <End Role="BillDetails" EntitySet="BillDetails" />
             <End Role="RoomsReservations" EntitySet="RoomsReservations" />
+          </AssociationSet>
+          <AssociationSet Name="FL_RoomsReservations" Association="Self.FL_RoomsReservations">
+            <End Role="RoomsReservations" EntitySet="RoomsReservations" />
+            <End Role="Rooms" EntitySet="Rooms" />
           </AssociationSet>
         </EntityContainer>
       </Schema>
@@ -340,12 +339,12 @@
           <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="RoomNum" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
           <Property Name="IDRoomType" Type="Int32" Nullable="false" />
-          <Property Name="IDRoomReservation" Type="Int32" Nullable="false" />
           <Property Name="Status" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
           <Property Name="ImageData" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
           <Property Name="Deleted" Type="Boolean" Nullable="false" />
-          <NavigationProperty Name="RoomsReservation" Relationship="Self.FK_Room_RoomsReservation_RoomReservationID" FromRole="Rooms" ToRole="RoomsReservations" />
+          <Property Name="IDRoomsReservation" Type="Int32" Nullable="true" />
           <NavigationProperty Name="RoomType" Relationship="Self.FK_Room_RoomType_RoomTypeID" FromRole="Rooms" ToRole="RoomTypes" />
+          <NavigationProperty Name="RoomsReservation" Relationship="Self.FL_RoomsReservations" FromRole="Rooms" ToRole="RoomsReservations" />
         </EntityType>
         <EntityType Name="RoomsReservation">
           <Key>
@@ -354,7 +353,7 @@
           <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="IDBillDetail" Type="Int32" Nullable="false" />
           <NavigationProperty Name="BillDetail" Relationship="Self.FK_RoomsReservation_BillDetail_BillDetailID" FromRole="RoomsReservations" ToRole="BillDetails" />
-          <NavigationProperty Name="Rooms" Relationship="Self.FK_Room_RoomsReservation_RoomReservationID" FromRole="RoomsReservations" ToRole="Rooms" />
+          <NavigationProperty Name="Rooms" Relationship="Self.FL_RoomsReservations" FromRole="RoomsReservations" ToRole="Rooms" />
         </EntityType>
         <EntityType Name="RoomType">
           <Key>
@@ -363,6 +362,7 @@
           <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="Name" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
           <Property Name="Price" Type="Double" Nullable="false" />
+          <Property Name="Deleted" Type="Boolean" />
           <NavigationProperty Name="Rooms" Relationship="Self.FK_Room_RoomType_RoomTypeID" FromRole="RoomTypes" ToRole="Rooms" />
         </EntityType>
         <EntityType Name="Staff">
@@ -468,20 +468,6 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_Room_RoomsReservation_RoomReservationID">
-          <End Role="RoomsReservations" Type="Self.RoomsReservation" Multiplicity="1">
-            <OnDelete Action="Cascade" />
-          </End>
-          <End Role="Rooms" Type="Self.Room" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="RoomsReservations">
-              <PropertyRef Name="ID" />
-            </Principal>
-            <Dependent Role="Rooms">
-              <PropertyRef Name="IDRoomReservation" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <Association Name="FK_Room_RoomType_RoomTypeID">
           <End Role="RoomTypes" Type="Self.RoomType" Multiplicity="1">
             <OnDelete Action="Cascade" />
@@ -493,6 +479,18 @@
             </Principal>
             <Dependent Role="Rooms">
               <PropertyRef Name="IDRoomType" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FL_RoomsReservations">
+          <End Role="RoomsReservations" Type="Self.RoomsReservation" Multiplicity="0..1" />
+          <End Role="Rooms" Type="Self.Room" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="RoomsReservations">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Rooms">
+              <PropertyRef Name="IDRoomsReservation" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -531,12 +529,12 @@
             <End Role="FoodsAndServices" EntitySet="FoodsAndServices" />
             <End Role="Orders" EntitySet="Orders" />
           </AssociationSet>
-          <AssociationSet Name="FK_Room_RoomsReservation_RoomReservationID" Association="Self.FK_Room_RoomsReservation_RoomReservationID">
-            <End Role="RoomsReservations" EntitySet="RoomsReservations" />
-            <End Role="Rooms" EntitySet="Rooms" />
-          </AssociationSet>
           <AssociationSet Name="FK_Room_RoomType_RoomTypeID" Association="Self.FK_Room_RoomType_RoomTypeID">
             <End Role="RoomTypes" EntitySet="RoomTypes" />
+            <End Role="Rooms" EntitySet="Rooms" />
+          </AssociationSet>
+          <AssociationSet Name="FL_RoomsReservations" Association="Self.FL_RoomsReservations">
+            <End Role="RoomsReservations" EntitySet="RoomsReservations" />
             <End Role="Rooms" EntitySet="Rooms" />
           </AssociationSet>
         </EntityContainer>
@@ -614,10 +612,10 @@
                 <ScalarProperty Name="ID" ColumnName="ID" />
                 <ScalarProperty Name="RoomNum" ColumnName="RoomNum" />
                 <ScalarProperty Name="IDRoomType" ColumnName="IDRoomType" />
-                <ScalarProperty Name="IDRoomReservation" ColumnName="IDRoomReservation" />
                 <ScalarProperty Name="Status" ColumnName="Status" />
                 <ScalarProperty Name="ImageData" ColumnName="ImageData" />
                 <ScalarProperty Name="Deleted" ColumnName="Deleted" />
+                <ScalarProperty Name="IDRoomsReservation" ColumnName="IDRoomsReservation" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -635,6 +633,7 @@
                 <ScalarProperty Name="ID" ColumnName="ID" />
                 <ScalarProperty Name="Name" ColumnName="Name" />
                 <ScalarProperty Name="Price" ColumnName="Price" />
+                <ScalarProperty Name="Deleted" ColumnName="Deleted" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

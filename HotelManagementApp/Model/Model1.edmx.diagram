@@ -4,7 +4,7 @@
   <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
-      <Diagram DiagramId="929271ce3aa1471d9ea5bad082cb5c18" Name="Diagram1">
+      <Diagram DiagramId="70db22a58cbf4560ba8de2fab7581822" Name="Diagram1">
         <EntityTypeShape EntityType="QuanLyKhachSan2Model.Account" Width="1.5" PointX="3" PointY="5" IsExpanded="true" />
         <EntityTypeShape EntityType="QuanLyKhachSan2Model.BillDetail" Width="1.5" PointX="6" PointY="4.625" IsExpanded="true" />
         <EntityTypeShape EntityType="QuanLyKhachSan2Model.Customer" Width="1.5" PointX="3.75" PointY="0.75" IsExpanded="true" />
@@ -21,8 +21,8 @@
         <AssociationConnector Association="QuanLyKhachSan2Model.FK_BillDetail_Staff_StaffID" ManuallyRouted="false" />
         <AssociationConnector Association="QuanLyKhachSan2Model.FK_RoomsReservation_BillDetail_BillDetailID" ManuallyRouted="false" />
         <AssociationConnector Association="QuanLyKhachSan2Model.FK__Orders__IDFoodsA__2B0A656D" ManuallyRouted="false" />
-        <AssociationConnector Association="QuanLyKhachSan2Model.FK_Room_RoomsReservation_RoomReservationID" ManuallyRouted="false" />
         <AssociationConnector Association="QuanLyKhachSan2Model.FK_Room_RoomType_RoomTypeID" ManuallyRouted="false" />
+        <AssociationConnector Association="QuanLyKhachSan2Model.FL_RoomsReservations" ManuallyRouted="false" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

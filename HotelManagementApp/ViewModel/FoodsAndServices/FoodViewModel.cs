@@ -74,6 +74,7 @@ namespace HotelManagementApp.ViewModel
         public ICommand addCommand { get; set; }
         public ICommand SelectImageCommand { get; set; }
         public ICommand editCommand { get; set; }
+        public ICommand deleteCommand { get; set; }
         public FoodViewModel()
         {
             LoadFoodList();
@@ -126,6 +127,24 @@ namespace HotelManagementApp.ViewModel
                 food.Type = Type;
                 food.ImageData = _SelectedImagePath;
                 addImage(food);
+
+                DataProvider.Instance.DB.SaveChanges();
+
+                OnPropertyChanged();
+                LoadFoodList();
+            });
+
+            deleteCommand = new RelayCommand<object>((p) =>
+            {
+                if (SelectedItem == null)
+                {
+                    return false;
+                }
+                return true;
+            }, (p) =>
+            {
+                var food = DataProvider.Instance.DB.FoodsAndServices.Where(x => x.ID == SelectedItem.ID).SingleOrDefault();
+                food.Deleted = true;
 
                 DataProvider.Instance.DB.SaveChanges();
 

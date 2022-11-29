@@ -7,9 +7,10 @@
         xmlns:uc="clr-namespace:HotelManagementApp.UserControlUI"
         xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
         mc:Ignorable="d"
+        DataContext="{StaticResource AddRoomVm}"
         Title="AddRoom"
         Width="600"
-        Height="300"
+        Height="600"
         Background="#FFEEE9FA"
         FontFamily="{DynamicResource MaterialDesignFont}"
         ResizeMode="NoResize"
@@ -24,7 +25,7 @@
         <Grid>
             <Grid.RowDefinitions>
                 <RowDefinition Height="50" />
-                <RowDefinition Height="30" />
+                <RowDefinition Height="50" />
                 <RowDefinition />
             </Grid.RowDefinitions>
 
@@ -41,24 +42,25 @@
                        Text="Add room"
                        TextWrapping="Wrap" />
             <Grid Grid.Row="2">
-                <WrapPanel Margin="73,0,-73,0">
+                <WrapPanel HorizontalAlignment="Center">
                     <Grid>
                         <Grid.RowDefinitions>
+                            <RowDefinition Height="200"/>
                             <RowDefinition Height="50" />
                             <RowDefinition Height="50" />
                             <RowDefinition Height="50" />
-                            <RowDefinition />
+                            <RowDefinition Height="50"/>
                         </Grid.RowDefinitions>
-                        <WrapPanel Grid.Row="0"
+                        <WrapPanel Grid.Row="1"
                                    HorizontalAlignment="Center"
                                    VerticalAlignment="Center">
                             <Label Width="100"
-                                   Content="Room name: " />
+                                   Content="Room number: " />
                             <TextBox x:Name="Addname"
                                      Width="300"
-                                     Text="{Binding AddRoomName}" />
+                                     Text="{Binding RoomNum}" />
                         </WrapPanel>
-                        <WrapPanel Grid.Row="1"
+                        <WrapPanel Grid.Row="2"
                                    HorizontalAlignment="Center"
                                    VerticalAlignment="Center">
                             <Label Width="100"
@@ -66,35 +68,72 @@
                             <ComboBox x:Name="addtype"
                                       Width="300"
                                       IsReadOnly="False"
-                                      ItemsSource="{Binding Listfieldtype}"
-                                      SelectedItem="{Binding selecttedype, Mode=TwoWay}">
+                                      ItemsSource="{Binding RoomTypeList}"
+                                      SelectedItem="{Binding RoomType, Mode=TwoWay}">
 
                                 <ComboBox.ItemTemplate>
                                     <DataTemplate>
                                         <StackPanel>
-                                            <TextBlock Text="{Binding name}" />
+                                            <TextBlock Text="{Binding Name}" />
                                         </StackPanel>
                                     </DataTemplate>
                                 </ComboBox.ItemTemplate>
                             </ComboBox>
                         </WrapPanel>
-                        <WrapPanel Grid.Row="2"
+                        <WrapPanel Grid.Row="3"
                                    HorizontalAlignment="Center"
                                    VerticalAlignment="Center">
                             <Label Width="100"
-                                   Content="Room condition: " />
+                                   Content="Room status: " />
 
                             <ComboBox x:Name="addcondition"
                                       Width="300"
                                       IsReadOnly="True"
-                                      SelectedValue="{Binding selectcondition}"
+                                      SelectedValue="{Binding Status}"
                                       SelectedValuePath="Content">
                                 <ComboBoxItem>Good</ComboBoxItem>
                                 <ComboBoxItem>Normal</ComboBoxItem>
                                 <ComboBoxItem>Repairing</ComboBoxItem>
                             </ComboBox>
                         </WrapPanel>
-                        <Grid Grid.Row="3">
+                        <WrapPanel Grid.Row="0" HorizontalAlignment="Center">
+                            <Grid x:Name="grdSelectImg1"
+                                                  Width="150"
+                                                  Height="150"
+                                                  Margin="0,0,0,0"
+                                                  HorizontalAlignment="Center"
+                                                  VerticalAlignment="Top">
+                                <Grid.Background>
+                                    <ImageBrush ImageSource="{Binding Image, UpdateSourceTrigger=PropertyChanged}" />
+                                </Grid.Background>
+                                <Rectangle x:Name="recImage1"
+                                                           Width="150"
+                                                           Height="153"
+                                                           Margin="0,0,0,-2"
+                                                           HorizontalAlignment="Left"
+                                                           VerticalAlignment="Top"
+                                                           RadiusX="4"
+                                                           RadiusY="4"
+                                                           Stroke="#5C0DAC"
+                                                           StrokeDashArray="4 2"
+                                                           StrokeThickness="4" />
+                                <Button x:Name="btnSelectImage1"
+                                                        Width="120"
+                                                        Height="35"
+                                                        Margin="0,0,0,-56"
+                                                        Padding="0"
+                                                        HorizontalAlignment="Center"
+                                                        VerticalAlignment="Bottom"
+                                                        Command="{Binding SelectImageCommand}"
+                                                        CommandParameter="{Binding ElementName=grdSelectImg1}"
+                                                        Content="Select Image"
+                                                        FocusVisualStyle="{x:Null}"
+                                                        FontSize="16"
+                                                        FontWeight="SemiBold"
+                                                        ToolTip="Chọn ảnh" />
+                            </Grid>
+                        </WrapPanel>
+                        <Grid Grid.Row="4">
                             <Grid.ColumnDefinitions>
                                 <ColumnDefinition />
                                 <ColumnDefinition />
@@ -105,7 +144,7 @@
                                     VerticalAlignment="Center"
                                     HorizontalContentAlignment="Stretch"
                                     materialDesign:ButtonAssist.CornerRadius="5"
-                                    Command="{Binding AddFieldCommand}">
+                                    Command="{Binding AddRoomCommand}">
                                 <TextBlock Margin="5,0,0,0"
                                            HorizontalAlignment="Center"
                                            VerticalAlignment="Center"

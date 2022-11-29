@@ -6,5 +6,6 @@
     <viewmodel:SettingsViewModel x:Key="SettingsVm"></viewmodel:SettingsViewModel>
     <viewmodel:StaffViewModel x:Key="StaffVm"></viewmodel:StaffViewModel>
     <viewmodel:FoodViewModel x:Key="FoodVm"></viewmodel:FoodViewModel>
+    <viewmodel:AddRoomViewModel x:Key="AddRoomVm"></viewmodel:AddRoomViewModel>
     
 </ResourceDictionary>
