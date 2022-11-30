@@ -24,15 +24,14 @@ namespace HotelManagementApp.Model
         public int ID { get; set; }
         public int IDStaff { get; set; }
         public int IDCustomer { get; set; }
-        public System.DateTime CheckInTime { get; set; }
-        public System.DateTime CheckOutTime { get; set; }
         public double TotalMoney { get; set; }
+        public Nullable<System.DateTime> BillDate { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Order> Orders { get; set; }
-        public virtual Customer Customer { get; set; }
-        public virtual Staff Staff { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<RoomsReservation> RoomsReservations { get; set; }
+        public virtual Customer Customer { get; set; }
+        public virtual Staff Staff { get; set; }
     }
 }

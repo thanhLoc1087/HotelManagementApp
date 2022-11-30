@@ -120,7 +120,7 @@ namespace HotelManagementApp.ViewModel
                 return true;
             }, (p) =>
             {
-                var food = DataProvider.Instance.DB.FoodsAndServices.Where(x => x.ID == SelectedItem.ID).SingleOrDefault();
+                var food = DataProvider.Instance.DB.FoodsAndServices.Where(x => x.ID == SelectedItem.ID).FirstOrDefault();
                 food.Name = Name;
                 food.Unit = Unit;
                 food.Price = Price;
@@ -143,7 +143,7 @@ namespace HotelManagementApp.ViewModel
                 return true;
             }, (p) =>
             {
-                var food = DataProvider.Instance.DB.FoodsAndServices.Where(x => x.ID == SelectedItem.ID).SingleOrDefault();
+                var food = DataProvider.Instance.DB.FoodsAndServices.Where(x => x.ID == SelectedItem.ID).FirstOrDefault();
                 food.Deleted = true;
 
                 DataProvider.Instance.DB.SaveChanges();

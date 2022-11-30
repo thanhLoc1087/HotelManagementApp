@@ -127,7 +127,7 @@ namespace HotelManagementApp.ViewModel
                 return true;
             }, (p) =>
             {
-                var staff = DataProvider.Instance.DB.Staffs.Where(x => x.ID == SelectedItem.ID).SingleOrDefault();
+                var staff = DataProvider.Instance.DB.Staffs.Where(x => x.ID == SelectedItem.ID).FirstOrDefault();
                 staff.Name = Name;
                 staff.Sex = Sex;
                 staff.CCCD = CCCD;
@@ -149,7 +149,7 @@ namespace HotelManagementApp.ViewModel
                 return true;
             }, (p) =>
             {
-                var staff = DataProvider.Instance.DB.Staffs.Where(x => x.ID == SelectedItem.ID).SingleOrDefault();
+                var staff = DataProvider.Instance.DB.Staffs.Where(x => x.ID == SelectedItem.ID).FirstOrDefault();
                 staff.Deleted = true;
 
                 DataProvider.Instance.DB.SaveChanges();

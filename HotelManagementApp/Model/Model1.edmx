@@ -22,9 +22,8 @@
           <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="IDStaff" Type="int" Nullable="false" />
           <Property Name="IDCustomer" Type="int" Nullable="false" />
-          <Property Name="CheckInTime" Type="datetime" Nullable="false" />
-          <Property Name="CheckOutTime" Type="datetime" Nullable="false" />
           <Property Name="TotalMoney" Type="float" Nullable="false" />
+          <Property Name="BillDate" Type="smalldatetime" />
         </EntityType>
         <EntityType Name="Customers">
           <Key>
@@ -72,14 +71,16 @@
           <Property Name="Status" Type="nvarchar(max)" Nullable="false" />
           <Property Name="ImageData" Type="nvarchar(max)" />
           <Property Name="Deleted" Type="bit" Nullable="false" />
-          <Property Name="IDRoomsReservation" Type="int" />
         </EntityType>
         <EntityType Name="RoomsReservations">
           <Key>
             <PropertyRef Name="ID" />
           </Key>
           <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="IDBillDetail" Type="int" Nullable="false" />
+          <Property Name="IDBillDetail" Type="int" />
+          <Property Name="IDRoom" Type="int" />
+          <Property Name="CheckInTime" Type="smalldatetime" />
+          <Property Name="CheckOutTime" Type="smalldatetime" />
         </EntityType>
         <EntityType Name="RoomTypes">
           <Key>
@@ -149,6 +150,30 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK__RoomsRese__IDBil__625A9A57">
+          <End Role="BillDetails" Type="Self.BillDetails" Multiplicity="0..1" />
+          <End Role="RoomsReservations" Type="Self.RoomsReservations" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="BillDetails">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="RoomsReservations">
+              <PropertyRef Name="IDBillDetail" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__RoomsRese__IDRoo__634EBE90">
+          <End Role="Rooms" Type="Self.Rooms" Multiplicity="0..1" />
+          <End Role="RoomsReservations" Type="Self.RoomsReservations" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Rooms">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="RoomsReservations">
+              <PropertyRef Name="IDRoom" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_BillDetail_Customer_CustomerID">
           <End Role="Customers" Type="Self.Customers" Multiplicity="1">
             <OnDelete Action="Cascade" />
@@ -191,32 +216,6 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_RoomsReservation_BillDetail_BillDetailID">
-          <End Role="BillDetails" Type="Self.BillDetails" Multiplicity="1">
-            <OnDelete Action="Cascade" />
-          </End>
-          <End Role="RoomsReservations" Type="Self.RoomsReservations" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="BillDetails">
-              <PropertyRef Name="ID" />
-            </Principal>
-            <Dependent Role="RoomsReservations">
-              <PropertyRef Name="IDBillDetail" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FL_RoomsReservations">
-          <End Role="RoomsReservations" Type="Self.RoomsReservations" Multiplicity="0..1" />
-          <End Role="Rooms" Type="Self.Rooms" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="RoomsReservations">
-              <PropertyRef Name="ID" />
-            </Principal>
-            <Dependent Role="Rooms">
-              <PropertyRef Name="IDRoomsReservation" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <EntityContainer Name="QuanLyKhachSan2ModelStoreContainer">
           <EntitySet Name="Accounts" EntityType="Self.Accounts" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="BillDetails" EntityType="Self.BillDetails" Schema="dbo" store:Type="Tables" />
@@ -240,6 +239,14 @@
             <End Role="FoodsAndServices" EntitySet="FoodsAndServices" />
             <End Role="Orders" EntitySet="Orders" />
           </AssociationSet>
+          <AssociationSet Name="FK__RoomsRese__IDBil__625A9A57" Association="Self.FK__RoomsRese__IDBil__625A9A57">
+            <End Role="BillDetails" EntitySet="BillDetails" />
+            <End Role="RoomsReservations" EntitySet="RoomsReservations" />
+          </AssociationSet>
+          <AssociationSet Name="FK__RoomsRese__IDRoo__634EBE90" Association="Self.FK__RoomsRese__IDRoo__634EBE90">
+            <End Role="Rooms" EntitySet="Rooms" />
+            <End Role="RoomsReservations" EntitySet="RoomsReservations" />
+          </AssociationSet>
           <AssociationSet Name="FK_BillDetail_Customer_CustomerID" Association="Self.FK_BillDetail_Customer_CustomerID">
             <End Role="Customers" EntitySet="Customers" />
             <End Role="BillDetails" EntitySet="BillDetails" />
@@ -250,14 +257,6 @@
           </AssociationSet>
           <AssociationSet Name="FK_Room_RoomType_RoomTypeID" Association="Self.FK_Room_RoomType_RoomTypeID">
             <End Role="RoomTypes" EntitySet="RoomTypes" />
-            <End Role="Rooms" EntitySet="Rooms" />
-          </AssociationSet>
-          <AssociationSet Name="FK_RoomsReservation_BillDetail_BillDetailID" Association="Self.FK_RoomsReservation_BillDetail_BillDetailID">
-            <End Role="BillDetails" EntitySet="BillDetails" />
-            <End Role="RoomsReservations" EntitySet="RoomsReservations" />
-          </AssociationSet>
-          <AssociationSet Name="FL_RoomsReservations" Association="Self.FL_RoomsReservations">
-            <End Role="RoomsReservations" EntitySet="RoomsReservations" />
             <End Role="Rooms" EntitySet="Rooms" />
           </AssociationSet>
         </EntityContainer>
@@ -284,13 +283,12 @@
           <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="IDStaff" Type="Int32" Nullable="false" />
           <Property Name="IDCustomer" Type="Int32" Nullable="false" />
-          <Property Name="CheckInTime" Type="DateTime" Nullable="false" Precision="3" />
-          <Property Name="CheckOutTime" Type="DateTime" Nullable="false" Precision="3" />
           <Property Name="TotalMoney" Type="Double" Nullable="false" />
+          <Property Name="BillDate" Type="DateTime" Precision="0" />
           <NavigationProperty Name="Orders" Relationship="Self.FK__Orders__IDBillDe__2BFE89A6" FromRole="BillDetails" ToRole="Orders" />
+          <NavigationProperty Name="RoomsReservations" Relationship="Self.FK__RoomsRese__IDBil__625A9A57" FromRole="BillDetails" ToRole="RoomsReservations" />
           <NavigationProperty Name="Customer" Relationship="Self.FK_BillDetail_Customer_CustomerID" FromRole="BillDetails" ToRole="Customers" />
           <NavigationProperty Name="Staff" Relationship="Self.FK_BillDetail_Staff_StaffID" FromRole="BillDetails" ToRole="Staffs" />
-          <NavigationProperty Name="RoomsReservations" Relationship="Self.FK_RoomsReservation_BillDetail_BillDetailID" FromRole="BillDetails" ToRole="RoomsReservations" />
         </EntityType>
         <EntityType Name="Customer">
           <Key>
@@ -342,18 +340,20 @@
           <Property Name="Status" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
           <Property Name="ImageData" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
           <Property Name="Deleted" Type="Boolean" Nullable="false" />
-          <Property Name="IDRoomsReservation" Type="Int32" Nullable="true" />
+          <NavigationProperty Name="RoomsReservations" Relationship="Self.FK__RoomsRese__IDRoo__634EBE90" FromRole="Rooms" ToRole="RoomsReservations" />
           <NavigationProperty Name="RoomType" Relationship="Self.FK_Room_RoomType_RoomTypeID" FromRole="Rooms" ToRole="RoomTypes" />
-          <NavigationProperty Name="RoomsReservation" Relationship="Self.FL_RoomsReservations" FromRole="Rooms" ToRole="RoomsReservations" />
         </EntityType>
         <EntityType Name="RoomsReservation">
           <Key>
             <PropertyRef Name="ID" />
           </Key>
           <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="IDBillDetail" Type="Int32" Nullable="false" />
-          <NavigationProperty Name="BillDetail" Relationship="Self.FK_RoomsReservation_BillDetail_BillDetailID" FromRole="RoomsReservations" ToRole="BillDetails" />
-          <NavigationProperty Name="Rooms" Relationship="Self.FL_RoomsReservations" FromRole="RoomsReservations" ToRole="Rooms" />
+          <Property Name="IDBillDetail" Type="Int32" />
+          <Property Name="IDRoom" Type="Int32" />
+          <Property Name="CheckInTime" Type="DateTime" Precision="0" />
+          <Property Name="CheckOutTime" Type="DateTime" Precision="0" />
+          <NavigationProperty Name="BillDetail" Relationship="Self.FK__RoomsRese__IDBil__625A9A57" FromRole="RoomsReservations" ToRole="BillDetails" />
+          <NavigationProperty Name="Room" Relationship="Self.FK__RoomsRese__IDRoo__634EBE90" FromRole="RoomsReservations" ToRole="Rooms" />
         </EntityType>
         <EntityType Name="RoomType">
           <Key>
@@ -414,6 +414,18 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK__RoomsRese__IDBil__625A9A57">
+          <End Role="BillDetails" Type="Self.BillDetail" Multiplicity="0..1" />
+          <End Role="RoomsReservations" Type="Self.RoomsReservation" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="BillDetails">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="RoomsReservations">
+              <PropertyRef Name="IDBillDetail" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_BillDetail_Customer_CustomerID">
           <End Role="Customers" Type="Self.Customer" Multiplicity="1">
             <OnDelete Action="Cascade" />
@@ -442,20 +454,6 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_RoomsReservation_BillDetail_BillDetailID">
-          <End Role="BillDetails" Type="Self.BillDetail" Multiplicity="1">
-            <OnDelete Action="Cascade" />
-          </End>
-          <End Role="RoomsReservations" Type="Self.RoomsReservation" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="BillDetails">
-              <PropertyRef Name="ID" />
-            </Principal>
-            <Dependent Role="RoomsReservations">
-              <PropertyRef Name="IDBillDetail" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <Association Name="FK__Orders__IDFoodsA__2B0A656D">
           <End Role="FoodsAndServices" Type="Self.FoodsAndService" Multiplicity="0..1" />
           <End Role="Orders" Type="Self.Order" Multiplicity="*" />
@@ -465,6 +463,18 @@
             </Principal>
             <Dependent Role="Orders">
               <PropertyRef Name="IDFoodsAndServices" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__RoomsRese__IDRoo__634EBE90">
+          <End Role="Rooms" Type="Self.Room" Multiplicity="0..1" />
+          <End Role="RoomsReservations" Type="Self.RoomsReservation" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Rooms">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="RoomsReservations">
+              <PropertyRef Name="IDRoom" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -479,18 +489,6 @@
             </Principal>
             <Dependent Role="Rooms">
               <PropertyRef Name="IDRoomType" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FL_RoomsReservations">
-          <End Role="RoomsReservations" Type="Self.RoomsReservation" Multiplicity="0..1" />
-          <End Role="Rooms" Type="Self.Room" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="RoomsReservations">
-              <PropertyRef Name="ID" />
-            </Principal>
-            <Dependent Role="Rooms">
-              <PropertyRef Name="IDRoomsReservation" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -513,6 +511,10 @@
             <End Role="BillDetails" EntitySet="BillDetails" />
             <End Role="Orders" EntitySet="Orders" />
           </AssociationSet>
+          <AssociationSet Name="FK__RoomsRese__IDBil__625A9A57" Association="Self.FK__RoomsRese__IDBil__625A9A57">
+            <End Role="BillDetails" EntitySet="BillDetails" />
+            <End Role="RoomsReservations" EntitySet="RoomsReservations" />
+          </AssociationSet>
           <AssociationSet Name="FK_BillDetail_Customer_CustomerID" Association="Self.FK_BillDetail_Customer_CustomerID">
             <End Role="Customers" EntitySet="Customers" />
             <End Role="BillDetails" EntitySet="BillDetails" />
@@ -521,20 +523,16 @@
             <End Role="Staffs" EntitySet="Staffs" />
             <End Role="BillDetails" EntitySet="BillDetails" />
           </AssociationSet>
-          <AssociationSet Name="FK_RoomsReservation_BillDetail_BillDetailID" Association="Self.FK_RoomsReservation_BillDetail_BillDetailID">
-            <End Role="BillDetails" EntitySet="BillDetails" />
-            <End Role="RoomsReservations" EntitySet="RoomsReservations" />
-          </AssociationSet>
           <AssociationSet Name="FK__Orders__IDFoodsA__2B0A656D" Association="Self.FK__Orders__IDFoodsA__2B0A656D">
             <End Role="FoodsAndServices" EntitySet="FoodsAndServices" />
             <End Role="Orders" EntitySet="Orders" />
           </AssociationSet>
+          <AssociationSet Name="FK__RoomsRese__IDRoo__634EBE90" Association="Self.FK__RoomsRese__IDRoo__634EBE90">
+            <End Role="Rooms" EntitySet="Rooms" />
+            <End Role="RoomsReservations" EntitySet="RoomsReservations" />
+          </AssociationSet>
           <AssociationSet Name="FK_Room_RoomType_RoomTypeID" Association="Self.FK_Room_RoomType_RoomTypeID">
             <End Role="RoomTypes" EntitySet="RoomTypes" />
-            <End Role="Rooms" EntitySet="Rooms" />
-          </AssociationSet>
-          <AssociationSet Name="FL_RoomsReservations" Association="Self.FL_RoomsReservations">
-            <End Role="RoomsReservations" EntitySet="RoomsReservations" />
             <End Role="Rooms" EntitySet="Rooms" />
           </AssociationSet>
         </EntityContainer>
@@ -561,9 +559,8 @@
                 <ScalarProperty Name="ID" ColumnName="ID" />
                 <ScalarProperty Name="IDStaff" ColumnName="IDStaff" />
                 <ScalarProperty Name="IDCustomer" ColumnName="IDCustomer" />
-                <ScalarProperty Name="CheckInTime" ColumnName="CheckInTime" />
-                <ScalarProperty Name="CheckOutTime" ColumnName="CheckOutTime" />
                 <ScalarProperty Name="TotalMoney" ColumnName="TotalMoney" />
+                <ScalarProperty Name="BillDate" ColumnName="BillDate" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -615,7 +612,6 @@
                 <ScalarProperty Name="Status" ColumnName="Status" />
                 <ScalarProperty Name="ImageData" ColumnName="ImageData" />
                 <ScalarProperty Name="Deleted" ColumnName="Deleted" />
-                <ScalarProperty Name="IDRoomsReservation" ColumnName="IDRoomsReservation" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -624,6 +620,9 @@
               <MappingFragment StoreEntitySet="RoomsReservations">
                 <ScalarProperty Name="ID" ColumnName="ID" />
                 <ScalarProperty Name="IDBillDetail" ColumnName="IDBillDetail" />
+                <ScalarProperty Name="IDRoom" ColumnName="IDRoom" />
+                <ScalarProperty Name="CheckInTime" ColumnName="CheckInTime" />
+                <ScalarProperty Name="CheckOutTime" ColumnName="CheckOutTime" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

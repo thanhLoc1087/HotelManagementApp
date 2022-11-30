@@ -133,7 +133,7 @@
     <Compile Include="ViewModel\Login\LoginViewModel.cs" />
     <Compile Include="ViewModel\MainViewModel.cs" />
     <Compile Include="ViewModel\Settings\SettingsViewModel.cs" />
-    <Compile Include="ViewModel\SingleBedRoom\SingleBedRoomViewModel.cs" />
+    <Compile Include="ViewModel\SingleBedRoomInfo\SingleBedroomInfoViewModel.cs" />
     <Compile Include="ViewModel\Staff\StaffViewModel.cs" />
     <Compile Include="ViewModel\UserControlViewModel\ControlBarViewModel.cs" />
     <Compile Include="View\AddRoom.xaml.cs">
@@ -269,7 +269,6 @@
       <DependentUpon>Model1.edmx</DependentUpon>
       <LastGenOutput>Model1.Context.cs</LastGenOutput>
     </Content>
-    <Content Include="Model\Model1.edmx.sql" />
     <Content Include="Model\Model1.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <DependentUpon>Model1.edmx</DependentUpon>

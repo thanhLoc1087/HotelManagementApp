@@ -1501,7 +1501,8 @@
                                                          HorizontalAlignment="Right"
                                                          HorizontalContentAlignment="Left"
                                                          VerticalContentAlignment="Center"
-                                                         materialDesign:HintAssist.Hint="Name"
+                                                         materialDesign:HintAssist.Hint="Name" 
+                                                         
                                                          BorderThickness="0"
                                                          Cursor="IBeam"
                                                          FontSize="14"

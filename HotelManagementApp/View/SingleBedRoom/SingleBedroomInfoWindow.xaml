@@ -8,6 +8,7 @@
         xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
         mc:Ignorable="d"
         x:Name="SingleBedRoomInfo"
+        DataContext="{StaticResource SingleBedroomInfoViewmodel}"
         Title="Hotel Management"
         Background="#FFEEE9FA"
         FontFamily="{DynamicResource MaterialDesignFont}"
@@ -47,53 +48,76 @@
 
             <materialDesign:Card Grid.Row="0"
                                  Margin="5">
-                <WrapPanel Margin="0,0,0,10">
+                <WrapPanel Margin="0,0,0,10" >
                     <TextBox x:Name="txbIdroom"
                              Margin="5,5,15,5"
-                             materialDesign:HintAssist.Hint="Id room"
-                             IsReadOnly="True"
+                             materialDesign:HintAssist.Hint="RoomNum"
+                             IsReadOnly="False"
+                             Text="{Binding RoomNum, UpdateSourceTrigger=PropertyChanged}"
                              Style="{StaticResource MaterialDesignFloatingHintTextBox}" />
                     <TextBox x:Name="txbCusName"
                              Margin="5,5,15,5"
                              materialDesign:HintAssist.Hint="Customer name"
                              Style="{StaticResource MaterialDesignFloatingHintTextBox}"
-                             Text="{Binding AddCustomerName, UpdateSourceTrigger=PropertyChanged}" />
+                             Text="{Binding CustomerName, UpdateSourceTrigger=PropertyChanged}" />
+                    <ComboBox Margin="5,10,15,5"
+                              materialDesign:HintAssist.Hint="Sex"
+                              Style="{StaticResource MaterialDesignFloatingHintComboBox}"
+                              Text="{Binding Sex, UpdateSourceTrigger=PropertyChanged}">
+                        <ComboBoxItem>Male</ComboBoxItem>
+                        <ComboBoxItem>Female</ComboBoxItem>
+                    </ComboBox>
                     <TextBox x:Name="txbCusPhone"
                              Margin="5,5,15,5"
                              materialDesign:HintAssist.Hint="Phone number"
                              Style="{StaticResource MaterialDesignFloatingHintTextBox}"
-                             Text="{Binding AddCustomerPhone, UpdateSourceTrigger=PropertyChanged}" />
+                             Text="{Binding PhoneNum, UpdateSourceTrigger=PropertyChanged}" />
+                    <TextBox Margin="5,5,15,5"
+                             materialDesign:HintAssist.Hint="Email"
+                             Style="{StaticResource MaterialDesignFloatingHintTextBox}"
+                             Text="{Binding Email, UpdateSourceTrigger=PropertyChanged}" />
                     <TextBox x:Name="txbCusCCCD"
                              Margin="5,5,15,5"
                              materialDesign:HintAssist.Hint="CCCD"
                              Style="{StaticResource MaterialDesignFloatingHintTextBox}"
-                             Text="{Binding AddCustomerCCCD, UpdateSourceTrigger=PropertyChanged}" />
+                             Text="{Binding CCCD, UpdateSourceTrigger=PropertyChanged}" />
                     <TextBox x:Name="txbCusNationality"
                              Margin="5,5,15,5"
                              materialDesign:HintAssist.Hint="Nationality"
                              Style="{StaticResource MaterialDesignFloatingHintTextBox}"
-                             Text="{Binding AddCustomerNationality, UpdateSourceTrigger=PropertyChanged}" />
-                    <DatePicker x:Name="date"
-                                Width="100"
-                                Margin="5,5,15,5"
+                             Text="{Binding Nationality, UpdateSourceTrigger=PropertyChanged}" />
+                    <DatePicker Width="100"
+                                Margin="5,10,15,5"
                                 VerticalAlignment="Center"
-                                materialDesign:HintAssist.Hint="Date"
-                                SelectedDate="{Binding AddDate}"
+                                materialDesign:HintAssist.Hint="Checkin date"
+                                SelectedDate="{Binding CheckInDate}"
                                 Style="{StaticResource MaterialDesignFloatingHintDatePicker}" />
                     <materialDesign:TimePicker x:Name="checkintime_picker"
-                                               Margin="20,9,5,0"
+                                               Margin="5,15,15,0"
                                                HorizontalAlignment="Center"
                                                VerticalAlignment="Center"
                                                materialDesign:HintAssist.Hint="Check in time"
                                                Is24Hours="True"
-                                               SelectedTime="{Binding AddCheckInTime}" />
+                                               SelectedTime="{Binding CheckInTime}" />
+                    <DatePicker Width="110"
+                                Margin="5,10,15,5"
+                                VerticalAlignment="Center"
+                                materialDesign:HintAssist.Hint="Check out date"
+                                SelectedDate="{Binding CheckOutDate}"
+                                Style="{StaticResource MaterialDesignFloatingHintDatePicker}" />
                     <materialDesign:TimePicker x:Name="checkouttime_picker"
-                                               Margin="10,9,0,0"
+                                               Margin="5,15,15,0"
                                                HorizontalAlignment="Center"
                                                VerticalAlignment="Center"
                                                materialDesign:HintAssist.Hint="Check out time"
                                                Is24Hours="True"
-                                               SelectedTime="{Binding AddCheckOutTime}" />
+                                               SelectedTime="{Binding CheckOutTime}" />
+                    <DatePicker Width="100"
+                                Margin="5,10,15,5"
+                                VerticalAlignment="Center"
+                                materialDesign:HintAssist.Hint="Bill Date"
+                                SelectedDate="{Binding BillDate}"
+                                Style="{StaticResource MaterialDesignFloatingHintDatePicker}" />
                 </WrapPanel>
             </materialDesign:Card>
 
@@ -102,17 +126,21 @@
                 <WrapPanel>
                     <Button Width="100"
                             Margin="20"
-                            Command="{Binding AddBookingCommand}"
+                            Command="{Binding AddCommand}"
                             Content="Add"/>
                     <!--Click="Button_Add"-->
                     <Button Width="100"
                             Margin="20"
-                            Command="{Binding EditBookingCommand}"
+                            Command="{Binding EditCommand}"
                             Content="Edit" />
                     <Button Width="100"
                             Margin="20"
-                            Command="{Binding DeleteBookingCommand}"
-                            Content="Delete" />
+                            Command="{Binding DeleteCommand}"
+                            Content="Delete"/>
+                    <Button Width="100"
+                            Margin="20"
+                            Command="{Binding ClearCommand}"
+                            Content="Clear"/>
                 </WrapPanel>
             </materialDesign:Card>
 
@@ -121,19 +149,19 @@
                                  VerticalAlignment="Stretch">
                 <ScrollViewer VerticalScrollBarVisibility="Auto">
                     <ListView ItemsSource="{Binding ListWithID}"
-                              SelectedItem="{Binding SelectedItemBooking, Mode=OneWayToSource}">
+                              SelectedItem="{Binding SelectedItem, Mode=TwoWay}">
                         <ListView.View>
                             <GridView>
-                                <GridViewColumn DisplayMemberBinding="{Binding Id}"
-                                                Header="Id" />
+                                <GridViewColumn DisplayMemberBinding="{Binding RoomNum}"
+                                                Header="Room Num" />
                                 <GridViewColumn DisplayMemberBinding="{Binding CustomerName}"
                                                 Header="Customer name" />
-                                <GridViewColumn DisplayMemberBinding="{Binding CustomerPhoneNumber}"
-                                                Header="Customer phone number" />
+                                <GridViewColumn DisplayMemberBinding="{Binding PhoneNumber}"
+                                                Header="Phone number" />
                                 <GridViewColumn DisplayMemberBinding="{Binding CustomerCCCD}"
-                                                Header="Customer CCCD" />
+                                                Header="CCCD" />
                                 <GridViewColumn DisplayMemberBinding="{Binding CustomerNationality}"
-                                                Header="Customer nationality" />
+                                                Header="Nationality" />
                                 <GridViewColumn DisplayMemberBinding="{Binding Date, StringFormat='dd/MM/yyyy'}"
                                                 Header="Date" />
                                 <GridViewColumn DisplayMemberBinding="{Binding CheckInTime, StringFormat='HH:mm'}"

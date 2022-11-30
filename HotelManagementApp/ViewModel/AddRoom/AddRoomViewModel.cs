@@ -57,7 +57,7 @@ namespace HotelManagementApp.ViewModel
                 var room = new Room()
                 {
                     RoomNum = RoomNum,
-                    RoomType = RoomType,
+                    IDRoomType = RoomType.ID,
                     Status = Status,
                 };
                 DataProvider.Instance.DB.Rooms.Add(room);
