@@ -1534,22 +1534,28 @@
                                                            RadiusX="6"
                                                            RadiusY="6"
                                                            Stroke="Gray" />
-                                                    <TextBox x:Name="txtUnit1"
-                                                         Width="210"
-                                                         Height="40"
-                                                         Margin="0,0,10,0"
-                                                         Padding="0"
-                                                         HorizontalAlignment="Right"
-                                                         HorizontalContentAlignment="Left"
-                                                         VerticalContentAlignment="Center"
-                                                         materialDesign:HintAssist.Hint="Sex"
-                                                         BorderThickness="0"
-                                                         Cursor="IBeam"
-                                                         FontSize="14"
-                                                         FontWeight="SemiBold"
-                                                         Foreground="Gray"
-                                                         MaxLines="1"
-                                                         Text="{Binding Sex, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" />
+                                                    <ComboBox x:Name="txtUnit1"
+                                                                 Width="210"
+                                                                 Height="40"
+                                                                 Margin="0,0,10,0"
+                                                                 Padding="0"
+                                                                 HorizontalAlignment="Right"
+                                                                 HorizontalContentAlignment="Left"
+                                                                 VerticalContentAlignment="Center"
+                                                                 materialDesign:HintAssist.Hint="Sex"
+                                                                 BorderThickness="0"
+                                                                 Cursor="IBeam"
+                                                                 FontSize="14"
+                                                                 FontWeight="SemiBold"
+                                                                 Foreground="Gray"
+                                                                 Text="{Binding Sex, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}">
+                                                            <ComboBoxItem>
+                                                                <TextBlock Text="Male"/>
+                                                            </ComboBoxItem>
+                                                            <ComboBoxItem>
+                                                                <TextBlock Text="Female"/>
+                                                            </ComboBoxItem>
+                                                </ComboBox>
                                                 </Grid>
                                                 <Grid Width="350"
                                                   Height="40"
