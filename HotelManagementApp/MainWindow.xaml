@@ -1544,15 +1544,15 @@
                                                                  VerticalContentAlignment="Center"
                                                                  materialDesign:HintAssist.Hint="Sex"
                                                                  BorderThickness="0"
-                                                                 Cursor="IBeam"
+                                                                 Cursor="Hand"
                                                                  FontSize="14"
                                                                  FontWeight="SemiBold"
                                                                  Foreground="Gray"
                                                                  Text="{Binding Sex, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}">
-                                                            <ComboBoxItem>
+                                                            <ComboBoxItem Cursor="Hand">
                                                                 <TextBlock Text="Male"/>
                                                             </ComboBoxItem>
-                                                            <ComboBoxItem>
+                                                            <ComboBoxItem Cursor="Hand">
                                                                 <TextBlock Text="Female"/>
                                                             </ComboBoxItem>
                                                 </ComboBox>
@@ -1646,7 +1646,7 @@
                                                            RadiusX="6"
                                                            RadiusY="6"
                                                            Stroke="Gray" />
-                                                <ComboBox x:Name="txtBirth"
+                                                <ComboBox x:Name="txtRole"
                                                          Width="210"
                                                          Height="40"
                                                          Margin="0,0,10,0"
@@ -1656,16 +1656,16 @@
                                                          VerticalContentAlignment="Center"
                                                          materialDesign:HintAssist.Hint="Role"
                                                          BorderThickness="0"
-                                                         Cursor="IBeam"
+                                                         Cursor="Hand"
                                                          FontSize="14"
                                                          FontWeight="SemiBold"
                                                          Foreground="Gray"
                                                          IsEditable="False"
-                                                         Text="{Binding Role, StringFormat='dd/MM/yyyy', Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">
-                                                    <ComboBoxItem>
+                                                         Text="{Binding Role, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">
+                                                    <ComboBoxItem Cursor="Hand">
                                                         <TextBlock Text="Admin"/>
                                                     </ComboBoxItem>
-                                                    <ComboBoxItem>
+                                                    <ComboBoxItem Cursor="Hand">
                                                         <TextBlock Text="Staff"/>
                                                     </ComboBoxItem>
                                                 </ComboBox>
