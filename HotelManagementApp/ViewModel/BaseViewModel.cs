@@ -18,7 +18,34 @@ namespace HotelManagementApp.ViewModel
         {
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
+        private Visibility _adminVisibility = Visibility.Collapsed;
+        public Visibility AdminVisibility
+        {
+            get => _adminVisibility;
+            set
+            {
+                if (_adminVisibility != value)
+                {
+                    _adminVisibility = value;
+                    OnPropertyChanged("AdminVisibility");
+                }
+            }
+        }
+        private Visibility _staffVisibility = Visibility.Collapsed;
+        public Visibility StaffVisibility
+        {
+            get => _staffVisibility;
+            set
+            {
+                if (_staffVisibility != value)
+                {
+                    _staffVisibility = value;
+                    OnPropertyChanged("StaffVisibility");
+                }
+            }
+        }
     }
+    
     public class RelayCommand<T> : ICommand
     {
         private readonly Predicate<T> _canExecute;
