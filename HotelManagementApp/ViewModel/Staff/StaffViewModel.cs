@@ -1,6 +1,7 @@
 ﻿using HotelManagementApp.Model;
 using HotelManagementApp.View;
 using Microsoft.Win32;
+using System;
 using System.Collections.ObjectModel;
 using System.IO;
 using System.Linq;
@@ -54,28 +55,13 @@ namespace HotelManagementApp.ViewModel
                     PhoneNum = SelectedItem.PhoneNumber;
                     Role = SelectedItem.Role;
                     ImageSource = SelectedItem.ImageData;
-                    if (ImageSource != null)
-                    {
-                        string destinationDirectory = Directory.GetParent(Directory.GetCurrentDirectory()).Parent.FullName + ImageSource;
-                        BitmapImage newBitmapImage = new BitmapImage();
-                        if(File.Exists(destinationDirectory))
-                        {
-                            newBitmapImage.BeginInit();
-
-                            newBitmapImage.StreamSource = new FileStream(destinationDirectory, FileMode.Open, FileAccess.Read);
-                            newBitmapImage.EndInit();
-                            EmployeeImage = newBitmapImage;
-                        }    
-                    }
-                    else
-                    {
-                        EmployeeImage = null;
-                    }
-
+                    LoadImage();
                 }
                 OnPropertyChanged();
             }
         }
+
+       
 
         public ICommand addCommand { get; set; }
         public ICommand SelectImageCommand { get; set; }
@@ -175,11 +161,7 @@ namespace HotelManagementApp.ViewModel
             OpenFile.Filter = "ALL supported Graphics| *.jpeg; *.jpg;*.png;";
             if (OpenFile.ShowDialog() == true)
             {
-                BitmapImage img = new BitmapImage();
-                img.BeginInit();
-                img.StreamSource = new FileStream(OpenFile.FileName, FileMode.Open, FileAccess.Read);
-                img.EndInit();
-                EmployeeImage = img;
+                EmployeeImage = LoadBitmapImage(OpenFile.FileName);
                 _SelectedImagePath = OpenFile.FileName;
             }
             OnPropertyChanged();
@@ -200,8 +182,35 @@ namespace HotelManagementApp.ViewModel
             {
                 ImageSource = null;
             }
-
             OnPropertyChanged();
+        }
+        private void LoadImage()
+        {
+            if (ImageSource != null)
+            {
+                string destinationDirectory = Directory.GetParent(Directory.GetCurrentDirectory()).Parent.FullName + ImageSource;
+                if (File.Exists(destinationDirectory))
+                {
+                    EmployeeImage = LoadBitmapImage(destinationDirectory);
+                }
+            }
+            else
+            {
+                EmployeeImage = null;
+            }
+        }
+        public static BitmapImage LoadBitmapImage(string fileName)
+        {
+            using (var stream = new FileStream(fileName, FileMode.Open))
+            {
+                var bitmapImage = new BitmapImage();
+                bitmapImage.BeginInit();
+                bitmapImage.CacheOption = BitmapCacheOption.OnLoad;
+                bitmapImage.StreamSource = stream;
+                bitmapImage.EndInit();
+                bitmapImage.Freeze();
+                return bitmapImage;
+            }
         }
     }       
 }

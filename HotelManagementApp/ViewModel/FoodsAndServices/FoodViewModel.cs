@@ -1,6 +1,7 @@
 ﻿using HotelManagementApp.Model;
 using Microsoft.Win32;
 using System.Collections.ObjectModel;
+using System.ComponentModel.DataAnnotations;
 using System.Data;
 using System.IO;
 using System.Linq;
@@ -48,24 +49,7 @@ namespace HotelManagementApp.ViewModel
                     Price = SelectedItem.Price;
                     Type = SelectedItem.Type;
                     ImageSource = SelectedItem.ImageData;
-                    if (ImageSource != null)
-                    {
-                        string destinationDirectory = Directory.GetParent(Directory.GetCurrentDirectory()).Parent.FullName + ImageSource;
-                        BitmapImage newBitmapImage = new BitmapImage();
-                        if (File.Exists(destinationDirectory))
-                        {
-                            newBitmapImage.BeginInit();
-
-                            newBitmapImage.StreamSource = new FileStream(destinationDirectory, FileMode.Open, FileAccess.Read);
-                            newBitmapImage.EndInit();
-                            Image = newBitmapImage;
-                        }
-                    }
-                    else
-                    {
-                        Image = null;
-                    }
-
+                    LoadImage();
                 }
                 OnPropertyChanged();
             }
@@ -170,15 +154,12 @@ namespace HotelManagementApp.ViewModel
             OpenFile.Filter = "ALL supported Graphics| *.jpeg; *.jpg;*.png;";
             if (OpenFile.ShowDialog() == true)
             {
-                BitmapImage img = new BitmapImage();
-                img.BeginInit();
-                img.StreamSource = new FileStream(OpenFile.FileName, FileMode.Open, FileAccess.Read);
-                img.EndInit();
-                Image = img;
+                Image = LoadBitmapImage(OpenFile.FileName);
                 _SelectedImagePath = OpenFile.FileName;
             }
             OnPropertyChanged();
         }
+
         void addImage(FoodsAndService food)
         {
             string destinationDirectory = Directory.GetParent(Directory.GetCurrentDirectory()).Parent.FullName;
@@ -194,9 +175,37 @@ namespace HotelManagementApp.ViewModel
             {
                 ImageSource = null;
             }
-
             OnPropertyChanged();
         }
+        private void LoadImage()
+        {
+            if (ImageSource != null)
+            {
+                string destinationDirectory = Directory.GetParent(Directory.GetCurrentDirectory()).Parent.FullName + ImageSource;
+                if (File.Exists(destinationDirectory))
+                {
+                    Image = LoadBitmapImage(destinationDirectory);
+                }
+            }
+            else
+            {
+                Image = null;
+            }
+        }
+        public static BitmapImage LoadBitmapImage(string fileName)
+        {
+            using (var stream = new FileStream(fileName, FileMode.Open))
+            {
+                var bitmapImage = new BitmapImage();
+                bitmapImage.BeginInit();
+                bitmapImage.CacheOption = BitmapCacheOption.OnLoad;
+                bitmapImage.StreamSource = stream;
+                bitmapImage.EndInit();
+                bitmapImage.Freeze();
+                return bitmapImage;
+            }
+        }
+
     }
 
 }
