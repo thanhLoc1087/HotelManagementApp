@@ -186,6 +186,10 @@ namespace HotelManagementApp.ViewModel
                 {
                     Image = LoadBitmapImage(destinationDirectory);
                 }
+                else
+                {
+                    Image = null;
+                }
             }
             else
             {

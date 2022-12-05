@@ -1375,7 +1375,6 @@
 
                             </Border>
                         </Grid>
-                        <!--DataContext="{StaticResource EmployeeVM}"-->
                         <Grid Grid.Column="1">
                                 <Border Background="Transparent"
                                     Visibility="{Binding Visibility}">
@@ -1389,9 +1388,9 @@
                                         </Border.Effect>
                                         <Grid>
                                             <Grid.RowDefinitions>
-                                                <RowDefinition Height="204*" />
-                                                <RowDefinition Height="325*" />
-                                                <RowDefinition Height="94*" />
+                                                <RowDefinition Height="auto" />
+                                                <RowDefinition Height="*" />
+                                                <RowDefinition Height="auto" />
                                             </Grid.RowDefinitions>
                                             <Grid Grid.Row="0"
                                               Margin="0,0,-0.2,1">
@@ -1418,7 +1417,7 @@
                                                     <Button x:Name="btnSelectImage1"
                                                             Width="120"
                                                             Height="35"
-                                                            Margin="0,0,0,-56"
+                                                            Margin="0,0,0,-45"
                                                             Padding="0"
                                                             HorizontalAlignment="Center"
                                                             VerticalAlignment="Bottom"
@@ -1437,7 +1436,7 @@
                                               Grid.Row="1"
                                               Grid.RowSpan="2"
                                               Width="420"
-                                              Height="290"
+                                              Height="350"
                                               Margin="20,55,20.8,0"
                                               HorizontalAlignment="Center"
                                               VerticalAlignment="Top">
@@ -1634,7 +1633,76 @@
                                                     </ComboBoxItem>
                                                 </ComboBox>
                                             </Grid>
+                                            <Grid Width="350"
+                                                  Height="40"
+                                                  Margin="0,250,0,0"
+                                                  VerticalAlignment="Top">
+                                                <Label Height="32"
+                                                       Margin="0"
+                                                       HorizontalAlignment="Left"
+                                                       VerticalAlignment="Center"
+                                                       Content="Username"
+                                                       FontSize="18"
+                                                       FontWeight="SemiBold"
+                                                       Foreground="Black" />
+                                                <Rectangle Width="230"
+                                                           Height="40"
+                                                           Margin="0"
+                                                           HorizontalAlignment="Right"
+                                                           RadiusX="6"
+                                                           RadiusY="6"
+                                                           Stroke="Gray" />
+                                                <TextBox Width="210"
+                                                         Height="40"
+                                                         Margin="0,0,10,0"
+                                                         Padding="0"
+                                                         HorizontalAlignment="Right"
+                                                         HorizontalContentAlignment="Left"
+                                                         VerticalContentAlignment="Center"
+                                                         materialDesign:HintAssist.Hint="Username"
+                                                         BorderThickness="0"
+                                                         Cursor="IBeam"
+                                                         FontSize="14"
+                                                         FontWeight="SemiBold"
+                                                         Foreground="Gray"
+                                                         Text="{Binding Username, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
                                             </Grid>
+                                            <Grid Width="350"
+                                                  Height="40"
+                                                  Margin="0,300,0,0"
+                                                  VerticalAlignment="Top"
+                                                  Visibility="{Binding AdminVisibility}">
+                                                <Label Height="32"
+                                                       Margin="0"
+                                                       HorizontalAlignment="Left"
+                                                       VerticalAlignment="Center"
+                                                       Content="Password"
+                                                       FontSize="18"
+                                                       FontWeight="SemiBold"
+                                                       Foreground="Black" />
+                                                <Rectangle Width="230"
+                                                           Height="40"
+                                                           Margin="0"
+                                                           HorizontalAlignment="Right"
+                                                           RadiusX="6"
+                                                           RadiusY="6"
+                                                           Stroke="Gray" />
+                                                <TextBox Width="210"
+                                                         Height="40"
+                                                         Margin="0,0,10,0"
+                                                         Padding="0"
+                                                         HorizontalAlignment="Right"
+                                                         HorizontalContentAlignment="Left"
+                                                         VerticalContentAlignment="Center"
+                                                         materialDesign:HintAssist.Hint="Password"
+                                                         BorderThickness="0"
+                                                         Cursor="IBeam"
+                                                         FontSize="14"
+                                                         FontWeight="SemiBold"
+                                                         Foreground="Gray"
+                                                         Text="{Binding Password, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+                                            </Grid>
+                                        </Grid>
 
                                             <Grid Grid.Row="2"
                                               Height="40"

@@ -112,12 +112,6 @@
                                                materialDesign:HintAssist.Hint="Check out time"
                                                Is24Hours="True"
                                                SelectedTime="{Binding CheckOutTime}" />
-                    <DatePicker Width="100"
-                                Margin="5,10,15,5"
-                                VerticalAlignment="Center"
-                                materialDesign:HintAssist.Hint="Bill Date"
-                                SelectedDate="{Binding BillDate}"
-                                Style="{StaticResource MaterialDesignFloatingHintDatePicker}" />
                 </WrapPanel>
             </materialDesign:Card>
 

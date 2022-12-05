@@ -37,8 +37,6 @@ namespace HotelManagementApp.ViewModel
         public DateTime? CheckOutDate { get => _CheckOutDate; set { _CheckOutDate = value; OnPropertyChanged(); } }
         private DateTime? _CheckOutTime = null ;
         public DateTime? CheckOutTime { get => _CheckOutTime; set { _CheckOutTime = value; OnPropertyChanged(); } }
-        private DateTime? _BillDate;
-        public DateTime? BillDate { get => _BillDate; set { _BillDate = value; OnPropertyChanged(); } }
         public ICommand AddCommand { get; set; }
         public ICommand DeleteCommand { get; set; }
         public ICommand EditCommand { get; set; }
@@ -86,14 +84,12 @@ namespace HotelManagementApp.ViewModel
                 // Create & save new bill detail
                 var billDetail = new BillDetail()
                 {
-                    IDStaff = 1,
+                    IDStaff = (int)Const.ActiveAccount.IDStaff,
                     IDCustomer = customer.ID,
-                    BillDate = BillDate
                 };
 
                 DataProvider.Instance.DB.BillDetails.Add(billDetail);
                 DataProvider.Instance.DB.SaveChanges();
-                billDetail = DataProvider.Instance.DB.BillDetails.Where(x => x.IDCustomer == customer.ID && x.BillDate == BillDate).FirstOrDefault();
 
                 // Create & save new room reservation
                 var room = DataProvider.Instance.DB.Rooms.Where(x => x.RoomNum == RoomNum).FirstOrDefault();
@@ -108,8 +104,6 @@ namespace HotelManagementApp.ViewModel
                 DataProvider.Instance.DB.RoomsReservations.Add(roomReservation);
                 DataProvider.Instance.DB.SaveChanges();
 
-                //DataProvider.Instance.DB.RoomsReservations.Add(roomReservation);
-                DataProvider.Instance.DB.SaveChanges();
                 //LoadStaffsList();
             });
 
@@ -127,7 +121,7 @@ namespace HotelManagementApp.ViewModel
             }, (p) =>
             {
                 RoomNum = CustomerName = Sex = PhoneNum = Email = CCCD = Nationality = null;
-                CheckInDate = CheckOutDate = CheckInTime = CheckOutTime = BillDate = null;
+                CheckInDate = CheckOutDate = CheckInTime = CheckOutTime = null;
             });
         }
     }
