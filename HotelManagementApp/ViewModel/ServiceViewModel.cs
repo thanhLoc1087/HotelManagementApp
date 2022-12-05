@@ -12,5 +12,6 @@ namespace HotelManagementApp.ViewModel
     {
         private FoodsAndService _Service;
         public FoodsAndService Service { get => _Service; set { _Service = value; OnPropertyChanged(); } }
+
     }
 }
