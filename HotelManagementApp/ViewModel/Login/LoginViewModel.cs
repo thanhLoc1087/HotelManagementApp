@@ -41,6 +41,7 @@ namespace HotelManagementApp.ViewModel
             if (count > 0)
             {
                 IsLogin = true;
+                Const.ActiveAccount = DataProvider.Instance.DB.Accounts.Single(x => x.Username == Username);
                 p.Close();
             }
             else
