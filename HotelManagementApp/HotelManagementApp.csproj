@@ -132,6 +132,7 @@
     <Compile Include="ViewModel\FoodsAndServices\FoodViewModel.cs" />
     <Compile Include="ViewModel\Login\LoginViewModel.cs" />
     <Compile Include="ViewModel\MainViewModel.cs" />
+    <Compile Include="ViewModel\ServiceViewModel.cs" />
     <Compile Include="ViewModel\Settings\SettingsViewModel.cs" />
     <Compile Include="ViewModel\SingleBedRoomInfo\SingleBedroomInfoViewModel.cs" />
     <Compile Include="ViewModel\Staff\StaffViewModel.cs" />
