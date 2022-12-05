@@ -1,4 +1,4 @@
-﻿<Window x:Class="HotelManagementApp.MainWindow"
+<Window x:Class="HotelManagementApp.MainWindow"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
@@ -77,46 +77,45 @@
                     </TabItem.Header>
                     <!--  MainUI start here  -->
                     <Grid>
-                        <Grid.RowDefinitions>
-                            <RowDefinition Height="250" />
-                            <RowDefinition Height="*" />
-
-                        </Grid.RowDefinitions>
-                        <Grid Grid.Row="0">
-                            <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="400" />
-                                <ColumnDefinition Width="400" />
-                                <ColumnDefinition Width="400" />
-                            </Grid.ColumnDefinitions>
-                            <Grid Grid.Column="0">
-                                <materialDesign:Card Margin="25"
+                        <Grid Name="MainUI" Visibility="{Binding AdminVisibility}">
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="250" />
+                                <RowDefinition Height="*" />
+                            </Grid.RowDefinitions>
+                            <Grid Grid.Row="0">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="400" />
+                                    <ColumnDefinition Width="400" />
+                                    <ColumnDefinition Width="400" />
+                                </Grid.ColumnDefinitions>
+                                <Grid Grid.Column="0">
+                                    <materialDesign:Card Margin="25"
                                                      Padding="8"
                                                      materialDesign:ShadowAssist.ShadowDepth="Depth5"
                                                      Foreground="{x:Null}">
 
-                                    <materialDesign:Card.Background>
-                                        <LinearGradientBrush StartPoint="0.5,0"
+                                        <materialDesign:Card.Background>
+                                            <LinearGradientBrush StartPoint="0.5,0"
                                                              EndPoint="0.5,1">
-                                            <GradientStop Offset="1"
+                                                <GradientStop Offset="1"
                                                           Color="#FF7D27FF" />
-                                            <GradientStop Color="#FFBB2086" />
-                                        </LinearGradientBrush>
-                                    </materialDesign:Card.Background>
-
-                                </materialDesign:Card>
-                                <Label x:Name="label_money"
+                                                <GradientStop Color="#FFBB2086" />
+                                            </LinearGradientBrush>
+                                        </materialDesign:Card.Background>
+                                    </materialDesign:Card>
+                                    <Label x:Name="label_money"
                                        Width="93"
                                        Height="64"
                                        Margin="150,147,0,0"
                                        HorizontalAlignment="Left"
                                        VerticalAlignment="Top"
                                        Content="">
-                                    <Label.Background>
-                                        <ImageBrush ImageSource="Images/money.png"
+                                        <Label.Background>
+                                            <ImageBrush ImageSource="Images/money.png"
                                                     Stretch="Uniform" />
-                                    </Label.Background>
-                                </Label>
-                                <Label x:Name="label_income"
+                                        </Label.Background>
+                                    </Label>
+                                    <Label x:Name="label_income"
                                        Width="346"
                                        Height="39"
                                        Margin="26,39,0,0"
@@ -127,7 +126,7 @@
                                        FontSize="24"
                                        FontWeight="Bold"
                                        Foreground="#DDF9F9F9" />
-                                <Label x:Name="income"
+                                    <Label x:Name="income"
                                        Width="344"
                                        Height="31"
                                        Margin="28,105,0,0"
@@ -138,26 +137,26 @@
                                        FontSize="22"
                                        FontWeight="Bold"
                                        Foreground="#DDF9F9F9" />
-                                <!--Content="{Binding Alltimerevenue}"-->
+                                    <!--Content="{Binding Alltimerevenue}"-->
 
-                            </Grid>
-                            <Grid Grid.Column="1">
-                                <materialDesign:Card Margin="25"
+                                </Grid>
+                                <Grid Grid.Column="1">
+                                    <materialDesign:Card Margin="25"
                                                      Padding="8"
                                                      materialDesign:ShadowAssist.ShadowDepth="Depth5"
                                                      Foreground="{x:Null}">
 
-                                    <materialDesign:Card.Background>
-                                        <LinearGradientBrush StartPoint="0.5,0"
+                                        <materialDesign:Card.Background>
+                                            <LinearGradientBrush StartPoint="0.5,0"
                                                              EndPoint="0.5,1">
-                                            <GradientStop Color="#FFF51C40" />
-                                            <GradientStop Offset="1"
+                                                <GradientStop Color="#FFF51C40" />
+                                                <GradientStop Offset="1"
                                                           Color="#FFD89B65" />
-                                        </LinearGradientBrush>
-                                    </materialDesign:Card.Background>
+                                            </LinearGradientBrush>
+                                        </materialDesign:Card.Background>
 
-                                </materialDesign:Card>
-                                <Label x:Name="label_guesttext"
+                                    </materialDesign:Card>
+                                    <Label x:Name="label_guesttext"
                                        Width="347"
                                        Height="39"
                                        Margin="27,39,0,0"
@@ -168,19 +167,19 @@
                                        FontSize="24"
                                        FontWeight="Bold"
                                        Foreground="#DDF9F9F9" />
-                                <Label x:Name="label_guest"
+                                    <Label x:Name="label_guest"
                                        Width="93"
                                        Height="64"
                                        Margin="147,149,0,0"
                                        HorizontalAlignment="Left"
                                        VerticalAlignment="Top"
                                        Content="">
-                                    <Label.Background>
-                                        <ImageBrush ImageSource="Images/tags.png"
+                                        <Label.Background>
+                                            <ImageBrush ImageSource="Images/tags.png"
                                                     Stretch="Uniform" />
-                                    </Label.Background>
-                                </Label>
-                                <Label x:Name="guest"
+                                        </Label.Background>
+                                    </Label>
+                                    <Label x:Name="guest"
                                        Width="344"
                                        Height="33"
                                        Margin="29,104,0,0"
@@ -190,30 +189,30 @@
                                        FontSize="22"
                                        FontWeight="Bold"
                                        Foreground="#DDF9F9F9" />
-                                <!--Content="{Binding ThisMonthRevenue}"-->
-                            </Grid>
-                            <Grid Grid.Column="2">
-                                <Grid.ColumnDefinitions>
-                                    <ColumnDefinition Width="0*" />
-                                    <ColumnDefinition />
-                                </Grid.ColumnDefinitions>
-                                <materialDesign:Card Margin="25,25,25,25"
+                                    <!--Content="{Binding ThisMonthRevenue}"-->
+                                </Grid>
+                                <Grid Grid.Column="2">
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="0*" />
+                                        <ColumnDefinition />
+                                    </Grid.ColumnDefinitions>
+                                    <materialDesign:Card Margin="25,25,25,25"
                                                      Padding="8"
                                                      materialDesign:ShadowAssist.ShadowDepth="Depth5"
                                                      Foreground="{x:Null}"
                                                      Grid.ColumnSpan="2">
 
-                                    <materialDesign:Card.Background>
-                                        <LinearGradientBrush StartPoint="0.5,0"
+                                        <materialDesign:Card.Background>
+                                            <LinearGradientBrush StartPoint="0.5,0"
                                                              EndPoint="0.5,1">
-                                            <GradientStop Offset="1"
+                                                <GradientStop Offset="1"
                                                           Color="#FF016CFD" />
-                                            <GradientStop Color="#FF00E4FF" />
-                                        </LinearGradientBrush>
-                                    </materialDesign:Card.Background>
+                                                <GradientStop Color="#FF00E4FF" />
+                                            </LinearGradientBrush>
+                                        </materialDesign:Card.Background>
 
-                                </materialDesign:Card>
-                                <Label x:Name="label1_Copy"
+                                    </materialDesign:Card>
+                                    <Label x:Name="label1_Copy"
                                        Width="93"
                                        Height="64"
                                        Margin="156,145,0,0"
@@ -221,12 +220,12 @@
                                        VerticalAlignment="Top"
                                        Content=""
                                        Grid.ColumnSpan="2">
-                                    <Label.Background>
-                                        <ImageBrush ImageSource="Images/dollar.png"
+                                        <Label.Background>
+                                            <ImageBrush ImageSource="Images/dollar.png"
                                                     Stretch="Uniform" />
-                                    </Label.Background>
-                                </Label>
-                                <Label x:Name="label_Copy4"
+                                        </Label.Background>
+                                    </Label>
+                                    <Label x:Name="label_Copy4"
                                        Width="342"
                                        Height="39"
                                        Margin="0,39,0,0"
@@ -238,7 +237,7 @@
                                        FontWeight="Bold"
                                        Foreground="#DDF9F9F9"
                                        Grid.Column="1" />
-                                <Label x:Name="usd"
+                                    <Label x:Name="usd"
                                        Width="344"
                                        Height="33"
                                        Margin="0,104,0,0"
@@ -250,53 +249,53 @@
                                        Foreground="#DDF9F9F9"
                                        RenderTransformOrigin="0.5,0.5"
                                        Grid.Column="1">
-                                    <!--Content="{Binding AlltimerevenueUSD}"-->
-                                    <Label.RenderTransform>
-                                        <TransformGroup>
-                                            <ScaleTransform />
-                                            <SkewTransform />
-                                            <RotateTransform Angle="-0.549" />
-                                            <TranslateTransform />
-                                        </TransformGroup>
-                                    </Label.RenderTransform>
-                                </Label>
+                                        <!--Content="{Binding AlltimerevenueUSD}"-->
+                                        <Label.RenderTransform>
+                                            <TransformGroup>
+                                                <ScaleTransform />
+                                                <SkewTransform />
+                                                <RotateTransform Angle="-0.549" />
+                                                <TranslateTransform />
+                                            </TransformGroup>
+                                        </Label.RenderTransform>
+                                    </Label>
+                                </Grid>
                             </Grid>
-                        </Grid>
-                        <Grid Grid.Row="1">
-                            <Grid.RowDefinitions>
-                                <RowDefinition Height="74*" />
-                                <RowDefinition Height="133*" />
-                            </Grid.RowDefinitions>
-                            <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="350" />
-                                <ColumnDefinition Width="*" />
-                            </Grid.ColumnDefinitions>
-                            <Grid Grid.RowSpan="2"
+                            <Grid Grid.Row="1">
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="74*" />
+                                    <RowDefinition Height="133*" />
+                                </Grid.RowDefinitions>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="350" />
+                                    <ColumnDefinition Width="*" />
+                                </Grid.ColumnDefinitions>
+                                <Grid Grid.RowSpan="2"
                                   Grid.Column="0"
                                   Margin="25,25,25.4,24.6">
-                                <materialDesign:Card Padding="8"
+                                    <materialDesign:Card Padding="8"
                                                      materialDesign:ShadowAssist.ShadowDepth="Depth3"
                                                      Foreground="{x:Null}"
                                                      UniformCornerRadius="10" />
-                                <!--<Wpf:PieChart
+                                    <!--<Wpf:PieChart
                                     DataTooltip="{x:Null}"
                                     Hoverable="True"
                                     InnerRadius="10"
                                     LegendLocation="Bottom"
                                     Series="{Binding SeriesCollection}" />-->
-                                <Button Width="100"
+                                    <Button Width="100"
                                         Margin="100,0,100.4,331.6"
                                         Content="RELOAD" />
-                                <!--Command="{Binding ReloadStatictics}"-->
-                            </Grid>
-                            <Grid Grid.RowSpan="2"
+                                    <!--Command="{Binding ReloadStatictics}"-->
+                                </Grid>
+                                <Grid Grid.RowSpan="2"
                                   Grid.Column="1"
                                   Margin="24.6,25,25,24.6">
-                                <materialDesign:Card Padding="8"
+                                    <materialDesign:Card Padding="8"
                                                      materialDesign:ShadowAssist.ShadowDepth="Depth3"
                                                      Foreground="{x:Null}"
                                                      UniformCornerRadius="10" />
-                                <!--<Wpf:CartesianChart LegendLocation="Right" Series="{Binding SeriesCollection1}">
+                                    <!--<Wpf:CartesianChart LegendLocation="Right" Series="{Binding SeriesCollection1}">
                                     <Wpf:CartesianChart.AxisY>
                                         <Wpf:Axis Title="Income" LabelFormatter="{Binding YFormatter}" />
                                     </Wpf:CartesianChart.AxisY>
@@ -305,9 +304,11 @@
                                     </Wpf:CartesianChart.AxisX>
                                 </Wpf:CartesianChart>-->
 
+                                </Grid>
                             </Grid>
                         </Grid>
                     </Grid>
+
                 </TabItem>
                 <TabItem>
 
@@ -1415,19 +1416,20 @@
                                                            StrokeDashArray="4 2"
                                                            StrokeThickness="4" />
                                                     <Button x:Name="btnSelectImage1"
-                                                        Width="120"
-                                                        Height="35"
-                                                        Margin="0,0,0,-56"
-                                                        Padding="0"
-                                                        HorizontalAlignment="Center"
-                                                        VerticalAlignment="Bottom"
-                                                        Command="{Binding SelectImageCommand}"
-                                                        CommandParameter="{Binding ElementName=grdSelectImg1}"
-                                                        Content="Select Avatar"
-                                                        FocusVisualStyle="{x:Null}"
-                                                        FontSize="16"
-                                                        FontWeight="SemiBold"
-                                                        ToolTip="Chọn ảnh" />
+                                                            Width="120"
+                                                            Height="35"
+                                                            Margin="0,0,0,-56"
+                                                            Padding="0"
+                                                            HorizontalAlignment="Center"
+                                                            VerticalAlignment="Bottom"
+                                                            Command="{Binding SelectImageCommand}"
+                                                            CommandParameter="{Binding ElementName=grdSelectImg1}"
+                                                            Content="Select Avatar"
+                                                            FocusVisualStyle="{x:Null}"
+                                                            FontSize="16"
+                                                            FontWeight="SemiBold"
+                                                            ToolTip="Select Image" 
+                                                            Visibility="{Binding AdminVisibility}"/>
 
                                                 </Grid>
                                             </Grid>
@@ -1496,22 +1498,28 @@
                                                            RadiusX="6"
                                                            RadiusY="6"
                                                            Stroke="Gray" />
-                                                    <TextBox x:Name="txtUnit1"
-                                                         Width="210"
-                                                         Height="40"
-                                                         Margin="0,0,10,0"
-                                                         Padding="0"
-                                                         HorizontalAlignment="Right"
-                                                         HorizontalContentAlignment="Left"
-                                                         VerticalContentAlignment="Center"
-                                                         materialDesign:HintAssist.Hint="Sex"
-                                                         BorderThickness="0"
-                                                         Cursor="IBeam"
-                                                         FontSize="14"
-                                                         FontWeight="SemiBold"
-                                                         Foreground="Gray"
-                                                         MaxLines="1"
-                                                         Text="{Binding Sex, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" />
+                                                    <ComboBox x:Name="txtUnit1"
+                                                                 Width="210"
+                                                                 Height="40"
+                                                                 Margin="0,0,10,0"
+                                                                 Padding="0"
+                                                                 HorizontalAlignment="Right"
+                                                                 HorizontalContentAlignment="Left"
+                                                                 VerticalContentAlignment="Center"
+                                                                 materialDesign:HintAssist.Hint="Sex"
+                                                                 BorderThickness="0"
+                                                                 Cursor="Hand"
+                                                                 FontSize="14"
+                                                                 FontWeight="SemiBold"
+                                                                 Foreground="Gray"
+                                                                 Text="{Binding Sex, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}">
+                                                            <ComboBoxItem Cursor="Hand">
+                                                                <TextBlock Text="Male"/>
+                                                            </ComboBoxItem>
+                                                            <ComboBoxItem Cursor="Hand">
+                                                                <TextBlock Text="Female"/>
+                                                            </ComboBoxItem>
+                                                </ComboBox>
                                                 </Grid>
                                                 <Grid Width="350"
                                                   Height="40"
@@ -1602,7 +1610,7 @@
                                                            RadiusX="6"
                                                            RadiusY="6"
                                                            Stroke="Gray" />
-                                                <ComboBox x:Name="txtBirth"
+                                                <ComboBox x:Name="txtRole"
                                                          Width="210"
                                                          Height="40"
                                                          Margin="0,0,10,0"
@@ -1612,16 +1620,16 @@
                                                          VerticalContentAlignment="Center"
                                                          materialDesign:HintAssist.Hint="Role"
                                                          BorderThickness="0"
-                                                         Cursor="IBeam"
+                                                         Cursor="Hand"
                                                          FontSize="14"
                                                          FontWeight="SemiBold"
                                                          Foreground="Gray"
                                                          IsEditable="False"
-                                                         Text="{Binding Role, StringFormat='dd/MM/yyyy', Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">
-                                                    <ComboBoxItem>
+                                                         Text="{Binding Role, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">
+                                                    <ComboBoxItem Cursor="Hand">
                                                         <TextBlock Text="Admin"/>
                                                     </ComboBoxItem>
-                                                    <ComboBoxItem>
+                                                    <ComboBoxItem Cursor="Hand">
                                                         <TextBlock Text="Staff"/>
                                                     </ComboBoxItem>
                                                 </ComboBox>
@@ -1650,7 +1658,8 @@
                                                         FocusVisualStyle="{x:Null}"
                                                         FontSize="18"
                                                         IsDefault="True"
-                                                        ToolTip="Thêm" />
+                                                        ToolTip="Thêm" 
+                                                            Visibility="{Binding AdminVisibility}"/>
                                                 </Grid>
                                                 <Grid Grid.Column="1">
                                                     <Button x:Name="btnEdit1"
@@ -1667,23 +1676,25 @@
                                                         FocusVisualStyle="{x:Null}"
                                                         FontSize="18"
                                                         IsDefault="True"
-                                                        ToolTip="Sửa" />
+                                                        ToolTip="Sửa" 
+                                                            Visibility="{Binding AdminVisibility}"/>
                                                 </Grid>
                                                 <Grid Grid.Column="2">
                                                     <Button x:Name="btnDelete1"
-                                                        Width="100"
-                                                        Height="40"
-                                                        Margin="0"
-                                                        Padding="0"
-                                                        VerticalAlignment="Center"
-                                                        Background="#5C0DAC"
-                                                        Command="{Binding deleteCommand}"
-                                                        CommandParameter="{Binding ElementName=grdSelectImg1}"
-                                                        Content="Delete"
-                                                        FocusVisualStyle="{x:Null}"
-                                                        FontSize="18"
-                                                        Style="{StaticResource MaterialDesignRaisedButton}"
-                                                        ToolTip="Xóa" />
+                                                            Width="100"
+                                                            Height="40"
+                                                            Margin="0"
+                                                            Padding="0"
+                                                            VerticalAlignment="Center"
+                                                            Background="#5C0DAC"
+                                                            Command="{Binding deleteCommand}"
+                                                            CommandParameter="{Binding ElementName=grdSelectImg1}"
+                                                            Content="Delete"
+                                                            FocusVisualStyle="{x:Null}"
+                                                            FontSize="18"
+                                                            Style="{StaticResource MaterialDesignRaisedButton}"
+                                                            ToolTip="Xóa" 
+                                                            Visibility="{Binding AdminVisibility}"/>
                                                 </Grid>
 
                                             </Grid>

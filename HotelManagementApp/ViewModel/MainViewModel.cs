@@ -26,7 +26,7 @@ namespace HotelManagementApp.ViewModel
             LoadedWindowCommand = new RelayCommand<object>((p) => { return true; }, (p) =>
             {
                 IsLoaded = true;
-                var mainMenu = p as Window;
+                var mainMenu = p as MainWindow;
                 if (mainMenu == null)
                     return;
                 mainMenu.Hide();
@@ -37,6 +37,9 @@ namespace HotelManagementApp.ViewModel
                 var loginVM = loginWindow.DataContext as LoginViewModel;
                 if(loginVM.IsLogin)
                 {
+                    Authorise();
+                    AdminVisibility = Const.AdminVisibility;
+                    StaffVisibility = Const.StaffVisibility;
                     mainMenu.Show();
                 }
                 else
@@ -52,6 +55,20 @@ namespace HotelManagementApp.ViewModel
                 singleBedroomWindow.ShowDialog();
             }
             );
+            public void Authorise()
+            {
+                Staff activeStaff = DataProvider.Instance.DB.Staffs.Single(x => x.ID == Const.ActiveAccount.IDStaff);
+                if (activeStaff.Role == "")
+                {
+                    Const.AdminVisibility = Visibility.Visible;
+                    Const.StaffVisibility = Visibility.Collapsed;
+                }
+                else if (activeStaff.Role == "")
+                {
+                    Const.AdminVisibility = Visibility.Collapsed;
+                    Const.StaffVisibility = Visibility.Visible;
+                }
+            }
         }
     }
 }
