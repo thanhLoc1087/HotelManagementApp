@@ -914,7 +914,82 @@
                                         <RowDefinition Height="1*" />
                                         <RowDefinition Height="9*" />
                                     </Grid.RowDefinitions>
-                                    <Grid Grid.Row="0" />
+                                    <Grid Grid.Row="0">
+                                        <StackPanel Orientation="Horizontal">
+                                            <Border
+                                                Margin="15,0,0,0"
+                                                Height="40"
+                                                Width="115"
+                                                CornerRadius="16"
+                                                Background="#6C63FF"
+                                                >
+                                                <ComboBox
+                                                    Style="{StaticResource MaterialDesignFilledComboBox}"
+                                                    materialDesign:TextFieldAssist.TextBoxViewMargin="2,-11,-10,0"
+                                                    materialDesign:TextFieldAssist.TextFieldCornerRadius="14"
+                                                    materialDesign:HintAssist.Hint="Filter"
+                                                    materialDesign:TextFieldAssist.DecorationVisibility="Hidden"
+                                                    BorderThickness="0"
+                                                    materialDesign:HintAssist.Foreground="White"
+                                                    Background="White"
+                                                    Height="35"
+                                                    FontSize="14"
+                                                    Text="{Binding Filter, UpdateSourceTrigger=PropertyChanged}"
+                                                    Width="110">
+                                                    <ComboBoxItem></ComboBoxItem>
+                                                    <ComboBoxItem>ID</ComboBoxItem>
+                                                    <ComboBoxItem>Name</ComboBoxItem>
+                                                    <ComboBoxItem>Unit</ComboBoxItem>
+                                                    <ComboBoxItem>Price</ComboBoxItem>
+                                                </ComboBox>
+                                            </Border>
+                                            <TextBox
+                                                    x:Name="tbxSearch"
+                                                    Width="410"
+                                                    Height="40"
+                                                    Margin="15,0,0,0"
+                                                    BorderBrush="#6C63FF"
+                                                    Foreground="Black"
+                                                    FontSize="14"
+                                                    FontWeight="SemiBold"
+                                                    materialDesign:HintAssist.Hint="Find"
+                                                    materialDesign:HintAssist.FontFamily="{StaticResource MaterialDesignFont}"
+                                                    materialDesign:HintAssist.Foreground="White"
+                                                    materialDesign:TextFieldAssist.TextBoxViewMargin="10,7,0,0"
+                                                    materialDesign:TextFieldAssist.TextFieldCornerRadius="15"
+                                                    materialDesign:TextFieldAssist.DecorationVisibility="Hidden"
+                                                    BorderThickness="3"
+                                                    VerticalAlignment="Center"
+                                                    CaretBrush="Gray"
+                                                    Text="{Binding SearchString, UpdateSourceTrigger=PropertyChanged}"
+                                                    />
+                                            <Border
+                                                Margin="15,0,0,0"
+                                                Height="40"
+                                                Width="115"
+                                                CornerRadius="16"
+                                                Background="#6C63FF"
+                                                >
+                                                <ComboBox
+                                                    Style="{StaticResource MaterialDesignFilledComboBox}"
+                                                    materialDesign:TextFieldAssist.TextBoxViewMargin="2,-11,-10,0"
+                                                    materialDesign:TextFieldAssist.TextFieldCornerRadius="14"
+                                                    materialDesign:HintAssist.Hint="Type"
+                                                    materialDesign:TextFieldAssist.DecorationVisibility="Hidden"
+                                                    BorderThickness="0"
+                                                    materialDesign:HintAssist.Foreground="White"
+                                                    Background="White"
+                                                    Height="35"
+                                                    FontSize="14"
+                                                    Text="{Binding TypeFilter, UpdateSourceTrigger=PropertyChanged}"
+                                                    Width="110">
+                                                    <ComboBoxItem></ComboBoxItem>
+                                                    <ComboBoxItem>Food</ComboBoxItem>
+                                                    <ComboBoxItem>Service</ComboBoxItem>
+                                                </ComboBox>
+                                            </Border>
+                                        </StackPanel>
+                                    </Grid>
                                     <Grid Grid.Row="1">
 
 
@@ -927,7 +1002,7 @@
                                                   Focusable="False"
                                                   IsReadOnly="True"
                                                   IsSynchronizedWithCurrentItem="False"
-                                                  ItemsSource="{Binding FoodsAndServicesList}"
+                                                  ItemsSource="{Binding FilteredList}"
                                                   SelectedItem="{Binding SelectedItem}">
                                             <i:Interaction.Triggers>
                                                 <i:EventTrigger EventName="SelectionChanged">
@@ -1298,6 +1373,8 @@
                                         <RowDefinition Height="9*" />
                                     </Grid.RowDefinitions>
                                     <Grid Grid.Row="0" />
+                                    <WrapPanel Orientation="Horizontal"
+                                               VerticalAlignment="Center"/>
                                     <Grid Grid.Row="1">
 
 
@@ -1461,7 +1538,7 @@
                                                            RadiusX="6"
                                                            RadiusY="6"
                                                            Stroke="Gray" />
-                                                    <TextBox x:Name="txtName1"
+                                                    <TextBox
                                                          Width="210"
                                                          Height="40"
                                                          Margin="0,0,10,0"

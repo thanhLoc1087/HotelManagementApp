@@ -1,10 +1,12 @@
 ﻿using HotelManagementApp.Model;
 using Microsoft.Win32;
+using System;
 using System.Collections.ObjectModel;
 using System.ComponentModel.DataAnnotations;
 using System.Data;
 using System.IO;
 using System.Linq;
+using System.Text;
 using System.Windows.Input;
 using System.Windows.Media.Imaging;
 
@@ -14,6 +16,16 @@ namespace HotelManagementApp.ViewModel
     {
         private ObservableCollection<FoodsAndService> _FoodsAndServicesList;
         public ObservableCollection<FoodsAndService> FoodsAndServicesList { get => _FoodsAndServicesList; set { _FoodsAndServicesList = value; OnPropertyChanged(); } }
+        private ObservableCollection<FoodsAndService> _FilteredList;
+        public ObservableCollection<FoodsAndService> FilteredList { get => _FilteredList; set { _FilteredList = value; OnPropertyChanged(); } }
+
+
+        private string _Filter;
+        public string Filter { get => _Filter; set { _Filter = value; LoadFilteredList(); OnPropertyChanged(); } }
+        private string _TypeFilter;
+        public string TypeFilter { get => _TypeFilter; set { _TypeFilter = value; LoadFilteredList(); OnPropertyChanged(); } }
+        private string _SearchString;
+        public string SearchString { get => _SearchString; set { _SearchString = value; LoadFilteredList(); OnPropertyChanged(); } }
 
         private string _Name;
         public string Name { get => _Name; set { _Name = value; OnPropertyChanged(); } }
@@ -62,6 +74,7 @@ namespace HotelManagementApp.ViewModel
         public FoodViewModel()
         {
             LoadFoodList();
+            LoadFilteredList();
             addCommand = new RelayCommand<object>((p) =>
             {
                 if (string.IsNullOrEmpty(Name) || string.IsNullOrEmpty(Unit) || Price == 0 || string.IsNullOrEmpty(Type))
@@ -144,6 +157,7 @@ namespace HotelManagementApp.ViewModel
             {
                 FoodsAndServicesList.Add(item);
             }
+            LoadFilteredList();
         }
 
         void SelectImage()
@@ -204,6 +218,56 @@ namespace HotelManagementApp.ViewModel
                 bitmapImage.Freeze();
                 return bitmapImage;
             }
+        }
+        private void LoadFilteredList()
+        {
+
+            ObservableCollection<FoodsAndService> list = new ObservableCollection<FoodsAndService>();
+            foreach(var item in FoodsAndServicesList)
+            {
+                if(string.IsNullOrEmpty(Filter) && string.IsNullOrEmpty(SearchString) && string.IsNullOrEmpty(TypeFilter))
+                {
+                    list = FoodsAndServicesList;
+                }
+                else if (string.IsNullOrEmpty(Filter) && string.IsNullOrEmpty(SearchString) && !string.IsNullOrEmpty(TypeFilter))
+                {
+                    if(item.Type == TypeFilter)
+                    {
+                        list.Add(item);
+                    }
+                }
+                else
+                {
+                    switch (Filter)
+                    {
+                        case "ID":
+                            if (string.IsNullOrEmpty(SearchString) || (item.ID == Convert.ToInt32(SearchString) ) && (item.Type == TypeFilter || string.IsNullOrEmpty(TypeFilter)))
+                            {
+                                list.Add(item);
+                            }
+                            break;
+                        case "Name":
+                            if ((item.Name == SearchString || string.IsNullOrEmpty(SearchString)) && (item.Type == TypeFilter || string.IsNullOrEmpty(TypeFilter)))
+                            {
+                                list.Add(item);
+                            }
+                            break;
+                        case "Unit":
+                            if ((item.Unit== SearchString || string.IsNullOrEmpty(SearchString)) && (item.Type == TypeFilter || string.IsNullOrEmpty(TypeFilter)))
+                            {
+                                list.Add(item);
+                            }
+                            break;
+                        case "Price":
+                            if ((string.IsNullOrEmpty(SearchString) ||item.Price == Convert.ToDecimal(SearchString)) && (item.Type == TypeFilter || string.IsNullOrEmpty(TypeFilter)))
+                            {
+                                list.Add(item);
+                            }
+                            break;
+                    }
+                }
+            }
+            FilteredList = list;
         }
 
     }

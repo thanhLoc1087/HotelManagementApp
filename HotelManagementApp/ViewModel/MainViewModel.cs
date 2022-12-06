@@ -55,20 +55,20 @@ namespace HotelManagementApp.ViewModel
                 singleBedroomWindow.ShowDialog();
             }
             );
+        }
             public void Authorise()
             {
                 Staff activeStaff = DataProvider.Instance.DB.Staffs.Single(x => x.ID == Const.ActiveAccount.IDStaff);
-                if (activeStaff.Role == "")
+                if (activeStaff.Role == "Admin")
                 {
                     Const.AdminVisibility = Visibility.Visible;
                     Const.StaffVisibility = Visibility.Collapsed;
                 }
-                else if (activeStaff.Role == "")
+                else if (activeStaff.Role == "Staff")
                 {
                     Const.AdminVisibility = Visibility.Collapsed;
                     Const.StaffVisibility = Visibility.Visible;
                 }
             }
-        }
     }
 }
