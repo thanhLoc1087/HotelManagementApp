@@ -6,6 +6,8 @@ using System.Collections.ObjectModel;
 using System.IO;
 using System.Linq;
 using System.Security;
+using System.Security.Cryptography;
+using System.Text;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
@@ -33,6 +35,10 @@ namespace HotelManagementApp.ViewModel
         public string Role { get => _Role; set { _Role = value; OnPropertyChanged(); } }
         private string _ImageSource;
         public string ImageSource { get => _ImageSource; set { _ImageSource = value; OnPropertyChanged(); } }
+        private string _Username;
+        public string Username { get => _Username; set { _Username = value; OnPropertyChanged(); } }
+        private string _Password;
+        public string Password { get => _Password; set { _Password = value; OnPropertyChanged(); } }
 
         private BitmapImage _EmployeeImage;
         public BitmapImage EmployeeImage { get => _EmployeeImage; set { _EmployeeImage = value; OnPropertyChanged(); } }
@@ -55,6 +61,13 @@ namespace HotelManagementApp.ViewModel
                     PhoneNum = SelectedItem.PhoneNumber;
                     Role = SelectedItem.Role;
                     ImageSource = SelectedItem.ImageData;
+                    var account = DataProvider.Instance.DB.Accounts.Where(x => x.IDStaff == SelectedItem.ID).FirstOrDefault();
+                    if (account != null)
+                    {
+                        Username = account.Username;
+                    }
+                    else
+                        Username = null;
                     LoadImage();
                 }
                 OnPropertyChanged();
@@ -72,12 +85,17 @@ namespace HotelManagementApp.ViewModel
             LoadStaffsList();
             addCommand = new RelayCommand<object>((p) =>
             {
-                if (string.IsNullOrEmpty(Name) || string.IsNullOrEmpty(Sex) || string.IsNullOrEmpty(CCCD) || string.IsNullOrEmpty(PhoneNum) || Role == null)
+                if (string.IsNullOrEmpty(Name) || string.IsNullOrEmpty(Sex) || string.IsNullOrEmpty(CCCD) || string.IsNullOrEmpty(PhoneNum) || Role == null || string.IsNullOrEmpty(Username) || string.IsNullOrEmpty(Password))
                 {
                     return false;
                 }
                 var list = DataProvider.Instance.DB.Staffs.Where(x => x.CCCD == CCCD);
                 if (list == null || list.Count() != 0)
+                {
+                    return false;
+                }
+                var accList = DataProvider.Instance.DB.Accounts.Where(x => x.Username == Username);
+                if(accList == null || accList.Count() != 0)
                 {
                     return false;
                 }
@@ -94,6 +112,13 @@ namespace HotelManagementApp.ViewModel
                 };
                 DataProvider.Instance.DB.Staffs.Add(staff);
                 DataProvider.Instance.DB.SaveChanges();
+                var account = new Account()
+                {
+                    IDStaff = staff.ID,
+                    Username = Username,
+                    PasswordHash = MD5Hash(Base64Encode(Password)),
+                };
+                DataProvider.Instance.DB.Accounts.Add(account);
                 addImage(staff);
                 DataProvider.Instance.DB.SaveChanges();
                 LoadStaffsList();
@@ -212,6 +237,24 @@ namespace HotelManagementApp.ViewModel
                 return bitmapImage;
             }
         }
-    }       
-}
+        private string MD5Hash(string input)
+        {
+            StringBuilder hash = new StringBuilder();
+            MD5CryptoServiceProvider md5provider = new MD5CryptoServiceProvider();
+            byte[] bytes = md5provider.ComputeHash(new UTF8Encoding().GetBytes(input));
 
+            for (int i = 0; i < bytes.Length; i++)
+            {
+                hash.Append(bytes[i].ToString("x2"));
+            }
+            return hash.ToString();
+        }
+
+        private string Base64Encode(string input)
+        {
+            var textBytes = Encoding.UTF8.GetBytes(input);
+            var base64String = Convert.ToBase64String(textBytes);
+            return base64String;
+        }
+    }
+}       

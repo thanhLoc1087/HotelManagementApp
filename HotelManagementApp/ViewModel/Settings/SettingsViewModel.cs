@@ -38,17 +38,17 @@ namespace HotelManagementApp.ViewModel
                 {
                     return false;
                 }
-                //if(hashedPassword != CurrentEmployee.PasswordHash)
-                //{
-                //    return false;
-                //}
-                
+                if (hashedPassword != Const.ActiveAccount.PasswordHash)
+                {
+                    return false;
+                }
+
                 return true;
             }, (p) =>
             {
-                //var staff = DataProvider.Instance.DB.Staffs.Where(x => x.ID == CurrentEmployee.ID).FirstOrDefault();
+                var account = DataProvider.Instance.DB.Accounts.Where(x => x.IDStaff == Const.ActiveAccount.IDStaff).FirstOrDefault();
                 var hashedPassword = MD5Hash(Base64Encode(NewPassword));
-                // CurrentEmployee.PasswordHash = hashedPassword;
+                account.PasswordHash = hashedPassword;
                 DataProvider.Instance.DB.SaveChanges();
             }
             );
