@@ -50,6 +50,7 @@ namespace HotelManagementApp.ViewModel
                 var hashedPassword = MD5Hash(Base64Encode(NewPassword));
                 account.PasswordHash = hashedPassword;
                 DataProvider.Instance.DB.SaveChanges();
+                CurrentPassword = NewPassword = ConfirmPassword = null;
             }
             );
         }

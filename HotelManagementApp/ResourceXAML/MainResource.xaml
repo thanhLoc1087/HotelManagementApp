@@ -8,4 +8,5 @@
     <viewmodel:FoodViewModel x:Key="FoodVm"></viewmodel:FoodViewModel>
     <viewmodel:AddRoomViewModel x:Key="AddRoomVm"></viewmodel:AddRoomViewModel>
     <viewmodel:SingleBedroomInfoViewModel x:Key="SingleBedroomInfoViewmodel"></viewmodel:SingleBedroomInfoViewModel>
+    <viewmodel:AddRoomForAdminViewModel x:Key="AddRoomForAdminVm"></viewmodel:AddRoomForAdminViewModel>
 </ResourceDictionary>

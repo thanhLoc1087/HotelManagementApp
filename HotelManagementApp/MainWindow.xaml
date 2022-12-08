@@ -934,6 +934,7 @@
                                                     Background="White"
                                                     Height="35"
                                                     FontSize="14"
+                                                    SelectedIndex="2"
                                                     Text="{Binding Filter, UpdateSourceTrigger=PropertyChanged}"
                                                     Width="110">
                                                     <ComboBoxItem></ComboBoxItem>
@@ -1373,8 +1374,82 @@
                                         <RowDefinition Height="9*" />
                                     </Grid.RowDefinitions>
                                     <Grid Grid.Row="0" />
-                                    <WrapPanel Orientation="Horizontal"
-                                               VerticalAlignment="Center"/>
+                                    <StackPanel Orientation="Horizontal">
+                                        <Border
+                                                Margin="15,0,0,0"
+                                                Height="40"
+                                                Width="115"
+                                                CornerRadius="16"
+                                                Background="#6C63FF"
+                                                >
+                                            <ComboBox
+                                                    Style="{StaticResource MaterialDesignFilledComboBox}"
+                                                    materialDesign:TextFieldAssist.TextBoxViewMargin="2,-11,-10,0"
+                                                    materialDesign:TextFieldAssist.TextFieldCornerRadius="14"
+                                                    materialDesign:HintAssist.Hint="Filter"
+                                                    materialDesign:TextFieldAssist.DecorationVisibility="Hidden"
+                                                    BorderThickness="0"
+                                                    materialDesign:HintAssist.Foreground="White"
+                                                    Background="White"
+                                                    Height="35"
+                                                    FontSize="14"
+                                                    Text="{Binding Filter, UpdateSourceTrigger=PropertyChanged}"
+                                                    SelectedIndex="2"
+                                                    Width="110">
+                                                <ComboBoxItem></ComboBoxItem>
+                                                <ComboBoxItem>ID</ComboBoxItem>
+                                                <ComboBoxItem>Name</ComboBoxItem>
+                                                <ComboBoxItem>Sex</ComboBoxItem>
+                                                <ComboBoxItem>CCCD</ComboBoxItem>
+                                                <ComboBoxItem>Phone</ComboBoxItem>
+                                            </ComboBox>
+                                        </Border>
+                                        <TextBox
+                                                    Width="410"
+                                                    Height="40"
+                                                    Margin="15,0,0,0"
+                                                    BorderBrush="#6C63FF"
+                                                    Foreground="Black"
+                                                    FontSize="14"
+                                                    FontWeight="SemiBold"
+                                                    materialDesign:HintAssist.Hint="Find"
+                                                    materialDesign:HintAssist.FontFamily="{StaticResource MaterialDesignFont}"
+                                                    materialDesign:HintAssist.Foreground="White"
+                                                    materialDesign:TextFieldAssist.TextBoxViewMargin="10,7,0,0"
+                                                    materialDesign:TextFieldAssist.TextFieldCornerRadius="15"
+                                                    materialDesign:TextFieldAssist.DecorationVisibility="Hidden"
+                                                    BorderThickness="3"
+                                                    VerticalAlignment="Center"
+                                                    CaretBrush="Gray"
+                                                    Text="{Binding SearchString, UpdateSourceTrigger=PropertyChanged}"
+                                                    />
+                                        <Border
+                                                Margin="15,0,0,0"
+                                                Height="40"
+                                                Width="115"
+                                                CornerRadius="16"
+                                                Background="#6C63FF"
+                                                >
+                                            <ComboBox
+                                                    Style="{StaticResource MaterialDesignFilledComboBox}"
+                                                    materialDesign:TextFieldAssist.TextBoxViewMargin="2,-11,-10,0"
+                                                    materialDesign:TextFieldAssist.TextFieldCornerRadius="14"
+                                                    materialDesign:HintAssist.Hint="Role"
+                                                    materialDesign:TextFieldAssist.DecorationVisibility="Hidden"
+                                                    BorderThickness="0"
+                                                    materialDesign:HintAssist.Foreground="White"
+                                                    Background="White"
+                                                    Height="35"
+                                                    FontSize="14"
+                                                    Text="{Binding TypeFilter, UpdateSourceTrigger=PropertyChanged}"
+                                                    Width="110">
+                                                <ComboBoxItem></ComboBoxItem>
+                                                <ComboBoxItem>Admin</ComboBoxItem>
+                                                <ComboBoxItem>Staff</ComboBoxItem>
+                                            </ComboBox>
+                                        </Border>
+                                    </StackPanel>
+
                                     <Grid Grid.Row="1">
 
 
@@ -1453,34 +1528,34 @@
                             </Border>
                         </Grid>
                         <Grid Grid.Column="1">
-                                <Border Background="Transparent"
+                            <Border Background="Transparent"
                                     Visibility="{Binding Visibility}">
-                                    <Border Margin="10,20,20,20"
+                                <Border Margin="10,20,20,20"
                                         HorizontalAlignment="Stretch"
                                         VerticalAlignment="Stretch"
                                         Background="White"
                                         CornerRadius="20">
-                                        <Border.Effect>
-                                            <DropShadowEffect ShadowDepth="1" />
-                                        </Border.Effect>
-                                        <Grid>
-                                            <Grid.RowDefinitions>
-                                                <RowDefinition Height="auto" />
-                                                <RowDefinition Height="*" />
-                                                <RowDefinition Height="auto" />
-                                            </Grid.RowDefinitions>
-                                            <Grid Grid.Row="0"
+                                    <Border.Effect>
+                                        <DropShadowEffect ShadowDepth="1" />
+                                    </Border.Effect>
+                                    <Grid>
+                                        <Grid.RowDefinitions>
+                                            <RowDefinition Height="auto" />
+                                            <RowDefinition Height="*" />
+                                            <RowDefinition Height="auto" />
+                                        </Grid.RowDefinitions>
+                                        <Grid Grid.Row="0"
                                               Margin="0,0,-0.2,1">
-                                                <Grid x:Name="grdSelectImg1"
+                                            <Grid x:Name="grdSelectImg1"
                                                   Width="150"
                                                   Height="150"
                                                   Margin="10,30,0,0"
                                                   HorizontalAlignment="Center"
                                                   VerticalAlignment="Top">
-                                                    <Grid.Background>
-                                                        <ImageBrush ImageSource="{Binding EmployeeImage, UpdateSourceTrigger=PropertyChanged}" />
-                                                    </Grid.Background>
-                                                    <Rectangle x:Name="recImage1"
+                                                <Grid.Background>
+                                                    <ImageBrush ImageSource="{Binding EmployeeImage, UpdateSourceTrigger=PropertyChanged}" />
+                                                </Grid.Background>
+                                                <Rectangle x:Name="recImage1"
                                                            Width="150"
                                                            Height="153"
                                                            Margin="0,0,0,-2"
@@ -1491,7 +1566,7 @@
                                                            Stroke="#5C0DAC"
                                                            StrokeDashArray="4 2"
                                                            StrokeThickness="4" />
-                                                    <Button x:Name="btnSelectImage1"
+                                                <Button x:Name="btnSelectImage1"
                                                             Width="120"
                                                             Height="35"
                                                             Margin="0,0,0,-45"
@@ -1507,9 +1582,9 @@
                                                             ToolTip="Select Image" 
                                                             Visibility="{Binding AdminVisibility}"/>
 
-                                                </Grid>
                                             </Grid>
-                                            <Grid x:Name="grdInfo1"
+                                        </Grid>
+                                        <Grid x:Name="grdInfo1"
                                               Grid.Row="1"
                                               Grid.RowSpan="2"
                                               Width="420"
@@ -1518,11 +1593,11 @@
                                               HorizontalAlignment="Center"
                                               VerticalAlignment="Top">
 
-                                                <Grid Width="350"
+                                            <Grid Width="350"
                                                   Height="40"
                                                   Margin="0,0,0,0"
                                                   VerticalAlignment="Top">
-                                                    <Label Height="32"
+                                                <Label Height="32"
                                                        Margin="0"
                                                        HorizontalAlignment="Left"
                                                        VerticalAlignment="Center"
@@ -1530,14 +1605,14 @@
                                                        FontSize="18"
                                                        FontWeight="SemiBold"
                                                        Foreground="Black" />
-                                                    <Rectangle Width="230"
+                                                <Rectangle Width="230"
                                                            Height="40"
                                                            Margin="0"
                                                            HorizontalAlignment="Right"
                                                            RadiusX="6"
                                                            RadiusY="6"
                                                            Stroke="Gray" />
-                                                    <TextBox
+                                                <TextBox
                                                          Width="210"
                                                          Height="40"
                                                          Margin="0,0,10,0"
@@ -1554,12 +1629,12 @@
                                                          Foreground="Gray"
                                                          MaxLines="1"
                                                          Text="{Binding Name, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"  />
-                                                </Grid>
-                                                <Grid Width="350"
+                                            </Grid>
+                                            <Grid Width="350"
                                                   Height="40"
                                                   Margin="0,50,0,0"
                                                   VerticalAlignment="Top">
-                                                    <Label Height="32"
+                                                <Label Height="32"
                                                        Margin="0"
                                                        HorizontalAlignment="Left"
                                                        VerticalAlignment="Center"
@@ -1567,14 +1642,14 @@
                                                        FontSize="18"
                                                        FontWeight="SemiBold"
                                                        Foreground="Black" />
-                                                    <Rectangle Width="230"
+                                                <Rectangle Width="230"
                                                            Height="40"
                                                            Margin="0"
                                                            HorizontalAlignment="Right"
                                                            RadiusX="6"
                                                            RadiusY="6"
                                                            Stroke="Gray" />
-                                                    <ComboBox x:Name="txtUnit1"
+                                                <ComboBox x:Name="txtUnit1"
                                                                  Width="210"
                                                                  Height="40"
                                                                  Margin="0,0,10,0"
@@ -1589,19 +1664,19 @@
                                                                  FontWeight="SemiBold"
                                                                  Foreground="Gray"
                                                                  Text="{Binding Sex, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}">
-                                                            <ComboBoxItem Cursor="Hand">
-                                                                <TextBlock Text="Male"/>
-                                                            </ComboBoxItem>
-                                                            <ComboBoxItem Cursor="Hand">
-                                                                <TextBlock Text="Female"/>
-                                                            </ComboBoxItem>
+                                                    <ComboBoxItem Cursor="Hand">
+                                                        <TextBlock Text="Male"/>
+                                                    </ComboBoxItem>
+                                                    <ComboBoxItem Cursor="Hand">
+                                                        <TextBlock Text="Female"/>
+                                                    </ComboBoxItem>
                                                 </ComboBox>
-                                                </Grid>
-                                                <Grid Width="350"
+                                            </Grid>
+                                            <Grid Width="350"
                                                   Height="40"
                                                   Margin="0,100,0,0"
                                                   VerticalAlignment="Top">
-                                                    <Label Height="32"
+                                                <Label Height="32"
                                                        Margin="0"
                                                        HorizontalAlignment="Left"
                                                        VerticalAlignment="Center"
@@ -1609,14 +1684,14 @@
                                                        FontSize="18"
                                                        FontWeight="SemiBold"
                                                        Foreground="Black" />
-                                                    <Rectangle Width="230"
+                                                <Rectangle Width="230"
                                                            Height="40"
                                                            Margin="0"
                                                            HorizontalAlignment="Right"
                                                            RadiusX="6"
                                                            RadiusY="6"
                                                            Stroke="Gray" />
-                                                    <TextBox x:Name="txtUnitPrice1"
+                                                <TextBox x:Name="txtUnitPrice1"
                                                          Width="210"
                                                          Height="40"
                                                          Margin="0,0,10,0"
@@ -1631,12 +1706,12 @@
                                                          FontWeight="SemiBold"
                                                          Foreground="Gray"
                                                          Text="{Binding CCCD, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, StringFormat={}{0:C}}" />
-                                                </Grid>
-                                                <Grid Width="350"
+                                            </Grid>
+                                            <Grid Width="350"
                                                   Height="40"
                                                   Margin="0,150,0,0"
                                                   VerticalAlignment="Top">
-                                                    <Label Height="32"
+                                                <Label Height="32"
                                                        Margin="0"
                                                        HorizontalAlignment="Left"
                                                        VerticalAlignment="Center"
@@ -1644,14 +1719,14 @@
                                                        FontSize="18"
                                                        FontWeight="SemiBold"
                                                        Foreground="Black" />
-                                                    <Rectangle Width="230"
+                                                <Rectangle Width="230"
                                                            Height="40"
                                                            Margin="0"
                                                            HorizontalAlignment="Right"
                                                            RadiusX="6"
                                                            RadiusY="6"
                                                            Stroke="Gray" />
-                                                    <TextBox x:Name="txtPhone"
+                                                <TextBox x:Name="txtPhone"
                                                          Width="210"
                                                          Height="40"
                                                          Margin="0,0,10,0"
@@ -1666,12 +1741,12 @@
                                                          FontWeight="SemiBold"
                                                          Foreground="Gray"
                                                          Text="{Binding PhoneNum, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
-                                                </Grid>
-                                                <Grid Width="350"
+                                            </Grid>
+                                            <Grid Width="350"
                                                   Height="40"
                                                   Margin="0,200,0,0"
                                                   VerticalAlignment="Top">
-                                                    <Label Height="32"
+                                                <Label Height="32"
                                                        Margin="0"
                                                        HorizontalAlignment="Left"
                                                        VerticalAlignment="Center"
@@ -1679,7 +1754,7 @@
                                                        FontSize="18"
                                                        FontWeight="SemiBold"
                                                        Foreground="Black" />
-                                                    <Rectangle Width="230"
+                                                <Rectangle Width="230"
                                                            Height="40"
                                                            Margin="0"
                                                            HorizontalAlignment="Right"
@@ -1781,17 +1856,17 @@
                                             </Grid>
                                         </Grid>
 
-                                            <Grid Grid.Row="2"
+                                        <Grid Grid.Row="2"
                                               Height="40"
                                               Margin="0,2.2,-0.2,0"
                                               VerticalAlignment="Top">
-                                                <Grid.ColumnDefinitions>
-                                                    <ColumnDefinition Width="2*" />
-                                                    <ColumnDefinition Width="2*" />
-                                                    <ColumnDefinition Width="2*" />
-                                                </Grid.ColumnDefinitions>
-                                                <Grid Grid.Column="0">
-                                                    <Button x:Name="btnAdd1"
+                                            <Grid.ColumnDefinitions>
+                                                <ColumnDefinition Width="2*" />
+                                                <ColumnDefinition Width="2*" />
+                                                <ColumnDefinition Width="2*" />
+                                            </Grid.ColumnDefinitions>
+                                            <Grid Grid.Column="0">
+                                                <Button x:Name="btnAdd1"
                                                         Width="100"
                                                         Height="40"
                                                         Padding="0"
@@ -1805,9 +1880,9 @@
                                                         IsDefault="True"
                                                         ToolTip="Thêm" 
                                                             Visibility="{Binding AdminVisibility}"/>
-                                                </Grid>
-                                                <Grid Grid.Column="1">
-                                                    <Button x:Name="btnEdit1"
+                                            </Grid>
+                                            <Grid Grid.Column="1">
+                                                <Button x:Name="btnEdit1"
                                                         Width="100"
                                                         Height="40"
                                                         Margin="0"
@@ -1823,9 +1898,9 @@
                                                         IsDefault="True"
                                                         ToolTip="Sửa" 
                                                             Visibility="{Binding AdminVisibility}"/>
-                                                </Grid>
-                                                <Grid Grid.Column="2">
-                                                    <Button x:Name="btnDelete1"
+                                            </Grid>
+                                            <Grid Grid.Column="2">
+                                                <Button x:Name="btnDelete1"
                                                             Width="100"
                                                             Height="40"
                                                             Margin="0"
@@ -1840,12 +1915,440 @@
                                                             Style="{StaticResource MaterialDesignRaisedButton}"
                                                             ToolTip="Xóa" 
                                                             Visibility="{Binding AdminVisibility}"/>
-                                                </Grid>
+                                            </Grid>
+
+                                        </Grid>
+                                    </Grid>
+                                </Border>
+                            </Border>
+
+                        </Grid>
+                    </Grid>
+
+                </TabItem>
+                <TabItem DataContext="{StaticResource AddRoomForAdminVm}">
+                    <TabItem.Header>
+                        <StackPanel Width="auto"
+                                    Height="auto">
+                            <!--DataContext="{StaticResource EmployeeVM}"-->
+                            <materialDesign:PackIcon Width="30"
+                                                     Height="30"
+                                                     HorizontalAlignment="Center"
+                                                     Kind="Bed" />
+                            <TextBlock HorizontalAlignment="Center"
+                                       Text="Room" />
+                        </StackPanel>
+                    </TabItem.Header>
+
+                    <!--  UI Employee Start Here  -->
+
+                    <Grid Background="Transparent">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="6*" />
+                            <ColumnDefinition Width="4*" />
+                        </Grid.ColumnDefinitions>
+                        <Grid Grid.Column="0">
+
+                            <Border Margin="20,20,10,20"
+                                    Background="white"
+                                    CornerRadius="20"
+                                    Visibility="{Binding Visibility}">
+                                <Border.Effect>
+                                    <DropShadowEffect ShadowDepth="1" />
+                                </Border.Effect>
+                                <Grid>
+                                    <Grid.RowDefinitions>
+                                        <RowDefinition Height="1*" />
+                                        <RowDefinition Height="9*" />
+                                    </Grid.RowDefinitions>
+                                    <Grid Grid.Row="0" />
+                                    <StackPanel Orientation="Horizontal">
+                                        <Border
+                                                Margin="15,0,0,0"
+                                                Height="40"
+                                                Width="115"
+                                                CornerRadius="16"
+                                                Background="#6C63FF"
+                                                >
+                                            <ComboBox
+                                                    Style="{StaticResource MaterialDesignFilledComboBox}"
+                                                    materialDesign:TextFieldAssist.TextBoxViewMargin="2,-11,-10,0"
+                                                    materialDesign:TextFieldAssist.TextFieldCornerRadius="14"
+                                                    materialDesign:HintAssist.Hint="Filter"
+                                                    materialDesign:TextFieldAssist.DecorationVisibility="Hidden"
+                                                    BorderThickness="0"
+                                                    materialDesign:HintAssist.Foreground="White"
+                                                    Background="White"
+                                                    Height="35"
+                                                    FontSize="14"
+                                                    Text="{Binding Filter, UpdateSourceTrigger=PropertyChanged}"
+                                                    SelectedIndex="2"
+                                                    Width="110">
+                                                <ComboBoxItem></ComboBoxItem>
+                                                <ComboBoxItem>ID</ComboBoxItem>
+                                                <ComboBoxItem>Name</ComboBoxItem>
+                                                <ComboBoxItem>Sex</ComboBoxItem>
+                                                <ComboBoxItem>CCCD</ComboBoxItem>
+                                                <ComboBoxItem>Phone</ComboBoxItem>
+                                            </ComboBox>
+                                        </Border>
+                                        <TextBox
+                                                    Width="410"
+                                                    Height="40"
+                                                    Margin="15,0,0,0"
+                                                    BorderBrush="#6C63FF"
+                                                    Foreground="Black"
+                                                    FontSize="14"
+                                                    FontWeight="SemiBold"
+                                                    materialDesign:HintAssist.Hint="Find"
+                                                    materialDesign:HintAssist.FontFamily="{StaticResource MaterialDesignFont}"
+                                                    materialDesign:HintAssist.Foreground="White"
+                                                    materialDesign:TextFieldAssist.TextBoxViewMargin="10,7,0,0"
+                                                    materialDesign:TextFieldAssist.TextFieldCornerRadius="15"
+                                                    materialDesign:TextFieldAssist.DecorationVisibility="Hidden"
+                                                    BorderThickness="3"
+                                                    VerticalAlignment="Center"
+                                                    CaretBrush="Gray"
+                                                    Text="{Binding SearchString, UpdateSourceTrigger=PropertyChanged}"
+                                                    />
+                                        <Border
+                                                Margin="15,0,0,0"
+                                                Height="40"
+                                                Width="115"
+                                                CornerRadius="16"
+                                                Background="#6C63FF"
+                                                >
+                                            <ComboBox
+                                                    Style="{StaticResource MaterialDesignFilledComboBox}"
+                                                    materialDesign:TextFieldAssist.TextBoxViewMargin="2,-11,-10,0"
+                                                    materialDesign:TextFieldAssist.TextFieldCornerRadius="14"
+                                                    materialDesign:HintAssist.Hint="Role"
+                                                    materialDesign:TextFieldAssist.DecorationVisibility="Hidden"
+                                                    BorderThickness="0"
+                                                    materialDesign:HintAssist.Foreground="White"
+                                                    Background="White"
+                                                    Height="35"
+                                                    FontSize="14"
+                                                    Text="{Binding TypeFilter, UpdateSourceTrigger=PropertyChanged}"
+                                                    Width="110">
+                                                <ComboBoxItem></ComboBoxItem>
+                                                <ComboBoxItem>Admin</ComboBoxItem>
+                                                <ComboBoxItem>Staff</ComboBoxItem>
+                                            </ComboBox>
+                                        </Border>
+                                    </StackPanel>
+
+                                    <Grid Grid.Row="1">
+
+
+
+                                        <DataGrid Margin="10,10,10,10"
+                                                  AlternatingRowBackground="#FFF8EBF9"
+                                                  AutoGenerateColumns="False"
+                                                  Background="{x:Null}"
+                                                  CanUserAddRows="False"
+                                                  Focusable="False"
+                                                  IsReadOnly="True"
+                                                  IsSynchronizedWithCurrentItem="False"
+                                                  ItemsSource="{Binding FilteredList}"
+                                                  SelectedItem="{Binding SelectedItem}">
+                                            <i:Interaction.Triggers>
+                                                <i:EventTrigger EventName="SelectionChanged">
+                                                    <i:InvokeCommandAction Command="{Binding Path=ReloadCommand}"
+                                                                           CommandParameter="{Binding ElementName=grdSelectImg1}" />
+                                                </i:EventTrigger>
+                                            </i:Interaction.Triggers>
+
+
+
+                                            <DataGrid.Columns>
+                                                <DataGridTextColumn>
+                                                    <DataGridTextColumn.ElementStyle>
+                                                        <Style TargetType="TextBlock">
+                                                            <Setter Property="HorizontalAlignment"
+                                                                    Value="Center" />
+                                                        </Style>
+                                                    </DataGridTextColumn.ElementStyle>
+                                                </DataGridTextColumn>
+                                                <materialDesign:DataGridTextColumn Width="1*"
+                                                                                   Binding="{Binding ID}"
+                                                                                   EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnPopupEditingStyle}"
+                                                                                   ElementStyle="{StaticResource MaterialDesignDataGridTextColumnStyle}"
+                                                                                   FontSize="15"
+                                                                                   FontWeight="Bold"
+                                                                                   Header="ID" />
+                                                <materialDesign:DataGridTextColumn Width="2*"
+                                                                                   Binding="{Binding RoomNum}"
+                                                                                   EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnPopupEditingStyle}"
+                                                                                   ElementStyle="{StaticResource MaterialDesignDataGridTextColumnStyle}"
+                                                                                   Header="Room Num" />
+                                                <materialDesign:DataGridTextColumn Width="1.5*"
+                                                                                   Binding="{Binding RoomType}"
+                                                                                   EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnPopupEditingStyle}"
+                                                                                   ElementStyle="{StaticResource MaterialDesignDataGridTextColumnStyle}"
+                                                                                   Header="Room Type" />
+                                                <materialDesign:DataGridTextColumn Width="1.5*"
+                                                                                   Binding="{Binding Status, StringFormat={}{0:C}}"
+                                                                                   EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnPopupEditingStyle}"
+                                                                                   ElementStyle="{StaticResource MaterialDesignDataGridTextColumnStyle}"
+                                                                                   Header="Status" />
+                                                <materialDesign:DataGridTextColumn Width="1.5*"
+                                                                                   Binding="{Binding PhoneNumber}"
+                                                                                   EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnPopupEditingStyle}"
+                                                                                   ElementStyle="{StaticResource MaterialDesignDataGridTextColumnStyle}"
+                                                                                   Header="Phone" />
+                                                
+
+
+                                            </DataGrid.Columns>
+                                        </DataGrid>
+
+                                    </Grid>
+                                </Grid>
+
+
+
+                            </Border>
+                        </Grid>
+                        <Grid Grid.Column="1">
+                            <Border Background="Transparent"
+                                    Visibility="{Binding Visibility}">
+                                <Border Margin="10,20,20,20"
+                                        HorizontalAlignment="Stretch"
+                                        VerticalAlignment="Stretch"
+                                        Background="White"
+                                        CornerRadius="20">
+                                    <Border.Effect>
+                                        <DropShadowEffect ShadowDepth="1" />
+                                    </Border.Effect>
+                                    <Grid>
+                                        <Grid.RowDefinitions>
+                                            <RowDefinition Height="auto" />
+                                            <RowDefinition Height="350" />
+                                            <RowDefinition Height="auto" />
+                                        </Grid.RowDefinitions>
+                                        <Grid Grid.Row="0"
+                                              Margin="0,0,-0.2,1">
+                                            <Grid Width="150"
+                                                  Height="150"
+                                                  Margin="10,30,0,0"
+                                                  HorizontalAlignment="Center"
+                                                  VerticalAlignment="Top">
+                                                <Grid.Background>
+                                                    <ImageBrush ImageSource="{Binding EmployeeImage, UpdateSourceTrigger=PropertyChanged}" />
+                                                </Grid.Background>
+                                                <Rectangle Width="150"
+                                                           Height="153"
+                                                           Margin="0,0,0,-2"
+                                                           HorizontalAlignment="Left"
+                                                           VerticalAlignment="Top"
+                                                           RadiusX="4"
+                                                           RadiusY="4"
+                                                           Stroke="#5C0DAC"
+                                                           StrokeDashArray="4 2"
+                                                           StrokeThickness="4" />
+                                                <Button     Width="120"
+                                                            Height="35"
+                                                            Margin="0,0,0,-45"
+                                                            Padding="0"
+                                                            HorizontalAlignment="Center"
+                                                            VerticalAlignment="Bottom"
+                                                            Command="{Binding SelectImageCommand}"
+                                                            CommandParameter="{Binding ElementName=grdSelectImg1}"
+                                                            Content="Select Avatar"
+                                                            FocusVisualStyle="{x:Null}"
+                                                            FontSize="16"
+                                                            FontWeight="SemiBold"
+                                                            ToolTip="Select Image" 
+                                                            Visibility="{Binding AdminVisibility}"/>
 
                                             </Grid>
                                         </Grid>
-                                    </Border>
+                                        <Grid Grid.Row="1"
+                                              Grid.RowSpan="2"
+                                              Width="420"
+                                              Height="150"
+                                              Margin="20,110,20.8,50"
+                                              HorizontalAlignment="Center"
+                                              VerticalAlignment="Top">
+
+                                            <Grid Width="350"
+                                                  Height="40"
+                                                  Margin="0,0,0,0"
+                                                  VerticalAlignment="Top">
+                                                <Label Height="32"
+                                                       Margin="0"
+                                                       HorizontalAlignment="Left"
+                                                       VerticalAlignment="Center"
+                                                       Content="Room Num"
+                                                       FontSize="18"
+                                                       FontWeight="SemiBold"
+                                                       Foreground="Black" />
+                                                <Rectangle Width="230"
+                                                           Height="40"
+                                                           Margin="0"
+                                                           HorizontalAlignment="Right"
+                                                           RadiusX="6"
+                                                           RadiusY="6"
+                                                           Stroke="Gray" />
+                                                <TextBox
+                                                         Width="210"
+                                                         Height="40"
+                                                         Margin="0,0,10,0"
+                                                         Padding="0"
+                                                         HorizontalAlignment="Right"
+                                                         HorizontalContentAlignment="Left"
+                                                         VerticalContentAlignment="Center"
+                                                         materialDesign:HintAssist.Hint="Room Num" 
+                                                         
+                                                         BorderThickness="0"
+                                                         Cursor="IBeam"
+                                                         FontSize="14"
+                                                         FontWeight="SemiBold"
+                                                         Foreground="Gray"
+                                                         MaxLines="1"
+                                                         Text="{Binding Name, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"  />
+                                            </Grid>
+                                            <Grid Width="350"
+                                                  Height="40"
+                                                  Margin="0,50,0,0"
+                                                  VerticalAlignment="Top">
+                                                <Label Height="32"
+                                                       Margin="0"
+                                                       HorizontalAlignment="Left"
+                                                       VerticalAlignment="Center"
+                                                       Content="Room Type"
+                                                       FontSize="18"
+                                                       FontWeight="SemiBold"
+                                                       Foreground="Black" />
+                                                <Rectangle Width="230"
+                                                           Height="40"
+                                                           Margin="0"
+                                                           HorizontalAlignment="Right"
+                                                           RadiusX="6"
+                                                           RadiusY="6"
+                                                           Stroke="Gray" />
+                                                <ComboBox Width="210"
+                                                                 Height="40"
+                                                                 Margin="0,0,10,0"
+                                                                 Padding="0"
+                                                                 HorizontalAlignment="Right"
+                                                                 HorizontalContentAlignment="Left"
+                                                                 VerticalContentAlignment="Center"
+                                                                 materialDesign:HintAssist.Hint="Room Type"
+                                                                 BorderThickness="0"
+                                                                 Cursor="Hand"
+                                                                 FontSize="14"
+                                                                 FontWeight="SemiBold"
+                                                                 Foreground="Gray"
+                                                                 Text="{Binding Sex, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}">
+                                                    <ComboBoxItem Cursor="Hand">
+                                                        <TextBlock Text="Male"/>
+                                                    </ComboBoxItem>
+                                                    <ComboBoxItem Cursor="Hand">
+                                                        <TextBlock Text="Female"/>
+                                                    </ComboBoxItem>
+                                                </ComboBox>
+                                            </Grid>
+                                            <Grid Width="350"
+                                                  Height="40"
+                                                  Margin="0,100,0,0"
+                                                  VerticalAlignment="Top">
+                                                <Label Height="32"
+                                                       Margin="0"
+                                                       HorizontalAlignment="Left"
+                                                       VerticalAlignment="Center"
+                                                       Content="Status"
+                                                       FontSize="18"
+                                                       FontWeight="SemiBold"
+                                                       Foreground="Black" />
+                                                <Rectangle Width="230"
+                                                           Height="40"
+                                                           Margin="0"
+                                                           HorizontalAlignment="Right"
+                                                           RadiusX="6"
+                                                           RadiusY="6"
+                                                           Stroke="Gray" />
+                                                <TextBox Width="210"
+                                                         Height="40"
+                                                         Margin="0,0,10,0"
+                                                         Padding="0"
+                                                         HorizontalAlignment="Right"
+                                                         HorizontalContentAlignment="Left"
+                                                         VerticalContentAlignment="Center"
+                                                         materialDesign:HintAssist.Hint="Status"
+                                                         BorderThickness="0"
+                                                         Cursor="IBeam"
+                                                         FontSize="14"
+                                                         FontWeight="SemiBold"
+                                                         Foreground="Gray"
+                                                         Text="{Binding CCCD, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, StringFormat={}{0:C}}" />
+                                            </Grid>
+                                        </Grid>
+
+                                        <Grid Grid.Row="2"
+                                              Height="40"
+                                              Margin="0,2.2,-0.2,0"
+                                              VerticalAlignment="Top">
+                                            <Grid.ColumnDefinitions>
+                                                <ColumnDefinition Width="2*" />
+                                                <ColumnDefinition Width="2*" />
+                                                <ColumnDefinition Width="2*" />
+                                            </Grid.ColumnDefinitions>
+                                            <Grid Grid.Column="0">
+                                                <Button Width="100"
+                                                        Height="40"
+                                                        Padding="0"
+                                                        VerticalAlignment="Center"
+                                                        Background="#5C0DAC"
+                                                        Command="{Binding addCommand}"
+                                                        CommandParameter="{Binding ElementName=grdSelectImg1}"
+                                                        Content="Add"
+                                                        FocusVisualStyle="{x:Null}"
+                                                        FontSize="18"
+                                                        IsDefault="True"
+                                                        ToolTip="Thêm" 
+                                                            Visibility="{Binding AdminVisibility}"/>
+                                            </Grid>
+                                            <Grid Grid.Column="1">
+                                                <Button Width="100"
+                                                        Height="40"
+                                                        Margin="0"
+                                                        Padding="0"
+                                                        HorizontalAlignment="Center"
+                                                        VerticalAlignment="Center"
+                                                        Background="#5C0DAC"
+                                                        Command="{Binding editCommand}"
+                                                        CommandParameter="{Binding ElementName=grdSelectImg1}"
+                                                        Content="Edit"
+                                                        FocusVisualStyle="{x:Null}"
+                                                        FontSize="18"
+                                                        IsDefault="True"
+                                                        ToolTip="Sửa" 
+                                                            Visibility="{Binding AdminVisibility}"/>
+                                            </Grid>
+                                            <Grid Grid.Column="2">
+                                                <Button 
+                                                            Width="100"
+                                                            Height="40"
+                                                            Margin="0"
+                                                            Padding="0"
+                                                            VerticalAlignment="Center"
+                                                            Background="#5C0DAC"
+                                                            Command="{Binding deleteCommand}"
+                                                            CommandParameter="{Binding ElementName=grdSelectImg1}"
+                                                            Content="Delete"
+                                                            FocusVisualStyle="{x:Null}"
+                                                            FontSize="18"
+                                                            Style="{StaticResource MaterialDesignRaisedButton}"
+                                                            ToolTip="Xóa" 
+                                                            Visibility="{Binding AdminVisibility}"/>
+                                            </Grid>
+
+                                        </Grid>
+                                    </Grid>
                                 </Border>
+                            </Border>
 
                         </Grid>
                     </Grid>
