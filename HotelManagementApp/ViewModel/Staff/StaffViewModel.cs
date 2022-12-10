@@ -299,25 +299,25 @@ namespace HotelManagementApp.ViewModel
                             }
                             break;
                         case "Name":
-                            if ((item.Name == SearchString || string.IsNullOrEmpty(SearchString)) && (item.Role == TypeFilter || string.IsNullOrEmpty(TypeFilter)))
+                            if ((string.IsNullOrEmpty(SearchString) || item.Name.Contains(SearchString)) && (item.Role == TypeFilter || string.IsNullOrEmpty(TypeFilter)))
                             {
                                 list.Add(item);
                             }
                             break;
                         case "Sex":
-                            if ((item.Sex== SearchString || string.IsNullOrEmpty(SearchString)) && (item.Role == TypeFilter || string.IsNullOrEmpty(TypeFilter)))
+                            if ((string.IsNullOrEmpty(SearchString) || item.Sex.Contains(SearchString)) && (item.Role == TypeFilter || string.IsNullOrEmpty(TypeFilter)))
                             {
                                 list.Add(item);
                             }
                             break;
                         case "CCCD":
-                            if ((string.IsNullOrEmpty(SearchString) ||item.CCCD == SearchString) && (item.Role == TypeFilter || string.IsNullOrEmpty(TypeFilter)))
+                            if ((string.IsNullOrEmpty(SearchString) || item.CCCD.Contains(SearchString)) && (item.Role == TypeFilter || string.IsNullOrEmpty(TypeFilter)))
                             {
                                 list.Add(item);
                             }
                             break;
                         case "Phone":
-                            if((string.IsNullOrEmpty(SearchString) || item.PhoneNumber == SearchString) && (item.Role == TypeFilter || string.IsNullOrEmpty(TypeFilter)))
+                            if((string.IsNullOrEmpty(SearchString) || item.PhoneNumber.Contains(SearchString)) && (item.Role == TypeFilter || string.IsNullOrEmpty(TypeFilter)))
                             {
                                 list.Add(item);
                             }

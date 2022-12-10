@@ -248,25 +248,25 @@ namespace HotelManagementApp.ViewModel
                     switch (Filter)
                     {
                         case "ID":
-                            if (string.IsNullOrEmpty(SearchString) || (item.ID == Convert.ToInt32(SearchString) ) && (item.Type == TypeFilter || string.IsNullOrEmpty(TypeFilter)))
+                            if (string.IsNullOrEmpty(SearchString) || (item.ID == Convert.ToInt32(SearchString)) && (item.Type == TypeFilter || string.IsNullOrEmpty(TypeFilter)))
                             {
                                 list.Add(item);
                             }
                             break;
                         case "Name":
-                            if ((item.Name == SearchString || string.IsNullOrEmpty(SearchString)) && (item.Type == TypeFilter || string.IsNullOrEmpty(TypeFilter)))
+                            if ((string.IsNullOrEmpty(SearchString) || item.Name.Contains(SearchString)) && (item.Type == TypeFilter || string.IsNullOrEmpty(TypeFilter)))
                             {
                                 list.Add(item);
                             }
                             break;
                         case "Unit":
-                            if ((item.Unit== SearchString || string.IsNullOrEmpty(SearchString)) && (item.Type == TypeFilter || string.IsNullOrEmpty(TypeFilter)))
+                            if ((string.IsNullOrEmpty(SearchString) || item.Unit.Contains(SearchString)) && (item.Type == TypeFilter || string.IsNullOrEmpty(TypeFilter)))
                             {
                                 list.Add(item);
                             }
                             break;
                         case "Price":
-                            if ((string.IsNullOrEmpty(SearchString) ||item.Price == Convert.ToDecimal(SearchString)) && (item.Type == TypeFilter || string.IsNullOrEmpty(TypeFilter)))
+                            if ((string.IsNullOrEmpty(SearchString) || item.Price == Convert.ToDecimal(SearchString)) && (item.Type == TypeFilter || string.IsNullOrEmpty(TypeFilter)))
                             {
                                 list.Add(item);
                             }
