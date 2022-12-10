@@ -63,7 +63,7 @@
                     <ComboBox Margin="5,10,15,5"
                               materialDesign:HintAssist.Hint="Sex"
                               Style="{StaticResource MaterialDesignFloatingHintComboBox}"
-                              Text="{Binding Sex, UpdateSourceTrigger=PropertyChanged}">
+                              Text="{Binding Sex, UpdateSourceTrigger=PropertyChanged}" RenderTransformOrigin="0.512,0.235" VerticalAlignment="Top">
                         <ComboBoxItem>Male</ComboBoxItem>
                         <ComboBoxItem>Female</ComboBoxItem>
                     </ComboBox>
