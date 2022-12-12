@@ -1,13 +1,19 @@
 ﻿using HotelManagementApp.Model;
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.ComponentModel.DataAnnotations;
 using System.Data;
+using System.Diagnostics.Tracing;
 using System.Linq;
+using System.Runtime.CompilerServices;
 using System.Security.Permissions;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows;
+using System.Windows.Automation.Peers;
 using System.Windows.Input;
+using System.Windows.Media;
 using System.Xaml;
 using System.Xml.Linq;
 
@@ -15,6 +21,8 @@ namespace HotelManagementApp.ViewModel
 {
     public class SingleBedroomInfoViewModel : BaseViewModel
     {
+        private ObservableCollection<RoomsReservation> _RoomReservationsList;
+        public ObservableCollection<RoomsReservation> RoomReservationList { get => _RoomReservationsList; set { _RoomReservationsList = value; OnPropertyChanged(); } }
         private string _RoomNum;
         public string RoomNum { get => _RoomNum; set { _RoomNum = value; OnPropertyChanged(); } }
         private string _CustomerName;
@@ -41,12 +49,49 @@ namespace HotelManagementApp.ViewModel
         public ICommand DeleteCommand { get; set; }
         public ICommand EditCommand { get; set; }
         public ICommand ClearCommand { get; set; }
+
+        private RoomsReservation _SelectedItem;
+        public RoomsReservation SelectedItem
+        {
+            get => _SelectedItem;
+            set
+            {
+                _SelectedItem = value;
+                if (SelectedItem != null)
+                {
+                    RoomNum = SelectedItem.Room.RoomNum;
+                    CustomerName = SelectedItem.BillDetail.Customer.Name;
+                    Sex = SelectedItem.BillDetail.Customer.Sex;
+                    PhoneNum = SelectedItem.BillDetail.Customer.PhoneNumber;
+                    Email = SelectedItem.BillDetail.Customer.Email;
+                    CCCD = SelectedItem.BillDetail.Customer.CCCD;
+                    Nationality = SelectedItem.BillDetail.Customer.Nationality;
+                    string temp;
+                    temp = SelectedItem.CheckInTime.Value.ToString("HH:mm");
+                    CheckInTime = DateTime.Parse(temp);
+                    temp = SelectedItem.CheckInTime.Value.ToShortDateString();
+                    CheckInDate = DateTime.Parse(temp);
+                    temp = SelectedItem.CheckOutTime.Value.ToString("HH:mm");
+                    CheckOutTime = DateTime.Parse(temp);
+                    temp = SelectedItem.CheckOutTime.Value.ToShortDateString();
+                    CheckOutDate = DateTime.Parse(temp);
+                }
+                OnPropertyChanged();
+            }
+        }
+
         public SingleBedroomInfoViewModel()
         {
+            Const.ActiveAccount = DataProvider.Instance.DB.Accounts.Where(x => x.ID == 0).FirstOrDefault();
+            LoadRoomReservationsList();
             AddCommand  = new RelayCommand<object>((p) =>
             {
                 var room = DataProvider.Instance.DB.Rooms.Where(x => x.RoomNum == RoomNum).FirstOrDefault();
                 if (string.IsNullOrEmpty(RoomNum) || string.IsNullOrEmpty(CustomerName) || string.IsNullOrEmpty(PhoneNum) || string.IsNullOrEmpty(CCCD) || CheckInDate == null || CheckInTime == null || CheckOutDate == null || CheckOutDate == null)
+                {
+                    return false;
+                }
+                if (CheckInDate > CheckOutDate || CheckInTime >= CheckOutTime)
                 {
                     return false;
                 }
@@ -59,70 +104,139 @@ namespace HotelManagementApp.ViewModel
                 return true;
             }, (p) =>
             {
-                var customer = new Customer();
-                // If customer doesn't exist, create & save new customer, else update the existing one
-                if (DataProvider.Instance.DB.Customers.Where(x => x.CCCD == CCCD).Count() == 0 || DataProvider.Instance.DB.Customers.Where(x => x.CCCD == CCCD) == null)
+                if (!Conflict())
                 {
-                    customer = new Customer()
+
+                    var customer = new Customer();
+                    // If customer doesn't exist, create & save new customer, else update the existing one
+                    if (DataProvider.Instance.DB.Customers.Where(x => x.CCCD == CCCD).Count() == 0 || DataProvider.Instance.DB.Customers.Where(x => x.CCCD == CCCD) == null)
                     {
-                        Name = CustomerName,
-                        Sex = Sex,
-                        CCCD = CCCD,
-                        PhoneNumber = PhoneNum,
-                        Email = Email,
-                        Nationality = Nationality,
+                        customer = new Customer()
+                        {
+                            Name = CustomerName,
+                            Sex = Sex,
+                            CCCD = CCCD,
+                            PhoneNumber = PhoneNum,
+                            Email = Email,
+                            Nationality = Nationality,
+                        };
+                        DataProvider.Instance.DB.Customers.Add(customer);
+                        DataProvider.Instance.DB.SaveChanges();
+                    }
+                    else
+                    {
+                        customer = DataProvider.Instance.DB.Customers.Where(x => x.CCCD == CCCD).FirstOrDefault();
+                    }
+
+                    customer = DataProvider.Instance.DB.Customers.Where(x => x.CCCD == customer.CCCD).FirstOrDefault();
+                    // Create & save new bill detail
+                    var billDetail = new BillDetail()
+                    {
+                        IDStaff = (int)Const.ActiveAccount.IDStaff,
+                        IDCustomer = customer.ID,
+                        Status = "On-Going",
                     };
-                    DataProvider.Instance.DB.Customers.Add(customer);
+
+                    DataProvider.Instance.DB.BillDetails.Add(billDetail);
                     DataProvider.Instance.DB.SaveChanges();
+
+                    // Create & save new room reservation
+                    var room = DataProvider.Instance.DB.Rooms.Where(x => x.RoomNum == RoomNum).FirstOrDefault();
+
+                    var roomReservation = new RoomsReservation()
+                    {
+                        IDBillDetail = billDetail.ID,
+                        IDRoom = room.ID,
+                        CheckInTime = CheckInDate.Value.Date.Add(CheckInTime.Value.TimeOfDay),
+                        CheckOutTime = CheckOutDate.Value.Date.Add(CheckOutTime.Value.TimeOfDay),
+                    };
+                    DataProvider.Instance.DB.RoomsReservations.Add(roomReservation);
+                    DataProvider.Instance.DB.SaveChanges();
+                    LoadRoomReservationsList();
+                    ClearFields();
                 }
-                else
-                {
-                    customer = DataProvider.Instance.DB.Customers.Where(x => x.CCCD == CCCD).FirstOrDefault();
-                }
-
-                customer = DataProvider.Instance.DB.Customers.Where(x => x.CCCD == customer.CCCD).FirstOrDefault();
-                // Create & save new bill detail
-                var billDetail = new BillDetail()
-                {
-                    IDStaff = (int)Const.ActiveAccount.IDStaff,
-                    IDCustomer = customer.ID,
-                };
-
-                DataProvider.Instance.DB.BillDetails.Add(billDetail);
-                DataProvider.Instance.DB.SaveChanges();
-
-                // Create & save new room reservation
-                var room = DataProvider.Instance.DB.Rooms.Where(x => x.RoomNum == RoomNum).FirstOrDefault();
-
-                var roomReservation = new RoomsReservation()
-                {
-                    IDBillDetail = billDetail.ID,
-                    IDRoom = room.ID,
-                    CheckInTime = CheckInDate.Value.Date.Add(CheckInTime.Value.TimeOfDay),
-                    CheckOutTime = CheckOutDate.Value.Date.Add(CheckOutTime.Value.TimeOfDay),
-                };
-                DataProvider.Instance.DB.RoomsReservations.Add(roomReservation);
-                DataProvider.Instance.DB.SaveChanges();
-
-                //LoadStaffsList();
             });
-
-            DeleteCommand  = new RelayCommand<object>((p) =>
+            EditCommand = new RelayCommand<object>((p) =>
             {
+                if (string.IsNullOrEmpty(RoomNum) || string.IsNullOrEmpty(CustomerName) || string.IsNullOrEmpty(PhoneNum) || string.IsNullOrEmpty(CCCD) || CheckInDate == null || CheckInTime == null || CheckOutDate == null || CheckOutDate == null || SelectedItem == null)
+                {
+                    return false;
+                }
+                if (CheckInDate > CheckOutDate || CheckInTime >= CheckOutTime)
+                {
+                    return false;
+                }
                 return true;
             }, (p) =>
             {
+                var RoomReservation = DataProvider.Instance.DB.RoomsReservations.Where(x => x.ID == SelectedItem.ID).FirstOrDefault();
+                var room = DataProvider.Instance.DB.Rooms.Where(x => x.RoomNum == RoomNum).FirstOrDefault();
+                RoomReservation.IDRoom = room.ID;
+                RoomReservation.CheckInTime = CheckInDate.Value.Date.Add(CheckInTime.Value.TimeOfDay);
+                RoomReservation.CheckOutTime = CheckOutDate.Value.Date.Add(CheckOutTime.Value.TimeOfDay);
+                RoomReservation.BillDetail.Customer.Name = CustomerName;
+                RoomReservation.BillDetail.Customer.Sex = Sex;
+                RoomReservation.BillDetail.Customer.CCCD = CCCD;
+                RoomReservation.BillDetail.Customer.PhoneNumber = PhoneNum;
+                RoomReservation.BillDetail.Customer.Email = Email;
+                RoomReservation.BillDetail.Customer.Nationality = Nationality;
 
+                DataProvider.Instance.DB.SaveChanges();
+
+                OnPropertyChanged();
+                LoadRoomReservationsList();
+                ClearFields();
             });
+
+
+            //DeleteCommand  = new RelayCommand<object>((p) =>
+            //{
+            //    if (SelectedItem == null)
+            //    {
+            //        return false;
+            //    }
+            //    return true;
+            //}, (p) =>
+            //{
+            //    var
+            //});
 
             ClearCommand  = new RelayCommand<object>((p) =>
             {
                 return true;
             }, (p) =>
             {
-                RoomNum = CustomerName = Sex = PhoneNum = Email = CCCD = Nationality = null;
-                CheckInDate = CheckOutDate = CheckInTime = CheckOutTime = null;
+                ClearFields();   
             });
+        }
+
+        private void LoadRoomReservationsList()
+        {
+            RoomReservationList = new ObservableCollection<RoomsReservation>();
+            var ReservationList = DataProvider.Instance.DB.RoomsReservations.Where(x => x.BillDetail.Status == "On-Going");
+            foreach (var item in ReservationList)
+            {
+                RoomReservationList.Add(item);
+            }
+        }
+        
+        private void ClearFields()
+        {
+            RoomNum = CustomerName = Sex = PhoneNum = Email = CCCD = Nationality = null;
+            CheckInDate = CheckOutDate = CheckInTime = CheckOutTime = null;
+        }
+
+        private bool Conflict()
+        {
+            var IncomingCheckInTime = CheckInDate.Value.Date.Add(CheckInTime.Value.TimeOfDay);
+            var IncomingCheckOutTime = CheckOutDate.Value.Date.Add(CheckOutTime.Value.TimeOfDay);
+            var temp = RoomReservationList.Where(x => x.Room.RoomNum == RoomNum && !(x.CheckOutTime <= IncomingCheckInTime || x.CheckInTime >= IncomingCheckInTime));
+            if(temp.Count() != 0)
+            {
+                MessageBox.Show("Phòng đã được đặt trong khoảng thời gian này, vui lòng chọn phòng khác hoặc chỉnh sửa thời gian!", "Phòng đã được đặt!", MessageBoxButton.OK, MessageBoxImage.Exclamation);
+                return true;
+            }
+            return false;
         }
     }
 }

@@ -142,29 +142,27 @@
                                  Margin="5"
                                  VerticalAlignment="Stretch">
                 <ScrollViewer VerticalScrollBarVisibility="Auto">
-                    <ListView ItemsSource="{Binding ListWithID}"
+                    <ListView ItemsSource="{Binding RoomReservationList}"
                               SelectedItem="{Binding SelectedItem, Mode=TwoWay}">
                         <ListView.View>
                             <GridView>
-                                <GridViewColumn DisplayMemberBinding="{Binding RoomNum}"
+                                <GridViewColumn DisplayMemberBinding="{Binding Room.RoomNum}"
                                                 Header="Room Num" />
-                                <GridViewColumn DisplayMemberBinding="{Binding CustomerName}"
+                                <GridViewColumn DisplayMemberBinding="{Binding BillDetail.Customer.Name}"
                                                 Header="Customer name" />
-                                <GridViewColumn DisplayMemberBinding="{Binding PhoneNumber}"
+                                <GridViewColumn DisplayMemberBinding="{Binding BillDetail.Customer.PhoneNumber}"
                                                 Header="Phone number" />
-                                <GridViewColumn DisplayMemberBinding="{Binding CustomerCCCD}"
+                                <GridViewColumn DisplayMemberBinding="{Binding BillDetail.Customer.CCCD}"
                                                 Header="CCCD" />
-                                <GridViewColumn DisplayMemberBinding="{Binding CustomerNationality}"
+                                <GridViewColumn DisplayMemberBinding="{Binding BillDetail.Customer.Nationality}"
                                                 Header="Nationality" />
-                                <GridViewColumn DisplayMemberBinding="{Binding Date, StringFormat='dd/MM/yyyy'}"
-                                                Header="Date" />
-                                <GridViewColumn DisplayMemberBinding="{Binding CheckInTime, StringFormat='HH:mm'}"
+                                <GridViewColumn DisplayMemberBinding="{Binding CheckInTime}"
                                                 Header="Check in time" 
-                                                Width="150" />
-                                <GridViewColumn DisplayMemberBinding="{Binding CheckOutTime, StringFormat='HH:mm'}"
+                                                Width="180" />
+                                <GridViewColumn DisplayMemberBinding="{Binding CheckOutTime}"
                                                 Header="Check out time"
-                                                Width="160" />
-                                <GridViewColumn DisplayMemberBinding="{Binding Status}"
+                                                Width="180" />
+                                <GridViewColumn DisplayMemberBinding="{Binding BillDetail.Status}"
                                                 Header="Status" />
                             </GridView>
                         </ListView.View>

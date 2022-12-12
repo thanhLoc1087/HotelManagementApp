@@ -16,7 +16,7 @@ namespace HotelManagementApp.Model
     public partial class QuanLyKhachSan2Entities : DbContext
     {
         public QuanLyKhachSan2Entities()
-            : base("QuanLyKhachSan2Entities")
+            : base("name=QuanLyKhachSan2Entities")
         {
         }
     
