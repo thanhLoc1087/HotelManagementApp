@@ -1,4 +1,5 @@
-﻿using System;
+﻿using HotelManagementApp.Model;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
@@ -17,32 +18,6 @@ namespace HotelManagementApp.ViewModel
         protected virtual void OnPropertyChanged([CallerMemberName] string propertyName = null)
         {
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
-        }
-        private Visibility _adminVisibility = Visibility.Collapsed;
-        public Visibility AdminVisibility
-        {
-            get => _adminVisibility;
-            set
-            {
-                if (_adminVisibility != value)
-                {
-                    _adminVisibility = value;
-                    OnPropertyChanged("AdminVisibility");
-                }
-            }
-        }
-        private Visibility _staffVisibility = Visibility.Collapsed;
-        public Visibility StaffVisibility
-        {
-            get => _staffVisibility;
-            set
-            {
-                if (_staffVisibility != value)
-                {
-                    _staffVisibility = value;
-                    OnPropertyChanged("StaffVisibility");
-                }
-            }
         }
     }
     

@@ -10,20 +10,20 @@ namespace HotelManagementApp.Model
     public class DataProvider
     {
         private static DataProvider _instance;
-        public static DataProvider Instance 
+        public static DataProvider Instance
         {
             get
             {
-                if (_instance == null )
+                if (_instance == null)
                     _instance = new DataProvider();
-                return _instance; 
+                return _instance;
             }
             set
             {
                 _instance = value;
             }
         }
-       
+
         public QuanLyKhachSan2Entities DB { get; set; }
         private DataProvider()
         {

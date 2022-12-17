@@ -1,6 +1,8 @@
 ﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-                    xmlns:viewmodel="clr-namespace:HotelManagementApp.ViewModel">
+                    xmlns:viewmodel="clr-namespace:HotelManagementApp.ViewModel"
+                    xmlns:local="clr-namespace:HotelManagementApp">
+    <local:Const x:Key="Const"></local:Const>
     <viewmodel:MainViewModel x:Key="MainVm"></viewmodel:MainViewModel>
     <viewmodel:LoginViewModel x:Key="LoginVm"></viewmodel:LoginViewModel>
     <viewmodel:SettingsViewModel x:Key="SettingsVm"></viewmodel:SettingsViewModel>

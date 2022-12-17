@@ -230,15 +230,15 @@ namespace HotelManagementApp.ViewModel
         {
 
             ObservableCollection<FoodsAndService> list = new ObservableCollection<FoodsAndService>();
-            foreach(var item in FoodsAndServicesList)
+            foreach (var item in FoodsAndServicesList)
             {
-                if(string.IsNullOrEmpty(Filter) && string.IsNullOrEmpty(SearchString) && string.IsNullOrEmpty(TypeFilter))
+                if (string.IsNullOrEmpty(Filter) && string.IsNullOrEmpty(SearchString) && string.IsNullOrEmpty(TypeFilter))
                 {
                     list = FoodsAndServicesList;
                 }
                 else if (string.IsNullOrEmpty(Filter) && string.IsNullOrEmpty(SearchString) && !string.IsNullOrEmpty(TypeFilter))
                 {
-                    if(item.Type == TypeFilter)
+                    if (item.Type == TypeFilter)
                     {
                         list.Add(item);
                     }
@@ -254,13 +254,13 @@ namespace HotelManagementApp.ViewModel
                             }
                             break;
                         case "Name":
-                            if ((string.IsNullOrEmpty(SearchString) || item.Name.Contains(SearchString)) && (item.Type == TypeFilter || string.IsNullOrEmpty(TypeFilter)))
+                            if ((item.Name == SearchString || string.IsNullOrEmpty(SearchString)) && (item.Type == TypeFilter || string.IsNullOrEmpty(TypeFilter)))
                             {
                                 list.Add(item);
                             }
                             break;
                         case "Unit":
-                            if ((string.IsNullOrEmpty(SearchString) || item.Unit.Contains(SearchString)) && (item.Type == TypeFilter || string.IsNullOrEmpty(TypeFilter)))
+                            if ((item.Unit == SearchString || string.IsNullOrEmpty(SearchString)) && (item.Type == TypeFilter || string.IsNullOrEmpty(TypeFilter)))
                             {
                                 list.Add(item);
                             }
