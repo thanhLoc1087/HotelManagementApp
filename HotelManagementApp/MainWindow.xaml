@@ -1474,7 +1474,7 @@
                                                   Focusable="False"
                                                   IsReadOnly="True"
                                                   IsSynchronizedWithCurrentItem="False"
-                                                  ItemsSource="{Binding StaffsList}"
+                                                  ItemsSource="{Binding FilteredList}"
                                                   SelectedItem="{Binding SelectedItem}">
                                             <i:Interaction.Triggers>
                                                 <i:EventTrigger EventName="SelectionChanged">
@@ -1996,10 +1996,9 @@
                                                     Width="110">
                                                 <ComboBoxItem></ComboBoxItem>
                                                 <ComboBoxItem>ID</ComboBoxItem>
-                                                <ComboBoxItem>Name</ComboBoxItem>
-                                                <ComboBoxItem>Sex</ComboBoxItem>
-                                                <ComboBoxItem>CCCD</ComboBoxItem>
-                                                <ComboBoxItem>Phone</ComboBoxItem>
+                                                <ComboBoxItem>Room Num</ComboBoxItem>
+                                                <ComboBoxItem>Room Type</ComboBoxItem>
+                                                <ComboBoxItem>Status</ComboBoxItem>
                                             </ComboBox>
                                         </Border>
                                         <TextBox
@@ -2032,18 +2031,17 @@
                                                     Style="{StaticResource MaterialDesignFilledComboBox}"
                                                     materialDesign:TextFieldAssist.TextBoxViewMargin="2,-11,-10,0"
                                                     materialDesign:TextFieldAssist.TextFieldCornerRadius="14"
-                                                    materialDesign:HintAssist.Hint="Role"
+                                                    materialDesign:HintAssist.Hint="Room Type"
                                                     materialDesign:TextFieldAssist.DecorationVisibility="Hidden"
                                                     BorderThickness="0"
                                                     materialDesign:HintAssist.Foreground="White"
                                                     Background="White"
                                                     Height="35"
                                                     FontSize="14"
-                                                    Text="{Binding TypeFilter, UpdateSourceTrigger=PropertyChanged}"
+                                                    ItemsSource="{Binding RoomTypesList, UpdateSourceTrigger=PropertyChanged}"
+                                                    Text="{}"
+                                                    SelectedItem="{Binding TypeFilter, UpdateSourceTrigger=PropertyChanged}"
                                                     Width="110">
-                                                <ComboBoxItem></ComboBoxItem>
-                                                <ComboBoxItem>Admin</ComboBoxItem>
-                                                <ComboBoxItem>Staff</ComboBoxItem>
                                             </ComboBox>
                                         </Border>
                                     </StackPanel>
@@ -2093,7 +2091,7 @@
                                                                                    ElementStyle="{StaticResource MaterialDesignDataGridTextColumnStyle}"
                                                                                    Header="Room Num" />
                                                 <materialDesign:DataGridTextColumn Width="1.5*"
-                                                                                   Binding="{Binding RoomType}"
+                                                                                   Binding="{Binding RoomType.Name}"
                                                                                    EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnPopupEditingStyle}"
                                                                                    ElementStyle="{StaticResource MaterialDesignDataGridTextColumnStyle}"
                                                                                    Header="Room Type" />
@@ -2101,12 +2099,7 @@
                                                                                    Binding="{Binding Status, StringFormat={}{0:C}}"
                                                                                    EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnPopupEditingStyle}"
                                                                                    ElementStyle="{StaticResource MaterialDesignDataGridTextColumnStyle}"
-                                                                                   Header="Status" />
-                                                <materialDesign:DataGridTextColumn Width="1.5*"
-                                                                                   Binding="{Binding PhoneNumber}"
-                                                                                   EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnPopupEditingStyle}"
-                                                                                   ElementStyle="{StaticResource MaterialDesignDataGridTextColumnStyle}"
-                                                                                   Header="Phone" />
+                                                                                   Header="Status" ></materialDesign:DataGridTextColumn>
 
 
 

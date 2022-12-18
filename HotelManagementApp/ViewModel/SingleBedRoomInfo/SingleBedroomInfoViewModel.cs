@@ -35,7 +35,7 @@ namespace HotelManagementApp.ViewModel
         public DateTime? CheckInTime { get => _CheckInTime; set { _CheckInTime = value; OnPropertyChanged(); } }
         private DateTime? _CheckOutDate = null;
         public DateTime? CheckOutDate { get => _CheckOutDate; set { _CheckOutDate = value; OnPropertyChanged(); } }
-        private DateTime? _CheckOutTime = null ;
+        private DateTime? _CheckOutTime = null;
         public DateTime? CheckOutTime { get => _CheckOutTime; set { _CheckOutTime = value; OnPropertyChanged(); } }
         public ICommand AddCommand { get; set; }
         public ICommand DeleteCommand { get; set; }
@@ -43,7 +43,7 @@ namespace HotelManagementApp.ViewModel
         public ICommand ClearCommand { get; set; }
         public SingleBedroomInfoViewModel()
         {
-            AddCommand  = new RelayCommand<object>((p) =>
+            AddCommand = new RelayCommand<object>((p) =>
             {
                 var room = DataProvider.Instance.DB.Rooms.Where(x => x.RoomNum == RoomNum).FirstOrDefault();
                 if (string.IsNullOrEmpty(RoomNum) || string.IsNullOrEmpty(CustomerName) || string.IsNullOrEmpty(PhoneNum) || string.IsNullOrEmpty(CCCD) || CheckInDate == null || CheckInTime == null || CheckOutDate == null || CheckOutDate == null)
@@ -107,7 +107,7 @@ namespace HotelManagementApp.ViewModel
                 //LoadStaffsList();
             });
 
-            DeleteCommand  = new RelayCommand<object>((p) =>
+            DeleteCommand = new RelayCommand<object>((p) =>
             {
                 return true;
             }, (p) =>
@@ -115,7 +115,7 @@ namespace HotelManagementApp.ViewModel
 
             });
 
-            ClearCommand  = new RelayCommand<object>((p) =>
+            ClearCommand = new RelayCommand<object>((p) =>
             {
                 return true;
             }, (p) =>
@@ -126,3 +126,4 @@ namespace HotelManagementApp.ViewModel
         }
     }
 }
+    

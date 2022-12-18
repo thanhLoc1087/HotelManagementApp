@@ -25,9 +25,8 @@ namespace HotelManagementApp.ViewModel
         public ObservableCollection<Room> RoomsList { get => _RoomsList; set { _RoomsList = value; OnPropertyChanged(); } }
         private ObservableCollection<Room> _FilteredList;
         public ObservableCollection<Room> FilteredList { get => _FilteredList; set { _FilteredList = value; OnPropertyChanged(); } }
-
-        private int _FilterNum;
-        public int FilterNum { get => _FilterNum; set { _FilterNum = value; LoadFilteredList(); OnPropertyChanged(); } }
+        private ObservableCollection<string> _RoomTypesList;
+        public ObservableCollection<string> RoomTypesList { get => _RoomTypesList; set { _RoomTypesList = value; OnPropertyChanged(); } }
         private string _Filter;
         public string Filter { get => _Filter; set { _Filter = value; LoadFilteredList(); OnPropertyChanged(); } }
         private string _TypeFilter;
@@ -52,7 +51,7 @@ namespace HotelManagementApp.ViewModel
                 if (SelectedItem != null)
                 {
                     RoomNum = SelectedItem.RoomNum;
-                    //RoomType = SelectedItem.RoomType;
+                    Type = IDRoomTypeConverter(SelectedItem.IDRoomType);
                     Status = SelectedItem.Status;
                     ImageSource = SelectedItem.ImageData;
                     LoadImage();
@@ -71,6 +70,7 @@ namespace HotelManagementApp.ViewModel
         public AddRoomForAdminViewModel()
         {
             LoadRoomsList();
+            LoadRoomTypesList();
             LoadFilteredList();
             addCommand = new RelayCommand<object>((p) =>
             {
@@ -78,7 +78,7 @@ namespace HotelManagementApp.ViewModel
                 {
                     return false;
                 }
-                var list = DataProvider.Instance.DB.Rooms.Where(x => x.RoomNum== RoomNum);
+                var list = DataProvider.Instance.DB.Rooms.Where(x => x.RoomNum == RoomNum);
                 if (list == null || list.Count() != 0)
                 {
                     return false;
@@ -89,9 +89,10 @@ namespace HotelManagementApp.ViewModel
                 var room = new Room()
                 {
                     RoomNum = RoomNum,
-                    //RoomType = Type,
+                    IDRoomType = stringRoomTypeConverter(Type),
                     Status = Status,
                 };
+
                 DataProvider.Instance.DB.Rooms.Add(room);
                 DataProvider.Instance.DB.SaveChanges();
                 addImage(room);
@@ -116,7 +117,7 @@ namespace HotelManagementApp.ViewModel
             {
                 var room = DataProvider.Instance.DB.Rooms.Where(x => x.ID == SelectedItem.ID).FirstOrDefault();
                 room.RoomNum = RoomNum;
-                // room.RoomType = Type;
+                room.IDRoomType = stringRoomTypeConverter(Type);
                 room.Status = Status;
                 room.ImageData = _SelectedImagePath;
                 addImage(room);
@@ -151,9 +152,19 @@ namespace HotelManagementApp.ViewModel
         {
             RoomsList = new ObservableCollection<Room>();
             var roomsList = DataProvider.Instance.DB.Rooms.Where(x => x.Deleted == false);
-            foreach (var item in RoomsList)
+            foreach (var item in roomsList)
             {
                 RoomsList.Add(item);
+            }
+        }
+
+        void LoadRoomTypesList()
+        {
+            RoomTypesList = new ObservableCollection<string>();
+            var typeList = DataProvider.Instance.DB.RoomTypes.Where(x => x.Deleted == false);
+            foreach (var item in typeList)
+            {
+                RoomTypesList.Add(item.Name);
             }
         }
 
@@ -219,63 +230,86 @@ namespace HotelManagementApp.ViewModel
         private void LoadFilteredList()
         {
 
-        //    ObservableCollection<Room> list = new ObservableCollection<Room>();
-        //    foreach (var item in RoomsList)
-        //    {
-        //        if (string.IsNullOrEmpty(Filter) && string.IsNullOrEmpty(SearchString) && string.IsNullOrEmpty(TypeFilter))
-        //        {
-        //            list = RoomsList;
-        //        }
-        //        else if (string.IsNullOrEmpty(Filter) && string.IsNullOrEmpty(SearchString) && !string.IsNullOrEmpty(TypeFilter))
-        //        {
-        //            //if (item.RoomType == TypeFilter)
-        //            //{
-        //            //    list.Add(item);
-        //            //}
-        //        }
-        //        else
-        //        {
-        //            switch (Filter)
-        //            {
-        //                case "ID":
-        //                    if (string.IsNullOrEmpty(SearchString) || (item.ID == Convert.ToInt32(SearchString)) && (item.Role == TypeFilter || string.IsNullOrEmpty(TypeFilter)))
-        //                    {
-        //                        list.Add(item);
-        //                    }
-        //                    break;
-        //                case "Room Num":
-        //                    if ((item.RoomNum == SearchString || string.IsNullOrEmpty(SearchString)) && (item.RoomNum == TypeFilter || string.IsNullOrEmpty(TypeFilter)))
-        //                    {
-        //                        list.Add(item);
-        //                    }
-        //                    break;
-        //                case "Room Type":
-        //                    if ((item.== SearchString || string.IsNullOrEmpty(SearchString)) && (item.Role == TypeFilter || string.IsNullOrEmpty(TypeFilter)))
-        //                    {
-        //                        list.Add(item);
-        //                    }
-        //                    break;
-        //                case "Status":
-        //                    if ((string.IsNullOrEmpty(SearchString) ||item.CCCD == SearchString) && (item.Role == TypeFilter || string.IsNullOrEmpty(TypeFilter)))
-        //                    {
-        //                        list.Add(item);
-        //                    }
-        //                    break;
-        //                case "Phone":
-        //                    if ((string.IsNullOrEmpty(SearchString) || item.PhoneNumber == SearchString) && (item.Role == TypeFilter || string.IsNullOrEmpty(TypeFilter)))
-        //                    {
-        //                        list.Add(item);
-        //                    }
-        //                    break;
-        //            }
-        //        }
-        //    }
-        //    FilteredList = list;
+            ObservableCollection<Room> list = new ObservableCollection<Room>();
+            foreach (var item in RoomsList)
+            {
+                if (string.IsNullOrEmpty(Filter) && string.IsNullOrEmpty(SearchString) && (TypeFilter == null))
+                {
+                    list = RoomsList;
+                }
+                else if (string.IsNullOrEmpty(Filter) && string.IsNullOrEmpty(SearchString) && (TypeFilter != null))
+                {
+                    if (item.RoomType.Name == TypeFilter)
+                    {
+                        list.Add(item);
+                    }
+                }
+                else
+                {
+                    switch (Filter)
+                    {
+                        case "ID":
+                            if (string.IsNullOrEmpty(SearchString) || (item.ID == Convert.ToInt32(SearchString)) && (item.RoomType.Name == TypeFilter || TypeFilter == null))
+                            {
+                                list.Add(item);
+                            }
+                            break;
+
+                        case "Room Num":
+                            if ((string.IsNullOrEmpty(SearchString) || item.RoomNum.Contains(SearchString)) && (item.RoomType.Name == TypeFilter || TypeFilter == null))
+                            {
+                                list.Add(item);
+                            }
+                            break;
+                        case "Room Type":
+                            if ((string.IsNullOrEmpty(SearchString) || item.RoomType.Name.Contains(SearchString)) && (item.RoomType.Name == TypeFilter || TypeFilter == null))
+                            {
+                                list.Add(item);
+                            }
+                            break;
+                        case "Status":
+                            if ((string.IsNullOrEmpty(SearchString) || item.Status.Contains(SearchString)) && (item.RoomType.Name == TypeFilter || TypeFilter == null))
+                            {
+                                list.Add(item);
+                            }
+                            break;
+                    }
+                }
+            }
+            FilteredList = list;
         }
-        public void ClearFields()
+        private void ClearFields()
         {
             RoomNum = Type = Status = null;
             Image = null;
+        }
+
+        private int stringRoomTypeConverter(string roomType)
+        {
+            switch (roomType)
+            {
+                case "Single Bed Room":
+                    return 1;
+                case "Double Bed Room":
+                    return 2;
+                case "Triple Bed Room":
+                    return 3;
+            }
+            return 0;
+        }
+
+        private string IDRoomTypeConverter(int id)
+        {
+            switch (id)
+            {
+                case 1:
+                    return "Single Bed Room";
+                case 2:
+                    return "Double Bed Room";
+                case 3:
+                    return "Triple Bed Room";
+            }
+            return null;
         }
     }
 }

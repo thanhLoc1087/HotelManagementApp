@@ -1,16 +1,17 @@
 ﻿using HotelManagementApp.Model;
 using HotelManagementApp.View;
-using HotelManagementApp.ViewModel;
 using Microsoft.Win32;
 using System;
 using System.Collections.ObjectModel;
 using System.IO;
 using System.Linq;
+using System.Security;
 using System.Security.Cryptography;
 using System.Text;
-using System.Windows;
 using System.Windows.Input;
+using System.Windows.Media;
 using System.Windows.Media.Imaging;
+using System.Xml.Serialization;
 
 namespace HotelManagementApp.ViewModel
 {
@@ -40,7 +41,7 @@ namespace HotelManagementApp.ViewModel
         private string _PhoneNum;
         public string PhoneNum { get => _PhoneNum; set { _PhoneNum = value; OnPropertyChanged(); } }
 
-        private string  _Role;
+        private string _Role;
         public string Role { get => _Role; set { _Role = value; OnPropertyChanged(); } }
         private string _ImageSource;
         public string ImageSource { get => _ImageSource; set { _ImageSource = value; OnPropertyChanged(); } }
@@ -83,7 +84,7 @@ namespace HotelManagementApp.ViewModel
             }
         }
 
-       
+
 
         public ICommand addCommand { get; set; }
         public ICommand SelectImageCommand { get; set; }
@@ -105,7 +106,7 @@ namespace HotelManagementApp.ViewModel
                     return false;
                 }
                 var accList = DataProvider.Instance.DB.Accounts.Where(x => x.Username == Username);
-                if(accList == null || accList.Count() != 0)
+                if (accList == null || accList.Count() != 0)
                 {
                     return false;
                 }
@@ -208,7 +209,7 @@ namespace HotelManagementApp.ViewModel
         void addImage(Staff staff)
         {
             string destinationDirectory = Directory.GetParent(Directory.GetCurrentDirectory()).Parent.FullName;
-            if(EmployeeImage != null)
+            if (EmployeeImage != null)
             {
                 staff.ImageData = $"\\ImageStorage\\StaffImg\\staff{staff.ID}.png";
                 var destination = destinationDirectory + staff.ImageData;
@@ -298,25 +299,25 @@ namespace HotelManagementApp.ViewModel
                             }
                             break;
                         case "Name":
-                            if ((item.Name == SearchString || string.IsNullOrEmpty(SearchString)) && (item.Role == TypeFilter || string.IsNullOrEmpty(TypeFilter)))
+                            if ((string.IsNullOrEmpty(SearchString) || item.Name.Contains(SearchString)) && (item.Role == TypeFilter || string.IsNullOrEmpty(TypeFilter)))
                             {
                                 list.Add(item);
                             }
                             break;
                         case "Sex":
-                            if ((item.Sex== SearchString || string.IsNullOrEmpty(SearchString)) && (item.Role == TypeFilter || string.IsNullOrEmpty(TypeFilter)))
+                            if ((string.IsNullOrEmpty(SearchString) || item.Sex.Contains(SearchString)) && (item.Role == TypeFilter || string.IsNullOrEmpty(TypeFilter)))
                             {
                                 list.Add(item);
                             }
                             break;
                         case "CCCD":
-                            if ((string.IsNullOrEmpty(SearchString) ||item.CCCD == SearchString) && (item.Role == TypeFilter || string.IsNullOrEmpty(TypeFilter)))
+                            if ((string.IsNullOrEmpty(SearchString) || item.CCCD.Contains(SearchString)) && (item.Role == TypeFilter || string.IsNullOrEmpty(TypeFilter)))
                             {
                                 list.Add(item);
                             }
                             break;
                         case "Phone":
-                            if((string.IsNullOrEmpty(SearchString) || item.PhoneNumber == SearchString) && (item.Role == TypeFilter || string.IsNullOrEmpty(TypeFilter)))
+                            if ((string.IsNullOrEmpty(SearchString) || item.PhoneNumber.Contains(SearchString)) && (item.Role == TypeFilter || string.IsNullOrEmpty(TypeFilter)))
                             {
                                 list.Add(item);
                             }
@@ -332,4 +333,4 @@ namespace HotelManagementApp.ViewModel
             EmployeeImage = null;
         }
     }
-}       
+}
