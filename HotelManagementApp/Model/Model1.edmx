@@ -23,8 +23,7 @@
           <Property Name="IDStaff" Type="int" Nullable="false" />
           <Property Name="IDCustomer" Type="int" Nullable="false" />
           <Property Name="TotalMoney" Type="float" Nullable="false" />
-          <Property Name="BillDate" Type="smalldatetime" />
-          <Property Name="Status" Type="nvarchar(max)" />
+          <Property Name="BillDate" Type="datetime" />
         </EntityType>
         <EntityType Name="Customers">
           <Key>
@@ -46,7 +45,7 @@
           <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="Name" Type="nvarchar(max)" />
           <Property Name="Unit" Type="nvarchar(max)" />
-          <Property Name="Price" Type="money" />
+          <Property Name="Price" Type="decimal" Precision="19" Scale="4" />
           <Property Name="ImageData" Type="nvarchar(max)" />
           <Property Name="Type" Type="nvarchar(max)" />
           <Property Name="Deleted" Type="bit" Nullable="false" />
@@ -59,8 +58,8 @@
           <Property Name="IDFoodsAndServices" Type="int" />
           <Property Name="IDBillDetail" Type="int" />
           <Property Name="Quantity" Type="int" />
-          <Property Name="TotalPrice" Type="money" />
-          <Property Name="Time" Type="smalldatetime" />
+          <Property Name="TotalPrice" Type="decimal" Precision="19" Scale="4" />
+          <Property Name="Time" Type="datetime" />
         </EntityType>
         <EntityType Name="Rooms">
           <Key>
@@ -80,8 +79,8 @@
           <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="IDBillDetail" Type="int" />
           <Property Name="IDRoom" Type="int" />
-          <Property Name="CheckInTime" Type="smalldatetime" />
-          <Property Name="CheckOutTime" Type="smalldatetime" />
+          <Property Name="CheckInTime" Type="datetime" />
+          <Property Name="CheckOutTime" Type="datetime" />
         </EntityType>
         <EntityType Name="RoomTypes">
           <Key>
@@ -285,8 +284,7 @@
           <Property Name="IDStaff" Type="Int32" Nullable="false" />
           <Property Name="IDCustomer" Type="Int32" Nullable="false" />
           <Property Name="TotalMoney" Type="Double" Nullable="false" />
-          <Property Name="BillDate" Type="DateTime" Precision="0" />
-          <Property Name="Status" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="BillDate" Type="DateTime" Precision="3" />
           <NavigationProperty Name="Orders" Relationship="Self.FK__Orders__IDBillDe__2BFE89A6" FromRole="BillDetails" ToRole="Orders" />
           <NavigationProperty Name="RoomsReservations" Relationship="Self.FK__RoomsRese__IDBil__625A9A57" FromRole="BillDetails" ToRole="RoomsReservations" />
           <NavigationProperty Name="Customer" Relationship="Self.FK_BillDetail_Customer_CustomerID" FromRole="BillDetails" ToRole="Customers" />
@@ -328,7 +326,7 @@
           <Property Name="IDBillDetail" Type="Int32" />
           <Property Name="Quantity" Type="Int32" />
           <Property Name="TotalPrice" Type="Decimal" Precision="19" Scale="4" />
-          <Property Name="Time" Type="DateTime" Precision="0" />
+          <Property Name="Time" Type="DateTime" Precision="3" />
           <NavigationProperty Name="BillDetail" Relationship="Self.FK__Orders__IDBillDe__2BFE89A6" FromRole="Orders" ToRole="BillDetails" />
           <NavigationProperty Name="FoodsAndService" Relationship="Self.FK__Orders__IDFoodsA__2B0A656D" FromRole="Orders" ToRole="FoodsAndServices" />
         </EntityType>
@@ -352,8 +350,8 @@
           <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="IDBillDetail" Type="Int32" />
           <Property Name="IDRoom" Type="Int32" />
-          <Property Name="CheckInTime" Type="DateTime" Precision="0" />
-          <Property Name="CheckOutTime" Type="DateTime" Precision="0" />
+          <Property Name="CheckInTime" Type="DateTime" Precision="3" />
+          <Property Name="CheckOutTime" Type="DateTime" Precision="3" />
           <NavigationProperty Name="BillDetail" Relationship="Self.FK__RoomsRese__IDBil__625A9A57" FromRole="RoomsReservations" ToRole="BillDetails" />
           <NavigationProperty Name="Room" Relationship="Self.FK__RoomsRese__IDRoo__634EBE90" FromRole="RoomsReservations" ToRole="Rooms" />
         </EntityType>
@@ -563,7 +561,6 @@
                 <ScalarProperty Name="IDCustomer" ColumnName="IDCustomer" />
                 <ScalarProperty Name="TotalMoney" ColumnName="TotalMoney" />
                 <ScalarProperty Name="BillDate" ColumnName="BillDate" />
-                <ScalarProperty Name="Status" ColumnName="Status" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

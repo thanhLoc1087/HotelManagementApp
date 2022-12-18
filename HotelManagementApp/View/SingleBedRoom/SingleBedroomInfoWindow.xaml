@@ -63,7 +63,7 @@
                     <ComboBox Margin="5,10,15,5"
                               materialDesign:HintAssist.Hint="Sex"
                               Style="{StaticResource MaterialDesignFloatingHintComboBox}"
-                              Text="{Binding Sex, UpdateSourceTrigger=PropertyChanged}" RenderTransformOrigin="0.512,0.235" VerticalAlignment="Top">
+                              Text="{Binding Sex, UpdateSourceTrigger=PropertyChanged}">
                         <ComboBoxItem>Male</ComboBoxItem>
                         <ComboBoxItem>Female</ComboBoxItem>
                     </ComboBox>
@@ -142,27 +142,29 @@
                                  Margin="5"
                                  VerticalAlignment="Stretch">
                 <ScrollViewer VerticalScrollBarVisibility="Auto">
-                    <ListView ItemsSource="{Binding RoomReservationList}"
+                    <ListView ItemsSource="{Binding ListWithID}"
                               SelectedItem="{Binding SelectedItem, Mode=TwoWay}">
                         <ListView.View>
                             <GridView>
-                                <GridViewColumn DisplayMemberBinding="{Binding Room.RoomNum}"
+                                <GridViewColumn DisplayMemberBinding="{Binding RoomNum}"
                                                 Header="Room Num" />
-                                <GridViewColumn DisplayMemberBinding="{Binding BillDetail.Customer.Name}"
+                                <GridViewColumn DisplayMemberBinding="{Binding CustomerName}"
                                                 Header="Customer name" />
-                                <GridViewColumn DisplayMemberBinding="{Binding BillDetail.Customer.PhoneNumber}"
+                                <GridViewColumn DisplayMemberBinding="{Binding PhoneNumber}"
                                                 Header="Phone number" />
-                                <GridViewColumn DisplayMemberBinding="{Binding BillDetail.Customer.CCCD}"
+                                <GridViewColumn DisplayMemberBinding="{Binding CustomerCCCD}"
                                                 Header="CCCD" />
-                                <GridViewColumn DisplayMemberBinding="{Binding BillDetail.Customer.Nationality}"
+                                <GridViewColumn DisplayMemberBinding="{Binding CustomerNationality}"
                                                 Header="Nationality" />
-                                <GridViewColumn DisplayMemberBinding="{Binding CheckInTime}"
+                                <GridViewColumn DisplayMemberBinding="{Binding Date, StringFormat='dd/MM/yyyy'}"
+                                                Header="Date" />
+                                <GridViewColumn DisplayMemberBinding="{Binding CheckInTime, StringFormat='HH:mm'}"
                                                 Header="Check in time" 
-                                                Width="180" />
-                                <GridViewColumn DisplayMemberBinding="{Binding CheckOutTime}"
+                                                Width="150" />
+                                <GridViewColumn DisplayMemberBinding="{Binding CheckOutTime, StringFormat='HH:mm'}"
                                                 Header="Check out time"
-                                                Width="180" />
-                                <GridViewColumn DisplayMemberBinding="{Binding BillDetail.Status}"
+                                                Width="160" />
+                                <GridViewColumn DisplayMemberBinding="{Binding Status}"
                                                 Header="Status" />
                             </GridView>
                         </ListView.View>

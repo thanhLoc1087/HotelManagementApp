@@ -1,17 +1,16 @@
 ﻿using HotelManagementApp.Model;
 using HotelManagementApp.View;
+using HotelManagementApp.ViewModel;
 using Microsoft.Win32;
 using System;
 using System.Collections.ObjectModel;
 using System.IO;
 using System.Linq;
-using System.Security;
 using System.Security.Cryptography;
 using System.Text;
+using System.Windows;
 using System.Windows.Input;
-using System.Windows.Media;
 using System.Windows.Media.Imaging;
-using System.Xml.Serialization;
 
 namespace HotelManagementApp.ViewModel
 {
@@ -299,25 +298,25 @@ namespace HotelManagementApp.ViewModel
                             }
                             break;
                         case "Name":
-                            if ((string.IsNullOrEmpty(SearchString) || item.Name.Contains(SearchString)) && (item.Role == TypeFilter || string.IsNullOrEmpty(TypeFilter)))
+                            if ((item.Name == SearchString || string.IsNullOrEmpty(SearchString)) && (item.Role == TypeFilter || string.IsNullOrEmpty(TypeFilter)))
                             {
                                 list.Add(item);
                             }
                             break;
                         case "Sex":
-                            if ((string.IsNullOrEmpty(SearchString) || item.Sex.Contains(SearchString)) && (item.Role == TypeFilter || string.IsNullOrEmpty(TypeFilter)))
+                            if ((item.Sex== SearchString || string.IsNullOrEmpty(SearchString)) && (item.Role == TypeFilter || string.IsNullOrEmpty(TypeFilter)))
                             {
                                 list.Add(item);
                             }
                             break;
                         case "CCCD":
-                            if ((string.IsNullOrEmpty(SearchString) || item.CCCD.Contains(SearchString)) && (item.Role == TypeFilter || string.IsNullOrEmpty(TypeFilter)))
+                            if ((string.IsNullOrEmpty(SearchString) ||item.CCCD == SearchString) && (item.Role == TypeFilter || string.IsNullOrEmpty(TypeFilter)))
                             {
                                 list.Add(item);
                             }
                             break;
                         case "Phone":
-                            if((string.IsNullOrEmpty(SearchString) || item.PhoneNumber.Contains(SearchString)) && (item.Role == TypeFilter || string.IsNullOrEmpty(TypeFilter)))
+                            if((string.IsNullOrEmpty(SearchString) || item.PhoneNumber == SearchString) && (item.Role == TypeFilter || string.IsNullOrEmpty(TypeFilter)))
                             {
                                 list.Add(item);
                             }
