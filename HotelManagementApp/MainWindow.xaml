@@ -432,34 +432,34 @@
                             </Grid>
                             <Grid Grid.Column="1">
 
-                                        <Grid.RowDefinitions>
-                                            <RowDefinition Height="1*" />
-                                            <RowDefinition Height="8*" />
-                                            <RowDefinition Height="1*" />
-                                            <RowDefinition Height="1.5*" />
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="1*" />
+                                    <RowDefinition Height="8*" />
+                                    <RowDefinition Height="1*" />
+                                    <RowDefinition Height="1.5*" />
 
-                                        </Grid.RowDefinitions>
-                                        <!--  Tên sân  -->
-                                        <Grid Grid.Row="0"
+                                </Grid.RowDefinitions>
+                                <!--  Tên sân  -->
+                                <Grid Grid.Row="0"
                                       Grid.RowSpan="2"
                                       Height="58"
                                       Margin="0,0,0.2,461.2"
                                       VerticalAlignment="Bottom">
-                                            <Rectangle Width="auto"
+                                    <Rectangle Width="auto"
                                                Height="40"
                                                Margin="5,5,15,5"
                                                RadiusX="6"
                                                RadiusY="6"
                                                Stroke="Gray" />
-                                            <ComboBox Width="300"
+                                    <ComboBox Width="300"
                                               Height="25"
                                               materialDesign:HintAssist.Hint="Field Name">
-                                                <!--ItemsSource="{Binding ListbookingCombobox}"
+                                        <!--ItemsSource="{Binding ListbookingCombobox}"
                                               SelectedItem="{Binding FieldSelectedItem}"-->
 
-                                                <ComboBox.ItemTemplate>
-                                                    <DataTemplate>
-                                                        <!--<StackPanel Orientation="Horizontal">
+                                        <ComboBox.ItemTemplate>
+                                            <DataTemplate>
+                                                <!--<StackPanel Orientation="Horizontal">
 
                                                     <TextBlock Text="{Binding field.name}" />
                                                     <TextBlock Text="   |   " />
@@ -467,33 +467,33 @@
                                                     <TextBlock Text=" - " />
                                                     <TextBlock Text="{Binding end_time, StringFormat='{}{0:h:mm tt}'}" />
                                                 </StackPanel>-->
-                                                    </DataTemplate>
-                                                </ComboBox.ItemTemplate>
-                                            </ComboBox>
+                                            </DataTemplate>
+                                        </ComboBox.ItemTemplate>
+                                    </ComboBox>
 
-                                        </Grid>
-                                        <Grid Grid.Row="1">
-                                            <Border CornerRadius="30">
-                                                <Grid>
-                                                    <Grid.RowDefinitions>
-                                                        <RowDefinition Height="1*" />
-                                                        <RowDefinition Height="8*" />
-                                                    </Grid.RowDefinitions>
-                                                    <Grid Grid.Row="0">
-                                                        <Grid.ColumnDefinitions>
-                                                            <ColumnDefinition Width="6*" />
-                                                            <ColumnDefinition Width="4*" />
-                                                        </Grid.ColumnDefinitions>
-                                                        <Grid Grid.Column="0">
-                                                            <TextBlock Margin="20,10,10,10"
+                                </Grid>
+                                <Grid Grid.Row="1">
+                                    <Border CornerRadius="30">
+                                        <Grid>
+                                            <Grid.RowDefinitions>
+                                                <RowDefinition Height="1*" />
+                                                <RowDefinition Height="8*" />
+                                            </Grid.RowDefinitions>
+                                            <Grid Grid.Row="0">
+                                                <Grid.ColumnDefinitions>
+                                                    <ColumnDefinition Width="6*" />
+                                                    <ColumnDefinition Width="4*" />
+                                                </Grid.ColumnDefinitions>
+                                                <Grid Grid.Column="0">
+                                                    <TextBlock Margin="20,10,10,10"
                                                                VerticalAlignment="Center"
                                                                FontSize="20"
                                                                FontWeight="DemiBold"
                                                                Text="Current Order" />
-                                                        </Grid>
-                                                        <Grid Grid.Column="1">
+                                                </Grid>
+                                                <Grid Grid.Column="1">
 
-                                                            <Button Width="100"
+                                                    <Button Width="100"
                                                             Background="#FFFFDDDD"
                                                             BorderBrush="#FFFFDDDD"
                                                             BorderThickness="0"
@@ -501,52 +501,52 @@
                                                             Content="Clear all"
                                                             Foreground="Red"
                                                             SnapsToDevicePixels="True" />
-                                                        </Grid>
-                                                    </Grid>
-                                                    <Grid Grid.Row="1">
-                                                        <ItemsControl ItemsSource="{Binding Listorder}">
-                                                            <ItemsControl.ItemsPanel>
-                                                                <ItemsPanelTemplate>
-                                                                    <StackPanel Background="White"
-                                                                        Orientation="Vertical" />
-                                                                </ItemsPanelTemplate>
-                                                            </ItemsControl.ItemsPanel>
-                                                            <ItemsControl.ItemTemplate>
-                                                                <DataTemplate>
-                                                                    <!--<local:ProductDetailsControl />-->
-                                                                </DataTemplate>
-                                                            </ItemsControl.ItemTemplate>
-                                                            <ItemsControl.Template>
-                                                                <ControlTemplate>
-                                                                    <ScrollViewer Padding="{TemplateBinding Padding}">
-                                                                        <ItemsPresenter />
-                                                                    </ScrollViewer>
-
-                                                                </ControlTemplate>
-                                                            </ItemsControl.Template>
-                                                        </ItemsControl>
-                                                    </Grid>
                                                 </Grid>
-                                            </Border>
-                                        </Grid>
+                                            </Grid>
+                                            <Grid Grid.Row="1">
+                                                <ItemsControl ItemsSource="{Binding Listorder}">
+                                                    <ItemsControl.ItemsPanel>
+                                                        <ItemsPanelTemplate>
+                                                            <StackPanel Background="White"
+                                                                        Orientation="Vertical" />
+                                                        </ItemsPanelTemplate>
+                                                    </ItemsControl.ItemsPanel>
+                                                    <ItemsControl.ItemTemplate>
+                                                        <DataTemplate>
+                                                            <!--<local:ProductDetailsControl />-->
+                                                        </DataTemplate>
+                                                    </ItemsControl.ItemTemplate>
+                                                    <ItemsControl.Template>
+                                                        <ControlTemplate>
+                                                            <ScrollViewer Padding="{TemplateBinding Padding}">
+                                                                <ItemsPresenter />
+                                                            </ScrollViewer>
 
-                                        <!--  Tong tien  -->
-                                        <Grid Grid.Row="2"
+                                                        </ControlTemplate>
+                                                    </ItemsControl.Template>
+                                                </ItemsControl>
+                                            </Grid>
+                                        </Grid>
+                                    </Border>
+                                </Grid>
+
+                                <!--  Tong tien  -->
+                                <Grid Grid.Row="2"
                                       Margin="10,20,10,0">
 
-                                            <TextBlock Margin="20,5,10,0"
+                                    <TextBlock Margin="20,5,10,0"
                                                FontSize="24"
                                                FontWeight="Bold"
                                                Text="Total"
                                                TextAlignment="Left" />
-                                            <TextBlock x:Name="total"
+                                    <TextBlock x:Name="total"
                                                Margin="20,5,10,0"
                                                Panel.ZIndex="1"
                                                FontSize="24"
                                                Foreground="White"
                                                Text="{Binding total, StringFormat={}{0:N0} VND}"
                                                TextAlignment="Right" />
-                                            <Rectangle Width="200"
+                                    <Rectangle Width="200"
                                                Height="30"
                                                Margin="0"
                                                HorizontalAlignment="Right"
@@ -555,24 +555,24 @@
                                                RadiusX="4"
                                                RadiusY="4" />
 
-                                        </Grid>
-                                        <Grid Grid.Row="3">
+                                </Grid>
+                                <Grid Grid.Row="3">
 
 
-                                            <Button Grid.Column="0"
+                                    <Button Grid.Column="0"
                                             Width="300"
                                             Height="45"
                                             materialDesign:ButtonAssist.CornerRadius="5"
                                             Command="{Binding OrderCommand}"
                                             Style="{StaticResource MaterialDesignRaisedButton}"
                                             ToolTip="MaterialDesignRaisedButton with Round Corners">
-                                                <StackPanel HorizontalAlignment="Stretch"
+                                        <StackPanel HorizontalAlignment="Stretch"
                                                     VerticalAlignment="Stretch"
                                                     Orientation="Horizontal">
-                                                    <materialDesign:PackIcon Width="auto"
+                                            <materialDesign:PackIcon Width="auto"
                                                                      Height="20"
                                                                      Kind="CurrencyUsd" />
-                                                    <TextBlock HorizontalAlignment="Center"
+                                            <TextBlock HorizontalAlignment="Center"
                                                        VerticalAlignment="Center"
                                                        FontWeight="Bold"
                                                        Text="ORDER" />
@@ -1968,7 +1968,7 @@
                         </StackPanel>
                     </TabItem.Header>
 
-                    <!--  UI Employee Start Here  -->
+                    <!--  UI Rooms Start Here  -->
 
                     <Grid Background="Transparent">
                         <Grid.ColumnDefinitions>
@@ -2057,6 +2057,7 @@
                                                     Height="35"
                                                     FontSize="14"
                                                     ItemsSource="{Binding RoomTypesList, UpdateSourceTrigger=PropertyChanged}"
+                                                    DisplayMemberPath="Name"
                                                     Text="{}"
                                                     SelectedItem="{Binding TypeFilter, UpdateSourceTrigger=PropertyChanged}"
                                                     Width="110">
@@ -2251,9 +2252,9 @@
                                                            Stroke="Gray" />
                                                 <ComboBox Width="210"
                                                                  Height="40"
-                                                                 Margin="0,0,10,0"
+                                                                 Margin="130,0,0,0"
                                                                  Padding="0"
-                                                                 HorizontalAlignment="Right"
+                                                                 HorizontalAlignment="Left"
                                                                  HorizontalContentAlignment="Left"
                                                                  VerticalContentAlignment="Center"
                                                                  materialDesign:HintAssist.Hint="Room Type"
@@ -2262,16 +2263,11 @@
                                                                  FontSize="14"
                                                                  FontWeight="SemiBold"
                                                                  Foreground="Gray"
-                                                                 Text="{Binding Type, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}">
-                                                    <ComboBoxItem Cursor="Hand">
-                                                        <TextBlock Text="Single Bed Room"/>
-                                                    </ComboBoxItem>
-                                                    <ComboBoxItem Cursor="Hand">
-                                                        <TextBlock Text="Double Bed Room"/>
-                                                    </ComboBoxItem>
-                                                    <ComboBoxItem Cursor="Hand">
-                                                        <TextBlock Text="Triple Bed Room"/>
-                                                    </ComboBoxItem>
+                                                          
+                                                                 ItemsSource="{Binding RoomTypesList}"
+                                                                 DisplayMemberPath="Name"
+                                                                 SelectedItem="{Binding Type}"                                                       
+                                                                 Text="{Binding Type.Name, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}">
                                                 </ComboBox>
                                             </Grid>
                                             <Grid Width="350"
@@ -2293,7 +2289,7 @@
                                                            RadiusX="6"
                                                            RadiusY="6"
                                                            Stroke="Gray" />
-                                                <TextBox Width="210"
+                                                <ComboBox Width="210"
                                                          Height="40"
                                                          Margin="0,0,10,0"
                                                          Padding="0"
@@ -2306,7 +2302,12 @@
                                                          FontSize="14"
                                                          FontWeight="SemiBold"
                                                          Foreground="Gray"
-                                                         Text="{Binding Status, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, StringFormat={}{0:C}}" />
+                                                         Text="{Binding Status, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, StringFormat={}{0:C}}">
+                                                    <ComboBoxItem>Available</ComboBoxItem>
+                                                    <ComboBoxItem>Booked</ComboBoxItem>
+                                                    <ComboBoxItem>Cleaning</ComboBoxItem>
+                                                    <ComboBoxItem>Repairing</ComboBoxItem>
+                                                </ComboBox>
                                             </Grid>
                                         </Grid>
 
@@ -2393,7 +2394,7 @@
                         </StackPanel>
                     </TabItem.Header>
 
-                    <!--  UI Employee Start Here  -->
+                    <!--  UI Room Types Here  -->
 
                     <Grid Background="Transparent">
                         <Grid.ColumnDefinitions>
@@ -2439,9 +2440,8 @@
                                                     Width="110">
                                                 <ComboBoxItem></ComboBoxItem>
                                                 <ComboBoxItem>ID</ComboBoxItem>
-                                                <ComboBoxItem>Room Num</ComboBoxItem>
-                                                <ComboBoxItem>Room Type</ComboBoxItem>
-                                                <ComboBoxItem>Status</ComboBoxItem>
+                                                <ComboBoxItem>Name</ComboBoxItem>
+                                                <ComboBoxItem>Price</ComboBoxItem>
                                             </ComboBox>
                                         </Border>
                                         <TextBox
@@ -2482,6 +2482,7 @@
                                                     Height="35"
                                                     FontSize="14"
                                                     ItemsSource="{Binding RoomTypesList, UpdateSourceTrigger=PropertyChanged}"
+                                                    DisplayMemberPath="Name"
                                                     Text="{}"
                                                     SelectedItem="{Binding TypeFilter, UpdateSourceTrigger=PropertyChanged}"
                                                     Width="110">
@@ -2493,7 +2494,7 @@
 
 
 
-                                        <DataGrid Margin="3256,-140,-3236,160"
+                                        <DataGrid Margin="10,10,10,10"
                                                   AlternatingRowBackground="#FFF8EBF9"
                                                   AutoGenerateColumns="False"
                                                   Background="{x:Null}"
@@ -2529,21 +2530,15 @@
                                                                                    FontWeight="Bold"
                                                                                    Header="ID" />
                                                 <materialDesign:DataGridTextColumn Width="2*"
-                                                                                   Binding="{Binding RoomNum}"
+                                                                                   Binding="{Binding Name}"
                                                                                    EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnPopupEditingStyle}"
                                                                                    ElementStyle="{StaticResource MaterialDesignDataGridTextColumnStyle}"
-                                                                                   Header="Room Num" />
+                                                                                   Header="Type" />
                                                 <materialDesign:DataGridTextColumn Width="1.5*"
-                                                                                   Binding="{Binding RoomType.Name}"
+                                                                                   Binding="{Binding Price}"
                                                                                    EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnPopupEditingStyle}"
                                                                                    ElementStyle="{StaticResource MaterialDesignDataGridTextColumnStyle}"
-                                                                                   Header="Room Type" />
-                                                <materialDesign:DataGridTextColumn Width="1.5*"
-                                                                                   Binding="{Binding Status, StringFormat={}{0:C}}"
-                                                                                   EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnPopupEditingStyle}"
-                                                                                   ElementStyle="{StaticResource MaterialDesignDataGridTextColumnStyle}"
-                                                                                   Header="Status" ></materialDesign:DataGridTextColumn>
-
+                                                                                   Header="Price" />
 
 
                                             </DataGrid.Columns>
