@@ -94,9 +94,9 @@ namespace HotelManagementApp.ViewModel
             }
             );
 
-            //RefreshStatictics = new RelayCommand<object>((p) => true, (p) => LoadStatistics());
+            RefreshStatictics = new RelayCommand<object>((p) => true, (p) => LoadStatistics());
 
-            //LoadStatistics();
+            LoadStatistics();
         }
         public void Authorise()
         {
