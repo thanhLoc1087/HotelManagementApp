@@ -50,6 +50,7 @@ namespace HotelManagementApp.ViewModel
         public ICommand deleteCommand { get; set; }
         public AddRoomTypes()
         {
+            LoadRoomTypesList();
             addCommand = new RelayCommand<object>((p) =>
             {
                 if (string.IsNullOrEmpty(Name)||  Price == 0 || Price == null)
@@ -176,16 +177,6 @@ namespace HotelManagementApp.ViewModel
             }
             FilteredList = list;
         }
-        //void LoadRoomTypesList()
-        //{
-        //    RoomTypesList = new ObservableCollection<string>();
-        //    var typeList = DataProvider.Instance.DB.RoomTypes.Where(x => x.Deleted == false);
-        //    foreach (var item in typeList)
-        //    {
-        //        RoomTypesList.Add(item.Name);
-        //    }
-        //}
-
         private void ClearFields()
         {
             Name = null;

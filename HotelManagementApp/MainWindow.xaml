@@ -2039,10 +2039,12 @@
                                                     Background="White"
                                                     Height="35"
                                                     FontSize="14"
-                                                    ItemsSource="{Binding RoomTypesList, UpdateSourceTrigger=PropertyChanged}"
+                                                    ItemsSource="{Binding Test, UpdateSourceTrigger=PropertyChanged}"
+                                                    DisplayMemberPath="Name"
                                                     Text="{}"
                                                     SelectedItem="{Binding TypeFilter, UpdateSourceTrigger=PropertyChanged}"
                                                     Width="110">
+
                                             </ComboBox>
                                         </Border>
                                     </StackPanel>
@@ -2245,16 +2247,8 @@
                                                                  FontSize="14"
                                                                  FontWeight="SemiBold"
                                                                  Foreground="Gray"
+                                                                 ItemsSource="{Binding RoomTypesList, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"
                                                                  Text="{Binding Type, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}">
-                                                    <ComboBoxItem Cursor="Hand">
-                                                        <TextBlock Text="Single Bed Room"/>
-                                                    </ComboBoxItem>
-                                                    <ComboBoxItem Cursor="Hand">
-                                                        <TextBlock Text="Double Bed Room"/>
-                                                    </ComboBoxItem>
-                                                    <ComboBoxItem Cursor="Hand">
-                                                        <TextBlock Text="Triple Bed Room"/>
-                                                    </ComboBoxItem>
                                                 </ComboBox>
                                             </Grid>
                                             <Grid Width="350"
