@@ -359,8 +359,6 @@
                             <Grid Grid.Column="0"
                                   Margin="10">
 
-
-
                                 <!--  Filter và search  -->
 
                                 <TabControl Grid.RowSpan="2"
@@ -371,6 +369,7 @@
                                     <!--SelectionChanged="TabControl_SelectionChanged_1"-->
 
                                     <!--  Nước uống  -->
+
                                     <TabItem Width="840">
                                         <TabItem.Header>
                                             <StackPanel Width="auto"
@@ -397,25 +396,26 @@
                                                         <!-- <local1:FAndSBlock DataContext="{Binding}"/> -->
                                                         <Border MaxHeight="200" MaxWidth="180"
                                                                 Grid.Row="1" Background="AntiqueWhite"
-                                                                BorderThickness="2" BorderBrush="Gray">
+                                                                BorderThickness="2" BorderBrush="Gray"
+                                                                CornerRadius="4" Padding="8">
                                                             <StackPanel>
                                                                 <Image x:Name="FAndSImage" Stretch="Fill"
                                                                        MaxWidth="180" MaxHeight="100"
                                                                        MinWidth="180" MinHeight="100"
                                                                        Source="{Binding Path=ImageData, UpdateSourceTrigger=PropertyChanged}"/>
-                                                                <TextBlock Height="25" Foreground="Black" FontWeight="Bold">
+                                                                <TextBlock Height="20" Foreground="Black" FontWeight="Bold">
                                                                             <Run Text="Name:"/>
                                                                             <Run Text="{Binding Name, UpdateSourceTrigger=PropertyChanged}"/>
                                                                 </TextBlock>
-                                                                <TextBlock Height="25" Foreground="Black">
+                                                                <TextBlock Height="20" Foreground="Black">
                                                                             <Run Text="Price:"/>   
                                                                             <Run Text="{Binding Price, UpdateSourceTrigger=PropertyChanged}"/>
                                                                 </TextBlock>
-                                                                <TextBlock Height="25" Foreground="Black">
+                                                                <TextBlock Height="20" Foreground="Black">
                                                                             <Run Text="Unit:"/>   
                                                                             <Run Text="{Binding Unit, UpdateSourceTrigger=PropertyChanged}"/>
                                                                 </TextBlock>
-                                                                <TextBlock Height="25" Foreground="Black">
+                                                                <TextBlock Height="20" Foreground="Black">
                                                                             <Run Text="Type:"/>   
                                                                             <Run Text="{Binding Type, UpdateSourceTrigger=PropertyChanged}"/>
                                                                 </TextBlock>
@@ -428,7 +428,9 @@
                                     </TabItem>
 
                                     <!--  Đặt hàng  -->
-                                    <Grid Grid.Column="1">
+                                </TabControl>
+                            </Grid>
+                            <Grid Grid.Column="1">
 
                                         <Grid.RowDefinitions>
                                             <RowDefinition Height="1*" />
@@ -576,14 +578,11 @@
                                                        Text="ORDER" />
 
 
-                                                </StackPanel>
-                                            </Button>
-                                        </Grid>
-                                        <!--  Nút đặt hàng  -->
-                                    </Grid>
-                                </TabControl>
+                                        </StackPanel>
+                                    </Button>
+                                </Grid>
+                                <!--  Nút đặt hàng  -->
                             </Grid>
-
                         </Grid>
                     </Grid>
                 </TabItem>
