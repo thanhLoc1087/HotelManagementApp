@@ -74,7 +74,6 @@ namespace HotelManagementApp.ViewModel
         public FoodViewModel()
         {
             LoadFoodList();
-            LoadFilteredList();
             addCommand = new RelayCommand<object>((p) =>
             {
                 if (string.IsNullOrEmpty(Name) || string.IsNullOrEmpty(Unit) || Price == 0 || string.IsNullOrEmpty(Type))
@@ -228,7 +227,6 @@ namespace HotelManagementApp.ViewModel
         }
         private void LoadFilteredList()
         {
-
             ObservableCollection<FoodsAndService> list = new ObservableCollection<FoodsAndService>();
             foreach (var item in FoodsAndServicesList)
             {

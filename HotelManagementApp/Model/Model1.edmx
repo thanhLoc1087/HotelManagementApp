@@ -22,7 +22,7 @@
           <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="IDStaff" Type="int" Nullable="false" />
           <Property Name="IDCustomer" Type="int" Nullable="false" />
-          <Property Name="TotalMoney" Type="float" Nullable="false" />
+          <Property Name="TotalMoney" Type="money" />
           <Property Name="BillDate" Type="smalldatetime" />
           <Property Name="Status" Type="nvarchar(max)" />
         </EntityType>
@@ -82,6 +82,7 @@
           <Property Name="IDRoom" Type="int" />
           <Property Name="CheckInTime" Type="smalldatetime" />
           <Property Name="CheckOutTime" Type="smalldatetime" />
+          <Property Name="Deleted" Type="bit" />
         </EntityType>
         <EntityType Name="RoomTypes">
           <Key>
@@ -89,7 +90,7 @@
           </Key>
           <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="Name" Type="nvarchar(max)" Nullable="false" />
-          <Property Name="Price" Type="float" Nullable="false" />
+          <Property Name="Price" Type="money" />
           <Property Name="Deleted" Type="bit" />
         </EntityType>
         <EntityType Name="Staffs">
@@ -284,7 +285,7 @@
           <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="IDStaff" Type="Int32" Nullable="false" />
           <Property Name="IDCustomer" Type="Int32" Nullable="false" />
-          <Property Name="TotalMoney" Type="Double" Nullable="false" />
+          <Property Name="TotalMoney" Type="Decimal" Precision="19" Scale="4" />
           <Property Name="BillDate" Type="DateTime" Precision="0" />
           <Property Name="Status" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
           <NavigationProperty Name="Orders" Relationship="Self.FK__Orders__IDBillDe__2BFE89A6" FromRole="BillDetails" ToRole="Orders" />
@@ -354,6 +355,7 @@
           <Property Name="IDRoom" Type="Int32" />
           <Property Name="CheckInTime" Type="DateTime" Precision="0" />
           <Property Name="CheckOutTime" Type="DateTime" Precision="0" />
+          <Property Name="Deleted" Type="Boolean" />
           <NavigationProperty Name="BillDetail" Relationship="Self.FK__RoomsRese__IDBil__625A9A57" FromRole="RoomsReservations" ToRole="BillDetails" />
           <NavigationProperty Name="Room" Relationship="Self.FK__RoomsRese__IDRoo__634EBE90" FromRole="RoomsReservations" ToRole="Rooms" />
         </EntityType>
@@ -363,7 +365,7 @@
           </Key>
           <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="Name" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
-          <Property Name="Price" Type="Double" Nullable="false" />
+          <Property Name="Price" Type="Decimal" Precision="19" Scale="4" />
           <Property Name="Deleted" Type="Boolean" />
           <NavigationProperty Name="Rooms" Relationship="Self.FK_Room_RoomType_RoomTypeID" FromRole="RoomTypes" ToRole="Rooms" />
         </EntityType>
@@ -626,6 +628,7 @@
                 <ScalarProperty Name="IDRoom" ColumnName="IDRoom" />
                 <ScalarProperty Name="CheckInTime" ColumnName="CheckInTime" />
                 <ScalarProperty Name="CheckOutTime" ColumnName="CheckOutTime" />
+                <ScalarProperty Name="Deleted" ColumnName="Deleted" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

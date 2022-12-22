@@ -11,4 +11,5 @@
     <viewmodel:AddRoomViewModel x:Key="AddRoomVm"></viewmodel:AddRoomViewModel>
     <viewmodel:SingleBedroomInfoViewModel x:Key="SingleBedroomInfoViewmodel"></viewmodel:SingleBedroomInfoViewModel>
     <viewmodel:AddRoomForAdminViewModel x:Key="AddRoomForAdminVm"></viewmodel:AddRoomForAdminViewModel>
+    <viewmodel:AddRoomTypes x:Key="AddRoomTypesVm"></viewmodel:AddRoomTypes>
 </ResourceDictionary>

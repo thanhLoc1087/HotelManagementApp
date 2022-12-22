@@ -117,11 +117,11 @@ namespace HotelManagementApp.ViewModel
         public void LoadStatistics()
         {
             DateTime currentTime = DateTime.Now;
-            double allIncome = 0;
-            double monthIncome = 0;
-            double roomIncome = 0;
-            double foodIncome = 0;
-            double serviceIncome = 0;
+            decimal? allIncome = 0;
+            decimal? monthIncome = 0;
+            decimal? roomIncome = 0;
+            decimal? foodIncome = 0;
+            decimal? serviceIncome = 0;
             try
             {
                 // All income
@@ -147,7 +147,7 @@ namespace HotelManagementApp.ViewModel
                                                where ((DateTime)a.BillDate).ToString("MM") == currentTime.ToString("MM")
                                                where c.Type == "Food"
                                                select b;
-                foodIncome = (double)foodBills.Select(x => x.TotalPrice).Sum();
+                foodIncome = (decimal?)foodBills.Select(x => x.TotalPrice).Sum();
                 // Service monthly income
                 IEnumerable<Order> serviceBills = from a in ListBills
                                                   join b in ListOrder on a.ID equals b.IDBillDetail
@@ -155,7 +155,7 @@ namespace HotelManagementApp.ViewModel
                                                   where ((DateTime)a.BillDate).ToString("MM") == currentTime.ToString("MM")
                                                   where c.Type == "Service"
                                                   select b;
-                serviceIncome = (double)serviceBills.Select(x => x.TotalPrice).Sum();
+                serviceIncome = (decimal?)serviceBills.Select(x => x.TotalPrice).Sum();
             } catch { }
             
             SeriesCollectionPie.Clear();
@@ -164,8 +164,8 @@ namespace HotelManagementApp.ViewModel
             var roomSeries = new PieSeries
             {
                 Title = "Room Reservations",
-                //Values = new ChartValues<ObservableValue> { new ObservableValue(100) },
-                Values = new ChartValues<ObservableValue> { new ObservableValue(roomIncome) },
+                Values = new ChartValues<ObservableValue> { new ObservableValue(100) },
+                //Values = new ChartValues<ObservableValue> { new ObservableValue(roomIncome) },
                 DataLabels = true,
                 FontSize = 16,
                 LabelPoint = ChartPoint => string.Format("{0} ({1:P})", ChartPoint.Y, ChartPoint.Participation)
@@ -175,8 +175,8 @@ namespace HotelManagementApp.ViewModel
             var foodSeries = new PieSeries
             {
                 Title = "Food",
-                //Values = new ChartValues<ObservableValue> { new ObservableValue(200) },
-                Values = new ChartValues<ObservableValue> { new ObservableValue(foodIncome) },
+                Values = new ChartValues<ObservableValue> { new ObservableValue(200) },
+                //Values = new ChartValues<ObservableValue> { new ObservableValue(foodIncome) },
                 DataLabels = true,
                 FontSize = 16,
                 LabelPoint = ChartPoint => string.Format("{0} ({1:P})", ChartPoint.Y, ChartPoint.Participation)
@@ -186,8 +186,8 @@ namespace HotelManagementApp.ViewModel
             var serviceSeries = new PieSeries
             {
                 Title = "Services",
-                //Values = new ChartValues<ObservableValue> { new ObservableValue(300) },
-                Values = new ChartValues<ObservableValue> { new ObservableValue(serviceIncome) },
+                Values = new ChartValues<ObservableValue> { new ObservableValue(300) },
+                //Values = new ChartValues<ObservableValue> { new ObservableValue(serviceIncome) },
                 DataLabels = true,
                 FontSize = 16,
                 LabelPoint = ChartPoint => string.Format("{0} ({1:P})", ChartPoint.Y, ChartPoint.Participation)

@@ -19,6 +19,7 @@ namespace HotelManagementApp.Model
         public Nullable<int> IDRoom { get; set; }
         public Nullable<System.DateTime> CheckInTime { get; set; }
         public Nullable<System.DateTime> CheckOutTime { get; set; }
+        public Nullable<bool> Deleted { get; set; }
     
         public virtual BillDetail BillDetail { get; set; }
         public virtual Room Room { get; set; }

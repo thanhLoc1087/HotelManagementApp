@@ -24,7 +24,7 @@ namespace HotelManagementApp.Model
         public int ID { get; set; }
         public int IDStaff { get; set; }
         public int IDCustomer { get; set; }
-        public double TotalMoney { get; set; }
+        public Nullable<decimal> TotalMoney { get; set; }
         public Nullable<System.DateTime> BillDate { get; set; }
         public string Status { get; set; }
     

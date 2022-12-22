@@ -136,6 +136,7 @@
       <DependentUpon>ControlBarUC.xaml</DependentUpon>
     </Compile>
     <Compile Include="ViewModel\AddRoomForAdminViewModel.cs" />
+    <Compile Include="ViewModel\AddRoomTypes.cs" />
     <Compile Include="ViewModel\AddRoom\AddRoomViewModel.cs" />
     <Compile Include="ViewModel\BaseViewModel.cs" />
     <Compile Include="ViewModel\FoodsAndServices\FoodViewModel.cs" />
