@@ -272,7 +272,7 @@ namespace HotelManagementApp.ViewModel
         }
 
         private void LoadFilteredList()
-        {
+        { 
 
             ObservableCollection<Staff> list = new ObservableCollection<Staff>();
             foreach (var item in StaffsList)
