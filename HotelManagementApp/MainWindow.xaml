@@ -2139,7 +2139,7 @@
                                                   HorizontalAlignment="Center"
                                                   VerticalAlignment="Top">
                                                 <Grid.Background>
-                                                    <ImageBrush ImageSource="{Binding EmployeeImage, UpdateSourceTrigger=PropertyChanged}" />
+                                                    <ImageBrush ImageSource="{Binding Image, UpdateSourceTrigger=PropertyChanged}" />
                                                 </Grid.Background>
                                                 <Rectangle Width="150"
                                                            Height="153"

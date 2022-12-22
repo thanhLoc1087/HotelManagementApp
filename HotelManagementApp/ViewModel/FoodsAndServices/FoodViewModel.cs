@@ -102,8 +102,6 @@ namespace HotelManagementApp.ViewModel
                 DataProvider.Instance.DB.SaveChanges();
                 LoadFoodList();
                 ClearFields();
-                SelectedItem = null;
-
             });
 
             SelectImageCommand = new RelayCommand<object>((p) => { return true; }, (p) =>
@@ -133,8 +131,6 @@ namespace HotelManagementApp.ViewModel
                 OnPropertyChanged();
                 LoadFoodList();
                 ClearFields();
-                SelectedItem = null;
-
             });
 
             deleteCommand = new RelayCommand<object>((p) =>
@@ -154,8 +150,6 @@ namespace HotelManagementApp.ViewModel
                 OnPropertyChanged();
                 LoadFoodList();
                 ClearFields();
-                SelectedItem = null;
-
             });
         }
         void LoadFoodList()
