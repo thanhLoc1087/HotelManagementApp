@@ -89,8 +89,10 @@ namespace HotelManagementApp.ViewModel
 
             ShowSingleBedroomWindowCommand = new RelayCommand<object>((p) => { return true; }, (p) =>
             {
-                SingleBedroomWindow singleBedroomWindow = new SingleBedroomWindow();
-                singleBedroomWindow.ShowDialog();
+                //SingleBedroomWindow singleBedroomWindow = new SingleBedroomWindow();
+                //singleBedroomWindow.ShowDialog();
+                SingleBedroomInfoWindow singleBedroomWindow = new SingleBedroomInfoWindow();
+                singleBedroomWindow.Show();
             }
             );
 

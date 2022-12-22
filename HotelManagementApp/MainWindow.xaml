@@ -2211,7 +2211,7 @@
                                                          FontWeight="SemiBold"
                                                          Foreground="Gray"
                                                          MaxLines="1"
-                                                         Text="{Binding Name, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"  />
+                                                         Text="{Binding RoomNum, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"  />
                                             </Grid>
                                             <Grid Width="350"
                                                   Height="40"
@@ -2245,15 +2245,15 @@
                                                                  FontSize="14"
                                                                  FontWeight="SemiBold"
                                                                  Foreground="Gray"
-                                                                 Text="{Binding Sex, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}">
+                                                                 Text="{Binding Type, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}">
                                                     <ComboBoxItem Cursor="Hand">
-                                                        <TextBlock Text="Single"/>
+                                                        <TextBlock Text="Single Bed Room"/>
                                                     </ComboBoxItem>
                                                     <ComboBoxItem Cursor="Hand">
-                                                        <TextBlock Text="Double"/>
+                                                        <TextBlock Text="Double Bed Room"/>
                                                     </ComboBoxItem>
                                                     <ComboBoxItem Cursor="Hand">
-                                                        <TextBlock Text="Triple"/>
+                                                        <TextBlock Text="Triple Bed Room"/>
                                                     </ComboBoxItem>
                                                 </ComboBox>
                                             </Grid>
@@ -2289,7 +2289,7 @@
                                                          FontSize="14"
                                                          FontWeight="SemiBold"
                                                          Foreground="Gray"
-                                                         Text="{Binding CCCD, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, StringFormat={}{0:C}}" />
+                                                         Text="{Binding Status, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, StringFormat={}{0:C}}" />
                                             </Grid>
                                         </Grid>
 

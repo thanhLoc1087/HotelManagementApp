@@ -142,7 +142,7 @@
                                  Margin="5"
                                  VerticalAlignment="Stretch">
                 <ScrollViewer VerticalScrollBarVisibility="Auto">
-                    <ListView ItemsSource="{Binding ListWithID}"
+                    <ListView ItemsSource="{Binding RoomReservationList}"
                               SelectedItem="{Binding SelectedItem, Mode=TwoWay}">
                         <ListView.View>
                             <GridView>

@@ -19,6 +19,7 @@ namespace HotelManagementApp.ViewModel
     {
         private ObservableCollection<Staff> _StaffsList;
         public ObservableCollection<Staff> StaffsList { get => _StaffsList; set { _StaffsList = value; OnPropertyChanged(); } }
+        
         private ObservableCollection<Staff> _FilteredList;
         public ObservableCollection<Staff> FilteredList { get => _FilteredList; set { _FilteredList = value; OnPropertyChanged(); } }
 
@@ -134,6 +135,7 @@ namespace HotelManagementApp.ViewModel
                 DataProvider.Instance.DB.SaveChanges();
                 LoadStaffsList();
                 ClearFields();
+                SelectedItem = null;
             });
 
             SelectImageCommand = new RelayCommand<object>((p) => { return true; }, (p) =>
@@ -163,6 +165,7 @@ namespace HotelManagementApp.ViewModel
                 OnPropertyChanged();
                 LoadStaffsList();
                 ClearFields();
+                SelectedItem = null;
             });
             deleteCommand = new RelayCommand<object>((p) =>
             {
@@ -181,6 +184,7 @@ namespace HotelManagementApp.ViewModel
                 OnPropertyChanged();
                 LoadStaffsList();
                 ClearFields();
+                SelectedItem = null;
             });
         }
         void LoadStaffsList()
@@ -191,6 +195,7 @@ namespace HotelManagementApp.ViewModel
             {
                 StaffsList.Add(item);
             }
+            LoadFilteredList();
         }
         void SelectImage()
         {

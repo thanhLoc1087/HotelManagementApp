@@ -99,6 +99,7 @@ namespace HotelManagementApp.ViewModel
                 DataProvider.Instance.DB.SaveChanges();
                 LoadRoomsList();
                 ClearFields();
+                SelectedItem = null;
             });
 
             SelectImageCommand = new RelayCommand<object>((p) => { return true; }, (p) =>
@@ -127,6 +128,7 @@ namespace HotelManagementApp.ViewModel
                 OnPropertyChanged();
                 LoadRoomsList();
                 ClearFields();
+                SelectedItem = null;
             });
             deleteCommand = new RelayCommand<object>((p) =>
             {
@@ -145,6 +147,7 @@ namespace HotelManagementApp.ViewModel
                 OnPropertyChanged();
                 LoadRoomsList();
                 ClearFields();
+                SelectedItem = null;
             });
 
         }
