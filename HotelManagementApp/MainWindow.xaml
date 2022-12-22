@@ -305,7 +305,8 @@
                                             <Wpf:Axis Title="Income" LabelFormatter="{Binding YFormatter}" />
                                         </Wpf:CartesianChart.AxisY>
                                         <Wpf:CartesianChart.AxisX>
-                                            <Wpf:Axis Title="Month" Labels="{Binding Labels}" MinValue="{Binding thisMonth}"/>
+                                            <Wpf:Axis Title="Month" Labels="{Binding Labels}" 
+                                                      Position="LeftBottom"/>
                                         </Wpf:CartesianChart.AxisX>
                                     </Wpf:CartesianChart>
 
@@ -2246,10 +2247,13 @@
                                                                  Foreground="Gray"
                                                                  Text="{Binding Sex, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}">
                                                     <ComboBoxItem Cursor="Hand">
-                                                        <TextBlock Text="Male"/>
+                                                        <TextBlock Text="Single"/>
                                                     </ComboBoxItem>
                                                     <ComboBoxItem Cursor="Hand">
-                                                        <TextBlock Text="Female"/>
+                                                        <TextBlock Text="Double"/>
+                                                    </ComboBoxItem>
+                                                    <ComboBoxItem Cursor="Hand">
+                                                        <TextBlock Text="Triple"/>
                                                     </ComboBoxItem>
                                                 </ComboBox>
                                             </Grid>

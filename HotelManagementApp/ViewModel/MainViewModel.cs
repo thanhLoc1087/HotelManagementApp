@@ -115,44 +115,55 @@ namespace HotelManagementApp.ViewModel
         public void LoadStatistics()
         {
             DateTime currentTime = DateTime.Now;
-            // All income
-            double allIncome = ListBills.Select(x => x.TotalMoney).Sum();
-            Alltimerevenue = allIncome.ToString();
-            AlltimerevenueUSD = (allIncome / 23035).ToString();
+            double allIncome = 0;
+            double monthIncome = 0;
+            double roomIncome = 0;
+            double foodIncome = 0;
+            double serviceIncome = 0;
+            try
+            {
+                // All income
+                allIncome = ListBills.Select(x => x.TotalMoney).Sum();
+                Alltimerevenue = allIncome.ToString();
+                AlltimerevenueUSD = (allIncome / 23035).ToString();
+                // This month income
+                monthIncome = ListBills.Where(x => ((DateTime)x.BillDate).ToString("MM") == currentTime.ToString("MM")).Select(x => x.TotalMoney).Sum();
+                ThisMonthRevenue = monthIncome.ToString();
 
-            // Room monthly income
-            IEnumerable<RoomType> roomBills = from a in ListBills
-                                              join b in ListRoomsRevs on a.ID equals b.IDBillDetail
-                                              join c in ListRooms on b.IDRoom equals c.ID
-                                              join d in ListRoomTypes on c.IDRoomType equals d.ID
-                                              where ((DateTime)a.BillDate).ToString("MM") == currentTime.ToString("MM")
-                                              select d;
-            double roomIncome = roomBills.Select(x => x.Price).Sum();
-            // Food monthly income
-            IEnumerable<Order> foodBills = from a in ListBills
-                                           join b in ListOrder on a.ID equals b.IDBillDetail
-                                           join c in ListFnSs on b.IDFoodsAndServices equals c.ID
-                                           where ((DateTime)a.BillDate).ToString("MM") == currentTime.ToString("MM")
-                                           where c.Type == "Food"
-                                           select b;
-            double foodIncome = (double)foodBills.Select(x => x.TotalPrice).Sum();
-            // Service monthly income
-            IEnumerable<Order> serviceBills = from a in ListBills
-                                              join b in ListOrder on a.ID equals b.IDBillDetail
-                                              join c in ListFnSs on b.IDFoodsAndServices equals c.ID
-                                              where ((DateTime)a.BillDate).ToString("MM") == currentTime.ToString("MM")
-                                              where c.Type == "Service"
-                                              select b;
-            double serviceIncome = (double)serviceBills.Select(x => x.TotalPrice).Sum();
-
+                // Room monthly income
+                IEnumerable<RoomType> roomBills = from a in ListBills
+                                                  join b in ListRoomsRevs on a.ID equals b.IDBillDetail
+                                                  join c in ListRooms on b.IDRoom equals c.ID
+                                                  join d in ListRoomTypes on c.IDRoomType equals d.ID
+                                                  where ((DateTime)a.BillDate).ToString("MM") == currentTime.ToString("MM")
+                                                  select d;
+                roomIncome = roomBills.Select(x => x.Price).Sum();
+                // Food monthly income
+                IEnumerable<Order> foodBills = from a in ListBills
+                                               join b in ListOrder on a.ID equals b.IDBillDetail
+                                               join c in ListFnSs on b.IDFoodsAndServices equals c.ID
+                                               where ((DateTime)a.BillDate).ToString("MM") == currentTime.ToString("MM")
+                                               where c.Type == "Food"
+                                               select b;
+                foodIncome = (double)foodBills.Select(x => x.TotalPrice).Sum();
+                // Service monthly income
+                IEnumerable<Order> serviceBills = from a in ListBills
+                                                  join b in ListOrder on a.ID equals b.IDBillDetail
+                                                  join c in ListFnSs on b.IDFoodsAndServices equals c.ID
+                                                  where ((DateTime)a.BillDate).ToString("MM") == currentTime.ToString("MM")
+                                                  where c.Type == "Service"
+                                                  select b;
+                serviceIncome = (double)serviceBills.Select(x => x.TotalPrice).Sum();
+            } catch { }
+            
             SeriesCollectionPie.Clear();
 
             //Stactictics to PieChart
             var roomSeries = new PieSeries
             {
                 Title = "Room Reservations",
-                Values = new ChartValues<ObservableValue> { new ObservableValue(100) },
-                //Values = new ChartValues<ObservableValue> { new ObservableValue(roomIncome) },
+                //Values = new ChartValues<ObservableValue> { new ObservableValue(100) },
+                Values = new ChartValues<ObservableValue> { new ObservableValue(roomIncome) },
                 DataLabels = true,
                 FontSize = 16,
                 LabelPoint = ChartPoint => string.Format("{0} ({1:P})", ChartPoint.Y, ChartPoint.Participation)
@@ -162,8 +173,8 @@ namespace HotelManagementApp.ViewModel
             var foodSeries = new PieSeries
             {
                 Title = "Food",
-                Values = new ChartValues<ObservableValue> { new ObservableValue(200) },
-                //Values = new ChartValues<ObservableValue> { new ObservableValue(foodIncome) },
+                //Values = new ChartValues<ObservableValue> { new ObservableValue(200) },
+                Values = new ChartValues<ObservableValue> { new ObservableValue(foodIncome) },
                 DataLabels = true,
                 FontSize = 16,
                 LabelPoint = ChartPoint => string.Format("{0} ({1:P})", ChartPoint.Y, ChartPoint.Participation)
@@ -173,8 +184,8 @@ namespace HotelManagementApp.ViewModel
             var serviceSeries = new PieSeries
             {
                 Title = "Services",
-                Values = new ChartValues<ObservableValue> { new ObservableValue(300) },
-                //Values = new ChartValues<ObservableValue> { new ObservableValue(serviceIncome) },
+                //Values = new ChartValues<ObservableValue> { new ObservableValue(300) },
+                Values = new ChartValues<ObservableValue> { new ObservableValue(serviceIncome) },
                 DataLabels = true,
                 FontSize = 16,
                 LabelPoint = ChartPoint => string.Format("{0} ({1:P})", ChartPoint.Y, ChartPoint.Participation)
