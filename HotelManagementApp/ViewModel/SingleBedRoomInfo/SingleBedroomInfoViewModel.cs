@@ -87,11 +87,15 @@ namespace HotelManagementApp.ViewModel
             AddCommand = new RelayCommand<object>((p) =>
             {
                 var room = DataProvider.Instance.DB.Rooms.Where(x => x.RoomNum == RoomNum).FirstOrDefault();
-                if (string.IsNullOrEmpty(RoomNum) || string.IsNullOrEmpty(CustomerName) || string.IsNullOrEmpty(PhoneNum) || string.IsNullOrEmpty(CCCD) || CheckInDate == null || CheckInTime == null || CheckOutDate == null || CheckOutDate == null)
+                if (string.IsNullOrEmpty(RoomNum) || string.IsNullOrEmpty(CustomerName) || string.IsNullOrEmpty(PhoneNum) || string.IsNullOrEmpty(CCCD) || CheckInDate == null || CheckInTime == null || CheckInDate == null || CheckOutDate == null)
                 {
                     return false;
                 }
-                if (CheckInDate > CheckOutDate || CheckInTime >= CheckOutTime)
+                if (CheckInDate > CheckOutDate)
+                {
+                    return false;
+                }
+                if(CheckInDate == CheckOutDate && CheckInTime > CheckOutTime)
                 {
                     return false;
                 }

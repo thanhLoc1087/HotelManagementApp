@@ -57,7 +57,7 @@ namespace HotelManagementApp.ViewModel
                 {
                     return false;
                 }
-                var list = DataProvider.Instance.DB.FoodsAndServices.Where(x => x.Name == Name);
+                var list = DataProvider.Instance.DB.RoomTypes.Where(x => x.Name == Name);
                 if (list == null || list.Count() != 0)
                 {
                     return false;

@@ -12,9 +12,9 @@ DEBUG;TRACE
 D:\University\LTTQ\modified\HotelManagementApp\HotelManagementApp\App.xaml
 111245037901
 2739969757
-421865703740
+432041100124
 24-936352156
 MainWindow.xaml;ResourceXAML\MainResource.xaml;UserControlUI\ControlBarUC.xaml;View\AddRoom.xaml;View\LoginWindow.xaml;View\PaymentWindow.xaml;View\SingleBedRoom\SingleBedroomWindow.xaml;View\SingleBedRoom\SingleBedroomBillWindow.xaml;View\SingleBedRoom\SingleBedroomEditWindow.xaml;View\SingleBedRoom\SingleBedRoomFastBookingWindow.xaml;View\SingleBedRoom\SingleBedroomInfoWindow.xaml;
 
-False
+True
 
