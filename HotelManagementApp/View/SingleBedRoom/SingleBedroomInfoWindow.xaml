@@ -3,6 +3,7 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
         xmlns:local="clr-namespace:HotelManagementApp.View"
         xmlns:uc="clr-namespace:HotelManagementApp.UserControlUI"
         xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
@@ -76,11 +77,21 @@
                              materialDesign:HintAssist.Hint="Email"
                              Style="{StaticResource MaterialDesignFloatingHintTextBox}"
                              Text="{Binding Email, UpdateSourceTrigger=PropertyChanged}" />
-                    <TextBox x:Name="txbCusCCCD"
-                             Margin="5,5,15,5"
+                    <ComboBox Margin="5,5,15,5"
                              materialDesign:HintAssist.Hint="CCCD"
-                             Style="{StaticResource MaterialDesignFloatingHintTextBox}"
-                             Text="{Binding CCCD, UpdateSourceTrigger=PropertyChanged}" />
+                             Style="{StaticResource MaterialDesignFloatingHintComboBox}"
+                             ItemsSource="{Binding SuggestionsList, UpdateSourceTrigger=PropertyChanged}"
+                             IsEditable="True"
+                             Text="{Binding CCCD, UpdateSourceTrigger=PropertyChanged}">
+                        <i:Interaction.Triggers>
+                            <i:EventTrigger EventName="SelectionChanged">
+                                <i:InvokeCommandAction Command="{Binding CCCDSelectionChangedCommand}" />
+                            </i:EventTrigger>
+                            <!--<i:EventTrigger EventName="TextChanged">
+                                <i:InvokeCommandAction Command="{Binding CCCDTextChangedCommand}"/>
+                            </i:EventTrigger>-->
+                        </i:Interaction.Triggers>
+                    </ComboBox>
                     <TextBox x:Name="txbCusNationality"
                              Margin="5,5,15,5"
                              materialDesign:HintAssist.Hint="Nationality"

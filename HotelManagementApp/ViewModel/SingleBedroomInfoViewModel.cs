@@ -1,4 +1,4 @@
-﻿using HotelManagementApp.Model;
+using HotelManagementApp.Model;
 using HotelManagementApp.View.Reservation;
 using System;
 using System.Collections.Generic;
@@ -25,6 +25,10 @@ namespace HotelManagementApp.ViewModel
         /// List phòng để hiển thị
         private ObservableCollection<Room> _RoomsList;
         public ObservableCollection<Room> RoomsList { get => _RoomsList; set { _RoomsList = value; OnPropertyChanged(); } }
+        private ObservableCollection<string> _SuggestionsList;
+        public ObservableCollection<string> SuggestionsList { get => _SuggestionsList; set { _SuggestionsList = value; OnPropertyChanged(); } }
+        private ObservableCollection<Customer> _CustomersList;
+        public  ObservableCollection<Customer> CustomersList { get => _CustomersList; set { _CustomersList = value; OnPropertyChanged(); } }
         private Room _SelectedRoom;
         public Room SelectedRoom { get => _SelectedRoom; set { _SelectedRoom = value; OnPropertyChanged(); } }
         private ObservableCollection<RoomsReservation> _RoomReservationsList;
@@ -40,7 +44,28 @@ namespace HotelManagementApp.ViewModel
         private string _Email;
         public string Email { get => _Email; set { _Email = value; OnPropertyChanged(); } }
         private string _CCCD;
-        public string CCCD { get => _CCCD; set { _CCCD = value; OnPropertyChanged(); } }
+        public string CCCD { 
+            get => _CCCD;
+            set 
+            {
+                _CCCD = value;
+                LoadSuggestionsList();
+                var customer = CustomersList.Where(x => x.CCCD == CCCD).FirstOrDefault();
+                if (CCCD != null && customer != null)
+                {
+                    CustomerName = customer.Name;
+                    Sex = customer.Sex;
+                    PhoneNum = customer.PhoneNumber;
+                    Email = customer.Email;
+                    Nationality = customer.Nationality;
+                }
+                else
+                {
+                    CustomerName = Sex = PhoneNum = Email = Nationality = null;
+                }
+                OnPropertyChanged();
+            }
+        }
         private string _Nationality;
         public string Nationality { get => _Nationality; set { _Nationality = value; OnPropertyChanged(); } }
         private DateTime? _CheckInDate = null;
@@ -57,6 +82,8 @@ namespace HotelManagementApp.ViewModel
         public ICommand ClearCommand { get; set; }
         public ICommand AddReservationCommand { get; set; }
         public ICommand CancelReservationCommand { get; set; }
+        public ICommand CCCDSelectionChangedCommand { get; set; }
+        public ICommand CCCDTextChangedCommand { get; set; }
         private bool windowShowed = false;
         private RoomsReservation _SelectedItem;
         public AddReservationWindow reservationWindow = new AddReservationWindow();
@@ -93,6 +120,7 @@ namespace HotelManagementApp.ViewModel
         {
             Const.ActiveAccount = DataProvider.Instance.DB.Accounts.Where(x => x.ID == 0).FirstOrDefault();
             LoadRoomReservationsList();
+            LoadCustomersList();
             AddCommand = new RelayCommand<object>((p) =>
             {
                 var room = DataProvider.Instance.DB.Rooms.Where(x => x.RoomNum == RoomNum).FirstOrDefault();
@@ -215,6 +243,34 @@ namespace HotelManagementApp.ViewModel
                 ShowAddReservationWindow();
             });
 
+            CCCDSelectionChangedCommand = new RelayCommand<object>((p) =>
+            {
+                return true;
+            }, (p) =>
+            {
+                LoadSuggestionsList();
+            });
+            CCCDTextChangedCommand = new RelayCommand<object>((p) =>
+            {
+                return true;
+            }, (p) =>
+            {
+                LoadSuggestionsList();
+                var customer = CustomersList.Where(x => x.CCCD == CCCD).FirstOrDefault();
+                if (CCCD != null && customer != null)
+                {
+                    CustomerName = customer.Name;
+                    Sex = customer.Sex;
+                    PhoneNum = customer.PhoneNumber;
+                    Email = customer.Email;
+                    Nationality = customer.Nationality;
+                }
+                else
+                {
+                    CustomerName = Sex = PhoneNum = Email = Nationality = null;
+                }
+            });
+
             AddReservationCommand = new RelayCommand<object>((p) =>
             {
                 var room = DataProvider.Instance.DB.Rooms.Where(x => x.ID == SelectedRoom.ID).FirstOrDefault();
@@ -287,6 +343,27 @@ namespace HotelManagementApp.ViewModel
                 return true;
             }
             return false;
+        }
+        private void LoadCustomersList()
+        {
+            CustomersList = new ObservableCollection<Customer>();
+            var customersList = DataProvider.Instance.DB.Customers.Where(x => x.Deleted == false);
+            foreach(var item in customersList)
+            {
+                CustomersList.Add(item);
+            }
+        }
+
+        private void LoadSuggestionsList()
+        {
+            SuggestionsList = new ObservableCollection<string>();
+            foreach(var item in CustomersList)
+            {
+                if(item.CCCD.StartsWith(CCCD))
+                {
+                    SuggestionsList.Add(item.CCCD);
+                }
+            }
         }
         // chạy khi nhấn vào 1 phòng
         private void ShowAddReservationWindow()
