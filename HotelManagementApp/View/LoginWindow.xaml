@@ -75,7 +75,7 @@
                     FontSize="18"
                     FontWeight="Bold"
                     Foreground="Gray" />
-                <StackPanel Margin="15" VerticalAlignment="Center">
+                <StackPanel Margin="15,0,15,0" VerticalAlignment="Center" Height="167">
                     <TextBox
                         Margin="0,10"
                         materialDesign:HintAssist.Hint="Username"
@@ -96,6 +96,9 @@
                             </i:EventTrigger>
                         </i:Interaction.Triggers>
                     </PasswordBox>
+                    <TextBlock Text="{Binding loginMsg}"
+                               Style="{StaticResource MaterialDesignHelperTextBlock}"
+                               Foreground="Red"/>
                 </StackPanel>
             </Grid>
             <Button
