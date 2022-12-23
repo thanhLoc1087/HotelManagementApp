@@ -80,7 +80,7 @@ namespace HotelManagementApp.ViewModel
                 {
                     return false;
                 }
-                var list = DataProvider.Instance.DB.FoodsAndServices.Where(x => x.Name == Name);
+                var list = DataProvider.Instance.DB.FoodsAndServices.Where(x => x.Name == Name && x.Deleted == false);
                 if (list == null || list.Count() != 0)
                 {
                     return false;
@@ -111,6 +111,11 @@ namespace HotelManagementApp.ViewModel
             editCommand = new RelayCommand<object>((p) =>
             {
                 if (string.IsNullOrEmpty(Name) || string.IsNullOrEmpty(Unit) || Price == 0 || SelectedItem == null || string.IsNullOrEmpty(Type))
+                {
+                    return false;
+                }
+                var list = DataProvider.Instance.DB.FoodsAndServices.Where(x => x.Name == Name && x.Deleted == false && x.ID != SelectedItem.ID);
+                if (list == null || list.Count() != 0)
                 {
                     return false;
                 }

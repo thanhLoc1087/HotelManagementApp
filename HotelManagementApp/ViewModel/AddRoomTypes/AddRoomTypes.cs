@@ -57,7 +57,7 @@ namespace HotelManagementApp.ViewModel
                 {
                     return false;
                 }
-                var list = DataProvider.Instance.DB.RoomTypes.Where(x => x.Name == Name);
+                var list = DataProvider.Instance.DB.RoomTypes.Where(x => x.Name == Name && x.Deleted == false);
                 if (list == null || list.Count() != 0)
                 {
                     return false;
@@ -69,6 +69,7 @@ namespace HotelManagementApp.ViewModel
                 {
                     Name = Name,
                     Price = Price,
+                    Deleted = false,
                 };
                 DataProvider.Instance.DB.RoomTypes.Add(roomType);
                 DataProvider.Instance.DB.SaveChanges();
@@ -82,6 +83,11 @@ namespace HotelManagementApp.ViewModel
                     return false;
                 }
                 if(SelectedItem == null)
+                {
+                    return false;
+                }
+                var list = DataProvider.Instance.DB.RoomTypes.Where(x => x.Name == Name && x.Deleted == false && x.ID != SelectedItem.ID);
+                if (list == null || list.Count() != 0)
                 {
                     return false;
                 }

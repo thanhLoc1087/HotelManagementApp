@@ -9,7 +9,7 @@
     <viewmodel:StaffViewModel x:Key="StaffVm"></viewmodel:StaffViewModel>
     <viewmodel:FoodViewModel x:Key="FoodVm"></viewmodel:FoodViewModel>
     <viewmodel:AddRoomViewModel x:Key="AddRoomVm"></viewmodel:AddRoomViewModel>
-    <viewmodel:SingleBedroomInfoViewModel x:Key="SingleBedroomInfoViewmodel"></viewmodel:SingleBedroomInfoViewModel>
+    <viewmodel:SingleBedroomInfoViewModel x:Key="SingleBedroomInfoVm"></viewmodel:SingleBedroomInfoViewModel>
     <viewmodel:AddRoomForAdminViewModel x:Key="AddRoomForAdminVm"></viewmodel:AddRoomForAdminViewModel>
     <viewmodel:AddRoomTypes x:Key="AddRoomTypesVm"></viewmodel:AddRoomTypes>
     <viewmodel:CustomersViewModel x:Key="CustomerVm"></viewmodel:CustomersViewModel>

@@ -16,6 +16,7 @@
         TextOptions.TextFormattingMode="Ideal"
         TextOptions.TextRenderingMode="Auto"
         WindowStartupLocation="CenterScreen"
+        DataContext="{StaticResource SingleBedroomInfoVm}"
         WindowStyle="None"
         x:Name="SingleRoomFastBookingView"
         Title="HotelManagement"
@@ -37,7 +38,7 @@
                        HorizontalAlignment="Center"
                        FontSize="40"
                        FontWeight="Bold"
-                       Text="Single Bedroom Fast booking"
+                       Text="Room Reservation"
                        TextWrapping="Wrap" />
             <Grid Grid.Row="2">
                 <WrapPanel Margin="76,0,-76,0.4">
@@ -47,61 +48,56 @@
                             <RowDefinition />
                             <RowDefinition />
                             <RowDefinition />
-                            <RowDefinition />
-                            <RowDefinition />
                         </Grid.RowDefinitions>
-                        <WrapPanel Grid.Row="0"
-                                   HorizontalAlignment="Center"
-                                   VerticalAlignment="Center">
-                            <Label Width="100"
-                                   Content="Name: " />
-                            <TextBox x:Name="addname"
-                                     Width="300"
-                                     Text="{Binding FBcustomername}" />
-                        </WrapPanel>
-                        <WrapPanel Grid.Row="1"
-                                   HorizontalAlignment="Center"
-                                   VerticalAlignment="Center">
-                            <Label Width="100"
-                                   Content="Phone: " />
-                            <TextBox x:Name="addsdt"
-                                     Width="300"
-                                     Text="{Binding FBcustomerphone}" />
-                        </WrapPanel>
-                        <WrapPanel Grid.Row="2">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition/>
+                            <ColumnDefinition/>
+                        </Grid.ColumnDefinitions>
+                        <WrapPanel Grid.Row="0">
                             <Label Width="100"
                                    VerticalAlignment="Center"
-                                   Content="Day: " />
-                            <DatePicker x:Name="dp"
-                                        Margin="0"
-                                        VerticalAlignment="Center"
-                                        materialDesign:HintAssist.Hint="Date"
-                                        SelectedDate="{Binding FBdate}"
+                                   Content="Check In Date: " />
+                            <DatePicker Width="150"
+                                        materialDesign:HintAssist.Hint="Check In Date"
+                                        SelectedDate="{Binding CheckInDate}"
                                         Style="{StaticResource MaterialDesignFloatingHintDatePicker}" />
                         </WrapPanel>
-                        <WrapPanel Grid.Row="3">
+                        <WrapPanel Grid.Row="1">
                             <Label Width="100"
-                                   Content="Check in time:" />
-                            <materialDesign:TimePicker x:Name="startT_picker"
+                                   VerticalAlignment="Center"
+                                   Content="Check In Date: " />
+                            <DatePicker
+                                        Width="150"
+                                        VerticalAlignment="Center"
+                                        materialDesign:HintAssist.Hint="Check In Date"
+                                        SelectedDate="{Binding CheckOutDate}"
+                                        Style="{StaticResource MaterialDesignFloatingHintDatePicker}" />
+                        </WrapPanel>
+                        <WrapPanel Grid.Row="0" Grid.Column="1">
+                            <Label Width="100"
+                                   VerticalAlignment="Bottom"
+                                   Content="Check In Time:" />
+                            <materialDesign:TimePicker Width="100"
                                                        HorizontalAlignment="Center"
-                                                       VerticalAlignment="Center"
+                                                       VerticalAlignment="Top"
                                                        materialDesign:HintAssist.Hint="Check in time"
                                                        Is24Hours="True"
-                                                       SelectedTime="{Binding FBcheckintime}" />
+                                                       SelectedTime="{Binding CheckInTime}" Height="30" />
                         </WrapPanel>
-                        <WrapPanel Grid.Row="4">
+                        <WrapPanel Grid.Row="1" Grid.Column="1">
                             <Label Width="100"
-                                   Content="Check out time:" />
-                            <materialDesign:TimePicker x:Name="endT_picker"
+                                   VerticalAlignment="Center"
+                                   Content="Check Out Time:" />
+                            <materialDesign:TimePicker
                                                        Height="30"
                                                        HorizontalAlignment="Center"
                                                        VerticalAlignment="Center"
                                                        materialDesign:HintAssist.Hint="Check out time"
                                                        Is24Hours="True"
-                                                       SelectedTime="{Binding FBcheckouttime}" />
+                                                       SelectedTime="{Binding CheckOutTime}" />
                         </WrapPanel>
-                        <Grid Grid.Row="4"
-                              Grid.RowSpan="2"
+                        <Grid Grid.Row="2"
+                              Grid.ColumnSpan="2"
                               Margin="0,30,0,-54.6">
                             <Grid.ColumnDefinitions>
                                 <ColumnDefinition />
@@ -113,21 +109,19 @@
                                     VerticalAlignment="Center"
                                     HorizontalContentAlignment="Stretch"
                                     materialDesign:ButtonAssist.CornerRadius="5"
-                                    Command="{Binding FastbookingCommand}">
+                                    Command="{Binding AddReservationCommand}">
                                 <TextBlock Margin="5,0,0,0"
                                            HorizontalAlignment="Center"
                                            VerticalAlignment="Center"
                                            Text="Add" />
                             </Button>
-                            <Button Grid.Column="2"
+                            <Button Grid.Column="1"
                                     Width="128"
                                     HorizontalAlignment="Center"
                                     VerticalAlignment="Center"
                                     HorizontalContentAlignment="Stretch"
                                     materialDesign:ButtonAssist.CornerRadius="5"
-                                    >
-                                <!--Click="Button_Click"
-                                    Command="{Binding CancelCommand}"-->
+                                    Command="{Binding CancelReservationCommand}">
                                 <TextBlock Margin="5,0,0,0"
                                            HorizontalAlignment="Center"
                                            VerticalAlignment="Center"

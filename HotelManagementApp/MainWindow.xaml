@@ -839,7 +839,7 @@
                                         HorizontalAlignment="Center"
                                         VerticalAlignment="Center"
                                         materialDesign:ButtonAssist.CornerRadius="100"
-                                        Command="{Binding ShowDouleBedroomWindowCommand}"
+                                        Command="{Binding TestCommand}"
                                         CommandParameter="{Binding ElementName=DoubleBR}">
                                     <Grid>
                                         <Grid.RowDefinitions>

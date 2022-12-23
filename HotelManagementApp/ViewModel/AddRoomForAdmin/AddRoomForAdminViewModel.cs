@@ -27,6 +27,8 @@ namespace HotelManagementApp.ViewModel
         public ObservableCollection<Room> FilteredList { get => _FilteredList; set { _FilteredList = value; OnPropertyChanged(); } }
         private ObservableCollection<RoomType> _RoomTypesList;
         public ObservableCollection<RoomType> RoomTypesList { get => _RoomTypesList; set { _RoomTypesList = value; OnPropertyChanged(); } }
+        private ObservableCollection<RoomType> _RoomTypesFilterList;
+        public ObservableCollection<RoomType> RoomTypesFilterList { get => _RoomTypesFilterList; set { _RoomTypesFilterList = value; OnPropertyChanged(); } }
         private string _Filter;
         public string Filter { get => _Filter; set { _Filter = value; LoadFilteredList(); OnPropertyChanged(); } }
         private RoomType _TypeFilter;
@@ -74,11 +76,11 @@ namespace HotelManagementApp.ViewModel
             LoadFilteredList();
             addCommand = new RelayCommand<object>((p) =>
             {
-                if (string.IsNullOrEmpty(RoomNum) || Type == null || string.IsNullOrEmpty(Status))
+                if (string.IsNullOrEmpty(RoomNum) || Type == null || string.IsNullOrEmpty(Status) || string.IsNullOrEmpty(Type.Name))
                 {
                     return false;
                 }
-                var list = DataProvider.Instance.DB.Rooms.Where(x => x.RoomNum == RoomNum);
+                var list = DataProvider.Instance.DB.Rooms.Where(x => x.RoomNum == RoomNum && x.Deleted == false);
                 if (list == null || list.Count() != 0)
                 {
                     return false;
@@ -110,6 +112,11 @@ namespace HotelManagementApp.ViewModel
             editCommand = new RelayCommand<object>((p) =>
             {
                 if (string.IsNullOrEmpty(RoomNum) || Type == null || string.IsNullOrEmpty(Status) || SelectedItem == null)
+                {
+                    return false;
+                }
+                var list = DataProvider.Instance.DB.Rooms.Where(x => x.RoomNum == RoomNum && x.Deleted == false && x.ID != SelectedItem.ID);
+                if (list == null || list.Count() != 0)
                 {
                     return false;
                 }
@@ -165,11 +172,13 @@ namespace HotelManagementApp.ViewModel
         void LoadRoomTypesList()
         {
             RoomTypesList = new ObservableCollection<RoomType>();
-            RoomTypesList.Add(new RoomType(){ Name = null, Price = null });
+            RoomTypesFilterList = new ObservableCollection<RoomType>();
+            RoomTypesFilterList.Add(new RoomType(){ Name = null, Price = null });
             var typeList = DataProvider.Instance.DB.RoomTypes.Where(x => x.Deleted == false);
             foreach (var item in typeList)
             {
                 RoomTypesList.Add(item);
+                RoomTypesFilterList.Add(item);
             }
         }
 
@@ -291,18 +300,6 @@ namespace HotelManagementApp.ViewModel
             RoomNum = Status = null;
             Image = null;
             Type = null;
-        }
-
-        private int stringRoomTypeConverter(string roomType)
-        {
-            RoomType RoomType = DataProvider.Instance.DB.RoomTypes.Where(x => x.Name == roomType).FirstOrDefault();
-            return RoomType.ID;
-        }
-
-        private string IDRoomTypeConverter(int id)
-        {
-            RoomType roomType = DataProvider.Instance.DB.RoomTypes.Where(x => x.ID == id).FirstOrDefault();
-            return roomType.Name;
         }
     }
 }

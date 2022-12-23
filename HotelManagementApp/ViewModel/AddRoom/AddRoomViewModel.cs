@@ -41,7 +41,7 @@ namespace HotelManagementApp.ViewModel
         {
             AddRoomCommand = new RelayCommand<object>((p) =>
             {
-                if (string.IsNullOrEmpty(RoomNum) || RoomType == null || string.IsNullOrEmpty(Status))
+                if (string.IsNullOrEmpty(RoomNum) || RoomType.Name == null || string.IsNullOrEmpty(Status) || RoomType == null)
                 {
                     return false;
                 }

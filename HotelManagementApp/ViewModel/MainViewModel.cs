@@ -1,5 +1,6 @@
 ﻿using HotelManagementApp.Model;
 using HotelManagementApp.View;
+using HotelManagementApp.View.Reservation;
 using LiveCharts;
 using LiveCharts.Defaults;
 using LiveCharts.Wpf;
@@ -51,6 +52,9 @@ namespace HotelManagementApp.ViewModel
         public ICommand ShowSingleBedroomWindowCommand { get; set; }
         public ICommand RefreshStatictics { get; set; }
 
+        //test
+        public ICommand TestCommand { get; set; }
+
         public MainViewModel()
         {
             ListBills = new ObservableCollection<BillDetail>(DataProvider.Instance.DB.BillDetails);
@@ -62,6 +66,13 @@ namespace HotelManagementApp.ViewModel
 
             _SeriesCollectionPie = new SeriesCollection();
             _SeriesCollectionCart = new SeriesCollection();
+
+            TestCommand = new RelayCommand<object>((p) => { return true; }, (p) =>
+            {
+                AddReservationWindow window = new AddReservationWindow();
+                window.Show();
+            }
+            );
 
             LoadedWindowCommand = new RelayCommand<object>((p) => { return true; }, (p) =>
             {

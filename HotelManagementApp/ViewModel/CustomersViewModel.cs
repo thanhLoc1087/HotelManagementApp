@@ -89,7 +89,7 @@ namespace HotelManagementApp.ViewModel
                 {
                     return false;
                 }
-                var list = DataProvider.Instance.DB.Customers.Where(x => x.CCCD == CCCD);
+                var list = DataProvider.Instance.DB.Customers.Where(x => x.CCCD == CCCD && x.Deleted == false);
                 if (list == null || list.Count() != 0)
                 {
                     return false;
@@ -116,6 +116,11 @@ namespace HotelManagementApp.ViewModel
             editCommand = new RelayCommand<object>((p) =>
             {
                 if (string.IsNullOrEmpty(Name) || string.IsNullOrEmpty(Sex) || string.IsNullOrEmpty(CCCD) || string.IsNullOrEmpty(PhoneNum) || string.IsNullOrEmpty(Email) || string.IsNullOrEmpty(Nationality) || SelectedItem == null)
+                {
+                    return false;
+                }
+                var list = DataProvider.Instance.DB.Customers.Where(x => x.CCCD == CCCD && x.Deleted == false && x.ID != SelectedItem.ID);
+                if (list == null || list.Count() != 0)
                 {
                     return false;
                 }

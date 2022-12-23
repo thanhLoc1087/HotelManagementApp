@@ -145,7 +145,7 @@
     <Compile Include="ViewModel\MainViewModel.cs" />
     <Compile Include="ViewModel\OrderViewModel.cs" />
     <Compile Include="ViewModel\Settings\SettingsViewModel.cs" />
-    <Compile Include="ViewModel\SingleBedRoomInfo\SingleBedroomInfoViewModel.cs" />
+    <Compile Include="ViewModel\SingleBedroomInfoViewModel.cs" />
     <Compile Include="ViewModel\Staff\StaffViewModel.cs" />
     <Compile Include="ViewModel\UserControlViewModel\ControlBarViewModel.cs" />
     <Compile Include="View\AddRoom.xaml.cs">
@@ -156,6 +156,10 @@
     </Compile>
     <Compile Include="View\PaymentWindow.xaml.cs">
       <DependentUpon>PaymentWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\Reservation\AddReservationWindow.xaml.cs">
+      <DependentUpon>AddReservationWindow.xaml</DependentUpon>
+      <SubType>Code</SubType>
     </Compile>
     <Compile Include="View\SingleBedRoom\SingleBedroomWindow.xaml.cs">
       <DependentUpon>SingleBedroomWindow.xaml</DependentUpon>
@@ -203,6 +207,10 @@
     <Page Include="View\PaymentWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\Reservation\AddReservationWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>XamlIntelliSenseFileGenerator</Generator>
     </Page>
     <Page Include="View\SingleBedRoom\SingleBedroomWindow.xaml">
       <SubType>Designer</SubType>
@@ -263,8 +271,6 @@
     <Folder Include="ImageStorage\FoodImg\" />
     <Folder Include="ImageStorage\RoomImg\" />
     <Folder Include="ImageStorage\StaffImg\" />
-    <Folder Include="View\DoubleBedroom\" />
-    <Folder Include="View\TripleBedRoom\" />
   </ItemGroup>
   <ItemGroup>
     <Resource Include="Images\background.jpg" />
