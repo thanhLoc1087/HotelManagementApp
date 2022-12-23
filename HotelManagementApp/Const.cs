@@ -1,11 +1,7 @@
 ﻿using HotelManagementApp.Model;
 using System;
-using System.Collections.Generic;
 using System.ComponentModel;
-using System.Linq;
 using System.Runtime.CompilerServices;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
 
 namespace HotelManagementApp
@@ -44,6 +40,12 @@ namespace HotelManagementApp
                     OnStaticPropertyChanged("StaffVisibility");
                 }
             }
+        }
+        static public string _loginMsg = "Sai tài khoản hoặc mật khẩu!";
+        static public string loginMsg
+        {
+            get => _loginMsg;
+            set { _loginMsg = value; OnStaticPropertyChanged("loginMsg"); }
         }
     }
 }

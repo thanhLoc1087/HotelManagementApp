@@ -1,11 +1,8 @@
 ﻿using HotelManagementApp.Model;
-using HotelManagementApp.View;
 using System;
-using System.Collections.Generic;
 using System.Linq;
 using System.Security.Cryptography;
 using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
@@ -19,6 +16,8 @@ namespace HotelManagementApp.ViewModel
         public string Username { get => _username; set { _username = value; OnPropertyChanged(); } }
         private string _password;
         public string Password { get => _password; set { _password = value; OnPropertyChanged(); } }
+        private string _loginMsg;
+        public string loginMsg { get => _loginMsg; set { _loginMsg = value; OnPropertyChanged(); } }
 
         public ICommand LoginCommand { get; set; }
         public ICommand PasswordChangedCommand { get; set; }
@@ -31,7 +30,7 @@ namespace HotelManagementApp.ViewModel
             LoginCommand = new RelayCommand<Window>((p) => { return true; }, (p) => { Login(p); });
             PasswordChangedCommand = new RelayCommand<PasswordBox>((p) => { return true; }, (p) => { Password = p.Password; });
         }
-        
+
         void Login(Window p)
         {
             if (p == null)
@@ -40,14 +39,16 @@ namespace HotelManagementApp.ViewModel
             var count = DataProvider.Instance.DB.Accounts.Where(x => x.Username == Username && x.PasswordHash == HashedPassword).Count();
             if (count > 0)
             {
+                loginMsg = "";
                 IsLogin = true;
                 Const.ActiveAccount = DataProvider.Instance.DB.Accounts.Single(x => x.Username == Username);
                 p.Close();
             }
             else
             {
+                loginMsg = "";
                 IsLogin = false;
-                MessageBox.Show("Sai tài khoản hoặc mật khẩu!");
+                loginMsg = Const.loginMsg;
             }
         }
 

@@ -269,18 +269,21 @@
                                     <RowDefinition Height="133*" />
                                 </Grid.RowDefinitions>
                                 <Grid.ColumnDefinitions>
-                                    <ColumnDefinition Width="350" />
-                                    <ColumnDefinition Width="*" />
+                                    <ColumnDefinition Width="460" />
+                                    <ColumnDefinition />
                                 </Grid.ColumnDefinitions>
                                 <Grid Grid.RowSpan="2"
                                   Grid.Column="0"
-                                  Margin="25,25,25.4,24.6">
+                                  Margin="25,25,25,25">
+                                    <TextBlock Text="{Binding statFilterError}"
+                                               Style="{StaticResource MaterialDesignHelperTextBlock}"
+                                               Foreground="Red"/>
                                     <materialDesign:Card Padding="8"
                                                      materialDesign:ShadowAssist.ShadowDepth="Depth3"
                                                      Foreground="{x:Null}"
-                                                     UniformCornerRadius="10" />
+                                                     UniformCornerRadius="10" Margin="237,10,-91,-10" />
                                     <Wpf:PieChart
-                                        Margin="8,20"
+                                        Margin="237,30,-91,10"
                                         DataTooltip="{x:Null}"
                                         Hoverable="True"
                                         InnerRadius="5"
@@ -289,27 +292,41 @@
                                         Series="{Binding SeriesCollectionPie}" 
                                         StartingRotationAngle="0"/>
                                     <Button Width="100"
-                                            Margin="100,0,100.4,331.6"
+                                            Margin="126,332,184,4"
                                             Command="{Binding RefreshStatictics}"
-                                            Content="REFRESH" />
+                                            Content="REFRESH"/>
+                                    <ComboBox  Style="{StaticResource MaterialDesignFloatingHintComboBox}"
+                                               materialDesign:HintAssist.Hint="Filter by"
+                                               Margin="0,13,250,0"
+                                               VerticalAlignment="Top"
+                                               Text="{Binding cbxFilterBy, UpdateSourceTrigger=PropertyChanged}"
+                                               SelectedValue="{Binding cbxSelectedValue}">
+                                        <ComboBoxItem Content="Date" IsSelected="True"/>
+                                        <ComboBoxItem Content="Month"/>
+                                        <ComboBoxItem Content="Year"/>
+                                    </ComboBox>
+                                    <Calendar Margin="-14,54,184,0"
+                                              VerticalAlignment="Top"
+                                              materialDesign:HintAssist.Hint="Filter"
+                                              Style="{StaticResource MaterialDesignCalendarPortraitBase}"
+                                              SelectedDate="{Binding caSelectedDate, UpdateSourceTrigger=PropertyChanged}"/>
                                 </Grid>
                                 <Grid Grid.RowSpan="2"
                                   Grid.Column="1"
-                                  Margin="24.6,25,25,24.6">
+                                  Margin="113,25,25,25">
                                     <materialDesign:Card Padding="8"
                                                      materialDesign:ShadowAssist.ShadowDepth="Depth3"
                                                      Foreground="{x:Null}"
-                                                     UniformCornerRadius="10" />
-                                    <Wpf:CartesianChart LegendLocation="Right" Series="{Binding SeriesCollectionCart}">
+                                                     UniformCornerRadius="10" Margin="-37,8,38,-8" />
+                                    <Wpf:CartesianChart LegendLocation="Right" Series="{Binding SeriesCollectionCart}" Margin="-37,10,38,-8">
                                         <Wpf:CartesianChart.AxisY>
-                                            <Wpf:Axis Title="Income" LabelFormatter="{Binding YFormatter}" />
+                                            <Wpf:Axis Title="Income" LabelFormatter="{Binding YFormatter}" MinValue="0"/>
                                         </Wpf:CartesianChart.AxisY>
                                         <Wpf:CartesianChart.AxisX>
-                                            <Wpf:Axis Title="Month" Labels="{Binding Labels}" 
-                                                      Position="LeftBottom"/>
+                                            <Wpf:Axis Title="Month" Labels="{Binding XFormatter}" 
+                                                      Position="LeftBottom" MinValue="0"/>
                                         </Wpf:CartesianChart.AxisX>
                                     </Wpf:CartesianChart>
-
                                 </Grid>
                             </Grid>
                         </Grid>
@@ -1564,17 +1581,81 @@
                                     </Border.Effect>
                                     <Grid>
                                         <Grid.RowDefinitions>
-                                            <RowDefinition Height="auto" />
-                                            <RowDefinition Height="*" />
-                                            <RowDefinition Height="auto" />
+                                            <RowDefinition Height="auto" MinHeight="216" />
+                                            <RowDefinition />
+                                            <RowDefinition Height="auto" MinHeight="108.8" />
                                         </Grid.RowDefinitions>
                                         <Grid Grid.Row="0"
-                                              Margin="0,0,-0.2,1">
+                                              Margin="0,0,-1,1">
+
+                                            <Label Height="32"
+                                                       HorizontalAlignment="Left"
+                                                       VerticalAlignment="Top"
+                                                       Content="Name"
+                                                       FontSize="18"
+                                                       FontWeight="SemiBold"
+                                                       Foreground="Black" Margin="46,53,0,0" />
+                                            <Rectangle Width="230"
+                                                           Height="40"
+                                                           Margin="40,40,0,35"
+                                                           HorizontalAlignment="Left"
+                                                           RadiusX="6"
+                                                           RadiusY="6"
+                                                           Stroke="Gray" />
+                                            <TextBox
+                                                         Width="210"
+                                                         Height="40"
+                                                         Margin="50,40,0,35"
+                                                         Padding="0"
+                                                         HorizontalAlignment="Left"
+                                                         HorizontalContentAlignment="Left"
+                                                         VerticalContentAlignment="Center"
+                                                         materialDesign:HintAssist.Hint="Name" 
+                                                         
+                                                         BorderThickness="0"
+                                                         Cursor="IBeam"
+                                                         FontSize="14"
+                                                         FontWeight="SemiBold"
+                                                         Foreground="Gray"
+                                                         MaxLines="1"
+                                                         Text="{Binding Name, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"  />
+
+                                            <Label Height="32"
+                                                       Margin="46,136,0,0"
+                                                       HorizontalAlignment="Left"
+                                                       VerticalAlignment="Top"
+                                                       Content="CCCD"
+                                                       FontSize="18"
+                                                       FontWeight="SemiBold"
+                                                       Foreground="Black" />
+
+                                            <Rectangle Width="230"
+                                                       Height="40"
+                                                       HorizontalAlignment="Right"
+                                                       RadiusX="6"
+                                                       Margin="0,171,192,4"
+                                                       RadiusY="6"
+                                                       Stroke="Gray" />
+                                            <TextBox x:Name="txtUnitPrice1"
+                                                     Width="210"
+                                                     Height="40"
+                                                     Margin="0,170,202,0"
+                                                     Padding="0"
+                                                     HorizontalAlignment="Right"
+                                                     HorizontalContentAlignment="Left"
+                                                     VerticalContentAlignment="Center"
+                                                     materialDesign:HintAssist.Hint="CCCD"
+                                                     BorderThickness="0"
+                                                     Cursor="IBeam"
+                                                     FontSize="14"
+                                                     FontWeight="SemiBold"
+                                                     Foreground="Gray"
+                                                     Text="{Binding CCCD, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, StringFormat={}{0:C}}" />
                                             <Grid x:Name="grdSelectImg1"
                                                   Width="150"
                                                   Height="150"
-                                                  Margin="10,30,0,0"
-                                                  HorizontalAlignment="Center"
+                                                  Margin="0,20,20,0"
+                                                  HorizontalAlignment="Right"
                                                   VerticalAlignment="Top">
                                                 <Grid.Background>
                                                     <ImageBrush ImageSource="{Binding EmployeeImage, UpdateSourceTrigger=PropertyChanged}" />
@@ -1610,10 +1691,9 @@
                                         </Grid>
                                         <Grid x:Name="grdInfo1"
                                               Grid.Row="1"
-                                              Grid.RowSpan="2"
                                               Width="420"
-                                              Height="350"
-                                              Margin="20,55,20.8,0"
+                                              Height="280"
+                                              Margin="0,20,0,0"
                                               HorizontalAlignment="Center"
                                               VerticalAlignment="Top">
 
@@ -1626,41 +1706,10 @@
                                                     <ColumnDefinition Width="25*"/>
                                                     <ColumnDefinition Width="284*"/>
                                                 </Grid.ColumnDefinitions>
-                                                <Label Height="32"
-                                                       HorizontalAlignment="Left"
-                                                       VerticalAlignment="Center"
-                                                       Content="Name"
-                                                       FontSize="18"
-                                                       FontWeight="SemiBold"
-                                                       Foreground="Black" Grid.ColumnSpan="2" />
-                                                <Rectangle Width="230"
-                                                           Height="40"
-                                                           Margin="54,0,0,0"
-                                                           HorizontalAlignment="Left"
-                                                           RadiusX="6"
-                                                           RadiusY="6"
-                                                           Stroke="Gray" Grid.Column="2" />
-                                                <TextBox
-                                                         Width="210"
-                                                         Height="40"
-                                                         Margin="64,0,0,0"
-                                                         Padding="0"
-                                                         HorizontalAlignment="Left"
-                                                         HorizontalContentAlignment="Left"
-                                                         VerticalContentAlignment="Center"
-                                                         materialDesign:HintAssist.Hint="Name" 
-                                                         
-                                                         BorderThickness="0"
-                                                         Cursor="IBeam"
-                                                         FontSize="14"
-                                                         FontWeight="SemiBold"
-                                                         Foreground="Gray"
-                                                         MaxLines="1"
-                                                         Text="{Binding Name, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" Grid.Column="2"  />
                                             </Grid>
                                             <Grid Width="350"
                                                   Height="40"
-                                                  Margin="0,50,0,0"
+                                                  Margin="0,0,0,0"
                                                   VerticalAlignment="Top">
                                                 <Label Height="32"
                                                        Margin="0"
@@ -1672,15 +1721,15 @@
                                                        Foreground="Black" />
                                                 <Rectangle Width="230"
                                                            Height="40"
-                                                           Margin="0"
                                                            HorizontalAlignment="Right"
                                                            RadiusX="6"
                                                            RadiusY="6"
                                                            Stroke="Gray" />
+
                                                 <ComboBox x:Name="txtUnit1"
                                                                  Width="210"
                                                                  Height="40"
-                                                                 Margin="0,0,10,0"
+                                                          Margin="0,0,10,0"
                                                                  Padding="0"
                                                                  HorizontalAlignment="Right"
                                                                  HorizontalContentAlignment="Left"
@@ -1691,7 +1740,7 @@
                                                                  FontSize="14"
                                                                  FontWeight="SemiBold"
                                                                  Foreground="Gray"
-                                                                 Text="{Binding Sex, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}">
+                                                                 Text="{Binding Sex, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" VerticalAlignment="Top">
                                                     <ComboBoxItem Cursor="Hand">
                                                         <TextBlock Text="Male"/>
                                                     </ComboBoxItem>
@@ -1702,42 +1751,7 @@
                                             </Grid>
                                             <Grid Width="350"
                                                   Height="40"
-                                                  Margin="0,100,0,0"
-                                                  VerticalAlignment="Top">
-                                                <Label Height="32"
-                                                       Margin="0"
-                                                       HorizontalAlignment="Left"
-                                                       VerticalAlignment="Center"
-                                                       Content="CCCD"
-                                                       FontSize="18"
-                                                       FontWeight="SemiBold"
-                                                       Foreground="Black" />
-                                                <Rectangle Width="230"
-                                                           Height="40"
-                                                           Margin="0"
-                                                           HorizontalAlignment="Right"
-                                                           RadiusX="6"
-                                                           RadiusY="6"
-                                                           Stroke="Gray" />
-                                                <TextBox x:Name="txtUnitPrice1"
-                                                         Width="210"
-                                                         Height="40"
-                                                         Margin="0,0,10,0"
-                                                         Padding="0"
-                                                         HorizontalAlignment="Right"
-                                                         HorizontalContentAlignment="Left"
-                                                         VerticalContentAlignment="Center"
-                                                         materialDesign:HintAssist.Hint="CCCD"
-                                                         BorderThickness="0"
-                                                         Cursor="IBeam"
-                                                         FontSize="14"
-                                                         FontWeight="SemiBold"
-                                                         Foreground="Gray"
-                                                         Text="{Binding CCCD, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, StringFormat={}{0:C}}" />
-                                            </Grid>
-                                            <Grid Width="350"
-                                                  Height="40"
-                                                  Margin="0,150,0,0"
+                                                  Margin="0,50,0,0"
                                                   VerticalAlignment="Top">
                                                 <Label Height="32"
                                                        Margin="0"
@@ -1772,7 +1786,7 @@
                                             </Grid>
                                             <Grid Width="350"
                                                   Height="40"
-                                                  Margin="0,200,0,0"
+                                                  Margin="0,100,0,0"
                                                   VerticalAlignment="Top">
                                                 <Label Height="32"
                                                        Margin="0"
@@ -1815,7 +1829,7 @@
                                             </Grid>
                                             <Grid Width="350"
                                                   Height="40"
-                                                  Margin="0,250,0,0"
+                                                  Margin="0,150,0,0"
                                                   VerticalAlignment="Top">
                                                 <Label Height="32"
                                                        Margin="0"
@@ -1849,7 +1863,7 @@
                                             </Grid>
                                             <Grid Width="350"
                                                   Height="40"
-                                                  Margin="0,300,0,0"
+                                                  Margin="0,200,0,0"
                                                   VerticalAlignment="Top"
                                                   Visibility="{Binding AdminVisibility, Source={StaticResource Const}}">
                                                 <Grid.ColumnDefinitions>
@@ -1889,12 +1903,12 @@
 
                                         <Grid Grid.Row="2"
                                               Height="40"
-                                              Margin="0,2.2,-0.2,0"
+                                              Margin="0,2,0,0"
                                               VerticalAlignment="Top">
                                             <Grid.ColumnDefinitions>
-                                                <ColumnDefinition Width="2*" />
-                                                <ColumnDefinition Width="2*" />
-                                                <ColumnDefinition Width="2*" />
+                                                <ColumnDefinition Width="*" />
+                                                <ColumnDefinition Width="*" />
+                                                <ColumnDefinition Width="*" />
                                             </Grid.ColumnDefinitions>
                                             <Grid Grid.Column="0">
                                                 <Button x:Name="btnAdd1"
@@ -2558,9 +2572,7 @@
                         <Grid Grid.Column="1">
                             <Border Background="Transparent"
                                     Visibility="{Binding Visibility}">
-                                <Border Margin="10,20,20,20"
-                                        HorizontalAlignment="Stretch"
-                                        VerticalAlignment="Stretch"
+                                <Border Margin="10,20,20,297"
                                         Background="White"
                                         CornerRadius="20">
                                     <Border.Effect>
@@ -2568,24 +2580,10 @@
                                     </Border.Effect>
                                     <Grid>
                                         <Grid.RowDefinitions>
-                                            <RowDefinition Height="auto" />
-                                            <RowDefinition Height="350" />
+                                            <RowDefinition Height="200" />
                                             <RowDefinition Height="auto" />
                                         </Grid.RowDefinitions>
                                         <Grid Grid.Row="0"
-                                              Margin="0,0,-0.2,1">
-                                            <Grid Width="150"
-                                                  Height="150"
-                                                  Margin="10,30,0,0"
-                                                  HorizontalAlignment="Center"
-                                                  VerticalAlignment="Top">
-                                                <Grid.Background>
-                                                    <ImageBrush ImageSource="{Binding Image, UpdateSourceTrigger=PropertyChanged}" />
-                                                </Grid.Background>
-
-                                            </Grid>
-                                        </Grid>
-                                        <Grid Grid.Row="1"
                                               Grid.RowSpan="2"
                                               Width="420"
                                               Height="150"
@@ -2943,27 +2941,14 @@
                                     <Grid>
                                         <Grid.RowDefinitions>
                                             <RowDefinition Height="auto" />
-                                            <RowDefinition Height="350" />
-                                            <RowDefinition Height="auto" />
+                                            <RowDefinition Height="400" />
+                                            <RowDefinition Height="auto" MinHeight="140" />
                                         </Grid.RowDefinitions>
-                                        <Grid Grid.Row="0"
-                                              Margin="0,0,-0.2,1">
-                                            <Grid Width="150"
-                                                  Height="100"
-                                                  Margin="161,0,0,0"
-                                                  HorizontalAlignment="Left"
-                                                  VerticalAlignment="Center">
-                                                <Grid.Background>
-                                                    <ImageBrush ImageSource="{Binding Image, UpdateSourceTrigger=PropertyChanged}" />
-                                                </Grid.Background>
-
-                                            </Grid>
-                                        </Grid>
                                         <Grid Grid.Row="1"
                                               Grid.RowSpan="2"
                                               Width="420"
                                               Height="450"
-                                              Margin="20,55,20.8,0"
+                                              Margin="0,55,0,0"
                                               HorizontalAlignment="Center"
                                               VerticalAlignment="Top">
 
@@ -3263,8 +3248,8 @@
                                         </Grid>
 
                                         <Grid Grid.Row="2"
-                                              Height="auto"
-                                              Margin="0,100,-0.2,0"
+                                              Height="40"
+                                              Margin="0,100,0,0"
                                               VerticalAlignment="Top">
                                             <Grid.ColumnDefinitions>
                                                 <ColumnDefinition Width="2*" />
