@@ -206,8 +206,8 @@ namespace HotelManagementApp.ViewModel
             {
                 // All income
                 allIncome = ListBills.Select(x => x.TotalMoney).Sum();
-                Alltimerevenue = ((decimal)allIncome).ToString("N0");
-                AlltimerevenueUSD = ((decimal)allIncome / 23035).ToString("N4");
+                AlltimerevenueUSD = ((decimal)allIncome).ToString("N4");
+                Alltimerevenue = ((decimal)allIncome * 23035).ToString("N0");
                 // This selected date income
                 selectedDateIncome = ListBills.Where(x => ((DateTime)x.BillDate).ToString(dateFormat) == selectedTime.ToString(dateFormat)).Select(x => x.TotalMoney).Sum();
                 SelectedDateRevenue = selectedDateIncome.ToString();
