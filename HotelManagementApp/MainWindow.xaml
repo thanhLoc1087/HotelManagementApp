@@ -424,7 +424,7 @@
                                                                 <Image x:Name="FAndSImage" Stretch="Fill"
                                                                        MaxWidth="180" MaxHeight="100"
                                                                        MinWidth="180" MinHeight="100"
-                                                                       Source="{Binding Path=ImageData, UpdateSourceTrigger=PropertyChanged}"/>
+                                                                       Source="{Binding Path=ImageData,Converter={StaticResource PathConverter}, UpdateSourceTrigger=PropertyChanged}"/>
                                                                 <TextBlock Height="20" Foreground="Black" FontWeight="Bold">
                                                                             <Run Text="Name:"/>
                                                                             <Run Text="{Binding Name, UpdateSourceTrigger=PropertyChanged}"/>

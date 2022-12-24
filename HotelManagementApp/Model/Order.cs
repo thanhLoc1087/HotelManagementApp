@@ -20,6 +20,7 @@ namespace HotelManagementApp.Model
         public Nullable<int> Quantity { get; set; }
         public Nullable<decimal> TotalPrice { get; set; }
         public Nullable<System.DateTime> Time { get; set; }
+        public Nullable<bool> Deleted { get; set; }
     
         public virtual BillDetail BillDetail { get; set; }
         public virtual FoodsAndService FoodsAndService { get; set; }
