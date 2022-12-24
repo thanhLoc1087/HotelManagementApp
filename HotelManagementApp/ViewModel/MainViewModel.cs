@@ -7,7 +7,9 @@ using LiveCharts.Wpf;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Globalization;
 using System.Linq;
+using System.Threading;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
@@ -30,8 +32,6 @@ namespace HotelManagementApp.ViewModel
         public string AlltimerevenueUSD { get => alltimerevenueUSD; set { alltimerevenueUSD = value; OnPropertyChanged(); } }
         private string selectedDateRevenue = "0";
         public string SelectedDateRevenue { get => selectedDateRevenue; set { selectedDateRevenue = value; OnPropertyChanged(); } }
-        private string _bestSellerPrice = "";
-        public string bestSellerPrice { get => _bestSellerPrice; set { _bestSellerPrice = value; OnPropertyChanged(); } }
         private string _lblDateFilter;
         public string lblDateFilter { get => _lblDateFilter; set { _lblDateFilter = value; OnPropertyChanged(); } }
         private CalendarMode _caDisplayMode = CalendarMode.Month;
@@ -175,7 +175,6 @@ namespace HotelManagementApp.ViewModel
                             select new { c, b };
                 decimal? besSellerPrice = query.Max(x => x.b.TotalPrice);
                 bestSeller = (query.Single(x => x.b.TotalPrice >= besSellerPrice)).c;
-                bestSellerPrice = ((decimal)bestSeller.Price).ToString("N0") + " VND";
             }
             catch { }
 

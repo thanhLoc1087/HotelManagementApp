@@ -137,7 +137,7 @@
                                        VerticalContentAlignment="Center"
                                        FontSize="22"
                                        FontWeight="Bold"
-                                        Content="{Binding SelectedDateRevenue}"
+                                        Content="{Binding SelectedDateRevenue, StringFormat=C0, ConverterCulture=vi-VN}"
                                        Foreground="#DDF9F9F9" />
 
                                 </Grid>
@@ -164,7 +164,7 @@
                                        HorizontalAlignment="Left"
                                        VerticalAlignment="Top"
                                        HorizontalContentAlignment="Center"
-                                       Content="ALL INCOME IN VND"
+                                       Content="ALL INCOME"
                                        FontSize="24"
                                        FontWeight="Bold"
                                        Foreground="#DDF9F9F9" />
@@ -189,7 +189,7 @@
                                        HorizontalContentAlignment="Center"
                                        FontSize="22"
                                        FontWeight="Bold"
-                                        Content="{Binding Alltimerevenue}"
+                                        Content="{Binding Alltimerevenue, StringFormat=C0, ConverterCulture=vi-VN}"
                                        Foreground="#DDF9F9F9" />
                                 </Grid>
                                 <Grid Grid.Column="2">
@@ -241,7 +241,7 @@
                                        FontSize="22"
                                        Foreground="#DDF9F9F9"
                                        RenderTransformOrigin="0.5,0.5"/>
-                                    <Label Content="{Binding bestSellerPrice}" 
+                                    <Label Content="{Binding bestSeller.Price, StringFormat=C0, ConverterCulture=vi-VN}" 
                                            Margin="175,116,33,96"
                                            FontWeight="DemiBold"
                                        FontSize="22"
@@ -443,7 +443,7 @@
                                                                 </TextBlock>
                                                                 <TextBlock Height="20" Foreground="Black">
                                                                             <Run Text="Price:"/>   
-                                                                            <Run Text="{Binding Price, UpdateSourceTrigger=PropertyChanged}"/>
+                                                                            <Run Text="{Binding Price, UpdateSourceTrigger=PropertyChanged, StringFormat=C0, ConverterCulture=vi-VN}"/>
                                                                 </TextBlock>
                                                                 <TextBlock Height="20" Foreground="Black">
                                                                             <Run Text="Unit:"/>   
@@ -1099,7 +1099,7 @@
                                                                                    ElementStyle="{StaticResource MaterialDesignDataGridTextColumnStyle}"
                                                                                    Header="Unit" />
                                                 <materialDesign:DataGridTextColumn Width="1.5*"
-                                                                                   Binding="{Binding Price, StringFormat={}{0:C}}"
+                                                                                   Binding="{Binding Price, StringFormat=C0, ConverterCulture=vi-VN}"
                                                                                    EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnPopupEditingStyle}"
                                                                                    ElementStyle="{StaticResource MaterialDesignDataGridTextColumnStyle}"
                                                                                    Header="Price" />
@@ -1285,7 +1285,7 @@
                                                          FontSize="14"
                                                          FontWeight="SemiBold"
                                                          Foreground="Gray"
-                                                         Text="{Binding Price, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, StringFormat={}{0:C}}" />
+                                                         Text="{Binding Price, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, StringFormat=C0, ConverterCulture=vi-VN}" />
                                             </Grid>
                                             <Grid Width="350"
                                                   Height="40"
@@ -2571,7 +2571,7 @@
                                                                                    ElementStyle="{StaticResource MaterialDesignDataGridTextColumnStyle}"
                                                                                    Header="Type" />
                                                 <materialDesign:DataGridTextColumn Width="1.5*"
-                                                                                   Binding="{Binding Price}"
+                                                                                   Binding="{Binding Price, StringFormat=C0, ConverterCulture=vi-VN}"
                                                                                    EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnPopupEditingStyle}"
                                                                                    ElementStyle="{StaticResource MaterialDesignDataGridTextColumnStyle}"
                                                                                    Header="Price" />
@@ -2678,7 +2678,7 @@
                                                          FontSize="14"
                                                          FontWeight="SemiBold"
                                                          Foreground="Gray"
-                                                         Text="{Binding Price, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, StringFormat={}{0:C}}" />
+                                                         Text="{Binding Price, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, StringFormat=C0, ConverterCulture=vi-VN}" />
                                             </Grid>
                                             <Grid Width="350"
                                                   Height="40"
@@ -3228,7 +3228,7 @@
                                                          FontSize="14"
                                                          FontWeight="SemiBold"
                                                          Foreground="Gray"
-                                                         Text="{Binding BillsNum, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+                                                         Text="{Binding BillsNum, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, StringFormat=C0, ConverterCulture=vi-VN}" />
                                             </Grid>
                                             <Grid Width="350"
                                                   Height="40"
