@@ -32,7 +32,7 @@ namespace HotelManagementApp.ViewModel
                 throw new ArgumentNullException("execute");
             _canExecute = canExecute;
             _execute = execute;
-        }   
+        }
 
         public RelayCommand(Action<Window> closeWindow)
         {

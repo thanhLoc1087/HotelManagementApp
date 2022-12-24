@@ -281,9 +281,9 @@
                                     <materialDesign:Card Padding="8"
                                                      materialDesign:ShadowAssist.ShadowDepth="Depth3"
                                                      Foreground="{x:Null}"
-                                                     UniformCornerRadius="10" Margin="237,10,-91,-10" />
+                                                     UniformCornerRadius="10" Margin="263,10,-117,-10" />
                                     <Wpf:PieChart
-                                        Margin="237,30,-91,10"
+                                        Margin="263,30,-117,10"
                                         DataTooltip="{x:Null}"
                                         Hoverable="True"
                                         InnerRadius="5"
@@ -292,12 +292,12 @@
                                         Series="{Binding SeriesCollectionPie}" 
                                         StartingRotationAngle="0"/>
                                     <Button Width="100"
-                                            Margin="126,332,184,4"
+                                            Margin="142,324,168,12"
                                             Command="{Binding RefreshStatictics}"
                                             Content="REFRESH"/>
                                     <ComboBox  Style="{StaticResource MaterialDesignFloatingHintComboBox}"
                                                materialDesign:HintAssist.Hint="Filter by"
-                                               Margin="0,13,250,0"
+                                               Margin="16,13,234,0"
                                                VerticalAlignment="Top"
                                                Text="{Binding cbxFilterBy, UpdateSourceTrigger=PropertyChanged}"
                                                SelectedValue="{Binding cbxSelectedValue}">
@@ -305,11 +305,16 @@
                                         <ComboBoxItem Content="Month"/>
                                         <ComboBoxItem Content="Year"/>
                                     </ComboBox>
-                                    <Calendar Margin="-14,54,184,0"
+                                    <Calendar Margin="2,54,168,0"
                                               VerticalAlignment="Top"
                                               materialDesign:HintAssist.Hint="Filter"
                                               Style="{StaticResource MaterialDesignCalendarPortraitBase}"
                                               SelectedDate="{Binding caSelectedDate, UpdateSourceTrigger=PropertyChanged}"/>
+                                    <TextBlock Text="{Binding tbkStatError, UpdateSourceTrigger=PropertyChanged}" 
+                                               Margin="263,13,-117,318"
+                                               Foreground="Red"
+                                               TextWrapping="WrapWithOverflow"
+                                               TextAlignment="Center"/>
                                 </Grid>
                                 <Grid Grid.RowSpan="2"
                                   Grid.Column="1"
@@ -317,8 +322,8 @@
                                     <materialDesign:Card Padding="8"
                                                      materialDesign:ShadowAssist.ShadowDepth="Depth3"
                                                      Foreground="{x:Null}"
-                                                     UniformCornerRadius="10" Margin="-37,8,38,-8" />
-                                    <Wpf:CartesianChart LegendLocation="Right" Series="{Binding SeriesCollectionCart}" Margin="-37,10,38,-8">
+                                                     UniformCornerRadius="10" Margin="0,8,28,-8" />
+                                    <Wpf:CartesianChart LegendLocation="Right" Series="{Binding SeriesCollectionCart}" Margin="10,28,28,-25">
                                         <Wpf:CartesianChart.AxisY>
                                             <Wpf:Axis Title="Income" LabelFormatter="{Binding YFormatter}" MinValue="0"/>
                                         </Wpf:CartesianChart.AxisY>
@@ -1128,7 +1133,7 @@
                                                   HorizontalAlignment="Center"
                                                   VerticalAlignment="Top">
                                                 <Grid.Background>
-                                                    <ImageBrush ImageSource="{Binding Image}" />
+                                                    <ImageBrush ImageSource="{Binding Image}" Stretch="UniformToFill"/>
                                                 </Grid.Background>
                                                 <Rectangle Width="150"
                                                            Height="153"
@@ -1658,7 +1663,7 @@
                                                   HorizontalAlignment="Right"
                                                   VerticalAlignment="Top">
                                                 <Grid.Background>
-                                                    <ImageBrush ImageSource="{Binding EmployeeImage, UpdateSourceTrigger=PropertyChanged}" />
+                                                    <ImageBrush ImageSource="{Binding EmployeeImage, UpdateSourceTrigger=PropertyChanged}" Stretch="UniformToFill"/>
                                                 </Grid.Background>
                                                 <Rectangle x:Name="recImage1"
                                                            Width="150"
@@ -2033,6 +2038,7 @@
                                                 <ComboBoxItem></ComboBoxItem>
                                                 <ComboBoxItem>ID</ComboBoxItem>
                                                 <ComboBoxItem>Room Num</ComboBoxItem>
+                                                <ComboBoxItem>Room Type</ComboBoxItem>
                                                 <ComboBoxItem>Status</ComboBoxItem>
                                             </ComboBox>
                                         </Border>
@@ -2073,7 +2079,7 @@
                                                     Background="White"
                                                     Height="35"
                                                     FontSize="14"
-                                                    ItemsSource="{Binding Types, Source={StaticResource Global}, UpdateSourceTrigger=PropertyChanged}"
+                                                    ItemsSource="{Binding RoomTypesList, UpdateSourceTrigger=PropertyChanged}"
                                                     DisplayMemberPath="Name"
                                                     Text="{}"
                                                     SelectedItem="{Binding TypeFilter, UpdateSourceTrigger=PropertyChanged}"
@@ -2174,7 +2180,7 @@
                                                   HorizontalAlignment="Center"
                                                   VerticalAlignment="Top">
                                                 <Grid.Background>
-                                                    <ImageBrush ImageSource="{Binding Image, UpdateSourceTrigger=PropertyChanged}" />
+                                                    <ImageBrush ImageSource="{Binding Image, UpdateSourceTrigger=PropertyChanged}" Stretch="UniformToFill"/>
                                                 </Grid.Background>
                                                 <Rectangle Width="150"
                                                            Height="153"
@@ -2281,7 +2287,7 @@
                                                                  FontWeight="SemiBold"
                                                                  Foreground="Gray"
                                                           
-                                                                 ItemsSource="{Binding Types, Source={StaticResource Global}, UpdateSourceTrigger=PropertyChanged}"
+                                                                 ItemsSource="{Binding RoomTypesList}"
                                                                  DisplayMemberPath="Name"
                                                                  SelectedItem="{Binding Type}"                                                       
                                                                  Text="{Binding Type.Name, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}">
@@ -2498,11 +2504,11 @@
                                                     Background="White"
                                                     Height="35"
                                                     FontSize="14"
-                                                    ItemsSource="{Binding Types,Source={StaticResource Global},UpdateSourceTrigger=PropertyChanged}"
+                                                    ItemsSource="{Binding RoomTypesList, UpdateSourceTrigger=PropertyChanged}"
                                                     DisplayMemberPath="Name"
                                                     Text="{}"
                                                     SelectedItem="{Binding TypeFilter, UpdateSourceTrigger=PropertyChanged}"
-                                                    Width="110" Margin="2,2,3,0" VerticalAlignment="Top">
+                                                    Width="110">
                                             </ComboBox>
                                         </Border>
                                     </StackPanel>
@@ -2749,7 +2755,7 @@
                         </StackPanel>
                     </TabItem.Header>
 
-                    <!--  UI Customer Here  -->
+                    <!--  UI Room Types Here  -->
 
                     <Grid Background="Transparent">
                         <Grid.ColumnDefinitions>
@@ -2796,9 +2802,7 @@
                                                 <ComboBoxItem></ComboBoxItem>
                                                 <ComboBoxItem>ID</ComboBoxItem>
                                                 <ComboBoxItem>Name</ComboBoxItem>
-                                                <ComboBoxItem>CCCD</ComboBoxItem>
-                                                <ComboBoxItem>Phone</ComboBoxItem>
-                                                <ComboBoxItem>Email</ComboBoxItem>
+                                                <ComboBoxItem>Price</ComboBoxItem>
                                             </ComboBox>
                                         </Border>
                                         <TextBox
@@ -2831,19 +2835,18 @@
                                                     Style="{StaticResource MaterialDesignFilledComboBox}"
                                                     materialDesign:TextFieldAssist.TextBoxViewMargin="2,-11,-10,0"
                                                     materialDesign:TextFieldAssist.TextFieldCornerRadius="14"
-                                                    materialDesign:HintAssist.Hint="Sex"
+                                                    materialDesign:HintAssist.Hint="Room Type"
                                                     materialDesign:TextFieldAssist.DecorationVisibility="Hidden"
                                                     BorderThickness="0"
                                                     materialDesign:HintAssist.Foreground="White"
                                                     Background="White"
                                                     Height="35"
                                                     FontSize="14"
-                                                    SelectedIndex="0"
-                                                    Text="{Binding SexFilter, UpdateSourceTrigger=PropertyChanged}"
+                                                    ItemsSource="{Binding RoomTypesList, UpdateSourceTrigger=PropertyChanged}"
+                                                    DisplayMemberPath="Name"
+                                                    Text="{}"
+                                                    SelectedItem="{Binding TypeFilter, UpdateSourceTrigger=PropertyChanged}"
                                                     Width="110">
-                                                <ComboBoxItem></ComboBoxItem>
-                                                <ComboBoxItem>Male</ComboBoxItem>
-                                                <ComboBoxItem>Female</ComboBoxItem>
                                             </ComboBox>
                                         </Border>
                                     </StackPanel>
@@ -2860,7 +2863,7 @@
                                                   Focusable="False"
                                                   IsReadOnly="True"
                                                   IsSynchronizedWithCurrentItem="False"
-                                                  ItemsSource="{Binding FilteredList}"
+                                                  ItemsSource="{Binding CustomersList}"
                                                   SelectedItem="{Binding SelectedItem}">
                                             <i:Interaction.Triggers>
                                                 <i:EventTrigger EventName="SelectionChanged">

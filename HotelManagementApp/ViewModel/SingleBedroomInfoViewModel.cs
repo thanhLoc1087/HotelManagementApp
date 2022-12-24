@@ -51,24 +51,18 @@ namespace HotelManagementApp.ViewModel
                 _CCCD = value;
                 LoadSuggestionsList();
                 var customer = CustomersList.Where(x => x.CCCD == CCCD).FirstOrDefault();
-                if (customer != null)
+                if (CCCD != null && customer != null)
                 {
-                    bool check = (CustomerName == null && Sex == null && PhoneNum == null && Email == null && Nationality == null);
-                    if (CCCD != null && check)
-                    {
-                        CustomerName = customer.Name;
-                        Sex = customer.Sex;
-                        PhoneNum = customer.PhoneNumber;
-                        Email = customer.Email;
-                        Nationality = customer.Nationality;
-                    }
-                    else if (CCCD != null && customer == null)
-                    {
-                        CustomerName = Sex = PhoneNum = Email = Nationality = null;
-                    }
-                    else if (CCCD == null) {}
+                    CustomerName = customer.Name;
+                    Sex = customer.Sex;
+                    PhoneNum = customer.PhoneNumber;
+                    Email = customer.Email;
+                    Nationality = customer.Nationality;
                 }
-                
+                else
+                {
+                    CustomerName = Sex = PhoneNum = Email = Nationality = null;
+                }
                 OnPropertyChanged();
             }
         }
@@ -90,9 +84,9 @@ namespace HotelManagementApp.ViewModel
         public ICommand CancelReservationCommand { get; set; }
         public ICommand CCCDSelectionChangedCommand { get; set; }
         public ICommand CCCDTextChangedCommand { get; set; }
-        public ICommand TestCommand { get; set; }
+        private bool windowShowed = false;
         private RoomsReservation _SelectedItem;
-        public AddReservationWindow reservationWindow;
+        public AddReservationWindow reservationWindow = new AddReservationWindow();
         public RoomsReservation SelectedItem
         {
             get => _SelectedItem;
@@ -127,7 +121,6 @@ namespace HotelManagementApp.ViewModel
             Const.ActiveAccount = DataProvider.Instance.DB.Accounts.Where(x => x.ID == 0).FirstOrDefault();
             LoadRoomReservationsList();
             LoadCustomersList();
-
             AddCommand = new RelayCommand<object>((p) =>
             {
                 var room = DataProvider.Instance.DB.Rooms.Where(x => x.RoomNum == RoomNum).FirstOrDefault();
@@ -153,7 +146,7 @@ namespace HotelManagementApp.ViewModel
             }, (p) =>
             {
                 var customer = new Customer();
-                // If customer doesn't exist, create & save new customer, else use the existing one
+                // If customer doesn't exist, create & save new customer, else update the existing one
                 if (DataProvider.Instance.DB.Customers.Where(x => x.CCCD == CCCD).Count() == 0 || DataProvider.Instance.DB.Customers.Where(x => x.CCCD == CCCD) == null)
                 {
                     customer = new Customer()
@@ -181,35 +174,23 @@ namespace HotelManagementApp.ViewModel
                     Status = "On-Going",
                 };
 
-
                 DataProvider.Instance.DB.BillDetails.Add(billDetail);
                 DataProvider.Instance.DB.SaveChanges();
 
-                var room = DataProvider.Instance.DB.Rooms.Where(x => x.RoomNum == RoomNum).FirstOrDefault();
                 // Create & save new room reservation
-                var roomReservation = new RoomsReservation()
+                foreach (var item in RoomReservationList)
                 {
-                    Room = room,
-                    CheckInTime = CheckInDate.Value.Date.Add(CheckInTime.Value.TimeOfDay),
-                    CheckOutTime = CheckOutDate.Value.Date.Add(CheckOutTime.Value.TimeOfDay),
-                    BillDetail = billDetail,
-                };
-                room.Status = "Booked";
-                DataProvider.Instance.DB.RoomsReservations.Add(roomReservation);
-                //foreach (var item in RoomReservationList)
-                //{
-                //    item.BillDetail = billDetail;
-                //    item.Room.Status = "Booked";
-                //    DataProvider.Instance.DB.RoomsReservations.Add(item);
-                //}
+                    item.BillDetail = billDetail;
+                    DataProvider.Instance.DB.RoomsReservations.Add(item);
+                }
                 DataProvider.Instance.DB.SaveChanges();
                 //LoadRoomReservationsList();
-                ClearFields();
+                //ClearFields();
                 SelectedItem = null;
             });
             EditCommand = new RelayCommand<object>((p) =>
             {
-                if (string.IsNullOrEmpty(RoomNum) || string.IsNullOrEmpty(CustomerName) || string.IsNullOrEmpty(PhoneNum) || string.IsNullOrEmpty(CCCD) /*|| CheckInDate == null || CheckInTime == null || CheckOutDate == null || CheckOutDate == null || SelectedItem == null*/)
+                if (string.IsNullOrEmpty(RoomNum) || string.IsNullOrEmpty(CustomerName) || string.IsNullOrEmpty(PhoneNum) || string.IsNullOrEmpty(CCCD) || CheckInDate == null || CheckInTime == null || CheckOutDate == null || CheckOutDate == null || SelectedItem == null)
                 {
                     return false;
                 }
@@ -276,8 +257,7 @@ namespace HotelManagementApp.ViewModel
             {
                 LoadSuggestionsList();
                 var customer = CustomersList.Where(x => x.CCCD == CCCD).FirstOrDefault();
-                bool check = (CustomerName == null || Sex == null || PhoneNum == null || Email == null || Nationality == null);
-                if (CCCD != null && customer != null && check)
+                if (CCCD != null && customer != null)
                 {
                     CustomerName = customer.Name;
                     Sex = customer.Sex;
@@ -285,11 +265,10 @@ namespace HotelManagementApp.ViewModel
                     Email = customer.Email;
                     Nationality = customer.Nationality;
                 }
-                else if (CCCD != null && customer == null)
+                else
                 {
                     CustomerName = Sex = PhoneNum = Email = Nationality = null;
                 }
-                OnPropertyChanged();
             });
 
             AddReservationCommand = new RelayCommand<object>((p) =>
@@ -335,78 +314,6 @@ namespace HotelManagementApp.ViewModel
             {
                 reservationWindow.Close();
             });
-            TestCommand = new RelayCommand<object>((p) =>
-            {
-                var room = DataProvider.Instance.DB.Rooms.Where(x => x.RoomNum == RoomNum).FirstOrDefault();
-                if (string.IsNullOrEmpty(RoomNum) || string.IsNullOrEmpty(CustomerName) || string.IsNullOrEmpty(PhoneNum) || string.IsNullOrEmpty(CCCD) /*|| CheckInDate == null || CheckInTime == null || CheckOutDate == null || CheckOutDate == null || SelectedItem == null*/)
-                {
-                    return false;
-                }
-                if (CheckInDate > CheckOutDate)
-                {
-                    return false;
-                }
-                if (CheckInDate == CheckOutDate && CheckInTime > CheckOutTime)
-                {
-                    return false;
-                }
-
-                if (room == null)
-                {
-                    return false;
-                }
-
-                return true;
-            }, (p) =>
-            {
-                //var customer = new Customer();
-                //// If customer doesn't exist, create & save new customer, else use the existing one
-                //if (DataProvider.Instance.DB.Customers.Where(x => x.CCCD == CCCD).Count() == 0 || DataProvider.Instance.DB.Customers.Where(x => x.CCCD == CCCD) == null)
-                //{
-                //    customer = new Customer()
-                //    {
-                //        Name = CustomerName,
-                //        Sex = Sex,
-                //        CCCD = CCCD,
-                //        PhoneNumber = PhoneNum,
-                //        Email = Email,
-                //        Nationality = Nationality,
-                //    };
-                //    DataProvider.Instance.DB.Customers.Add(customer);
-                //    DataProvider.Instance.DB.SaveChanges();
-                //}
-                //else
-                //{
-                //    customer = DataProvider.Instance.DB.Customers.Where(x => x.CCCD == CCCD).FirstOrDefault();
-                //}
-
-                //// Create & save new bill detail
-                //var billDetail = new BillDetail()
-                //{
-                //    IDStaff = (int)Const.ActiveAccount.IDStaff,
-                //    IDCustomer = customer.ID,
-                //    Status = "On-Going",
-                //};
-
-
-                //DataProvider.Instance.DB.
-                //
-                //Details.Add(billDetail);
-                //DataProvider.Instance.DB.SaveChanges();
-
-                //// Create & save new room reservation
-                //foreach (var item in RoomReservationList)
-                //{
-                //    item.BillDetail = billDetail;
-                //    item.Room.Status = "Booked";
-                //    DataProvider.Instance.DB.RoomsReservations.Add(item);
-                //}
-                //DataProvider.Instance.DB.SaveChanges();
-                ////LoadRoomReservationsList();
-                ////ClearFields();
-                ShowAddReservationWindow();
-                SelectedItem = null;
-            });
         }
 
         private void LoadRoomReservationsList()
@@ -450,22 +357,21 @@ namespace HotelManagementApp.ViewModel
         private void LoadSuggestionsList()
         {
             SuggestionsList = new ObservableCollection<string>();
-            if(CCCD != null)
+            foreach(var item in CustomersList)
             {
-                foreach (var item in CustomersList)
+                if(item.CCCD.StartsWith(CCCD))
                 {
-                    if (item.CCCD.StartsWith(CCCD))
-                    {
-                        SuggestionsList.Add(item.CCCD);
-                    }
+                    SuggestionsList.Add(item.CCCD);
                 }
             }
         }
         // chạy khi nhấn vào 1 phòng
         private void ShowAddReservationWindow()
         {
-            reservationWindow = new AddReservationWindow() { DataContext = this };
-            reservationWindow.Show();
+            if (!windowShowed)
+            {
+                reservationWindow.Show();
+            }
         }
     }
 }

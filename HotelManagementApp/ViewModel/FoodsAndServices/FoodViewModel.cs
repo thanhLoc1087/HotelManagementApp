@@ -14,6 +14,8 @@ namespace HotelManagementApp.ViewModel
 {
     public class FoodViewModel : BaseViewModel
     {
+        private ObservableCollection<FoodsAndService> _FoodsAndServicesList;
+        public ObservableCollection<FoodsAndService> FoodsAndServicesList { get => _FoodsAndServicesList; set { _FoodsAndServicesList = value; OnPropertyChanged(); } }
         private ObservableCollection<FoodsAndService> _FilteredList;
         public ObservableCollection<FoodsAndService> FilteredList { get => _FilteredList; set { _FilteredList = value; OnPropertyChanged(); } }
 
@@ -32,7 +34,7 @@ namespace HotelManagementApp.ViewModel
         public string Unit { get => _Unit; set { _Unit = value; OnPropertyChanged(); } }
 
         private decimal? _Price;
-        public decimal? Price { get => _Price; set { _Price = value; if (Price == 0) Price = null; OnPropertyChanged(); } }
+        public decimal? Price { get => _Price; set { _Price = value; OnPropertyChanged(); } }
 
         private string _Type;
         public string Type { get => _Type; set { _Type = value; OnPropertyChanged(); } }
@@ -71,6 +73,7 @@ namespace HotelManagementApp.ViewModel
         public ICommand deleteCommand { get; set; }
         public FoodViewModel()
         {
+            LoadFoodList();
             addCommand = new RelayCommand<object>((p) =>
             {
                 if (string.IsNullOrEmpty(Name) || string.IsNullOrEmpty(Unit) || Price == 0 || string.IsNullOrEmpty(Type))
@@ -96,7 +99,7 @@ namespace HotelManagementApp.ViewModel
                 DataProvider.Instance.DB.SaveChanges();
                 addImage(food);
                 DataProvider.Instance.DB.SaveChanges();
-                UpdateList(food);
+                LoadFoodList();
                 ClearFields();
             });
 
@@ -128,7 +131,9 @@ namespace HotelManagementApp.ViewModel
                 addImage(food);
 
                 DataProvider.Instance.DB.SaveChanges();
-                UpdateList(food);
+
+                OnPropertyChanged();
+                LoadFoodList();
                 ClearFields();
             });
 
@@ -144,11 +149,24 @@ namespace HotelManagementApp.ViewModel
                 var food = DataProvider.Instance.DB.FoodsAndServices.Where(x => x.ID == SelectedItem.ID).FirstOrDefault();
                 food.Deleted = true;
 
-                UpdateList(food, true);
                 DataProvider.Instance.DB.SaveChanges();
+
+                OnPropertyChanged();
+                LoadFoodList();
                 ClearFields();
             });
         }
+        void LoadFoodList()
+        {
+            FoodsAndServicesList = new ObservableCollection<FoodsAndService>();
+            var foodList = DataProvider.Instance.DB.FoodsAndServices.Where(x => x.Deleted == false);
+            foreach (var item in foodList)
+            {
+                FoodsAndServicesList.Add(item);
+            }
+            LoadFilteredList();
+        }
+
         void SelectImage()
         {
             OpenFileDialog OpenFile = new OpenFileDialog();
@@ -215,11 +233,11 @@ namespace HotelManagementApp.ViewModel
         private void LoadFilteredList()
         {
             ObservableCollection<FoodsAndService> list = new ObservableCollection<FoodsAndService>();
-            foreach (var item in Global.FoodsAndServicesList)
+            foreach (var item in FoodsAndServicesList)
             {
                 if (string.IsNullOrEmpty(Filter) && string.IsNullOrEmpty(SearchString) && string.IsNullOrEmpty(TypeFilter))
                 {
-                    list = Global.FoodsAndServicesList;
+                    list = FoodsAndServicesList;
                 }
                 else if (string.IsNullOrEmpty(Filter) && string.IsNullOrEmpty(SearchString) && !string.IsNullOrEmpty(TypeFilter))
                 {
@@ -260,26 +278,6 @@ namespace HotelManagementApp.ViewModel
                 }
             }
             FilteredList = list;
-        }
-        private void UpdateList(FoodsAndService a, bool delete = false)
-        {
-            var food = Global.FoodsAndServicesList.Where(x => x.ID == a.ID).FirstOrDefault();
-            if (delete)
-            {
-                HotelManagementApp.Global.FoodsAndServicesList.Remove((FoodsAndService)food);
-            }
-            else
-            {
-                if (food == null)
-                {
-                    HotelManagementApp.Global.FoodsAndServicesList.Add(a);
-                }
-                else
-                {
-                    food = a;
-                }
-            }
-            LoadFilteredList();
         }
         public void ClearFields()
         {
