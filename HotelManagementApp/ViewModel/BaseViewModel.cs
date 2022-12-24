@@ -10,7 +10,7 @@ using System.Windows;
 using System.Windows.Input;
 
 namespace HotelManagementApp.ViewModel
-{ 
+{
     public class BaseViewModel : INotifyPropertyChanged
     {
         public event PropertyChangedEventHandler PropertyChanged;
@@ -20,7 +20,7 @@ namespace HotelManagementApp.ViewModel
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
     }
-    
+
     public class RelayCommand<T> : ICommand
     {
         private readonly Predicate<T> _canExecute;

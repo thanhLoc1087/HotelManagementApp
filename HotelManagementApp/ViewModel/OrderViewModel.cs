@@ -67,7 +67,7 @@ namespace HotelManagementApp.ViewModel
             PendingOrdersList = new ObservableCollection<Order>();
             OrderCommand = new RelayCommand<object>((p) =>
             {
-                if (string.IsNullOrEmpty(RoomNum) || TargetBillDetail == null || PendingOrdersList == null)
+                if (string.IsNullOrEmpty(RoomNum) || TargetBillDetail == null || PendingOrdersList == null || SelectedItem == null)
                 {
                     return false;
                 }
@@ -89,11 +89,11 @@ namespace HotelManagementApp.ViewModel
                     DBbill.TotalMoney += item.TotalPrice;
                     Global.OrdersList.Add(item);
                     Sbill.Orders.Add(item);
-                    DBbill.TotalMoney += item.TotalPrice;
+                    Sbill.TotalMoney += item.TotalPrice;
                 }
                 DataProvider.Instance.DB.SaveChanges();
                 SelectedItem = null;
-                PendingOrdersList = null;
+                PendingOrdersList.Clear();
             });
         }
 

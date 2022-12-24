@@ -13,8 +13,6 @@ namespace HotelManagementApp.ViewModel
 {
     class AddRoomTypes : BaseViewModel
     {
-        private ObservableCollection<RoomType> _RoomTypesList;
-        public ObservableCollection<RoomType> RoomTypesList { get => _RoomTypesList; set { _RoomTypesList = value; OnPropertyChanged(); } }
         private ObservableCollection<RoomType> _FilteredList;
         public ObservableCollection<RoomType> FilteredList { get => _FilteredList; set { _FilteredList = value; OnPropertyChanged(); } }
         private string _Filter;
@@ -50,10 +48,9 @@ namespace HotelManagementApp.ViewModel
         public ICommand deleteCommand { get; set; }
         public AddRoomTypes()
         {
-            LoadRoomTypesList();
             addCommand = new RelayCommand<object>((p) =>
             {
-                if (string.IsNullOrEmpty(Name)||  Price == 0 || Price == null)
+                if (string.IsNullOrEmpty(Name) || Price == 0 || Price == null)
                 {
                     return false;
                 }
@@ -73,7 +70,7 @@ namespace HotelManagementApp.ViewModel
                 };
                 DataProvider.Instance.DB.RoomTypes.Add(roomType);
                 DataProvider.Instance.DB.SaveChanges();
-                LoadRoomTypesList();
+                UpdateList(roomType);
                 ClearFields();
             });
             editCommand = new RelayCommand<object>((p) =>
@@ -82,7 +79,7 @@ namespace HotelManagementApp.ViewModel
                 {
                     return false;
                 }
-                if(SelectedItem == null)
+                if (SelectedItem == null)
                 {
                     return false;
                 }
@@ -100,8 +97,7 @@ namespace HotelManagementApp.ViewModel
 
                 DataProvider.Instance.DB.SaveChanges();
 
-                OnPropertyChanged();
-                LoadRoomTypesList();
+                UpdateList(roomType);
                 ClearFields();
             });
             deleteCommand = new RelayCommand<object>((p) =>
@@ -115,30 +111,17 @@ namespace HotelManagementApp.ViewModel
             {
                 var roomType = DataProvider.Instance.DB.RoomTypes.Where(x => x.ID == SelectedItem.ID).FirstOrDefault();
                 roomType.Deleted = true;
-
+                UpdateList(roomType, true);
                 DataProvider.Instance.DB.SaveChanges();
 
-                OnPropertyChanged();
-                LoadRoomTypesList();
                 ClearFields();
+                OnPropertyChanged();
             });
-        }
-
-        private void LoadRoomTypesList()
-        {
-            RoomTypesList = new ObservableCollection<RoomType>();
-            RoomTypesList.Add(new RoomType() { Name = null });
-            var roomTypesList = DataProvider.Instance.DB.RoomTypes.Where(x => x.Deleted == false);
-            foreach (var item in roomTypesList)
-            {
-                RoomTypesList.Add(item);
-            }
-            LoadFilteredList();
         }
         private void LoadFilteredList()
         {
             ObservableCollection<RoomType> list = new ObservableCollection<RoomType>();
-            foreach (var item in RoomTypesList)
+            foreach (var item in Global.Types)
             {
                 if (item.Name == null)
                     continue;
@@ -180,6 +163,27 @@ namespace HotelManagementApp.ViewModel
                 }
             }
             FilteredList = list;
+        }
+
+        private void UpdateList(RoomType a, bool delete = false)
+        {
+            var roomType = Global.Types.Where(x => x.ID == a.ID).FirstOrDefault();
+            if (delete)
+            {
+                HotelManagementApp.Global.Types.Remove((RoomType)roomType);
+            }
+            else
+            {
+                if (roomType == null)
+                {
+                    HotelManagementApp.Global.Types.Add(a);
+                }
+                else
+                {
+                    roomType = a;
+                }
+            }
+            LoadFilteredList();
         }
         private void ClearFields()
         {
