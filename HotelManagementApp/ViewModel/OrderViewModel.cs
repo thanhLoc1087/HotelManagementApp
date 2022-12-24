@@ -37,8 +37,8 @@ namespace HotelManagementApp.ViewModel
         }
         private BillDetail _TargetBillDetail;
         public BillDetail TargetBillDetail { get => _TargetBillDetail; set { _TargetBillDetail = value; OnPropertyChanged(); } }
-        private Order _SelectedItem;
-        public Order SelectedItem
+        private FoodsAndService _SelectedItem;
+        public FoodsAndService SelectedItem
         { 
             get => _SelectedItem;
             set 
@@ -46,7 +46,13 @@ namespace HotelManagementApp.ViewModel
                 _SelectedItem = value;
                 if (SelectedItem != null)
                 {
-                    PendingOrdersList.Add(SelectedItem);
+                    var order = new Order();
+                    order.IDFoodsAndServices = SelectedItem.ID;
+                    order.Quantity = 1;
+                    order.TotalPrice = order.Quantity * SelectedItem.Price;
+                    order.Time = DateTime.Now;
+                    order.Deleted = false;
+                    PendingOrdersList.Add(order);
                 }
                 OnPropertyChanged();
             }
@@ -64,16 +70,26 @@ namespace HotelManagementApp.ViewModel
                 {
                     return false;
                 }
+                var list = Global.RoomsList.Where(x => x.RoomNum == RoomNum);
+                if(list == null || list.Count() == 0)
+                {
+                    return false;
+                }
                 return true;
             }, (p) =>
             {
+                var DBbill = DataProvider.Instance.DB.BillDetails.Where(x => x.ID == TargetBillDetail.ID).FirstOrDefault();
+                var Sbill = Global.BillsList.Where(x => x.ID == DBbill.ID).FirstOrDefault();
                 foreach (var item in PendingOrdersList)
                 {
-                    TargetBillDetail.Orders.Add(item);
+                    DataProvider.Instance.DB.Orders.Add(item);
+                    DBbill.Orders.Add(item);
+                    Global.OrdersList.Add(item);
+                    Sbill.Orders.Add(item);
                 }
-
                 DataProvider.Instance.DB.SaveChanges();
                 SelectedItem = null;
+                PendingOrdersList = null;
             });
         }
 
