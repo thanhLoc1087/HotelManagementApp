@@ -34,13 +34,15 @@ namespace HotelManagementApp.ViewModel
         private ObservableCollection<RoomsReservation> _listRoomsRevs;
         public ObservableCollection<RoomsReservation> ListRoomsRevs { get => _listRoomsRevs; set { _listRoomsRevs = value; OnPropertyChanged(); } }
         //Statictis
-        public string dateFormat = "YYYY";
+        public string dateFormat = "dd/MM/yyyy";
         private string alltimerevenue = "0";
         public string Alltimerevenue { get => alltimerevenue; set { alltimerevenue = value; OnPropertyChanged(); } }
         private string alltimerevenueUSD = "0";
         public string AlltimerevenueUSD { get => alltimerevenueUSD; set { alltimerevenueUSD = value; OnPropertyChanged(); } }
-        private string thisMonthRevenue = "0";
-        public string ThisMonthRevenue { get => thisMonthRevenue; set { thisMonthRevenue = value; OnPropertyChanged(); } }
+        private string selectedDateRevenue = "0";
+        public string SelectedDateRevenue { get => selectedDateRevenue; set { selectedDateRevenue = value; OnPropertyChanged(); } }
+        private string _lblDateFilter;
+        public string lblDateFilter { get => _lblDateFilter; set { _lblDateFilter = value; OnPropertyChanged(); } }
         private CalendarMode _caDisplayMode = CalendarMode.Month;
         public CalendarMode caDisplayMode { get => _caDisplayMode; set { _caDisplayMode = value; OnPropertyChanged("caDisplayMode"); } }
         public string _cbxSelectedValue;
@@ -179,7 +181,7 @@ namespace HotelManagementApp.ViewModel
         {
             DateTime selectedTime = (DateTime)caSelectedDate;
             decimal? allIncome = 0;
-            decimal? monthIncome = 0;
+            decimal? selectedDateIncome = 0;
             decimal? roomIncome = 0;
             decimal? foodIncome = 0;
             decimal? serviceIncome = 0;
@@ -199,15 +201,16 @@ namespace HotelManagementApp.ViewModel
             decimal? serviceIncomeQ2 = 0;
             decimal? serviceIncomeQ3 = 0;
             decimal? serviceIncomeQ4 = 0;
+            lblDateFilter = ((DateTime)caSelectedDate).ToString(dateFormat);
             try
             {
                 // All income
                 allIncome = ListBills.Select(x => x.TotalMoney).Sum();
-                Alltimerevenue = allIncome.ToString();
-                AlltimerevenueUSD = (allIncome / 23035).ToString();
-                // This month income
-                monthIncome = ListBills.Where(x => ((DateTime)x.BillDate).ToString("MM") == selectedTime.ToString("MM")).Select(x => x.TotalMoney).Sum();
-                ThisMonthRevenue = monthIncome.ToString();
+                Alltimerevenue = ((decimal)allIncome).ToString("N0");
+                AlltimerevenueUSD = ((decimal)allIncome / 23035).ToString("N4");
+                // This selected date income
+                selectedDateIncome = ListBills.Where(x => ((DateTime)x.BillDate).ToString(dateFormat) == selectedTime.ToString(dateFormat)).Select(x => x.TotalMoney).Sum();
+                SelectedDateRevenue = selectedDateIncome.ToString();
 
                 ////    PIE STATISTIC   ////    
                 // Room monthly income
@@ -410,6 +413,10 @@ namespace HotelManagementApp.ViewModel
             if (foodIncome ==0 && serviceIncome ==0 && roomIncome == 0)
             {
                 tbkStatError = Const.statErrorMsg;
+            } 
+            else
+            {
+                tbkStatError = "";
             }
         }
     }
