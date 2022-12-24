@@ -97,32 +97,6 @@
                              materialDesign:HintAssist.Hint="Nationality"
                              Style="{StaticResource MaterialDesignFloatingHintTextBox}"
                              Text="{Binding Nationality, UpdateSourceTrigger=PropertyChanged}" />
-                    <DatePicker Width="100"
-                                Margin="5,10,15,5"
-                                VerticalAlignment="Center"
-                                materialDesign:HintAssist.Hint="Checkin date"
-                                SelectedDate="{Binding CheckInDate}"
-                                Style="{StaticResource MaterialDesignFloatingHintDatePicker}" />
-                    <materialDesign:TimePicker x:Name="checkintime_picker"
-                                               Margin="5,15,15,0"
-                                               HorizontalAlignment="Center"
-                                               VerticalAlignment="Center"
-                                               materialDesign:HintAssist.Hint="Check in time"
-                                               Is24Hours="True"
-                                               SelectedTime="{Binding CheckInTime}" />
-                    <DatePicker Width="110"
-                                Margin="5,10,15,5"
-                                VerticalAlignment="Center"
-                                materialDesign:HintAssist.Hint="Check out date"
-                                SelectedDate="{Binding CheckOutDate}"
-                                Style="{StaticResource MaterialDesignFloatingHintDatePicker}" />
-                    <materialDesign:TimePicker x:Name="checkouttime_picker"
-                                               Margin="5,15,15,0"
-                                               HorizontalAlignment="Center"
-                                               VerticalAlignment="Center"
-                                               materialDesign:HintAssist.Hint="Check out time"
-                                               Is24Hours="True"
-                                               SelectedTime="{Binding CheckOutTime}" />
                 </WrapPanel>
             </materialDesign:Card>
 
@@ -146,6 +120,10 @@
                             Margin="20"
                             Command="{Binding ClearCommand}"
                             Content="Clear"/>
+                    <Button Width="100"
+                            Margin="20"
+                            Command="{Binding TestCommand}"
+                            Content="Test"/>
                 </WrapPanel>
             </materialDesign:Card>
 

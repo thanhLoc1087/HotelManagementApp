@@ -25,6 +25,7 @@
           <Property Name="TotalMoney" Type="money" />
           <Property Name="BillDate" Type="smalldatetime" />
           <Property Name="Status" Type="nvarchar(max)" />
+          <Property Name="Deleted" Type="bit" />
         </EntityType>
         <EntityType Name="Customers">
           <Key>
@@ -61,6 +62,7 @@
           <Property Name="Quantity" Type="int" />
           <Property Name="TotalPrice" Type="money" />
           <Property Name="Time" Type="smalldatetime" />
+          <Property Name="Deleted" Type="bit" />
         </EntityType>
         <EntityType Name="Rooms">
           <Key>
@@ -288,6 +290,7 @@
           <Property Name="TotalMoney" Type="Decimal" Precision="19" Scale="4" />
           <Property Name="BillDate" Type="DateTime" Precision="0" />
           <Property Name="Status" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="Deleted" Type="Boolean" />
           <NavigationProperty Name="Orders" Relationship="Self.FK__Orders__IDBillDe__2BFE89A6" FromRole="BillDetails" ToRole="Orders" />
           <NavigationProperty Name="RoomsReservations" Relationship="Self.FK__RoomsRese__IDBil__625A9A57" FromRole="BillDetails" ToRole="RoomsReservations" />
           <NavigationProperty Name="Customer" Relationship="Self.FK_BillDetail_Customer_CustomerID" FromRole="BillDetails" ToRole="Customers" />
@@ -330,6 +333,7 @@
           <Property Name="Quantity" Type="Int32" />
           <Property Name="TotalPrice" Type="Decimal" Precision="19" Scale="4" />
           <Property Name="Time" Type="DateTime" Precision="0" />
+          <Property Name="Deleted" Type="Boolean" />
           <NavigationProperty Name="BillDetail" Relationship="Self.FK__Orders__IDBillDe__2BFE89A6" FromRole="Orders" ToRole="BillDetails" />
           <NavigationProperty Name="FoodsAndService" Relationship="Self.FK__Orders__IDFoodsA__2B0A656D" FromRole="Orders" ToRole="FoodsAndServices" />
         </EntityType>
@@ -566,6 +570,7 @@
                 <ScalarProperty Name="TotalMoney" ColumnName="TotalMoney" />
                 <ScalarProperty Name="BillDate" ColumnName="BillDate" />
                 <ScalarProperty Name="Status" ColumnName="Status" />
+                <ScalarProperty Name="Deleted" ColumnName="Deleted" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -605,6 +610,7 @@
                 <ScalarProperty Name="Quantity" ColumnName="Quantity" />
                 <ScalarProperty Name="TotalPrice" ColumnName="TotalPrice" />
                 <ScalarProperty Name="Time" ColumnName="Time" />
+                <ScalarProperty Name="Deleted" ColumnName="Deleted" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

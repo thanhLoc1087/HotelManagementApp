@@ -4,6 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Data;
+using System.Data.Entity.Core.Metadata.Edm;
 using System.IO;
 using System.Linq;
 using System.Reflection;
@@ -21,14 +22,8 @@ namespace HotelManagementApp.ViewModel
 {
     public class AddRoomForAdminViewModel : BaseViewModel
     {
-        private ObservableCollection<Room> _RoomsList;
-        public ObservableCollection<Room> RoomsList { get => _RoomsList; set { _RoomsList = value; OnPropertyChanged(); } }
         private ObservableCollection<Room> _FilteredList;
         public ObservableCollection<Room> FilteredList { get => _FilteredList; set { _FilteredList = value; OnPropertyChanged(); } }
-        private ObservableCollection<RoomType> _RoomTypesList;
-        public ObservableCollection<RoomType> RoomTypesList { get => _RoomTypesList; set { _RoomTypesList = value; OnPropertyChanged(); } }
-        private ObservableCollection<RoomType> _RoomTypesFilterList;
-        public ObservableCollection<RoomType> RoomTypesFilterList { get => _RoomTypesFilterList; set { _RoomTypesFilterList = value; OnPropertyChanged(); } }
         private string _Filter;
         public string Filter { get => _Filter; set { _Filter = value; LoadFilteredList(); OnPropertyChanged(); } }
         private RoomType _TypeFilter;
@@ -71,8 +66,6 @@ namespace HotelManagementApp.ViewModel
 
         public AddRoomForAdminViewModel()
         {
-            LoadRoomsList();
-            LoadRoomTypesList();
             LoadFilteredList();
             addCommand = new RelayCommand<object>((p) =>
             {
@@ -99,7 +92,7 @@ namespace HotelManagementApp.ViewModel
                 DataProvider.Instance.DB.SaveChanges();
                 addImage(room);
                 DataProvider.Instance.DB.SaveChanges();
-                LoadRoomsList();
+                UpdateList(room);
                 ClearFields();
                 SelectedItem = null;
             });
@@ -133,7 +126,7 @@ namespace HotelManagementApp.ViewModel
                 DataProvider.Instance.DB.SaveChanges();
 
                 OnPropertyChanged();
-                LoadRoomsList();
+                UpdateList(room);
                 ClearFields();
                 SelectedItem = null;
             });
@@ -149,39 +142,15 @@ namespace HotelManagementApp.ViewModel
                 var room = DataProvider.Instance.DB.Rooms.Where(x => x.ID == SelectedItem.ID).FirstOrDefault();
                 room.Deleted = true;
 
+                UpdateList(room, true);
                 DataProvider.Instance.DB.SaveChanges();
 
                 OnPropertyChanged();
-                LoadRoomsList();
                 ClearFields();
                 SelectedItem = null;
             });
 
         }
-        void LoadRoomsList()
-        {
-            RoomsList = new ObservableCollection<Room>();
-            var roomsList = DataProvider.Instance.DB.Rooms.Where(x => x.Deleted == false);
-            foreach (var item in roomsList)
-            {
-                RoomsList.Add(item);
-            }
-            LoadFilteredList();
-        }
-
-        void LoadRoomTypesList()
-        {
-            RoomTypesList = new ObservableCollection<RoomType>();
-            RoomTypesFilterList = new ObservableCollection<RoomType>();
-            RoomTypesFilterList.Add(new RoomType(){ Name = null, Price = null });
-            var typeList = DataProvider.Instance.DB.RoomTypes.Where(x => x.Deleted == false);
-            foreach (var item in typeList)
-            {
-                RoomTypesList.Add(item);
-                RoomTypesFilterList.Add(item);
-            }
-        }
-
         void SelectImage()
         {
             OpenFileDialog OpenFile = new OpenFileDialog();
@@ -248,11 +217,11 @@ namespace HotelManagementApp.ViewModel
         private void LoadFilteredList()
         {
             ObservableCollection<Room> list = new ObservableCollection<Room>();
-            foreach (var item in RoomsList)
+            foreach (var item in Global.RoomsList)
             {
                 if (string.IsNullOrEmpty(Filter) && string.IsNullOrEmpty(SearchString) && (TypeFilter == null))
                 {
-                    list = RoomsList;
+                    list = Global.RoomsList;
                 }
                 else if (string.IsNullOrEmpty(Filter) && string.IsNullOrEmpty(SearchString) && (TypeFilter != null))
                 {
@@ -294,6 +263,26 @@ namespace HotelManagementApp.ViewModel
                 }
             }
             FilteredList = list;
+        }
+        private void UpdateList(Room a, bool delete = false)
+        {
+            var room = Global.RoomsList.Where(x => x.ID == a.ID).FirstOrDefault();
+            if (delete)
+            {
+                HotelManagementApp.Global.RoomsList.Remove((Room)room);
+            }
+            else
+            {
+                if (room == null)
+                {
+                    HotelManagementApp.Global.RoomsList.Add(a);
+                }
+                else
+                {
+                    room = a;
+                }
+            }
+            LoadFilteredList();
         }
         private void ClearFields()
         {

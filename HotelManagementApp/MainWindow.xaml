@@ -2033,7 +2033,6 @@
                                                 <ComboBoxItem></ComboBoxItem>
                                                 <ComboBoxItem>ID</ComboBoxItem>
                                                 <ComboBoxItem>Room Num</ComboBoxItem>
-                                                <ComboBoxItem>Room Type</ComboBoxItem>
                                                 <ComboBoxItem>Status</ComboBoxItem>
                                             </ComboBox>
                                         </Border>
@@ -2074,7 +2073,7 @@
                                                     Background="White"
                                                     Height="35"
                                                     FontSize="14"
-                                                    ItemsSource="{Binding RoomTypesList, UpdateSourceTrigger=PropertyChanged}"
+                                                    ItemsSource="{Binding Types, Source={StaticResource Global}, UpdateSourceTrigger=PropertyChanged}"
                                                     DisplayMemberPath="Name"
                                                     Text="{}"
                                                     SelectedItem="{Binding TypeFilter, UpdateSourceTrigger=PropertyChanged}"
@@ -2282,7 +2281,7 @@
                                                                  FontWeight="SemiBold"
                                                                  Foreground="Gray"
                                                           
-                                                                 ItemsSource="{Binding RoomTypesList}"
+                                                                 ItemsSource="{Binding Types, Source={StaticResource Global}, UpdateSourceTrigger=PropertyChanged}"
                                                                  DisplayMemberPath="Name"
                                                                  SelectedItem="{Binding Type}"                                                       
                                                                  Text="{Binding Type.Name, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}">
@@ -2499,11 +2498,11 @@
                                                     Background="White"
                                                     Height="35"
                                                     FontSize="14"
-                                                    ItemsSource="{Binding RoomTypesList, UpdateSourceTrigger=PropertyChanged}"
+                                                    ItemsSource="{Binding Types,Source={StaticResource Global},UpdateSourceTrigger=PropertyChanged}"
                                                     DisplayMemberPath="Name"
                                                     Text="{}"
                                                     SelectedItem="{Binding TypeFilter, UpdateSourceTrigger=PropertyChanged}"
-                                                    Width="110">
+                                                    Width="110" Margin="2,2,3,0" VerticalAlignment="Top">
                                             </ComboBox>
                                         </Border>
                                     </StackPanel>
@@ -2750,7 +2749,7 @@
                         </StackPanel>
                     </TabItem.Header>
 
-                    <!--  UI Room Types Here  -->
+                    <!--  UI Customer Here  -->
 
                     <Grid Background="Transparent">
                         <Grid.ColumnDefinitions>
@@ -2797,7 +2796,9 @@
                                                 <ComboBoxItem></ComboBoxItem>
                                                 <ComboBoxItem>ID</ComboBoxItem>
                                                 <ComboBoxItem>Name</ComboBoxItem>
-                                                <ComboBoxItem>Price</ComboBoxItem>
+                                                <ComboBoxItem>CCCD</ComboBoxItem>
+                                                <ComboBoxItem>Phone</ComboBoxItem>
+                                                <ComboBoxItem>Email</ComboBoxItem>
                                             </ComboBox>
                                         </Border>
                                         <TextBox
@@ -2830,18 +2831,19 @@
                                                     Style="{StaticResource MaterialDesignFilledComboBox}"
                                                     materialDesign:TextFieldAssist.TextBoxViewMargin="2,-11,-10,0"
                                                     materialDesign:TextFieldAssist.TextFieldCornerRadius="14"
-                                                    materialDesign:HintAssist.Hint="Room Type"
+                                                    materialDesign:HintAssist.Hint="Sex"
                                                     materialDesign:TextFieldAssist.DecorationVisibility="Hidden"
                                                     BorderThickness="0"
                                                     materialDesign:HintAssist.Foreground="White"
                                                     Background="White"
                                                     Height="35"
                                                     FontSize="14"
-                                                    ItemsSource="{Binding RoomTypesList, UpdateSourceTrigger=PropertyChanged}"
-                                                    DisplayMemberPath="Name"
-                                                    Text="{}"
-                                                    SelectedItem="{Binding TypeFilter, UpdateSourceTrigger=PropertyChanged}"
+                                                    SelectedIndex="0"
+                                                    Text="{Binding SexFilter, UpdateSourceTrigger=PropertyChanged}"
                                                     Width="110">
+                                                <ComboBoxItem></ComboBoxItem>
+                                                <ComboBoxItem>Male</ComboBoxItem>
+                                                <ComboBoxItem>Female</ComboBoxItem>
                                             </ComboBox>
                                         </Border>
                                     </StackPanel>
@@ -2858,7 +2860,7 @@
                                                   Focusable="False"
                                                   IsReadOnly="True"
                                                   IsSynchronizedWithCurrentItem="False"
-                                                  ItemsSource="{Binding CustomersList}"
+                                                  ItemsSource="{Binding FilteredList}"
                                                   SelectedItem="{Binding SelectedItem}">
                                             <i:Interaction.Triggers>
                                                 <i:EventTrigger EventName="SelectionChanged">
