@@ -4,7 +4,6 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Data;
 using System.Linq;
-using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Input;
@@ -15,14 +14,15 @@ namespace HotelManagementApp.ViewModel
 {
     public class CustomersViewModel : BaseViewModel
     {
+        private ObservableCollection<Customer> _CustomersList;
+        public ObservableCollection<Customer> CustomersList { get => _CustomersList; set { _CustomersList = value; OnPropertyChanged(); } }
+
         private ObservableCollection<Customer> _FilteredList;
         public ObservableCollection<Customer> FilteredList { get => _FilteredList; set { _FilteredList = value; OnPropertyChanged(); } }
 
 
         private string _Filter;
         public string Filter { get => _Filter; set { _Filter = value; LoadFilteredList(); OnPropertyChanged(); } }
-        private string _SexFilter;
-        public string SexFilter { get => _SexFilter; set { _SexFilter = value; LoadFilteredList(); OnPropertyChanged(); } }
         private string _SearchString;
         public string SearchString { get => _SearchString; set { _SearchString = value; LoadFilteredList(); OnPropertyChanged(); } }
 
@@ -81,6 +81,7 @@ namespace HotelManagementApp.ViewModel
 
         public CustomersViewModel()
         {
+            LoadCustomersList();
             LoadFilteredList();
             addCommand = new RelayCommand<object>((p) =>
             {
@@ -107,7 +108,7 @@ namespace HotelManagementApp.ViewModel
                 };
                 DataProvider.Instance.DB.Customers.Add(customer);
                 DataProvider.Instance.DB.SaveChanges();
-                UpdateList(customer);
+                LoadCustomersList();
                 ClearFields();
                 SelectedItem = null;
             });
@@ -134,7 +135,9 @@ namespace HotelManagementApp.ViewModel
                 customer.Nationality = Nationality;
 
                 DataProvider.Instance.DB.SaveChanges();
-                UpdateList(customer);
+
+                OnPropertyChanged();
+                LoadCustomersList();
                 ClearFields();
                 SelectedItem = null;
             });
@@ -147,91 +150,33 @@ namespace HotelManagementApp.ViewModel
                 return true;
             }, (p) =>
             {
-                var customer = DataProvider.Instance.DB.Customers.Where(x => x.ID == SelectedItem.ID).FirstOrDefault();
+                var customer = DataProvider.Instance.DB.Staffs.Where(x => x.ID == SelectedItem.ID).FirstOrDefault();
                 customer.Deleted = true;
 
                 DataProvider.Instance.DB.SaveChanges();
-                UpdateList(customer, true);
+
+                OnPropertyChanged();
+                LoadCustomersList();
                 ClearFields();
                 SelectedItem = null;
             });
         }
 
-        private void LoadFilteredList()
+        void LoadCustomersList()
         {
-            ObservableCollection<Customer> list = new ObservableCollection<Customer>();
-            foreach (var item in Global.CustomersList)
+            CustomersList = new ObservableCollection<Customer>();
+            var customersList = DataProvider.Instance.DB.Customers.Where(x => x.Deleted == false);
+            foreach (var item in customersList)
             {
-                if (string.IsNullOrEmpty(Filter) && string.IsNullOrEmpty(SearchString) && string.IsNullOrEmpty(SexFilter))
-                {
-                    list = Global.CustomersList;
-                }
-                else if (string.IsNullOrEmpty(Filter) && string.IsNullOrEmpty(SearchString) && !string.IsNullOrEmpty(SexFilter))
-                {
-                    if (item.Sex == SexFilter)
-                    {
-                        list.Add(item);
-                    }
-                }
-                else
-                {
-                    switch (Filter)
-                    {
-                        case "ID":
-                            if (string.IsNullOrEmpty(SearchString) || (item.ID == Convert.ToInt32(SearchString)) && (item.Sex == SexFilter || string.IsNullOrEmpty(SexFilter)))
-                            {
-                                list.Add(item);
-                            }
-                            break;
-                        case "Name":
-                            if ((string.IsNullOrEmpty(SearchString) || item.Name.Contains(SearchString)) && (item.Sex == SexFilter || string.IsNullOrEmpty(SexFilter)))
-                            {
-                                list.Add(item);
-                            }
-                            break;
-                        case "CCCD":
-                            if ((string.IsNullOrEmpty(SearchString) || item.CCCD.Contains(SearchString)) && (item.Sex == SexFilter || string.IsNullOrEmpty(SexFilter)))
-                            {
-                                list.Add(item);
-                            }
-                            break;
-                        case "Phone":
-                            if ((string.IsNullOrEmpty(SearchString) || item.PhoneNumber.Contains(SearchString)) && (item.Sex == SexFilter || string.IsNullOrEmpty(SexFilter)))
-                            {
-                                list.Add(item);
-                            }
-                            break;
-                        case "Email":
-                            if ((string.IsNullOrEmpty(SearchString) || item.Email.Contains(SearchString)) && (item.Sex == SexFilter || string.IsNullOrEmpty(SexFilter)))
-                            {
-                                list.Add(item);
-                            }
-                            break;
-                    }
-                }
-            }
-            FilteredList = list;
-        }
-        private void UpdateList(Customer a, bool delete = false)
-        {
-            var customer = Global.CustomersList.Where(x => x.ID == a.ID).FirstOrDefault();
-            if (delete)
-            {
-                HotelManagementApp.Global.CustomersList.Remove((Customer)customer);
-            }
-            else
-            {
-                if (customer == null)
-                {
-                    HotelManagementApp.Global.CustomersList.Add(a);
-                }
-                else
-                {
-                    customer = a;
-                }
+                CustomersList.Add(item);
             }
             LoadFilteredList();
         }
+
+        private void LoadFilteredList()
+        {
+
+        } 
 
         private void ClearFields()
         {
@@ -239,6 +184,6 @@ namespace HotelManagementApp.ViewModel
             BillsNum = null;
             TotalSpending = null;
         }
-
+        
     }
 }

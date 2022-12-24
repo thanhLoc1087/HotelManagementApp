@@ -17,6 +17,9 @@ namespace HotelManagementApp.ViewModel
 {
     public class StaffViewModel : BaseViewModel
     {
+        private ObservableCollection<Staff> _StaffsList;
+        public ObservableCollection<Staff> StaffsList { get => _StaffsList; set { _StaffsList = value; OnPropertyChanged(); } }
+        
         private ObservableCollection<Staff> _FilteredList;
         public ObservableCollection<Staff> FilteredList { get => _FilteredList; set { _FilteredList = value; OnPropertyChanged(); } }
 
@@ -81,12 +84,17 @@ namespace HotelManagementApp.ViewModel
                 OnPropertyChanged();
             }
         }
+
+
+
         public ICommand addCommand { get; set; }
         public ICommand SelectImageCommand { get; set; }
         public ICommand editCommand { get; set; }
         public ICommand deleteCommand { get; set; }
         public StaffViewModel()
         {
+            LoadStaffsList();
+            LoadFilteredList();
             addCommand = new RelayCommand<object>((p) =>
             {
                 if (string.IsNullOrEmpty(Name) || string.IsNullOrEmpty(Sex) || string.IsNullOrEmpty(CCCD) || string.IsNullOrEmpty(PhoneNum) || Role == null || string.IsNullOrEmpty(Username) || string.IsNullOrEmpty(Password))
@@ -125,7 +133,7 @@ namespace HotelManagementApp.ViewModel
                 DataProvider.Instance.DB.Accounts.Add(account);
                 addImage(staff);
                 DataProvider.Instance.DB.SaveChanges();
-                UpdateList(staff);
+                LoadStaffsList();
                 ClearFields();
                 SelectedItem = null;
             });
@@ -160,7 +168,7 @@ namespace HotelManagementApp.ViewModel
                 DataProvider.Instance.DB.SaveChanges();
 
                 OnPropertyChanged();
-                UpdateList(staff);
+                LoadStaffsList();
                 ClearFields();
                 SelectedItem = null;
             });
@@ -176,12 +184,23 @@ namespace HotelManagementApp.ViewModel
                 var staff = DataProvider.Instance.DB.Staffs.Where(x => x.ID == SelectedItem.ID).FirstOrDefault();
                 staff.Deleted = true;
 
-                UpdateList(staff, true);
                 DataProvider.Instance.DB.SaveChanges();
 
+                OnPropertyChanged();
+                LoadStaffsList();
                 ClearFields();
                 SelectedItem = null;
             });
+        }
+        void LoadStaffsList()
+        {
+            StaffsList = new ObservableCollection<Staff>();
+            var staffsList = DataProvider.Instance.DB.Staffs.Where(x => x.Deleted == false);
+            foreach (var item in staffsList)
+            {
+                StaffsList.Add(item);
+            }
+            LoadFilteredList();
         }
         void SelectImage()
         {
@@ -263,14 +282,14 @@ namespace HotelManagementApp.ViewModel
         }
 
         private void LoadFilteredList()
-        {
+        { 
 
             ObservableCollection<Staff> list = new ObservableCollection<Staff>();
-            foreach (var item in Global.StaffsList)
+            foreach (var item in StaffsList)
             {
                 if (string.IsNullOrEmpty(Filter) && string.IsNullOrEmpty(SearchString) && string.IsNullOrEmpty(TypeFilter))
                 {
-                    list = Global.StaffsList;
+                    list = StaffsList;
                 }
                 else if (string.IsNullOrEmpty(Filter) && string.IsNullOrEmpty(SearchString) && !string.IsNullOrEmpty(TypeFilter))
                 {
@@ -317,26 +336,6 @@ namespace HotelManagementApp.ViewModel
                 }
             }
             FilteredList = list;
-        }
-        private void UpdateList(Staff a, bool delete = false)
-        {
-            var staff = Global.StaffsList.Where(x => x.ID == a.ID).FirstOrDefault();
-            if (delete)
-            {
-                HotelManagementApp.Global.StaffsList.Remove((Staff)staff);
-            }
-            else
-            {
-                if (staff == null)
-                {
-                    HotelManagementApp.Global.StaffsList.Add(a);
-                }
-                else
-                {
-                    staff = a;
-                }
-            }
-            LoadFilteredList();
         }
         public void ClearFields()
         {

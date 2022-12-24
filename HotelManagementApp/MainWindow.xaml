@@ -62,7 +62,6 @@
                 <!--SelectionChanged="TabControl_SelectionChanged"-->
 
                 <TabItem>
-
                     <TabItem.Header>
 
                         <StackPanel Width="auto"
@@ -86,9 +85,9 @@
                             </Grid.RowDefinitions>
                             <Grid Grid.Row="0">
                                 <Grid.ColumnDefinitions>
-                                    <ColumnDefinition Width="400" />
-                                    <ColumnDefinition Width="400" />
-                                    <ColumnDefinition Width="400" />
+                                    <ColumnDefinition Width="*" />
+                                    <ColumnDefinition Width="*" />
+                                    <ColumnDefinition Width="1.5*" />
                                 </Grid.ColumnDefinitions>
                                 <Grid Grid.Column="0">
                                     <materialDesign:Card Margin="25"
@@ -108,8 +107,8 @@
                                     <Label x:Name="label_money"
                                        Width="93"
                                        Height="64"
-                                       Margin="150,147,0,0"
-                                       HorizontalAlignment="Left"
+                                       Margin="0,147,0,0"
+                                       HorizontalAlignment="Center"
                                        VerticalAlignment="Top"
                                        Content="">
                                         <Label.Background>
@@ -118,10 +117,10 @@
                                         </Label.Background>
                                     </Label>
                                     <Label x:Name="label_income"
-                                       Width="346"
+                                       Width="300"
                                        Height="39"
-                                       Margin="26,39,0,0"
-                                       HorizontalAlignment="Left"
+                                       Margin="0,39,0,0"
+                                       HorizontalAlignment="Center"
                                        VerticalAlignment="Top"
                                        HorizontalContentAlignment="Center"
                                        Content="{Binding lblDateFilter}"
@@ -129,9 +128,9 @@
                                        FontWeight="Bold"
                                        Foreground="#DDF9F9F9" />
                                     <Label x:Name="income"
-                                       Width="344"
+                                       Width="297"
                                        Height="31"
-                                       Margin="28,105,0,0"
+                                       Margin="28,95,0,0"
                                        HorizontalAlignment="Left"
                                        VerticalAlignment="Top"
                                        HorizontalContentAlignment="Center"
@@ -151,15 +150,15 @@
                                         <materialDesign:Card.Background>
                                             <LinearGradientBrush StartPoint="0.5,0"
                                                              EndPoint="0.5,1">
-                                                <GradientStop Color="#FFF51C40" />
                                                 <GradientStop Offset="1"
-                                                          Color="#FFD89B65" />
+                                                          Color="#FF016CFD" />
+                                                <GradientStop Color="#FF00E4FF" />
                                             </LinearGradientBrush>
                                         </materialDesign:Card.Background>
 
                                     </materialDesign:Card>
                                     <Label x:Name="label_guesttext"
-                                       Width="347"
+                                       Width="299"
                                        Height="39"
                                        Margin="27,39,0,0"
                                        HorizontalAlignment="Left"
@@ -177,14 +176,14 @@
                                        VerticalAlignment="Top"
                                        Content="">
                                         <Label.Background>
-                                            <ImageBrush ImageSource="Images/tags.png"
+                                            <ImageBrush ImageSource="Images/dollar.png"
                                                     Stretch="Uniform" />
                                         </Label.Background>
                                     </Label>
                                     <Label x:Name="guest"
-                                       Width="344"
+                                       Width="297"
                                        Height="33"
-                                       Margin="29,104,0,0"
+                                       Margin="29,94,0,0"
                                        HorizontalAlignment="Left"
                                        VerticalAlignment="Top"
                                        HorizontalContentAlignment="Center"
@@ -194,10 +193,6 @@
                                        Foreground="#DDF9F9F9" />
                                 </Grid>
                                 <Grid Grid.Column="2">
-                                    <Grid.ColumnDefinitions>
-                                        <ColumnDefinition Width="0*" />
-                                        <ColumnDefinition />
-                                    </Grid.ColumnDefinitions>
                                     <materialDesign:Card Margin="25,25,25,25"
                                                      Padding="8"
                                                      materialDesign:ShadowAssist.ShadowDepth="Depth5"
@@ -207,23 +202,61 @@
                                         <materialDesign:Card.Background>
                                             <LinearGradientBrush StartPoint="0.5,0"
                                                              EndPoint="0.5,1">
+                                                <GradientStop Color="#FFF51C40" />
                                                 <GradientStop Offset="1"
-                                                          Color="#FF016CFD" />
-                                                <GradientStop Color="#FF00E4FF" />
+                                                          Color="#FFD89B65" />
                                             </LinearGradientBrush>
                                         </materialDesign:Card.Background>
-
                                     </materialDesign:Card>
-                                    <Label x:Name="label1_Copy"
+                                    <Label Content="ID" 
+                                           Margin="59,78,407,139"
+                                       FontSize="22"
+                                       Foreground="#DDF9F9F9"
+                                       RenderTransformOrigin="0.5,0.5"
+                                           HorizontalContentAlignment="Center"/>
+                                    <Label Content="{Binding bestSeller.ID}" 
+                                           Margin="59,100,407,110"
+                                       FontSize="22"
+                                       Foreground="#DDF9F9F9"
+                                       RenderTransformOrigin="0.5,0.5"
+                                           HorizontalContentAlignment="Center"/>
+                                    <Label Width="326"
+                                       Height="33"
+                                       Margin="175,78,0,0"
+                                       HorizontalAlignment="Left"
+                                       VerticalAlignment="Top"
+                                       HorizontalContentAlignment="Left"
+                                       FontSize="22"
+                                       FontWeight="Bold"
+                                       Foreground="#DDF9F9F9"
+                                       RenderTransformOrigin="0.5,0.5"
+                                        Content="{Binding bestSeller.Name}"/>
+                                    <Label Content="{Binding bestSeller.Type}" 
+                                           Margin="325,157,33,53"
+                                       FontSize="22"
+                                       Foreground="#DDF9F9F9"
+                                       RenderTransformOrigin="0.5,0.5"/>
+                                    <Label Content="{Binding bestSeller.Unit}" 
+                                           Margin="175,157,206,53"
+                                       FontSize="22"
+                                       Foreground="#DDF9F9F9"
+                                       RenderTransformOrigin="0.5,0.5"/>
+                                    <Label Content="{Binding bestSellerPrice}" 
+                                           Margin="175,116,33,96"
+                                           FontWeight="DemiBold"
+                                       FontSize="22"
+                                       Foreground="#DDF9F9F9"
+                                       RenderTransformOrigin="0.5,0.5"/>
+                                    <Label
                                        Width="93"
                                        Height="64"
-                                       Margin="156,145,0,0"
+                                       Margin="40,145,0,0"
                                        HorizontalAlignment="Left"
                                        VerticalAlignment="Top"
                                        Content=""
                                        Grid.ColumnSpan="2">
                                         <Label.Background>
-                                            <ImageBrush ImageSource="Images/dollar.png"
+                                            <ImageBrush ImageSource="Images/tags.png"
                                                     Stretch="Uniform" />
                                         </Label.Background>
                                     </Label>
@@ -234,33 +267,11 @@
                                        HorizontalAlignment="Center"
                                        VerticalAlignment="Top"
                                        HorizontalContentAlignment="Center"
-                                       Content="ALL INCOME IN $"
+                                       Content="MOST POPULAR"
                                        FontSize="24"
                                        FontWeight="Bold"
                                        Foreground="#DDF9F9F9"
                                        Grid.Column="1" />
-                                    <Label x:Name="usd"
-                                       Width="344"
-                                       Height="33"
-                                       Margin="0,104,0,0"
-                                       HorizontalAlignment="Center"
-                                       VerticalAlignment="Top"
-                                       HorizontalContentAlignment="Center"
-                                       FontSize="22"
-                                       FontWeight="Bold"
-                                       Foreground="#DDF9F9F9"
-                                       RenderTransformOrigin="0.5,0.5"
-                                        Content="{Binding AlltimerevenueUSD}"
-                                       Grid.Column="1">
-                                        <Label.RenderTransform>
-                                            <TransformGroup>
-                                                <ScaleTransform />
-                                                <SkewTransform />
-                                                <RotateTransform Angle="-0.549" />
-                                                <TranslateTransform />
-                                            </TransformGroup>
-                                        </Label.RenderTransform>
-                                    </Label>
                                 </Grid>
                             </Grid>
                             <Grid Grid.Row="1" Grid.RowSpan="2">
@@ -301,7 +312,7 @@
                                                VerticalAlignment="Top"
                                                Text="{Binding cbxFilterBy, UpdateSourceTrigger=PropertyChanged}"
                                                SelectedValue="{Binding cbxSelectedValue}">
-                                        <ComboBoxItem Content="Date" IsSelected="True"/>
+                                        <ComboBoxItem Content="Date"/>
                                         <ComboBoxItem Content="Month"/>
                                         <ComboBoxItem Content="Year"/>
                                     </ComboBox>
@@ -309,7 +320,8 @@
                                               VerticalAlignment="Top"
                                               materialDesign:HintAssist.Hint="Filter"
                                               Style="{StaticResource MaterialDesignCalendarPortraitBase}"
-                                              SelectedDate="{Binding caSelectedDate, UpdateSourceTrigger=PropertyChanged}"/>
+                                              SelectedDate="{Binding caSelectedDate, UpdateSourceTrigger=PropertyChanged}"
+                                              DisplayMode="{Binding caDisplayMode, UpdateSourceTrigger=PropertyChanged}"/>
                                     <TextBlock Text="{Binding tbkStatError, UpdateSourceTrigger=PropertyChanged}" 
                                                Margin="263,13,-117,318"
                                                Foreground="Red"
@@ -322,8 +334,8 @@
                                     <materialDesign:Card Padding="8"
                                                      materialDesign:ShadowAssist.ShadowDepth="Depth3"
                                                      Foreground="{x:Null}"
-                                                     UniformCornerRadius="10" Margin="0,8,28,-8" />
-                                    <Wpf:CartesianChart LegendLocation="Right" Series="{Binding SeriesCollectionCart}" Margin="0,11,38,-8">
+                                                     UniformCornerRadius="10" Margin="0,8,0,-8" />
+                                    <Wpf:CartesianChart LegendLocation="Right" Series="{Binding SeriesCollectionCart}" Margin="0,11,0,-8">
                                         <Wpf:CartesianChart.AxisY>
                                             <Wpf:Axis Title="Income" LabelFormatter="{Binding YFormatter}" MinValue="0"/>
                                         </Wpf:CartesianChart.AxisY>
@@ -424,7 +436,7 @@
                                                                 <Image x:Name="FAndSImage" Stretch="Fill"
                                                                        MaxWidth="180" MaxHeight="100"
                                                                        MinWidth="180" MinHeight="100"
-                                                                       Source="{Binding Path=ImageData,Converter={StaticResource PathConverter}, UpdateSourceTrigger=PropertyChanged}"/>
+                                                                       Source="{Binding Path=ImageData, UpdateSourceTrigger=PropertyChanged}"/>
                                                                 <TextBlock Height="20" Foreground="Black" FontWeight="Bold">
                                                                             <Run Text="Name:"/>
                                                                             <Run Text="{Binding Name, UpdateSourceTrigger=PropertyChanged}"/>
@@ -2079,7 +2091,7 @@
                                                     Background="White"
                                                     Height="35"
                                                     FontSize="14"
-                                                    ItemsSource="{Binding Types, Source={StaticResource Global}, UpdateSourceTrigger=PropertyChanged}"
+                                                    ItemsSource="{Binding RoomTypesList, UpdateSourceTrigger=PropertyChanged}"
                                                     DisplayMemberPath="Name"
                                                     Text="{}"
                                                     SelectedItem="{Binding TypeFilter, UpdateSourceTrigger=PropertyChanged}"
@@ -2089,10 +2101,6 @@
                                     </StackPanel>
 
                                     <Grid Grid.Row="1">
-                                        <Grid.ColumnDefinitions>
-                                            <ColumnDefinition Width="89*"/>
-                                            <ColumnDefinition Width="12*"/>
-                                        </Grid.ColumnDefinitions>
 
 
 
@@ -2105,7 +2113,7 @@
                                                   IsReadOnly="True"
                                                   IsSynchronizedWithCurrentItem="False"
                                                   ItemsSource="{Binding FilteredList}"
-                                                  SelectedItem="{Binding SelectedItem}" Grid.ColumnSpan="2">
+                                                  SelectedItem="{Binding SelectedItem}">
                                             <i:Interaction.Triggers>
                                                 <i:EventTrigger EventName="SelectionChanged">
                                                     <i:InvokeCommandAction Command="{Binding Path=ReloadCommand}"
@@ -2291,7 +2299,7 @@
                                                                  FontWeight="SemiBold"
                                                                  Foreground="Gray"
                                                           
-                                                                 ItemsSource="{Binding Types, Source={StaticResource Global}, UpdateSourceTrigger=PropertyChanged}"
+                                                                 ItemsSource="{Binding RoomTypesList}"
                                                                  DisplayMemberPath="Name"
                                                                  SelectedItem="{Binding Type}"                                                       
                                                                  Text="{Binding Type.Name, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}">
@@ -2508,7 +2516,7 @@
                                                     Background="White"
                                                     Height="35"
                                                     FontSize="14"
-                                                    ItemsSource="{Binding Types, Source={StaticResource Global}, UpdateSourceTrigger=PropertyChanged}"
+                                                    ItemsSource="{Binding RoomTypesList, UpdateSourceTrigger=PropertyChanged}"
                                                     DisplayMemberPath="Name"
                                                     Text="{}"
                                                     SelectedItem="{Binding TypeFilter, UpdateSourceTrigger=PropertyChanged}"
@@ -3367,7 +3375,7 @@
                                     <RowDefinition />
                                 </Grid.RowDefinitions>
                                 <Grid Grid.Row="0">
-                                    <materialDesign:Flipper>
+                                    <materialDesign:Flipper Visibility="{Binding AdminVisibility, Source={StaticResource Const}}">
                                         <materialDesign:Flipper.FrontContent>
                                             <Button Width="100"
                                                     Height="auto"

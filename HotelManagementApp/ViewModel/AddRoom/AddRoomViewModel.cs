@@ -32,6 +32,8 @@ namespace HotelManagementApp.ViewModel
         public BitmapImage Image { get => _Image; set { _Image = value; OnPropertyChanged(); } }
         private string _SelectedImagePath;
 
+        private ObservableCollection<RoomType> _RoomTypeList;
+        public ObservableCollection<RoomType> RoomTypeList {get => _RoomTypeList; set { _RoomTypeList = value; OnPropertyChanged(); } }
         public ICommand AddRoomCommand { get; set; }
         public ICommand SelectImageCommand { get; set; }
 
@@ -64,10 +66,12 @@ namespace HotelManagementApp.ViewModel
                 DataProvider.Instance.DB.SaveChanges();
             });
 
-            SelectImageCommand = new RelayCommand<object>((p) => { return true; }, (p) =>
+            SelectImageCommand =  new RelayCommand<object>((p) => { return true; }, (p) =>
             {
                 SelectImage();
             });
+
+            LoadRoomTypeList();
         }
         void SelectImage()
         {
@@ -104,6 +108,16 @@ namespace HotelManagementApp.ViewModel
             }
 
             OnPropertyChanged();
+        }
+
+        void LoadRoomTypeList()
+        {
+            RoomTypeList = new ObservableCollection<RoomType>();
+            var typeList = DataProvider.Instance.DB.RoomTypes.Where(x => x.Deleted == false);
+            foreach (var item in typeList)
+            {
+                RoomTypeList.Add(item);
+            }
         }
     }
 }
