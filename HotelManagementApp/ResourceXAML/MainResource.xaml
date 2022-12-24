@@ -3,7 +3,6 @@
                     xmlns:viewmodel="clr-namespace:HotelManagementApp.ViewModel"
                     xmlns:local="clr-namespace:HotelManagementApp">
     <local:Const x:Key="Const"></local:Const>
-    <local:Global x:Key="Global"></local:Global>
     <viewmodel:MainViewModel x:Key="MainVm"></viewmodel:MainViewModel>
     <viewmodel:LoginViewModel x:Key="LoginVm"></viewmodel:LoginViewModel>
     <viewmodel:SettingsViewModel x:Key="SettingsVm"></viewmodel:SettingsViewModel>

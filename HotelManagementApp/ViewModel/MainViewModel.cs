@@ -16,9 +16,13 @@ namespace HotelManagementApp.ViewModel
 {
 
     public class MainViewModel : BaseViewModel
-    {
+    {      
         public bool IsLoaded = false;
+        public string _tbkStatError = "";
+        public string tbkStatError { get => _tbkStatError; set { _tbkStatError = value; OnPropertyChanged(); } }
         // Lists
+        private ObservableCollection<BillDetail> _listBills;
+        public ObservableCollection<BillDetail> ListBills { get => _listBills; set { _listBills = value; OnPropertyChanged(); } }
         private ObservableCollection<Room> _listRooms;
         public ObservableCollection<Room> ListRooms { get => _listRooms; set { _listRooms = value; OnPropertyChanged(); } }
         private ObservableCollection<RoomType> _listRoomTypes;
@@ -30,13 +34,15 @@ namespace HotelManagementApp.ViewModel
         private ObservableCollection<RoomsReservation> _listRoomsRevs;
         public ObservableCollection<RoomsReservation> ListRoomsRevs { get => _listRoomsRevs; set { _listRoomsRevs = value; OnPropertyChanged(); } }
         //Statictis
-        public string dateFormat = "YYYY";
+        public string dateFormat = "dd/MM/yyyy";
         private string alltimerevenue = "0";
         public string Alltimerevenue { get => alltimerevenue; set { alltimerevenue = value; OnPropertyChanged(); } }
         private string alltimerevenueUSD = "0";
         public string AlltimerevenueUSD { get => alltimerevenueUSD; set { alltimerevenueUSD = value; OnPropertyChanged(); } }
-        private string thisMonthRevenue = "0";
-        public string ThisMonthRevenue { get => thisMonthRevenue; set { thisMonthRevenue = value; OnPropertyChanged(); } }
+        private string selectedDateRevenue = "0";
+        public string SelectedDateRevenue { get => selectedDateRevenue; set { selectedDateRevenue = value; OnPropertyChanged(); } }
+        private string _lblDateFilter;
+        public string lblDateFilter { get => _lblDateFilter; set { _lblDateFilter = value; OnPropertyChanged(); } }
         private CalendarMode _caDisplayMode = CalendarMode.Month;
         public CalendarMode caDisplayMode { get => _caDisplayMode; set { _caDisplayMode = value; OnPropertyChanged("caDisplayMode"); } }
         public string _cbxSelectedValue;
@@ -81,6 +87,7 @@ namespace HotelManagementApp.ViewModel
 
         public MainViewModel()
         {
+            ListBills = new ObservableCollection<BillDetail>(DataProvider.Instance.DB.BillDetails);
             ListRooms = new ObservableCollection<Room>(DataProvider.Instance.DB.Rooms);
             ListRoomTypes = new ObservableCollection<RoomType>(DataProvider.Instance.DB.RoomTypes);
             ListFnSs = new ObservableCollection<FoodsAndService>(DataProvider.Instance.DB.FoodsAndServices);
@@ -130,7 +137,11 @@ namespace HotelManagementApp.ViewModel
             }
             );
 
-            RefreshStatictics = new RelayCommand<object>((p) => true, (p) => LoadStatistics());
+            RefreshStatictics = new RelayCommand<object>((p) => true, (p) =>
+            {
+                caSelectedDate = DateTime.Now;
+                LoadStatistics();
+            });
 
             LoadStatistics();
         }
@@ -170,7 +181,7 @@ namespace HotelManagementApp.ViewModel
         {
             DateTime selectedTime = (DateTime)caSelectedDate;
             decimal? allIncome = 0;
-            decimal? monthIncome = 0;
+            decimal? selectedDateIncome = 0;
             decimal? roomIncome = 0;
             decimal? foodIncome = 0;
             decimal? serviceIncome = 0;
@@ -190,19 +201,20 @@ namespace HotelManagementApp.ViewModel
             decimal? serviceIncomeQ2 = 0;
             decimal? serviceIncomeQ3 = 0;
             decimal? serviceIncomeQ4 = 0;
+            lblDateFilter = ((DateTime)caSelectedDate).ToString(dateFormat);
             try
             {
                 // All income
-                allIncome = Global.BillsList.Select(x => x.TotalMoney).Sum();
+                allIncome = ListBills.Select(x => x.TotalMoney).Sum();
                 Alltimerevenue = ((decimal)allIncome).ToString("N0");
                 AlltimerevenueUSD = ((decimal)allIncome / 23035).ToString("N4");
-                // This month income
-                monthIncome = Global.BillsList.Where(x => ((DateTime)x.BillDate).ToString("MM") == selectedTime.ToString("MM")).Select(x => x.TotalMoney).Sum();
-                ThisMonthRevenue = monthIncome.ToString("N0");
+                // This selected date income
+                selectedDateIncome = ListBills.Where(x => ((DateTime)x.BillDate).ToString(dateFormat) == selectedTime.ToString(dateFormat)).Select(x => x.TotalMoney).Sum();
+                SelectedDateRevenue = ((decimal)selectedDateIncome).ToString("N0");
 
                 ////    PIE STATISTIC   ////    
                 // Room monthly income
-                IEnumerable<RoomType> roomBills = from a in Global.BillsList
+                IEnumerable<RoomType> roomBills = from a in ListBills
                                                   join b in ListRoomsRevs on a.ID equals b.IDBillDetail
                                                   join c in ListRooms on b.IDRoom equals c.ID
                                                   join d in ListRoomTypes on c.IDRoomType equals d.ID
@@ -210,7 +222,7 @@ namespace HotelManagementApp.ViewModel
                                                   select d;
                 roomIncome = roomBills.Select(x => x.Price).Sum();
                 // Food monthly income
-                IEnumerable<Order> foodBills = from a in Global.BillsList
+                IEnumerable<Order> foodBills = from a in ListBills
                                                join b in ListOrder on a.ID equals b.IDBillDetail
                                                join c in ListFnSs on b.IDFoodsAndServices equals c.ID
                                                where ((DateTime)a.BillDate).ToString(dateFormat) == selectedTime.ToString(dateFormat)
@@ -218,7 +230,7 @@ namespace HotelManagementApp.ViewModel
                                                select b;
                 foodIncome = foodBills.Select(x => x.TotalPrice).Sum();
                 // Service monthly income
-                IEnumerable<Order> serviceBills = from a in Global.BillsList
+                IEnumerable<Order> serviceBills = from a in ListBills
                                                   join b in ListOrder on a.ID equals b.IDBillDetail
                                                   join c in ListFnSs on b.IDFoodsAndServices equals c.ID
                                                   where c.Type == "Service"
@@ -228,7 +240,7 @@ namespace HotelManagementApp.ViewModel
 
                 ////    CARTESAN STATTISTIC     ////
                 ///Imcome for room quarter 1 
-                IEnumerable<RoomType> roomBillsQ1 = from a in Global.BillsList
+                IEnumerable<RoomType> roomBillsQ1 = from a in ListBills
                                                     join b in ListRoomsRevs on a.ID equals b.IDBillDetail
                                                     join c in ListRooms on b.IDRoom equals c.ID
                                                     join d in ListRoomTypes on c.IDRoomType equals d.ID
@@ -237,7 +249,7 @@ namespace HotelManagementApp.ViewModel
                                                     select d;
                 roomIncomeQ1 = roomBillsQ1.Select(y => y.Price).Sum();
                 ///Imcome for room quarter 2 
-                IEnumerable<RoomType> roomBillsQ2 = from a in Global.BillsList
+                IEnumerable<RoomType> roomBillsQ2 = from a in ListBills
                                                     join b in ListRoomsRevs on a.ID equals b.IDBillDetail
                                                     join c in ListRooms on b.IDRoom equals c.ID
                                                     join d in ListRoomTypes on c.IDRoomType equals d.ID
@@ -246,7 +258,7 @@ namespace HotelManagementApp.ViewModel
                                                     select d;
                 roomIncomeQ2 = roomBillsQ2.Select(y => y.Price).Sum();
                 ///Imcome for room quarter 3
-                IEnumerable<RoomType> roomBillsQ3 = from a in Global.BillsList
+                IEnumerable<RoomType> roomBillsQ3 = from a in ListBills
                                                     join b in ListRoomsRevs on a.ID equals b.IDBillDetail
                                                     join c in ListRooms on b.IDRoom equals c.ID
                                                     join d in ListRoomTypes on c.IDRoomType equals d.ID
@@ -255,7 +267,7 @@ namespace HotelManagementApp.ViewModel
                                                     select d;
                 roomIncomeQ3 = roomBillsQ3.Select(y => y.Price).Sum();
                 ///Imcome for room quarter 4
-                IEnumerable<RoomType> roomBillsQ4 = from a in Global.BillsList
+                IEnumerable<RoomType> roomBillsQ4 = from a in ListBills
                                                     join b in ListRoomsRevs on a.ID equals b.IDBillDetail
                                                     join c in ListRooms on b.IDRoom equals c.ID
                                                     join d in ListRoomTypes on c.IDRoomType equals d.ID
@@ -264,7 +276,7 @@ namespace HotelManagementApp.ViewModel
                                                     select d;
                 roomIncomeQ4 = roomBillsQ4.Select(y => y.Price).Sum();
                 ///Imcome for FOOD quarter 1        
-                IEnumerable<Order> foodBillsQ1 = from a in Global.BillsList
+                IEnumerable<Order> foodBillsQ1 = from a in ListBills
                                                  join b in ListOrder on a.ID equals b.IDBillDetail
                                                  join c in ListFnSs on b.IDFoodsAndServices equals c.ID
                                                  where quart1.Contains(((DateTime)a.BillDate).ToString("MM"))
@@ -273,7 +285,7 @@ namespace HotelManagementApp.ViewModel
                                                  select b;
                 foodIncomeQ1 = foodBillsQ1.Select(y => y.TotalPrice).Sum();
                 ///Imcome for FOOD quarter 2  
-                IEnumerable<Order> foodBillsQ2 = from a in Global.BillsList
+                IEnumerable<Order> foodBillsQ2 = from a in ListBills
                                                  join b in ListOrder on a.ID equals b.IDBillDetail
                                                  join c in ListFnSs on b.IDFoodsAndServices equals c.ID
                                                  where quart2.Contains(((DateTime)a.BillDate).ToString("MM"))
@@ -282,7 +294,7 @@ namespace HotelManagementApp.ViewModel
                                                  select b;
                 foodIncomeQ2 = foodBillsQ2.Select(y => y.TotalPrice).Sum();
                 ///Imcome for FOOD quarter 3     
-                IEnumerable<Order> foodBillsQ3 = from a in Global.BillsList
+                IEnumerable<Order> foodBillsQ3 = from a in ListBills
                                                  join b in ListOrder on a.ID equals b.IDBillDetail
                                                  join c in ListFnSs on b.IDFoodsAndServices equals c.ID
                                                  where quart3.Contains(((DateTime)a.BillDate).ToString("MM"))
@@ -291,7 +303,7 @@ namespace HotelManagementApp.ViewModel
                                                  select b;
                 foodIncomeQ3 = foodBillsQ3.Select(y => y.TotalPrice).Sum();
                 ///Imcome for FOOD quarter 4      
-                IEnumerable<Order> foodBillsQ4 = from a in Global.BillsList
+                IEnumerable<Order> foodBillsQ4 = from a in ListBills
                                                  join b in ListOrder on a.ID equals b.IDBillDetail
                                                  join c in ListFnSs on b.IDFoodsAndServices equals c.ID
                                                  where quart4.Contains(((DateTime)a.BillDate).ToString("MM"))
@@ -300,7 +312,7 @@ namespace HotelManagementApp.ViewModel
                                                  select b;
                 foodIncomeQ4 = foodBillsQ4.Select(y => y.TotalPrice).Sum();
                 ///Imcome for SERVICE quarter 1 
-                IEnumerable<Order> serviceBillsQ1 = from a in Global.BillsList
+                IEnumerable<Order> serviceBillsQ1 = from a in ListBills
                                                     join b in ListOrder on a.ID equals b.IDBillDetail
                                                     join c in ListFnSs on b.IDFoodsAndServices equals c.ID
                                                     where c.Type == "Service"
@@ -309,7 +321,7 @@ namespace HotelManagementApp.ViewModel
                                                     select b;
                 serviceIncomeQ1 = serviceBillsQ1.Select(x => x.TotalPrice).Sum();
                 ///Imcome for SERVICE quarter 2
-                IEnumerable<Order> serviceBillsQ2 = from a in Global.BillsList
+                IEnumerable<Order> serviceBillsQ2 = from a in ListBills
                                                     join b in ListOrder on a.ID equals b.IDBillDetail
                                                     join c in ListFnSs on b.IDFoodsAndServices equals c.ID
                                                     where c.Type == "Service"
@@ -318,7 +330,7 @@ namespace HotelManagementApp.ViewModel
                                                     select b;
                 serviceIncomeQ2 = serviceBillsQ2.Select(x => x.TotalPrice).Sum();
                 ///Imcome for SERVICE quarter 3
-                IEnumerable<Order> serviceBillsQ3 = from a in Global.BillsList
+                IEnumerable<Order> serviceBillsQ3 = from a in ListBills
                                                     join b in ListOrder on a.ID equals b.IDBillDetail
                                                     join c in ListFnSs on b.IDFoodsAndServices equals c.ID
                                                     where c.Type == "Service"
@@ -327,7 +339,7 @@ namespace HotelManagementApp.ViewModel
                                                     select b;
                 serviceIncomeQ3 = serviceBillsQ3.Select(x => x.TotalPrice).Sum();
                 ///Imcome for SERVICE quarter 4
-                IEnumerable<Order> serviceBillsQ4 = from a in Global.BillsList
+                IEnumerable<Order> serviceBillsQ4 = from a in ListBills
                                                     join b in ListOrder on a.ID equals b.IDBillDetail
                                                     join c in ListFnSs on b.IDFoodsAndServices equals c.ID
                                                     where c.Type == "Service"
@@ -398,6 +410,14 @@ namespace HotelManagementApp.ViewModel
 
             XFormatter = new[] { "Quarter 1", "Quarter 2", "Quarter 3", "Quarter 4" };
             YFormatter = value => value.ToString("C");
+            if (foodIncome ==0 && serviceIncome ==0 && roomIncome == 0)
+            {
+                tbkStatError = Const.statErrorMsg;
+            } 
+            else
+            {
+                tbkStatError = "";
+            }
         }
     }
 }

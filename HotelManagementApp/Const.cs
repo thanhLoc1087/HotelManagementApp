@@ -47,5 +47,11 @@ namespace HotelManagementApp
             get => _loginMsg;
             set { _loginMsg = value; OnStaticPropertyChanged("loginMsg"); }
         }
+        static public string _statErrorMsg = "Không có dữ liệu trong giai đoạn này.";
+        static public string statErrorMsg
+        {
+            get => _statErrorMsg;
+            set { _statErrorMsg = value; OnStaticPropertyChanged("statErrorMsg"); }
+        }
     }
 }
