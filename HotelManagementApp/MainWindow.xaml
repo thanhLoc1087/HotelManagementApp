@@ -416,7 +416,7 @@
                                             </StackPanel>
                                         </TabItem.Header>
                                         <ScrollViewer CanContentScroll="True" VerticalScrollBarVisibility="Auto">
-                                            <ListBox ItemsSource="{Binding FoodsAndServicesList, UpdateSourceTrigger=PropertyChanged}" 
+                                            <ListBox ItemsSource="{Binding FoodsAndServicesList, Source={StaticResource Global}, UpdateSourceTrigger=PropertyChanged}" 
                                                      SelectedItem="{Binding Path=SelectedItem, Mode=TwoWay}"
                                                      x:Name="lbFAndS" Margin="20" Height="500" Width="Auto">
                                                 <ListBox.ItemsPanel>
@@ -485,25 +485,26 @@
                                                RadiusX="6"
                                                RadiusY="6"
                                                Stroke="Gray" />
-                                    <ComboBox Width="300"
+                                    <TextBox Width="300"
                                               Height="25"
+                                              Text="{Binding RoomNum, UpdateSourceTrigger=PropertyChanged}"
                                               materialDesign:HintAssist.Hint="Field Name">
                                         <!--ItemsSource="{Binding ListbookingCombobox}"
                                               SelectedItem="{Binding FieldSelectedItem}"-->
 
-                                        <ComboBox.ItemTemplate>
+                                        <!--<ComboBox.ItemTemplate>
                                             <DataTemplate>
-                                                <!--<StackPanel Orientation="Horizontal">
+                                                --><!--<StackPanel Orientation="Horizontal">
 
                                                     <TextBlock Text="{Binding field.name}" />
                                                     <TextBlock Text="   |   " />
                                                     <TextBlock Text="{Binding start_time, StringFormat='{}{0:h:mm tt}'}" />
                                                     <TextBlock Text=" - " />
                                                     <TextBlock Text="{Binding end_time, StringFormat='{}{0:h:mm tt}'}" />
-                                                </StackPanel>-->
+                                                </StackPanel>--><!--
                                             </DataTemplate>
-                                        </ComboBox.ItemTemplate>
-                                    </ComboBox>
+                                        </ComboBox.ItemTemplate>-->
+                                    </TextBox>
 
                                 </Grid>
                                 <Grid Grid.Row="1">
@@ -2814,7 +2815,9 @@
                                                 <ComboBoxItem></ComboBoxItem>
                                                 <ComboBoxItem>ID</ComboBoxItem>
                                                 <ComboBoxItem>Name</ComboBoxItem>
-                                                <ComboBoxItem>Price</ComboBoxItem>
+                                                <ComboBoxItem>CCCD</ComboBoxItem>
+                                                <ComboBoxItem>Phone</ComboBoxItem>
+                                                <ComboBoxItem>Email</ComboBoxItem>
                                             </ComboBox>
                                         </Border>
                                         <TextBox
@@ -2847,18 +2850,18 @@
                                                     Style="{StaticResource MaterialDesignFilledComboBox}"
                                                     materialDesign:TextFieldAssist.TextBoxViewMargin="2,-11,-10,0"
                                                     materialDesign:TextFieldAssist.TextFieldCornerRadius="14"
-                                                    materialDesign:HintAssist.Hint="Room Type"
+                                                    materialDesign:HintAssist.Hint="Sex"
                                                     materialDesign:TextFieldAssist.DecorationVisibility="Hidden"
                                                     BorderThickness="0"
                                                     materialDesign:HintAssist.Foreground="White"
                                                     Background="White"
                                                     Height="35"
                                                     FontSize="14"
-                                                    ItemsSource="{Binding RoomTypesList, UpdateSourceTrigger=PropertyChanged}"
-                                                    DisplayMemberPath="Name"
-                                                    Text="{}"
-                                                    SelectedItem="{Binding TypeFilter, UpdateSourceTrigger=PropertyChanged}"
+                                                    Text="{Binding SexFilter, UpdateSourceTrigger=PropertyChanged}"
                                                     Width="110">
+                                                <ComboBoxItem></ComboBoxItem>
+                                                <ComboBoxItem>Male</ComboBoxItem>
+                                                <ComboBoxItem>Female</ComboBoxItem>
                                             </ComboBox>
                                         </Border>
                                     </StackPanel>
@@ -2875,7 +2878,7 @@
                                                   Focusable="False"
                                                   IsReadOnly="True"
                                                   IsSynchronizedWithCurrentItem="False"
-                                                  ItemsSource="{Binding CustomersList}"
+                                                  ItemsSource="{Binding FilteredList}"
                                                   SelectedItem="{Binding SelectedItem}">
                                             <i:Interaction.Triggers>
                                                 <i:EventTrigger EventName="SelectionChanged">
