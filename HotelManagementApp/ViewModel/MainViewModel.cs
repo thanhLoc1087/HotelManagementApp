@@ -194,11 +194,11 @@ namespace HotelManagementApp.ViewModel
             {
                 // All income
                 allIncome = Global.BillsList.Select(x => x.TotalMoney).Sum();
-                Alltimerevenue = allIncome.ToString();
-                AlltimerevenueUSD = (allIncome / 23035).ToString();
+                Alltimerevenue = ((decimal)allIncome).ToString("N0");
+                AlltimerevenueUSD = ((decimal)allIncome / 23035).ToString("N4");
                 // This month income
                 monthIncome = Global.BillsList.Where(x => ((DateTime)x.BillDate).ToString("MM") == selectedTime.ToString("MM")).Select(x => x.TotalMoney).Sum();
-                ThisMonthRevenue = monthIncome.ToString();
+                ThisMonthRevenue = monthIncome.ToString("N0");
 
                 ////    PIE STATISTIC   ////    
                 // Room monthly income
