@@ -20,27 +20,53 @@ namespace HotelManagementApp.ViewModel
         public bool IsLoaded = false;
         public string _tbkStatError = "";
         public string tbkStatError { get => _tbkStatError; set { _tbkStatError = value; OnPropertyChanged(); } }
+        // Lists
+        private ObservableCollection<BillDetail> _listBills;
+        public ObservableCollection<BillDetail> ListBills { get => _listBills; set { _listBills = value; OnPropertyChanged(); } }
+        private ObservableCollection<Room> _listRooms;
+        public ObservableCollection<Room> ListRooms { get => _listRooms; set { _listRooms = value; OnPropertyChanged(); } }
+        private ObservableCollection<RoomType> _listRoomTypes;
+        public ObservableCollection<RoomType> ListRoomTypes { get => _listRoomTypes; set { _listRoomTypes = value; OnPropertyChanged(); } }
+        private ObservableCollection<FoodsAndService> _listFnSs;
+        public ObservableCollection<FoodsAndService> ListFnSs { get => _listFnSs; set { _listFnSs = value; OnPropertyChanged(); } }
+        private ObservableCollection<Order> _listOrders;
+        public ObservableCollection<Order> ListOrder{ get => _listOrders; set { _listOrders = value; OnPropertyChanged(); } }
+        private ObservableCollection<RoomsReservation> _listRoomsRevs;
+        public ObservableCollection<RoomsReservation> ListRoomsRevs { get => _listRoomsRevs; set { _listRoomsRevs = value; OnPropertyChanged(); } }
         //Statictis
         public string dateFormat = "dd/MM/yyyy";
+        private FoodsAndService _bestSeller;
+        public FoodsAndService bestSeller { get => _bestSeller; set { _bestSeller = value; OnPropertyChanged(); } }
         private string alltimerevenue = "0";
         public string Alltimerevenue { get => alltimerevenue; set { alltimerevenue = value; OnPropertyChanged(); } }
         private string alltimerevenueUSD = "0";
         public string AlltimerevenueUSD { get => alltimerevenueUSD; set { alltimerevenueUSD = value; OnPropertyChanged(); } }
         private string selectedDateRevenue = "0";
         public string SelectedDateRevenue { get => selectedDateRevenue; set { selectedDateRevenue = value; OnPropertyChanged(); } }
+        private string _bestSellerPrice = "";
+        public string bestSellerPrice { get => _bestSellerPrice; set { _bestSellerPrice = value; OnPropertyChanged(); } }
         private string _lblDateFilter;
         public string lblDateFilter { get => _lblDateFilter; set { _lblDateFilter = value; OnPropertyChanged(); } }
         private CalendarMode _caDisplayMode = CalendarMode.Month;
         public CalendarMode caDisplayMode { get => _caDisplayMode; set { _caDisplayMode = value; OnPropertyChanged("caDisplayMode"); } }
-        public string _cbxSelectedValue;
+        //PieChart
+        private SeriesCollection _SeriesCollectionPie;
+        public SeriesCollection SeriesCollectionPie { get => _SeriesCollectionPie; set { _SeriesCollectionPie = value; OnPropertyChanged(); } }
+        //CartesianChart
+        private SeriesCollection _SeriesCollectionCart;
+        public SeriesCollection SeriesCollectionCart { get => _SeriesCollectionCart; set { _SeriesCollectionCart = value; OnPropertyChanged(); } }
+        public string[] XFormatter { get; set; }
+        public Func<double, string> YFormatter { get; set; }
+        public string _cbxSelectedValue = "Date";
         public string cbxSelectedValue
         {
             get { return _cbxSelectedValue; }
             set
             {
                 _cbxSelectedValue = value;
-                base.OnPropertyChanged("cbxSelectedValue");
                 SetFilterFormat();
+                base.OnPropertyChanged("cbxSelectedValue");
+                LoadStatistics();
             }
         }
         public DateTime? _caSelectedDate = DateTime.Now;
@@ -55,15 +81,6 @@ namespace HotelManagementApp.ViewModel
             }
         }
 
-        //PieChart
-        private SeriesCollection _SeriesCollectionPie;
-        public SeriesCollection SeriesCollectionPie { get => _SeriesCollectionPie; set { _SeriesCollectionPie = value; OnPropertyChanged(); } }
-        //CartesianChart
-        private SeriesCollection _SeriesCollectionCart;
-        public SeriesCollection SeriesCollectionCart { get => _SeriesCollectionCart; set { _SeriesCollectionCart = value; OnPropertyChanged(); } }
-        public string[] XFormatter { get; set; }
-        public Func<double, string> YFormatter { get; set; }
-
         //Load View
         public ICommand LoadedWindowCommand { get; set; }
         public ICommand ShowSingleBedroomWindowCommand { get; set; }
@@ -74,8 +91,15 @@ namespace HotelManagementApp.ViewModel
 
         public MainViewModel()
         {
-            _SeriesCollectionPie = new SeriesCollection();
-            _SeriesCollectionCart = new SeriesCollection();
+            ListBills = new ObservableCollection<BillDetail>(DataProvider.Instance.DB.BillDetails);
+            ListRooms = new ObservableCollection<Room>(DataProvider.Instance.DB.Rooms);
+            ListRoomTypes = new ObservableCollection<RoomType>(DataProvider.Instance.DB.RoomTypes);
+            ListFnSs = new ObservableCollection<FoodsAndService>(DataProvider.Instance.DB.FoodsAndServices);
+            ListOrder = new ObservableCollection<Order>(DataProvider.Instance.DB.Orders);
+            ListRoomsRevs = new ObservableCollection<RoomsReservation>(DataProvider.Instance.DB.RoomsReservations);
+
+            SeriesCollectionPie = new SeriesCollection();
+            SeriesCollectionCart = new SeriesCollection();
 
             TestCommand = new RelayCommand<object>((p) => { return true; }, (p) =>
             {
@@ -160,6 +184,20 @@ namespace HotelManagementApp.ViewModel
         public void LoadStatistics()
         {
             DateTime selectedTime = (DateTime)caSelectedDate;
+
+            // Best seller
+            try
+            {
+                var query = from a in ListBills
+                            join b in ListOrder on a.ID equals b.IDBillDetail
+                            join c in ListFnSs on b.IDFoodsAndServices equals c.ID
+                            where ((DateTime)a.BillDate).ToString(dateFormat) == selectedTime.ToString(dateFormat)
+                            select new { c, b };
+                decimal? besSellerPrice = query.Max(x => x.b.TotalPrice);
+                bestSeller = (query.Single(x => x.b.TotalPrice >= besSellerPrice)).c;
+                bestSellerPrice = ((decimal)bestSeller.Price).ToString("N0") + " VND";
+            } catch { }
+
             decimal? allIncome = 0;
             decimal? selectedDateIncome = 0;
             decimal? roomIncome = 0;
@@ -185,34 +223,34 @@ namespace HotelManagementApp.ViewModel
             try
             {
                 // All income
-                allIncome = Global.BillsList.Select(x => x.TotalMoney).Sum();
+                allIncome = ListBills.Select(x => x.TotalMoney).Sum();
                 Alltimerevenue = ((decimal)allIncome).ToString("N0");
                 AlltimerevenueUSD = ((decimal)allIncome / 23035).ToString("N4");
                 // This selected date income
-                selectedDateIncome = Global.BillsList.Where(x => ((DateTime)x.BillDate).ToString(dateFormat) == selectedTime.ToString(dateFormat)).Select(x => x.TotalMoney).Sum();
+                selectedDateIncome = ListBills.Where(x => ((DateTime)x.BillDate).ToString(dateFormat) == selectedTime.ToString(dateFormat)).Select(x => x.TotalMoney).Sum();
                 SelectedDateRevenue = ((decimal)selectedDateIncome).ToString("N0");
 
                 ////    PIE STATISTIC   ////    
                 // Room monthly income
-                IEnumerable<RoomType> roomBills = from a in Global.BillsList
-                                                  join b in Global.ReservationsList on a.ID equals b.IDBillDetail
-                                                  join c in Global.RoomsList on b.IDRoom equals c.ID
-                                                  join d in Global.Types on c.IDRoomType equals d.ID
+                IEnumerable<RoomType> roomBills = from a in ListBills
+                                                  join b in ListRoomsRevs on a.ID equals b.IDBillDetail
+                                                  join c in ListRooms on b.IDRoom equals c.ID
+                                                  join d in ListRoomTypes on c.IDRoomType equals d.ID
                                                   where ((DateTime)a.BillDate).ToString(dateFormat) == selectedTime.ToString(dateFormat)
                                                   select d;
                 roomIncome = roomBills.Select(x => x.Price).Sum();
                 // Food monthly income
-                IEnumerable<Order> foodBills = from a in Global.BillsList
-                                               join b in Global.OrdersList on a.ID equals b.IDBillDetail
-                                               join c in Global.FoodsAndServicesList on b.IDFoodsAndServices equals c.ID
+                IEnumerable<Order> foodBills = from a in ListBills
+                                               join b in ListOrder on a.ID equals b.IDBillDetail
+                                               join c in ListFnSs on b.IDFoodsAndServices equals c.ID
                                                where ((DateTime)a.BillDate).ToString(dateFormat) == selectedTime.ToString(dateFormat)
                                                where c.Type == "Food"
                                                select b;
                 foodIncome = foodBills.Select(x => x.TotalPrice).Sum();
                 // Service monthly income
-                IEnumerable<Order> serviceBills = from a in Global.BillsList
-                                                  join b in Global.OrdersList on a.ID equals b.IDBillDetail
-                                                  join c in Global.FoodsAndServicesList on b.IDFoodsAndServices equals c.ID
+                IEnumerable<Order> serviceBills = from a in ListBills
+                                                  join b in ListOrder on a.ID equals b.IDBillDetail
+                                                  join c in ListFnSs on b.IDFoodsAndServices equals c.ID
                                                   where c.Type == "Service"
                                                   where ((DateTime)a.BillDate).ToString(dateFormat) == selectedTime.ToString(dateFormat)
                                                   select b;
@@ -220,108 +258,108 @@ namespace HotelManagementApp.ViewModel
 
                 ////    CARTESAN STATTISTIC     ////
                 ///Imcome for room quarter 1 
-                IEnumerable<RoomType> roomBillsQ1 = from a in Global.BillsList
-                                                    join b in Global.ReservationsList on a.ID equals b.IDBillDetail
-                                                    join c in Global.RoomsList on b.IDRoom equals c.ID
-                                                    join d in Global.Types on c.IDRoomType equals d.ID
+                IEnumerable<RoomType> roomBillsQ1 = from a in ListBills
+                                                    join b in ListRoomsRevs on a.ID equals b.IDBillDetail
+                                                    join c in ListRooms on b.IDRoom equals c.ID
+                                                    join d in ListRoomTypes on c.IDRoomType equals d.ID
                                                     where quart1.Contains(((DateTime)a.BillDate).ToString("MM"))
                                                     where ((DateTime)a.BillDate).ToString("yyyy") == selectedTime.ToString("yyyy")
                                                     select d;
                 roomIncomeQ1 = roomBillsQ1.Select(y => y.Price).Sum();
                 ///Imcome for room quarter 2 
-                IEnumerable<RoomType> roomBillsQ2 = from a in Global.BillsList
-                                                    join b in Global.ReservationsList on a.ID equals b.IDBillDetail
-                                                    join c in Global.RoomsList on b.IDRoom equals c.ID
-                                                    join d in Global.Types on c.IDRoomType equals d.ID
+                IEnumerable<RoomType> roomBillsQ2 = from a in ListBills
+                                                    join b in ListRoomsRevs on a.ID equals b.IDBillDetail
+                                                    join c in ListRooms on b.IDRoom equals c.ID
+                                                    join d in ListRoomTypes on c.IDRoomType equals d.ID
                                                     where quart2.Contains(((DateTime)a.BillDate).ToString("MM"))
                                                     where ((DateTime)a.BillDate).ToString("yyyy") == selectedTime.ToString("yyyy")
                                                     select d;
                 roomIncomeQ2 = roomBillsQ2.Select(y => y.Price).Sum();
                 ///Imcome for room quarter 3
-                IEnumerable<RoomType> roomBillsQ3 = from a in Global.BillsList
-                                                    join b in Global.ReservationsList on a.ID equals b.IDBillDetail
-                                                    join c in Global.RoomsList on b.IDRoom equals c.ID
-                                                    join d in Global.Types on c.IDRoomType equals d.ID
+                IEnumerable<RoomType> roomBillsQ3 = from a in ListBills
+                                                    join b in ListRoomsRevs on a.ID equals b.IDBillDetail
+                                                    join c in ListRooms on b.IDRoom equals c.ID
+                                                    join d in ListRoomTypes on c.IDRoomType equals d.ID
                                                     where quart3.Contains(((DateTime)a.BillDate).ToString("MM"))
                                                     where ((DateTime)a.BillDate).ToString("yyyy") == selectedTime.ToString("yyyy")
                                                     select d;
                 roomIncomeQ3 = roomBillsQ3.Select(y => y.Price).Sum();
                 ///Imcome for room quarter 4
-                IEnumerable<RoomType> roomBillsQ4 = from a in Global.BillsList
-                                                    join b in Global.ReservationsList on a.ID equals b.IDBillDetail
-                                                    join c in Global.RoomsList on b.IDRoom equals c.ID
-                                                    join d in Global.Types on c.IDRoomType equals d.ID
+                IEnumerable<RoomType> roomBillsQ4 = from a in ListBills
+                                                    join b in ListRoomsRevs on a.ID equals b.IDBillDetail
+                                                    join c in ListRooms on b.IDRoom equals c.ID
+                                                    join d in ListRoomTypes on c.IDRoomType equals d.ID
                                                     where quart4.Contains(((DateTime)a.BillDate).ToString("MM"))
                                                     where ((DateTime)a.BillDate).ToString("yyyy") == selectedTime.ToString("yyyy")
                                                     select d;
                 roomIncomeQ4 = roomBillsQ4.Select(y => y.Price).Sum();
                 ///Imcome for FOOD quarter 1        
-                IEnumerable<Order> foodBillsQ1 = from a in Global.BillsList
-                                                 join b in Global.OrdersList on a.ID equals b.IDBillDetail
-                                                 join c in Global.FoodsAndServicesList on b.IDFoodsAndServices equals c.ID
+                IEnumerable<Order> foodBillsQ1 = from a in ListBills
+                                                 join b in ListOrder on a.ID equals b.IDBillDetail
+                                                 join c in ListFnSs on b.IDFoodsAndServices equals c.ID
                                                  where quart1.Contains(((DateTime)a.BillDate).ToString("MM"))
                                                  where ((DateTime)a.BillDate).ToString("yyyy") == selectedTime.ToString("yyyy")
                                                  where c.Type == "Food"
                                                  select b;
                 foodIncomeQ1 = foodBillsQ1.Select(y => y.TotalPrice).Sum();
                 ///Imcome for FOOD quarter 2  
-                IEnumerable<Order> foodBillsQ2 = from a in Global.BillsList
-                                                 join b in Global.OrdersList on a.ID equals b.IDBillDetail
-                                                 join c in Global.FoodsAndServicesList on b.IDFoodsAndServices equals c.ID
+                IEnumerable<Order> foodBillsQ2 = from a in ListBills
+                                                 join b in ListOrder on a.ID equals b.IDBillDetail
+                                                 join c in ListFnSs on b.IDFoodsAndServices equals c.ID
                                                  where quart2.Contains(((DateTime)a.BillDate).ToString("MM"))
                                                  where ((DateTime)a.BillDate).ToString("yyyy") == selectedTime.ToString("yyyy")
                                                  where c.Type == "Food"
                                                  select b;
                 foodIncomeQ2 = foodBillsQ2.Select(y => y.TotalPrice).Sum();
                 ///Imcome for FOOD quarter 3     
-                IEnumerable<Order> foodBillsQ3 = from a in Global.BillsList
-                                                 join b in Global.OrdersList on a.ID equals b.IDBillDetail
-                                                 join c in Global.FoodsAndServicesList on b.IDFoodsAndServices equals c.ID
+                IEnumerable<Order> foodBillsQ3 = from a in ListBills
+                                                 join b in ListOrder on a.ID equals b.IDBillDetail
+                                                 join c in ListFnSs on b.IDFoodsAndServices equals c.ID
                                                  where quart3.Contains(((DateTime)a.BillDate).ToString("MM"))
                                                  where ((DateTime)a.BillDate).ToString("yyyy") == selectedTime.ToString("yyyy")
                                                  where c.Type == "Food"
                                                  select b;
                 foodIncomeQ3 = foodBillsQ3.Select(y => y.TotalPrice).Sum();
                 ///Imcome for FOOD quarter 4      
-                IEnumerable<Order> foodBillsQ4 = from a in Global.BillsList
-                                                 join b in Global.OrdersList on a.ID equals b.IDBillDetail
-                                                 join c in Global.FoodsAndServicesList on b.IDFoodsAndServices equals c.ID
+                IEnumerable<Order> foodBillsQ4 = from a in ListBills
+                                                 join b in ListOrder on a.ID equals b.IDBillDetail
+                                                 join c in ListFnSs on b.IDFoodsAndServices equals c.ID
                                                  where quart4.Contains(((DateTime)a.BillDate).ToString("MM"))
                                                  where ((DateTime)a.BillDate).ToString("yyyy") == selectedTime.ToString("yyyy")
                                                  where c.Type == "Food"
                                                  select b;
                 foodIncomeQ4 = foodBillsQ4.Select(y => y.TotalPrice).Sum();
                 ///Imcome for SERVICE quarter 1 
-                IEnumerable<Order> serviceBillsQ1 = from a in Global.BillsList
-                                                    join b in Global.OrdersList on a.ID equals b.IDBillDetail
-                                                    join c in Global.FoodsAndServicesList on b.IDFoodsAndServices equals c.ID
+                IEnumerable<Order> serviceBillsQ1 = from a in ListBills
+                                                    join b in ListOrder on a.ID equals b.IDBillDetail
+                                                    join c in ListFnSs on b.IDFoodsAndServices equals c.ID
                                                     where c.Type == "Service"
                                                     where quart1.Contains(((DateTime)a.BillDate).ToString("MM"))
                                                     where ((DateTime)a.BillDate).ToString("yyyy") == selectedTime.ToString("yyyy")
                                                     select b;
                 serviceIncomeQ1 = serviceBillsQ1.Select(x => x.TotalPrice).Sum();
                 ///Imcome for SERVICE quarter 2
-                IEnumerable<Order> serviceBillsQ2 = from a in Global.BillsList
-                                                    join b in Global.OrdersList on a.ID equals b.IDBillDetail
-                                                    join c in Global.FoodsAndServicesList on b.IDFoodsAndServices equals c.ID
+                IEnumerable<Order> serviceBillsQ2 = from a in ListBills
+                                                    join b in ListOrder on a.ID equals b.IDBillDetail
+                                                    join c in ListFnSs on b.IDFoodsAndServices equals c.ID
                                                     where c.Type == "Service"
                                                     where quart2.Contains(((DateTime)a.BillDate).ToString("MM"))
                                                     where ((DateTime)a.BillDate).ToString("yyyy") == selectedTime.ToString("yyyy")
                                                     select b;
                 serviceIncomeQ2 = serviceBillsQ2.Select(x => x.TotalPrice).Sum();
                 ///Imcome for SERVICE quarter 3
-                IEnumerable<Order> serviceBillsQ3 = from a in Global.BillsList
-                                                    join b in Global.OrdersList on a.ID equals b.IDBillDetail
-                                                    join c in Global.FoodsAndServicesList on b.IDFoodsAndServices equals c.ID
+                IEnumerable<Order> serviceBillsQ3 = from a in ListBills
+                                                    join b in ListOrder on a.ID equals b.IDBillDetail
+                                                    join c in ListFnSs on b.IDFoodsAndServices equals c.ID
                                                     where c.Type == "Service"
                                                     where quart3.Contains(((DateTime)a.BillDate).ToString("MM"))
                                                     where ((DateTime)a.BillDate).ToString("yyyy") == selectedTime.ToString("yyyy")
                                                     select b;
                 serviceIncomeQ3 = serviceBillsQ3.Select(x => x.TotalPrice).Sum();
                 ///Imcome for SERVICE quarter 4
-                IEnumerable<Order> serviceBillsQ4 = from a in Global.BillsList
-                                                    join b in Global.OrdersList on a.ID equals b.IDBillDetail
-                                                    join c in Global.FoodsAndServicesList on b.IDFoodsAndServices equals c.ID
+                IEnumerable<Order> serviceBillsQ4 = from a in ListBills
+                                                    join b in ListOrder on a.ID equals b.IDBillDetail
+                                                    join c in ListFnSs on b.IDFoodsAndServices equals c.ID
                                                     where c.Type == "Service"
                                                     where quart4.Contains(((DateTime)a.BillDate).ToString("MM"))
                                                     where ((DateTime)a.BillDate).ToString("yyyy") == selectedTime.ToString("yyyy")

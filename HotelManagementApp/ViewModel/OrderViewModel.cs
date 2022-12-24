@@ -1,7 +1,8 @@
-﻿using HotelManagementApp.Model;
+using HotelManagementApp.Model;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Data.Entity.Core.Common.CommandTrees;
 using System.Diagnostics;
 using System.Linq;
 using System.Runtime.CompilerServices;
@@ -82,10 +83,13 @@ namespace HotelManagementApp.ViewModel
                 var Sbill = Global.BillsList.Where(x => x.ID == DBbill.ID).FirstOrDefault();
                 foreach (var item in PendingOrdersList)
                 {
+                    //some logic
                     DataProvider.Instance.DB.Orders.Add(item);
                     DBbill.Orders.Add(item);
+                    DBbill.TotalMoney += item.TotalPrice;
                     Global.OrdersList.Add(item);
                     Sbill.Orders.Add(item);
+                    DBbill.TotalMoney += item.TotalPrice;
                 }
                 DataProvider.Instance.DB.SaveChanges();
                 SelectedItem = null;

@@ -13,7 +13,6 @@ namespace HotelManagementApp.ViewModel
 {
     public class SettingsViewModel : BaseViewModel
     {
-        private bool IsLoggedOut = false;
         private string _CurrentPassword;
         public string CurrentPassword { get => _CurrentPassword; set { _CurrentPassword = value; OnPropertyChanged(); } }
         private string _NewPassword;
@@ -25,18 +24,17 @@ namespace HotelManagementApp.ViewModel
 
         public SettingsViewModel()
         {
-            LogoutCommand = new RelayCommand<object>((p) => { if (IsLoggedOut) return false; return true; }, (p) =>
+            LogoutCommand = new RelayCommand<object>((p) => { return true; }, (p) =>
             {
-                IsLoggedOut = true;
                 System.Diagnostics.Process.Start(Application.ResourceAssembly.Location);
                 Application.Current.Shutdown();
             }
             );
 
-            ChangePasswordCommand = new RelayCommand<object>((p) =>
+            ChangePasswordCommand = new RelayCommand<object>((p) => 
             {
                 var hashedPassword = MD5Hash(Base64Encode(CurrentPassword));
-                if (ConfirmPassword != NewPassword)
+                if(ConfirmPassword != NewPassword)
                 {
                     return false;
                 }
