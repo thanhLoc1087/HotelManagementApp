@@ -17,8 +17,9 @@ namespace HotelManagementApp.ViewModel
         public ObservableCollection<Room> FilteredList { get => _FilteredList; set { _FilteredList = value; OnPropertyChanged(); } }
         private ObservableCollection<string> _SuggestionsList;
         public ObservableCollection<string> SuggestionsList { get => _SuggestionsList; set { _SuggestionsList = value; OnPropertyChanged(); } }
-        private Room _SelectedRoom;
-        public Room SelectedRoom { get => _SelectedRoom; set { _SelectedRoom = value; OnPropertyChanged(); } }
+        private ObservableCollection<RoomsReservation> _PendingReservationsList;
+        public ObservableCollection<RoomsReservation> PendingReservationList { get => PendingReservationList; set { PendingReservationList = value; OnPropertyChanged(); } }
+        
         private string _RoomNum;
         public string RoomNum { get => _RoomNum; set { _RoomNum = value; OnPropertyChanged(); } }
         private string _CustomerName;
@@ -29,6 +30,16 @@ namespace HotelManagementApp.ViewModel
         public string PhoneNum { get => _PhoneNum; set { _PhoneNum = value; OnPropertyChanged(); } }
         private string _Email;
         public string Email { get => _Email; set { _Email = value; OnPropertyChanged(); } }
+        private string _Nationality;
+        public string Nationality { get => _Nationality; set { _Nationality = value; OnPropertyChanged(); } }
+        private DateTime? _CheckInDate = null;
+        public DateTime? CheckInDate { get => _CheckInDate; set { _CheckInDate = value; OnPropertyChanged(); } }
+        private DateTime? _CheckInTime = null;
+        public DateTime? CheckInTime { get => _CheckInTime; set { _CheckInTime = value; OnPropertyChanged(); } }
+        private DateTime? _CheckOutDate = null;
+        public DateTime? CheckOutDate { get => _CheckOutDate; set { _CheckOutDate = value; OnPropertyChanged(); } }
+        private DateTime? _CheckOutTime = null;
+        public DateTime? CheckOutTime { get => _CheckOutTime; set { _CheckOutTime = value; OnPropertyChanged(); } }
         private string _CCCD;
         public string CCCD
         {
@@ -57,16 +68,44 @@ namespace HotelManagementApp.ViewModel
                 OnPropertyChanged();
             }
         }
-        private string _Nationality;
-        public string Nationality { get => _Nationality; set { _Nationality = value; OnPropertyChanged(); } }
-        private DateTime? _CheckInDate = null;
-        public DateTime? CheckInDate { get => _CheckInDate; set { _CheckInDate = value; OnPropertyChanged(); } }
-        private DateTime? _CheckInTime = null;
-        public DateTime? CheckInTime { get => _CheckInTime; set { _CheckInTime = value; OnPropertyChanged(); } }
-        private DateTime? _CheckOutDate = null;
-        public DateTime? CheckOutDate { get => _CheckOutDate; set { _CheckOutDate = value; OnPropertyChanged(); } }
-        private DateTime? _CheckOutTime = null;
-        public DateTime? CheckOutTime { get => _CheckOutTime; set { _CheckOutTime = value; OnPropertyChanged(); } }
+        private Room _SelectedReservation;
+        public Room SelectedReservation
+        {
+            get => _SelectedReservation;
+            set
+            {
+                _SelectedReservation = value;
+
+                OnPropertyChanged();
+            }
+        }
+
+        private Room _SelectedRoom;
+        public Room SelectedRoom 
+        { 
+            get => _SelectedRoom;
+            set 
+            {
+                _SelectedRoom = value;
+                var temp = PendingReservationList.Where(x => x.Room == value).FirstOrDefault();
+                if(_SelectedRoom != null)
+                {
+                    if(temp == null)
+                    {
+                        var reservation = new RoomsReservation();
+                        reservation.IDRoom = SelectedRoom.ID;
+                        reservation.CheckInTime = CheckInDate.Value.Date.Add(CheckInTime.Value.TimeOfDay);
+                        reservation.CheckOutTime = CheckOutDate.Value.Date.Add(CheckOutTime.Value.TimeOfDay);
+                    }
+                    if(_SelectedRoom.Status != "Available")
+                    {
+
+                    }
+                }
+                OnPropertyChanged();
+            } 
+        }
+     
         public ICommand AddCommand { get; set; }
         public ICommand DeleteCommand { get; set; }
         public ICommand EditCommand { get; set; }
@@ -76,7 +115,6 @@ namespace HotelManagementApp.ViewModel
         public ICommand CCCDSelectionChangedCommand { get; set; }
         public ICommand CCCDTextChangedCommand { get; set; }
         private bool windowShowed = false;
-        private RoomsReservation _SelectedItem;
         public AddReservationWindow reservationWindow = new AddReservationWindow();
 
         public BookingViewModel()

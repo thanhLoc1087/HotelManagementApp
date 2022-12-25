@@ -93,7 +93,6 @@ namespace HotelManagementApp.ViewModel
                 if (SelectedOrder != null)
                 {
                     Quantity = SelectedOrder.Quantity;
-
                 }
             }
         }
