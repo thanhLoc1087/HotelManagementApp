@@ -124,6 +124,7 @@ namespace HotelManagementApp.ViewModel
                 food.Unit = Unit;
                 food.Price = Price;
                 food.Type = Type;
+                food.ImageData = null;
                 food.ImageData = _SelectedImagePath;
                 addImage(food);
 
@@ -277,7 +278,6 @@ namespace HotelManagementApp.ViewModel
                 else
                 {
                     food = a;
-                    Global.OnStaticPropertyChanged("FoodsAndServicesList");
                 }
             }
             LoadFilteredList();

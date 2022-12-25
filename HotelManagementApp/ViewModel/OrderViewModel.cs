@@ -33,34 +33,34 @@ namespace HotelManagementApp.ViewModel
         public string SearchString { get => _SearchString; set { _SearchString = value; LoadFilteredList(); OnPropertyChanged(); } }
         public decimal? Total { get => _Total; set { _Total = value; OnPropertyChanged(); } }
         private string _RoomNum;
-        public string RoomNum 
+        public string RoomNum
         {
-            get => _RoomNum; 
-            set 
+            get => _RoomNum;
+            set
             {
                 _RoomNum = value;
                 TargetBillDetail = new BillDetail();
                 var billDetail = Global.BillsList.Where(x => x.Status == "On-Going" && x.RoomsReservations.Where(y => y.Room.RoomNum == RoomNum).FirstOrDefault() != null).FirstOrDefault();
-                if(billDetail != null)
+                if (billDetail != null)
                 {
                     TargetBillDetail = billDetail;
                 }
                 OnPropertyChanged();
-            } 
+            }
         }
         private BillDetail _TargetBillDetail;
         public BillDetail TargetBillDetail { get => _TargetBillDetail; set { _TargetBillDetail = value; OnPropertyChanged(); } }
         private FoodsAndService _SelectedItem;
         public FoodsAndService SelectedItem
-        { 
+        {
             get => _SelectedItem;
-            set 
-            { 
+            set
+            {
                 _SelectedItem = value;
                 var temp = PendingOrdersList.Where(x => x.FoodsAndService == value).FirstOrDefault();
-                if(SelectedItem != null)
+                if (SelectedItem != null)
                 {
-                    if(temp == null)
+                    if (temp == null)
                     {
                         var order = new Order();
                         order.FoodsAndService = _SelectedItem;
@@ -90,7 +90,7 @@ namespace HotelManagementApp.ViewModel
             set
             {
                 _SelectedOrder = value;
-                if(SelectedOrder!=null)
+                if (SelectedOrder != null)
                 {
                     Quantity = SelectedOrder.Quantity;
 
@@ -106,18 +106,20 @@ namespace HotelManagementApp.ViewModel
             PendingOrdersList = new ObservableCollection<Order>();
             ClearAllCommand = new RelayCommand<object>((p) =>
             {
-                if(PendingOrdersList.Count == 0 || PendingOrdersList == null)
+                if (PendingOrdersList.Count == 0 || PendingOrdersList == null)
                 {
                     return false;
                 }
                 return true;
             }, (p) =>
             {
-                if(PendingOrdersList != null)
+                if (PendingOrdersList != null)
                 {
                     PendingOrdersList.Clear();
+                    RoomNum = null;
                     Total = 0;
                 }
+                Quantity = null;
             });
             EditOrderCommand = new RelayCommand<object>((p) =>
             {
@@ -140,7 +142,7 @@ namespace HotelManagementApp.ViewModel
                     return false;
                 }
                 var list = Global.RoomsList.Where(x => x.RoomNum == RoomNum);
-                if(list == null || list.Count() == 0)
+                if (list == null || list.Count() == 0)
                 {
                     return false;
                 }
@@ -170,7 +172,7 @@ namespace HotelManagementApp.ViewModel
         private void LoadFilteredList()
         {
             ObservableCollection<FoodsAndService> list = new ObservableCollection<FoodsAndService>();
-            
+
             foreach (var item in Global.FoodsAndServicesList)
             {
                 if (string.IsNullOrEmpty(Sort) && string.IsNullOrEmpty(SearchString) && string.IsNullOrEmpty(TypeFilter))
@@ -208,9 +210,5 @@ namespace HotelManagementApp.ViewModel
             }
             FilteredList = list;
         }
-        //private void LoadFilteredList()
-        //{
-        //    FilteredList = Global.FoodsAndServicesList;
-        //}
     }
 }

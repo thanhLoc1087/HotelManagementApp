@@ -120,6 +120,7 @@ namespace HotelManagementApp.ViewModel
                 room.RoomNum = RoomNum;
                 room.RoomType = Type;
                 room.Status = Status;
+                room.ImageData = null;
                 room.ImageData = _SelectedImagePath;
                 addImage(room);
 

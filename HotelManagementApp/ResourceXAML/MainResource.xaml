@@ -15,5 +15,6 @@
     <viewmodel:AddRoomTypes x:Key="AddRoomTypesVm"></viewmodel:AddRoomTypes>
     <viewmodel:CustomersViewModel x:Key="CustomerVm"></viewmodel:CustomersViewModel>
     <viewmodel:OrderViewModel x:Key="OrderVm"></viewmodel:OrderViewModel>
+    <viewmodel:BookingViewModel x:Key="BookingVm"></viewmodel:BookingViewModel>
     <local:PathConverter x:Key="PathConverter"></local:PathConverter>
 </ResourceDictionary>

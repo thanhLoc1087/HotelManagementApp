@@ -7,6 +7,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Data;
 using System.Windows.Media;
+using System.Windows.Media.Imaging;
 
 namespace HotelManagementApp
 {
@@ -15,12 +16,21 @@ namespace HotelManagementApp
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
             string ImageData = value as string;
-            Uri destinationDirectory = new Uri(Directory.GetParent(Directory.GetCurrentDirectory()).Parent.FullName + ImageData);
-            return destinationDirectory;
+            string destination = Directory.GetParent(Directory.GetCurrentDirectory()).Parent.FullName + ImageData;
+            if (ImageData == null || !File.Exists(destination))
+                return null;
+
+            var bmp = new BitmapImage();
+            bmp.BeginInit();
+            bmp.CacheOption = BitmapCacheOption.OnLoad;
+            bmp.UriSource = new Uri(destination, UriKind.RelativeOrAbsolute);
+            bmp.EndInit();
+            return bmp;
+
         }
         public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
         {
-            return value;
+            throw new NotImplementedException();
         }
     }
 }

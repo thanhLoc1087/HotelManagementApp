@@ -153,6 +153,7 @@ namespace HotelManagementApp.ViewModel
                 staff.Name = Name;
                 staff.Sex = Sex;
                 staff.CCCD = CCCD;
+                staff.ImageData = null;
                 staff.ImageData = _SelectedImagePath;
                 staff.Role = Role;
                 addImage(staff);

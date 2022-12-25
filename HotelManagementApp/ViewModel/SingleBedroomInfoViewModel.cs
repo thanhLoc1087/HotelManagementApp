@@ -118,7 +118,6 @@ namespace HotelManagementApp.ViewModel
 
         public SingleBedroomInfoViewModel()
         {
-            Const.ActiveAccount = DataProvider.Instance.DB.Accounts.Where(x => x.ID == 0).FirstOrDefault();
             LoadRoomReservationsList();
             LoadCustomersList();
             AddCommand = new RelayCommand<object>((p) =>
