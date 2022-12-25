@@ -15,7 +15,7 @@ namespace HotelManagementApp
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
             string ImageData = value as string;
-            string destinationDirectory = Directory.GetParent(Directory.GetCurrentDirectory()).Parent.FullName + ImageData;
+            Uri destinationDirectory = new Uri(Directory.GetParent(Directory.GetCurrentDirectory()).Parent.FullName + ImageData);
             return destinationDirectory;
         }
         public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)

@@ -2,9 +2,11 @@ using HotelManagementApp.Model;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Data;
 using System.Data.Entity.Core.Common.CommandTrees;
 using System.Diagnostics;
 using System.Linq;
+using System.Reflection;
 using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
@@ -20,6 +22,16 @@ namespace HotelManagementApp.ViewModel
         public ObservableCollection<Order> PendingOrdersList { get => _PendingOrdersList; set { _PendingOrdersList = value; OnPropertyChanged(); } }
         private ObservableCollection<FoodsAndService> _FilteredList;
         public ObservableCollection<FoodsAndService> FilteredList { get => _FilteredList; set { _FilteredList = value; OnPropertyChanged(); } }
+        private int? _Quantity;
+        public int? Quantity { get => _Quantity; set { _Quantity = value; OnPropertyChanged(); } }
+        private decimal? _Total = 0;
+        private string _Sort;
+        public string Sort { get => _Sort; set { _Sort = value; LoadFilteredList(); OnPropertyChanged(); } }
+        private string _TypeFilter;
+        public string TypeFilter { get => _TypeFilter; set { _TypeFilter = value; LoadFilteredList(); OnPropertyChanged(); } }
+        private string _SearchString;
+        public string SearchString { get => _SearchString; set { _SearchString = value; LoadFilteredList(); OnPropertyChanged(); } }
+        public decimal? Total { get => _Total; set { _Total = value; OnPropertyChanged(); } }
         private string _RoomNum;
         public string RoomNum 
         {
@@ -45,29 +57,85 @@ namespace HotelManagementApp.ViewModel
             set 
             { 
                 _SelectedItem = value;
-                if (SelectedItem != null)
+                var temp = PendingOrdersList.Where(x => x.FoodsAndService == value).FirstOrDefault();
+                if(SelectedItem != null)
                 {
-                    var order = new Order();
-                    order.IDFoodsAndServices = SelectedItem.ID;
-                    order.Quantity = 1;
-                    order.TotalPrice = order.Quantity * SelectedItem.Price;
-                    order.Time = DateTime.Now;
-                    order.Deleted = false;
-                    PendingOrdersList.Add(order);
+                    if(temp == null)
+                    {
+                        var order = new Order();
+                        order.FoodsAndService = _SelectedItem;
+                        order.Quantity = 1;
+                        order.TotalPrice = order.Quantity * _SelectedItem.Price;
+                        order.Time = DateTime.Now;
+                        order.Deleted = false;
+                        PendingOrdersList.Add(order);
+                        Quantity = order.Quantity;
+                    }
+                    else
+                    {
+                        var order = PendingOrdersList.Where(x => x == temp).FirstOrDefault();
+                        order.Quantity += 1;
+                        order.TotalPrice = order.Quantity * _SelectedItem.Price;
+                        Quantity = order.Quantity;
+                    }
+                    Total += _SelectedItem.Price;
                 }
                 OnPropertyChanged();
             }
         }
+        private Order _SelectedOrder;
+        public Order SelectedOrder
+        {
+            get => _SelectedOrder;
+            set
+            {
+                _SelectedOrder = value;
+                if(SelectedOrder!=null)
+                {
+                    Quantity = SelectedOrder.Quantity;
 
-        public ICommand Selection { get; set; }
+                }
+            }
+        }
+        public ICommand EditOrderCommand { get; set; }
         public ICommand OrderCommand { get; set; }
+        public ICommand ClearAllCommand { get; set; }
         public OrderViewModel()
         {
             LoadFilteredList();
             PendingOrdersList = new ObservableCollection<Order>();
+            ClearAllCommand = new RelayCommand<object>((p) =>
+            {
+                if(PendingOrdersList.Count == 0 || PendingOrdersList == null)
+                {
+                    return false;
+                }
+                return true;
+            }, (p) =>
+            {
+                if(PendingOrdersList != null)
+                {
+                    PendingOrdersList.Clear();
+                    Total = 0;
+                }
+            });
+            EditOrderCommand = new RelayCommand<object>((p) =>
+            {
+                if (SelectedOrder == null)
+                {
+                    return false;
+                }
+                return true;
+            }, (p) =>
+            {
+                Total -= SelectedOrder.TotalPrice;
+                SelectedOrder.Quantity = Quantity;
+                SelectedOrder.TotalPrice = SelectedOrder.Quantity * SelectedOrder.FoodsAndService.Price;
+                Total += SelectedOrder.TotalPrice;
+            });
             OrderCommand = new RelayCommand<object>((p) =>
             {
-                if (string.IsNullOrEmpty(RoomNum) || TargetBillDetail == null || PendingOrdersList == null || SelectedItem == null)
+                if (string.IsNullOrEmpty(RoomNum) || TargetBillDetail == null || TargetBillDetail == null)
                 {
                     return false;
                 }
@@ -92,14 +160,57 @@ namespace HotelManagementApp.ViewModel
                     Sbill.TotalMoney += item.TotalPrice;
                 }
                 DataProvider.Instance.DB.SaveChanges();
-                SelectedItem = null;
+                RoomNum = null;
+                Total = 0;
+                Quantity = 0;
                 PendingOrdersList.Clear();
             });
         }
 
         private void LoadFilteredList()
         {
+            ObservableCollection<FoodsAndService> list = new ObservableCollection<FoodsAndService>();
             
+            foreach (var item in Global.FoodsAndServicesList)
+            {
+                if (string.IsNullOrEmpty(Sort) && string.IsNullOrEmpty(SearchString) && string.IsNullOrEmpty(TypeFilter))
+                {
+                    list = Global.FoodsAndServicesList;
+                }
+                else if (string.IsNullOrEmpty(Sort) && string.IsNullOrEmpty(SearchString) && !string.IsNullOrEmpty(TypeFilter))
+                {
+                    if (item.Type == TypeFilter)
+                    {
+                        list.Add(item);
+                    }
+                }
+                else
+                {
+                    if ((string.IsNullOrEmpty(SearchString) || item.Name.Contains(SearchString)) && (item.Type == TypeFilter || string.IsNullOrEmpty(TypeFilter)))
+                    {
+                        list.Add(item);
+                    }
+                }
+            }
+            if (Sort == "Descending")
+            {
+                ObservableCollection<FoodsAndService> temp;
+                temp = new ObservableCollection<FoodsAndService>(list.OrderBy(x => x.Price));
+                list.Clear();
+                foreach (var item in temp) list.Add(item);
+            }
+            else if (Sort == "Ascending")
+            {
+                ObservableCollection<FoodsAndService> temp;
+                temp = new ObservableCollection<FoodsAndService>(list.OrderByDescending(x => x.Price));
+                list.Clear();
+                foreach (var item in temp) list.Add(item);
+            }
+            FilteredList = list;
         }
+        //private void LoadFilteredList()
+        //{
+        //    FilteredList = Global.FoodsAndServicesList;
+        //}
     }
 }

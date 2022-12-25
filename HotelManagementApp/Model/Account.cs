@@ -9,17 +9,22 @@
 
 namespace HotelManagementApp.Model
 {
+    using HotelManagementApp.ViewModel;
     using System;
     using System.Collections.Generic;
     
-    public partial class Account
+    public partial class Account : BaseViewModel
     {
-        public int ID { get; set; }
-        public string Username { get; set; }
-        public string PasswordHash { get; set; }
-        public Nullable<int> IDStaff { get; set; }
-        public bool Deleted { get; set; }
-    
+        private int _ID { get; set; }
+        private string _Username { get; set; }
+        private string _PasswordHash { get; set; }
+        private Nullable<int> _IDStaff { get; set; }
+        private bool _Deleted { get; set; }
+        public int ID { get => _ID; set { _ID = value; OnPropertyChanged(); } }
+        public string Username { get => _Username; set { _Username = value; OnPropertyChanged(); } }
+        public string PasswordHash { get => _PasswordHash; set { _PasswordHash = value; OnPropertyChanged(); } }
+        public Nullable<int> IDStaff { get => _IDStaff; set { _IDStaff = value; OnPropertyChanged(); } }
+        public bool Deleted { get => _Deleted; set { _Deleted = value; OnPropertyChanged(); } }
         public virtual Staff Staff { get; set; }
     }
 }

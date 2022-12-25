@@ -277,6 +277,7 @@ namespace HotelManagementApp.ViewModel
                 else
                 {
                     food = a;
+                    Global.OnStaticPropertyChanged("FoodsAndServicesList");
                 }
             }
             LoadFilteredList();

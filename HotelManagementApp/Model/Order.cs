@@ -9,19 +9,26 @@
 
 namespace HotelManagementApp.Model
 {
+    using HotelManagementApp.ViewModel;
     using System;
     using System.Collections.Generic;
     
-    public partial class Order
+    public partial class Order : BaseViewModel
     {
-        public int ID { get; set; }
-        public Nullable<int> IDFoodsAndServices { get; set; }
-        public Nullable<int> IDBillDetail { get; set; }
-        public Nullable<int> Quantity { get; set; }
-        public Nullable<decimal> TotalPrice { get; set; }
-        public Nullable<System.DateTime> Time { get; set; }
-        public Nullable<bool> Deleted { get; set; }
-    
+        private int _ID { get; set; }
+        private Nullable<int> _IDFoodsAndServices { get; set; }
+        private Nullable<int> _IDBillDetail { get; set; }
+        private Nullable<int> _Quantity { get; set; }
+        private Nullable<decimal> _TotalPrice { get; set; }
+        private Nullable<System.DateTime> _Time { get; set; }
+        private Nullable<bool> _Deleted { get; set; }
+        public int ID { get => _ID; set { _ID = value; OnPropertyChanged(); } }
+        public Nullable<int> IDFoodsAndServices { get => _IDFoodsAndServices; set { _IDFoodsAndServices = value; OnPropertyChanged(); } }
+        public Nullable<int> IDBillDetail { get => _IDBillDetail; set { _IDBillDetail = value; OnPropertyChanged(); } }
+        public Nullable<int> Quantity { get => _Quantity; set { _Quantity = value; OnPropertyChanged(); } }
+        public Nullable<decimal> TotalPrice { get => _TotalPrice; set { _TotalPrice = value; OnPropertyChanged(); } }
+        public Nullable<System.DateTime> Time { get => _Time; set { _Time = value; OnPropertyChanged(); } }
+        public Nullable<bool> Deleted { get => _Deleted; set { _Deleted = value; OnPropertyChanged(); } }
         public virtual BillDetail BillDetail { get; set; }
         public virtual FoodsAndService FoodsAndService { get; set; }
     }

@@ -9,10 +9,11 @@
 
 namespace HotelManagementApp.Model
 {
+    using HotelManagementApp.ViewModel;
     using System;
     using System.Collections.Generic;
     
-    public partial class BillDetail
+    public partial class BillDetail : BaseViewModel
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public BillDetail()
@@ -20,15 +21,22 @@ namespace HotelManagementApp.Model
             this.Orders = new HashSet<Order>();
             this.RoomsReservations = new HashSet<RoomsReservation>();
         }
-    
-        public int ID { get; set; }
-        public int IDStaff { get; set; }
-        public int IDCustomer { get; set; }
-        public Nullable<decimal> TotalMoney { get; set; }
-        public Nullable<System.DateTime> BillDate { get; set; }
-        public string Status { get; set; }
-        public Nullable<bool> Deleted { get; set; }
-    
+        private int _ID { get; set; }
+        private int _IDStaff { get; set; }
+        private int _IDCustomer { get; set; }
+        private Nullable<decimal> _TotalMoney { get; set; }
+        private Nullable<System.DateTime> _BillDate { get; set; }
+        private string _Status { get; set; }
+        private Nullable<bool> _Deleted { get; set; }
+
+        public int ID { get => _ID; set { _ID = value; OnPropertyChanged(); } }
+        public int IDStaff { get => _IDStaff; set { _IDStaff = value; OnPropertyChanged(); } }
+        public int IDCustomer { get => _IDCustomer; set { _IDCustomer = value; OnPropertyChanged(); } }
+        public Nullable<decimal> TotalMoney { get => _TotalMoney; set { _TotalMoney = value; OnPropertyChanged(); } }
+        public Nullable<System.DateTime> BillDate { get => _BillDate; set { _BillDate = value; OnPropertyChanged(); } }
+        public string Status { get => _Status; set { _Status = value; OnPropertyChanged(); } }
+        public Nullable<bool> Deleted { get => _Deleted; set { _Deleted = value; OnPropertyChanged(); } }
+
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Order> Orders { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]

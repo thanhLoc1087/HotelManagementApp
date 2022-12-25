@@ -9,24 +9,30 @@
 
 namespace HotelManagementApp.Model
 {
+    using HotelManagementApp.ViewModel;
     using System;
     using System.Collections.Generic;
     
-    public partial class Room
+    public partial class Room : BaseViewModel
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public Room()
         {
             this.RoomsReservations = new HashSet<RoomsReservation>();
         }
-    
-        public int ID { get; set; }
-        public string RoomNum { get; set; }
-        public int IDRoomType { get; set; }
-        public string Status { get; set; }
-        public string ImageData { get; set; }
-        public bool Deleted { get; set; }
-    
+        private int _ID { get; set; }
+        private string _RoomNum { get; set; }
+        private int _IDRoomType { get; set; }
+        private string _Status { get; set; }
+        private string _ImageData { get; set; }
+        private bool _Deleted { get; set; }
+        public int ID { get => _ID; set { _ID = value; OnPropertyChanged(); } }
+        public string RoomNum { get => _RoomNum; set { _RoomNum = value; OnPropertyChanged(); } }
+        public int IDRoomType { get => _IDRoomType; set { _IDRoomType = value; OnPropertyChanged(); } }
+        public string Status { get => _Status; set { _Status = value; OnPropertyChanged(); } }
+        public string ImageData { get => _ImageData; set { _ImageData = value; OnPropertyChanged(); } }
+        public bool Deleted { get => _Deleted; set { _Deleted = value; OnPropertyChanged(); } }
+
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<RoomsReservation> RoomsReservations { get; set; }
         public virtual RoomType RoomType { get; set; }

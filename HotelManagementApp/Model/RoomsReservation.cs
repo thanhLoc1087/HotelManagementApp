@@ -9,18 +9,24 @@
 
 namespace HotelManagementApp.Model
 {
+    using HotelManagementApp.ViewModel;
     using System;
     using System.Collections.Generic;
     
-    public partial class RoomsReservation
+    public partial class RoomsReservation : BaseViewModel
     {
-        public int ID { get; set; }
-        public Nullable<int> IDBillDetail { get; set; }
-        public Nullable<int> IDRoom { get; set; }
-        public Nullable<System.DateTime> CheckInTime { get; set; }
-        public Nullable<System.DateTime> CheckOutTime { get; set; }
-        public Nullable<bool> Deleted { get; set; }
-    
+        private int _ID { get; set; }
+        private Nullable<int> _IDBillDetail { get; set; }
+        private Nullable<int> _IDRoom { get; set; }
+        private Nullable<System.DateTime> _CheckInTime { get; set; }
+        private Nullable<System.DateTime> _CheckOutTime { get; set; }
+        private Nullable<bool> _Deleted { get; set; }
+        public int ID { get => _ID; set { _ID = value; OnPropertyChanged(); } }
+        public Nullable<int> IDBillDetail { get => _IDBillDetail; set { _IDBillDetail = value; OnPropertyChanged(); } }
+        public Nullable<int> IDRoom { get => _IDRoom; set { _IDRoom = value; OnPropertyChanged(); } }
+        public Nullable<System.DateTime> CheckInTime { get => _CheckInTime; set { _CheckInTime = value; OnPropertyChanged(); } }
+        public Nullable<System.DateTime> CheckOutTime { get => _CheckOutTime; set { _CheckOutTime = value; OnPropertyChanged(); } }
+        public Nullable<bool> Deleted { get => _Deleted; set { _Deleted = value; OnPropertyChanged(); } }
         public virtual BillDetail BillDetail { get; set; }
         public virtual Room Room { get; set; }
     }

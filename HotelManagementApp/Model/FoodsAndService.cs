@@ -9,25 +9,33 @@
 
 namespace HotelManagementApp.Model
 {
+    using HotelManagementApp.ViewModel;
     using System;
     using System.Collections.Generic;
     
-    public partial class FoodsAndService
+    public partial class FoodsAndService : BaseViewModel
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public FoodsAndService()
         {
             this.Orders = new HashSet<Order>();
         }
-    
-        public int ID { get; set; }
-        public string Name { get; set; }
-        public string Unit { get; set; }
-        public Nullable<decimal> Price { get; set; }
-        public string ImageData { get; set; }
-        public string Type { get; set; }
-        public bool Deleted { get; set; }
-    
+
+        private int _ID;
+        private string _Name;
+        private string _Unit;
+        private Nullable<decimal> _Price;
+        private string _ImageData;
+        private string _Type;
+        private bool _Deleted;
+        public int ID { get => _ID; set { _ID = value; OnPropertyChanged(); } }
+        public string Name { get => _Name; set { _Name = value; OnPropertyChanged(); } }
+        public string Unit { get => _Unit; set { _Unit = value; OnPropertyChanged(); } }
+        public Nullable<decimal> Price { get => _Price; set { _Price = value; OnPropertyChanged(); } }
+        public string ImageData { get => _ImageData; set { _ImageData = value; OnPropertyChanged(); } }
+        public string Type { get => _Type; set { _Type = value; OnPropertyChanged(); } }
+        public bool Deleted { get => _Deleted; set { _Deleted = value; OnPropertyChanged(); } }
+
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Order> Orders { get; set; }
     }

@@ -9,10 +9,11 @@
 
 namespace HotelManagementApp.Model
 {
+    using HotelManagementApp.ViewModel;
     using System;
     using System.Collections.Generic;
     
-    public partial class Staff
+    public partial class Staff : BaseViewModel
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public Staff()
@@ -20,16 +21,25 @@ namespace HotelManagementApp.Model
             this.Accounts = new HashSet<Account>();
             this.BillDetails = new HashSet<BillDetail>();
         }
-    
-        public int ID { get; set; }
-        public string Name { get; set; }
-        public string Sex { get; set; }
-        public string CCCD { get; set; }
-        public string PhoneNumber { get; set; }
-        public string Role { get; set; }
-        public string ImageData { get; set; }
-        public bool Deleted { get; set; }
-    
+
+        private int _ID { get; set; }
+        private string _Name { get; set; }
+        private string _Sex { get; set; }
+        private string _CCCD { get; set; }
+        private string _PhoneNumber { get; set; }
+        private string _Role { get; set; }
+        private string _ImageData { get; set; }
+        private bool _Deleted { get; set; }
+
+        public int ID { get => _ID; set { _ID = value; OnPropertyChanged(); } }
+        public string Name { get => _Name; set { _Name = value; OnPropertyChanged(); } }
+        public string Sex { get => _Sex; set { _Sex = value; OnPropertyChanged(); } }
+        public string CCCD { get => _CCCD; set { _CCCD = value; OnPropertyChanged(); } }
+        public string PhoneNumber { get => _PhoneNumber; set { _PhoneNumber = value; OnPropertyChanged(); } }
+        public string Role { get => _Role; set { _Role = value; OnPropertyChanged(); } }
+        public string ImageData { get => _ImageData; set { _ImageData = value; OnPropertyChanged(); } }
+        public bool Deleted { get => _Deleted; set { _Deleted = value; OnPropertyChanged(); } }
+
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Account> Accounts { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]

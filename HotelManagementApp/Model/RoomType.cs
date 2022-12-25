@@ -9,22 +9,27 @@
 
 namespace HotelManagementApp.Model
 {
+    using HotelManagementApp.ViewModel;
     using System;
     using System.Collections.Generic;
     
-    public partial class RoomType
+    public partial class RoomType : BaseViewModel
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public RoomType()
         {
             this.Rooms = new HashSet<Room>();
         }
-    
-        public int ID { get; set; }
-        public string Name { get; set; }
-        public Nullable<decimal> Price { get; set; }
-        public Nullable<bool> Deleted { get; set; }
-    
+
+        private int _ID { get; set; }
+        private string _Name { get; set; }
+        private Nullable<decimal> _Price { get; set; }
+        private Nullable<bool> _Deleted { get; set; }
+        public int ID { get => _ID; set { _ID = value; OnPropertyChanged(); } }
+        public string Name { get => _Name; set { _Name = value; OnPropertyChanged(); } }
+        public Nullable<decimal> Price { get => _Price; set { _Price = value; OnPropertyChanged(); } }
+        public Nullable<bool> Deleted { get => _Deleted; set { _Deleted = value; OnPropertyChanged(); } }
+
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Room> Rooms { get; set; }
     }

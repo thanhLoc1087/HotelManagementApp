@@ -9,26 +9,35 @@
 
 namespace HotelManagementApp.Model
 {
+    using HotelManagementApp.ViewModel;
     using System;
     using System.Collections.Generic;
     
-    public partial class Customer
+    public partial class Customer : BaseViewModel
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public Customer()
         {
             this.BillDetails = new HashSet<BillDetail>();
         }
-    
-        public int ID { get; set; }
-        public string Name { get; set; }
-        public string Sex { get; set; }
-        public string CCCD { get; set; }
-        public string PhoneNumber { get; set; }
-        public string Email { get; set; }
-        public string Nationality { get; set; }
-        public bool Deleted { get; set; }
-    
+        private int _ID { get; set; }
+        private string _Name { get; set; }
+        private string _Sex { get; set; }
+        private string _CCCD { get; set; }
+        private string _PhoneNumber { get; set; }
+        private string _Email { get; set; }
+        private string _Nationality { get; set; }
+        private bool _Deleted { get; set; }
+
+        public int ID { get => _ID; set { _ID = value; OnPropertyChanged(); } }
+        public string Name { get => _Name; set { _Name = value; OnPropertyChanged(); } }
+        public string Sex { get => _Sex; set { _Sex = value; OnPropertyChanged(); } }
+        public string CCCD { get => _CCCD; set { _CCCD = value; OnPropertyChanged(); } }
+        public string PhoneNumber { get => _PhoneNumber; set { _PhoneNumber = value; OnPropertyChanged(); } }
+        public string Email { get => _Email; set { _Email = value; OnPropertyChanged(); } }
+        public string Nationality { get => _Nationality; set { _Nationality = value; OnPropertyChanged(); } }
+        public bool Deleted { get => _Deleted; set { _Deleted = value; OnPropertyChanged(); } }
+
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<BillDetail> BillDetails { get; set; }
     }
