@@ -9,6 +9,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Input;
+using System.Xml.Schema;
 
 namespace HotelManagementApp.ViewModel
 {
@@ -46,6 +47,8 @@ namespace HotelManagementApp.ViewModel
         public DateTime? CheckOutDate { get => _CheckOutDate; set { _CheckOutDate = value; OnPropertyChanged(); } }
         private DateTime? _CheckOutTime = null;
         public DateTime? CheckOutTime { get => _CheckOutTime; set { _CheckOutTime = value; OnPropertyChanged(); } }
+        private decimal? _Total = 0;
+        public decimal? Total {get => _Total; set { _Total = value; OnPropertyChanged(); } }
         private string _CCCD;
         public string CCCD
         {
@@ -98,10 +101,10 @@ namespace HotelManagementApp.ViewModel
                 {
                     if(temp == null)
                     {
-                        ShowAddReservationTimeWindow();
                         var reservation = new RoomsReservation();
                         reservation.Room = SelectedRoom;
-                        PendingReservationsList.Add(reservation);    
+                        PendingReservationsList.Add(reservation);
+                        Total += SelectedRoom.RoomType.Price;
                     }
                 }
                 OnPropertyChanged();
@@ -188,6 +191,8 @@ namespace HotelManagementApp.ViewModel
                 foreach (var item in PendingReservationsList)
                 {
                     item.BillDetail = billDetail;
+                    item.CheckInTime = CheckInDate.Value.Date.Add(CheckInTime.Value.TimeOfDay);
+                    item.CheckOutTime = CheckOutDate.Value.Date.Add(CheckOutTime.Value.TimeOfDay);
                     var timeSpan = item.CheckInTime.Value.Subtract(item.CheckOutTime.Value);
                     var days = timeSpan.TotalDays;
                     billDetail.TotalMoney += item.Room.RoomType.Price * (decimal?)days;
