@@ -93,7 +93,6 @@ namespace HotelManagementApp.ViewModel
                 if (SelectedOrder != null)
                 {
                     Quantity = SelectedOrder.Quantity;
-
                 }
             }
         }
@@ -197,14 +196,14 @@ namespace HotelManagementApp.ViewModel
             if (Sort == "Descending")
             {
                 ObservableCollection<FoodsAndService> temp;
-                temp = new ObservableCollection<FoodsAndService>(list.OrderBy(x => x.Price));
+                temp = new ObservableCollection<FoodsAndService>(list.OrderByDescending(x => x.Price));
                 list.Clear();
                 foreach (var item in temp) list.Add(item);
             }
             else if (Sort == "Ascending")
             {
                 ObservableCollection<FoodsAndService> temp;
-                temp = new ObservableCollection<FoodsAndService>(list.OrderByDescending(x => x.Price));
+                temp = new ObservableCollection<FoodsAndService>(list.OrderBy(x => x.Price));
                 list.Clear();
                 foreach (var item in temp) list.Add(item);
             }

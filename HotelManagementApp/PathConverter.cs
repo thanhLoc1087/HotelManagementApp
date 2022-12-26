@@ -26,7 +26,6 @@ namespace HotelManagementApp
             bmp.UriSource = new Uri(destination, UriKind.RelativeOrAbsolute);
             bmp.EndInit();
             return bmp;
-
         }
         public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
         {

@@ -72,19 +72,17 @@ namespace HotelManagementApp.ViewModel
         public ICommand LoadedWindowCommand { get; set; }
         public ICommand ShowSingleBedroomWindowCommand { get; set; }
         public ICommand RefreshStatictics { get; set; }
+        public ICommand ExitApplicationCommand { get; set; }
 
-        //test
-        public ICommand TestCommand { get; set; }
 
         public MainViewModel()
         {
             SeriesCollectionPie = new SeriesCollection();
             SeriesCollectionCart = new SeriesCollection();
 
-            TestCommand = new RelayCommand<object>((p) => { return true; }, (p) =>
+            ExitApplicationCommand = new RelayCommand<object>((p) => { return true; }, (p) =>
             {
-                AddReservationWindow window = new AddReservationWindow();
-                window.Show();
+                System.Windows.Application.Current.Shutdown();
             }
             );
 
