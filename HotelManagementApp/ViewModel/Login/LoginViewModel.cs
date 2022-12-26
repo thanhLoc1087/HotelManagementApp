@@ -21,6 +21,8 @@ namespace HotelManagementApp.ViewModel
 
         public ICommand LoginCommand { get; set; }
         public ICommand PasswordChangedCommand { get; set; }
+        public ICommand ExitApplicationCommand { get; set; }
+
         //Load View
         public LoginViewModel()
         {
@@ -29,6 +31,14 @@ namespace HotelManagementApp.ViewModel
             Password = "";
             LoginCommand = new RelayCommand<Window>((p) => { return true; }, (p) => { Login(p); });
             PasswordChangedCommand = new RelayCommand<PasswordBox>((p) => { return true; }, (p) => { Password = p.Password; });
+            ExitApplicationCommand = new RelayCommand<object>((p) => { return true; }, (p) =>
+            {
+                if(!IsLogin)
+                {
+                    System.Windows.Application.Current.Shutdown();
+                }
+            }
+           );
         }
 
         void Login(Window p)

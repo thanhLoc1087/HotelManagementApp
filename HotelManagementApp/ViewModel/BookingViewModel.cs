@@ -4,10 +4,12 @@ using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
+using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Input;
+using System.Xml.Schema;
 
 namespace HotelManagementApp.ViewModel
 {
@@ -18,8 +20,13 @@ namespace HotelManagementApp.ViewModel
         private ObservableCollection<string> _SuggestionsList;
         public ObservableCollection<string> SuggestionsList { get => _SuggestionsList; set { _SuggestionsList = value; OnPropertyChanged(); } }
         private ObservableCollection<RoomsReservation> _PendingReservationsList;
-        public ObservableCollection<RoomsReservation> PendingReservationList { get => PendingReservationList; set { PendingReservationList = value; OnPropertyChanged(); } }
-        
+        public ObservableCollection<RoomsReservation> PendingReservationsList { get => _PendingReservationsList; set { _PendingReservationsList = value; OnPropertyChanged(); } }
+        private string _SearchString;
+        public string SearchString { get => _SearchString; set { _SearchString = value; LoadFilteredList(); OnPropertyChanged(); } }
+        private string _Sort;
+        public string Sort { get => _Sort; set { _Sort = value; LoadFilteredList(); OnPropertyChanged(); } }
+        private RoomType _TypeFilter;
+        public RoomType TypeFilter { get => _TypeFilter; set { _TypeFilter = value; LoadFilteredList(); OnPropertyChanged(); } }
         private string _RoomNum;
         public string RoomNum { get => _RoomNum; set { _RoomNum = value; OnPropertyChanged(); } }
         private string _CustomerName;
@@ -40,6 +47,8 @@ namespace HotelManagementApp.ViewModel
         public DateTime? CheckOutDate { get => _CheckOutDate; set { _CheckOutDate = value; OnPropertyChanged(); } }
         private DateTime? _CheckOutTime = null;
         public DateTime? CheckOutTime { get => _CheckOutTime; set { _CheckOutTime = value; OnPropertyChanged(); } }
+        private decimal? _Total = 0;
+        public decimal? Total {get => _Total; set { _Total = value; OnPropertyChanged(); } }
         private string _CCCD;
         public string CCCD
         {
@@ -87,26 +96,24 @@ namespace HotelManagementApp.ViewModel
             set 
             {
                 _SelectedRoom = value;
-                var temp = PendingReservationList.Where(x => x.Room == value).FirstOrDefault();
-                if(_SelectedRoom != null)
+                var temp = PendingReservationsList.Where(x => x.Room == value).FirstOrDefault();
+                if(_SelectedRoom != null && _SelectedRoom.Status == "Available")
                 {
                     if(temp == null)
                     {
                         var reservation = new RoomsReservation();
-                        reservation.IDRoom = SelectedRoom.ID;
-                        reservation.CheckInTime = CheckInDate.Value.Date.Add(CheckInTime.Value.TimeOfDay);
-                        reservation.CheckOutTime = CheckOutDate.Value.Date.Add(CheckOutTime.Value.TimeOfDay);
-                    }
-                    if(_SelectedRoom.Status != "Available")
-                    {
-
+                        reservation.Room = SelectedRoom;
+                        PendingReservationsList.Add(reservation);
+                        Total += SelectedRoom.RoomType.Price;
                     }
                 }
                 OnPropertyChanged();
             } 
         }
-     
-        public ICommand AddCommand { get; set; }
+        AddReservationWindow reservationWindow = new AddReservationWindow();
+
+
+        public ICommand BookingCommand { get; set; }
         public ICommand DeleteCommand { get; set; }
         public ICommand EditCommand { get; set; }
         public ICommand ClearAllCommand { get; set; }
@@ -115,11 +122,12 @@ namespace HotelManagementApp.ViewModel
         public ICommand CCCDSelectionChangedCommand { get; set; }
         public ICommand CCCDTextChangedCommand { get; set; }
         private bool windowShowed = false;
-        public AddReservationWindow reservationWindow = new AddReservationWindow();
 
         public BookingViewModel()
         {
             LoadFilteredList();
+            PendingReservationsList = new ObservableCollection<RoomsReservation>();
+            reservationWindow = new AddReservationWindow() { DataContext = this };
             ClearAllCommand = new RelayCommand<object>((p) =>
             {
                 return true;
@@ -127,12 +135,114 @@ namespace HotelManagementApp.ViewModel
             {
                 ClearFields();
             });
-        }
+            BookingCommand = new RelayCommand<object>((p) =>
+            {
 
+                if (PendingReservationsList == null || PendingReservationsList.Count() ==0 || string.IsNullOrEmpty(CustomerName) || string.IsNullOrEmpty(PhoneNum) || string.IsNullOrEmpty(CCCD) || CheckInDate == null || CheckInTime == null || CheckInDate == null || CheckOutDate == null)
+                {
+                    return false;
+                }
+                if (CheckInDate > CheckOutDate)
+                {
+                    return false;
+                }
+                if (CheckInDate == CheckOutDate && CheckInTime > CheckOutTime)
+                {
+                    return false;
+                }
+                return true;
+            }, (p) =>
+            {
+                var customer = new Customer();
+                // If customer doesn't exist, create & save new customer, else update the existing one
+                if (DataProvider.Instance.DB.Customers.Where(x => x.CCCD == CCCD).Count() == 0 || DataProvider.Instance.DB.Customers.Where(x => x.CCCD == CCCD) == null)
+                {
+                    customer = new Customer()
+                    {
+                        Name = CustomerName,
+                        Sex = Sex,
+                        CCCD = CCCD,
+                        PhoneNumber = PhoneNum,
+                        Email = Email,
+                        Nationality = Nationality,
+                    };
+                    DataProvider.Instance.DB.Customers.Add(customer);
+                    Global.CustomersList.Add(customer);
+                    DataProvider.Instance.DB.SaveChanges();
+                }
+                else
+                {
+                    customer = DataProvider.Instance.DB.Customers.Where(x => x.CCCD == CCCD).FirstOrDefault();
+                }
+
+                // Create & save new bill detail
+                var billDetail = new BillDetail()
+                {
+                    Staff = Const.ActiveAccount.Staff,
+                    Customer = customer,
+                    Status = "On-Going",
+                };
+
+                DataProvider.Instance.DB.BillDetails.Add(billDetail);
+                Global.BillsList.Add(billDetail);
+                DataProvider.Instance.DB.SaveChanges();
+                billDetail = DataProvider.Instance.DB.BillDetails.Where(x => x.ID == billDetail.ID).FirstOrDefault();
+                // Create & save new room reservation
+                foreach (var item in PendingReservationsList)
+                {
+                    item.BillDetail = billDetail;
+                    item.CheckInTime = CheckInDate.Value.Date.Add(CheckInTime.Value.TimeOfDay);
+                    item.CheckOutTime = CheckOutDate.Value.Date.Add(CheckOutTime.Value.TimeOfDay);
+                    var timeSpan = item.CheckInTime.Value.Subtract(item.CheckOutTime.Value);
+                    var days = timeSpan.TotalDays;
+                    billDetail.TotalMoney += item.Room.RoomType.Price * (decimal?)days;
+                    DataProvider.Instance.DB.RoomsReservations.Add(item);
+                    Global.BillsList.Where(x => x.ID == billDetail.ID).FirstOrDefault().TotalMoney = billDetail.TotalMoney;
+                    Global.ReservationsList.Add(item);
+                }
+                DataProvider.Instance.DB.SaveChanges();
+                ClearFields();
+                PendingReservationsList.Clear();
+            });
+        }
        
         private void LoadFilteredList()
         {
             FilteredList = Global.RoomsList;
+            ObservableCollection<Room> list = new ObservableCollection<Room>();
+            foreach (var item in Global.RoomsList)
+            {
+                if (string.IsNullOrEmpty(Sort) && string.IsNullOrEmpty(SearchString) && (TypeFilter == null))
+                {
+                    list = Global.RoomsList;
+                }
+                else if (string.IsNullOrEmpty(Sort) && string.IsNullOrEmpty(SearchString) && (TypeFilter != null))
+                {
+                    if (item.RoomType.Name == TypeFilter.Name)
+                    {
+                        list.Add(item);
+                    }
+                }
+                else if ((string.IsNullOrEmpty(SearchString) || item.RoomNum.Contains(SearchString)) && (TypeFilter == null || TypeFilter.Name == null || item.RoomType.Name == TypeFilter.Name))
+                {
+                    list.Add(item);
+                }
+            }
+            if (Sort == "Descending")
+            {
+                ObservableCollection<Room> temp;
+                temp = new ObservableCollection<Room>(list.OrderByDescending(x => x.RoomType.Price));
+                list.Clear();
+                foreach (var item in temp) list.Add(item);
+            }
+            else if (Sort == "Ascending")
+            {
+                ObservableCollection<Room> temp;
+                temp = new ObservableCollection<Room>(list.OrderBy(x => x.RoomType.Price));
+                list.Clear();
+                foreach (var item in temp) list.Add(item);
+            }
+            FilteredList = list;
         }
         private void ClearFields()
         {
@@ -177,10 +287,11 @@ namespace HotelManagementApp.ViewModel
             }
         }
         // chạy khi nhấn vào 1 phòng
-        private void ShowAddReservationWindow()
+        private void ShowAddReservationTimeWindow()
         {
             if (!windowShowed)
             {
+                windowShowed = true;
                 reservationWindow.Show();
             }
         }
