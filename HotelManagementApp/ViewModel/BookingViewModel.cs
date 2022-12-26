@@ -40,13 +40,13 @@ namespace HotelManagementApp.ViewModel
         private string _Nationality;
         public string Nationality { get => _Nationality; set { _Nationality = value; OnPropertyChanged(); } }
         private DateTime? _CheckInDate = null;
-        public DateTime? CheckInDate { get => _CheckInDate; set { _CheckInDate = value; OnPropertyChanged(); } }
+        public DateTime? CheckInDate { get => _CheckInDate; set { _CheckInDate = value; LoadFilteredList(); OnPropertyChanged(); } }
         private DateTime? _CheckInTime = null;
-        public DateTime? CheckInTime { get => _CheckInTime; set { _CheckInTime = value; OnPropertyChanged(); } }
+        public DateTime? CheckInTime { get => _CheckInTime; set { _CheckInTime = value; LoadFilteredList(); OnPropertyChanged(); } }
         private DateTime? _CheckOutDate = null;
-        public DateTime? CheckOutDate { get => _CheckOutDate; set { _CheckOutDate = value; OnPropertyChanged(); } }
+        public DateTime? CheckOutDate { get => _CheckOutDate; set { _CheckOutDate = value; LoadFilteredList(); OnPropertyChanged(); } }
         private DateTime? _CheckOutTime = null;
-        public DateTime? CheckOutTime { get => _CheckOutTime; set { _CheckOutTime = value; OnPropertyChanged(); } }
+        public DateTime? CheckOutTime { get => _CheckOutTime; set { _CheckOutTime = value; LoadFilteredList(); OnPropertyChanged(); } }
         private decimal? _Total = 0;
         public decimal? Total {get => _Total; set { _Total = value; OnPropertyChanged(); } }
         private string _CCCD;
@@ -97,16 +97,24 @@ namespace HotelManagementApp.ViewModel
             {
                 _SelectedRoom = value;
                 var temp = PendingReservationsList.Where(x => x.Room == value).FirstOrDefault();
-                if(_SelectedRoom != null && _SelectedRoom.Status == "Available")
+                if(CheckInTime != null && CheckInDate != null && CheckOutDate != null && CheckOutTime != null)
                 {
-                    if(temp == null)
+                    if (_SelectedRoom != null)
                     {
-                        var reservation = new RoomsReservation();
-                        reservation.Room = SelectedRoom;
-                        PendingReservationsList.Add(reservation);
-                        Total += SelectedRoom.RoomType.Price;
+                        if (temp == null)
+                        {
+                            var IncomingCheckInTime = CheckInDate.Value.Date.Add(CheckInTime.Value.TimeOfDay);
+                            var IncomingCheckOutTime = CheckOutDate.Value.Date.Add(CheckOutTime.Value.TimeOfDay);
+                            var timespan = IncomingCheckOutTime.Subtract(IncomingCheckInTime).TotalDays;
+                            Total += SelectedRoom.RoomType.Price * (int)timespan;
+                            var reservation = new RoomsReservation();
+                            reservation.Room = SelectedRoom;
+                            reservation.Deleted = false;
+                            PendingReservationsList.Add(reservation);
+                        }
                     }
                 }
+                
                 OnPropertyChanged();
             } 
         }
@@ -187,10 +195,10 @@ namespace HotelManagementApp.ViewModel
                     Customer = customer,
                     Deleted = false,
                     Status = "On-Going",
+                    TotalMoney = Total,
                 };
 
                 DataProvider.Instance.DB.BillDetails.Add(billDetail);
-                Global.BillsList.Add(billDetail);
                 DataProvider.Instance.DB.SaveChanges();
                 billDetail = DataProvider.Instance.DB.BillDetails.Where(x => x.ID == billDetail.ID).FirstOrDefault();
                 // Create & save new room reservation
@@ -199,15 +207,15 @@ namespace HotelManagementApp.ViewModel
                     item.BillDetail = billDetail;
                     item.CheckInTime = CheckInDate.Value.Date.Add(CheckInTime.Value.TimeOfDay);
                     item.CheckOutTime = CheckOutDate.Value.Date.Add(CheckOutTime.Value.TimeOfDay);
-                    var timeSpan = item.CheckOutTime.Value.Subtract(item.CheckInTime.Value);
-                    var days = timeSpan.TotalDays;
-                    Total += item.Room.RoomType.Price * (int)days;
-                    billDetail.TotalMoney = Total;
+                    item.Room.Status = "Booked";
+                   // var timeSpan = item.CheckOutTime.Value.Subtract(item.CheckInTime.Value);
+                    //var days = timeSpan.TotalDays;
+                   // Total += item.Room.RoomType.Price * (int)days;
                     DataProvider.Instance.DB.RoomsReservations.Add(item);
-                    var temp = Global.BillsList.Where(x => x.ID == billDetail.ID).FirstOrDefault();
-                    temp = billDetail;
+                    Global.BillsList.Add(billDetail);
                     Global.ReservationsList.Add(item);
                 }
+                Total = 0;
                 DataProvider.Instance.DB.SaveChanges();
                 ClearFields();
                 PendingReservationsList.Clear();
@@ -218,11 +226,23 @@ namespace HotelManagementApp.ViewModel
         {
             FilteredList = Global.RoomsList;
             ObservableCollection<Room> list = new ObservableCollection<Room>();
+            ObservableCollection<Room> availables = new ObservableCollection<Room>();
+            if (CheckInTime != null && CheckInDate != null && CheckOutDate != null && CheckOutTime != null)
+            {
+                availables = LoadAvailableRoomsList();
+            }
             foreach (var item in Global.RoomsList)
             {
                 if (string.IsNullOrEmpty(Sort) && string.IsNullOrEmpty(SearchString) && (TypeFilter == null))
                 {
-                    list = Global.RoomsList;
+                    if (availables.Count() == 0)
+                    {
+                        list = Global.RoomsList;
+                    }
+                    else
+                    {
+                        list = availables;
+                    }
                 }
                 else if (string.IsNullOrEmpty(Sort) && string.IsNullOrEmpty(SearchString) && (TypeFilter != null))
                 {
@@ -293,6 +313,22 @@ namespace HotelManagementApp.ViewModel
                     }
                 }
             }
+        }
+
+        private ObservableCollection<Room> LoadAvailableRoomsList()
+        {
+            ObservableCollection<Room> list = new ObservableCollection<Room>();
+            var IncomingCheckInTime = CheckInDate.Value.Date.Add(CheckInTime.Value.TimeOfDay);
+            var IncomingCheckOutTime = CheckOutDate.Value.Date.Add(CheckOutTime.Value.TimeOfDay);
+            foreach (var item in Global.RoomsList)
+            {
+                var temp = item.RoomsReservations.Where(x => !(x.CheckOutTime <= IncomingCheckInTime || x.CheckInTime >= IncomingCheckOutTime) && x.Deleted == false);
+                if (temp == null || temp.Count() == 0)
+                {
+                    list.Add(item);
+                }
+            }
+            return list;
         }
         // chạy khi nhấn vào 1 phòng
         private void ShowAddReservationTimeWindow()

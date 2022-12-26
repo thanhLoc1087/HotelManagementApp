@@ -210,13 +210,13 @@ namespace HotelManagementApp.ViewModel
 
                 ////    PIE STATISTIC   ////    
                 // Room monthly income
-                IEnumerable<RoomType> roomBills = from a in Global.BillsList
-                                                  join b in Global.ReservationsList on a.ID equals b.IDBillDetail
-                                                  join c in Global.RoomsList on b.IDRoom equals c.ID
-                                                  join d in Global.Types on c.IDRoomType equals d.ID
-                                                  where ((DateTime)a.BillDate).ToString(dateFormat) == selectedTime.ToString(dateFormat)
-                                                  select d;
-                roomIncome = roomBills.Select(x => x.Price).Sum();
+                var roomBills = from a in Global.BillsList
+                                join roomRevs in Global.ReservationsList on a.ID equals roomRevs.IDBillDetail
+                                join c in Global.RoomsList on roomRevs.IDRoom equals c.ID
+                                join types in Global.Types on c.IDRoomType equals types.ID
+                                where ((DateTime)a.BillDate).ToString(dateFormat) == selectedTime.ToString(dateFormat)
+                                select new { roomRevs, types };
+                roomIncome = roomBills.Select(x => (decimal)x.types.Price * (decimal)((TimeSpan)(x.roomRevs.CheckOutTime - x.roomRevs.CheckInTime)).TotalDays).Sum();
                 // Food monthly income
                 IEnumerable<Order> foodBills = from a in Global.BillsList
                                                join b in Global.OrdersList on a.ID equals b.IDBillDetail
