@@ -136,7 +136,7 @@ namespace HotelManagementApp.ViewModel
             });
             OrderCommand = new RelayCommand<object>((p) =>
             {
-                if (string.IsNullOrEmpty(RoomNum) || TargetBillDetail == null || TargetBillDetail == null)
+                if (string.IsNullOrEmpty(RoomNum) || TargetBillDetail == null || PendingOrdersList.Count == 0 || PendingOrdersList == null)
                 {
                     return false;
                 }

@@ -134,6 +134,8 @@ namespace HotelManagementApp.ViewModel
             }, (p) =>
             {
                 ClearFields();
+                Total = 0;
+                PendingReservationsList.Clear();
             });
             BookingCommand = new RelayCommand<object>((p) =>
             {
@@ -169,6 +171,9 @@ namespace HotelManagementApp.ViewModel
                     DataProvider.Instance.DB.Customers.Add(customer);
                     Global.CustomersList.Add(customer);
                     DataProvider.Instance.DB.SaveChanges();
+                    ClearFields();
+                    Total = 0;
+                    PendingReservationsList.Clear();
                 }
                 else
                 {
@@ -180,6 +185,7 @@ namespace HotelManagementApp.ViewModel
                 {
                     Staff = Const.ActiveAccount.Staff,
                     Customer = customer,
+                    Deleted = false,
                     Status = "On-Going",
                 };
 
@@ -193,11 +199,13 @@ namespace HotelManagementApp.ViewModel
                     item.BillDetail = billDetail;
                     item.CheckInTime = CheckInDate.Value.Date.Add(CheckInTime.Value.TimeOfDay);
                     item.CheckOutTime = CheckOutDate.Value.Date.Add(CheckOutTime.Value.TimeOfDay);
-                    var timeSpan = item.CheckInTime.Value.Subtract(item.CheckOutTime.Value);
+                    var timeSpan = item.CheckOutTime.Value.Subtract(item.CheckInTime.Value);
                     var days = timeSpan.TotalDays;
-                    billDetail.TotalMoney += item.Room.RoomType.Price * (decimal?)days;
+                    Total += item.Room.RoomType.Price * (int)days;
+                    billDetail.TotalMoney = Total;
                     DataProvider.Instance.DB.RoomsReservations.Add(item);
-                    Global.BillsList.Where(x => x.ID == billDetail.ID).FirstOrDefault().TotalMoney = billDetail.TotalMoney;
+                    var temp = Global.BillsList.Where(x => x.ID == billDetail.ID).FirstOrDefault();
+                    temp = billDetail;
                     Global.ReservationsList.Add(item);
                 }
                 DataProvider.Instance.DB.SaveChanges();
