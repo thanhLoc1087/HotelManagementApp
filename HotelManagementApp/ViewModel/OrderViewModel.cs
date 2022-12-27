@@ -10,6 +10,7 @@ using System.Reflection;
 using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
 using System.Windows.Media;
@@ -100,6 +101,9 @@ namespace HotelManagementApp.ViewModel
         public ICommand EditOrderCommand { get; set; }
         public ICommand OrderCommand { get; set; }
         public ICommand ClearAllCommand { get; set; }
+        public ICommand DelOrderBtn { get; set; }
+        public ICommand QuantityIncreBtn { get; set; }
+        public ICommand QuantityDecreBtn { get; set; }
         public OrderViewModel()
         {
             LoadFilteredList();
@@ -166,7 +170,27 @@ namespace HotelManagementApp.ViewModel
                 Total = 0;
                 Quantity = 0;
                 PendingOrdersList.Clear();
+            }); 
+            DelOrderBtn = new RelayCommand<object>((p) => { return true; }, (p) =>
+            {
+                Total -= ((Order)p).TotalPrice;
+                PendingOrdersList.Remove(p as Order);
             });
+            QuantityIncreBtn = new RelayCommand<object>((p) => { return true; }, (p) =>
+            {
+                ((Order)p).Quantity++;
+                Total -= ((Order)p).TotalPrice;
+                ((Order)p).TotalPrice = ((Order)p).Quantity * ((Order)p).FoodsAndService.Price;
+                Total += ((Order)p).TotalPrice;
+            }); 
+            QuantityDecreBtn = new RelayCommand<object>((p) => { return true; }, (p) =>
+            {
+                if (((Order)p).Quantity <= 1) return;
+                ((Order)p).Quantity--;
+                Total -= ((Order)p).TotalPrice;
+                ((Order)p).TotalPrice = ((Order)p).Quantity * ((Order)p).FoodsAndService.Price;
+                Total += ((Order)p).TotalPrice;
+            }); 
         }
 
         private void LoadFilteredList()

@@ -72,7 +72,7 @@ namespace HotelManagementApp.ViewModel
                     {
                         CustomerName = Sex = PhoneNum = Email = Nationality = null;
                     }
-                    if (CCCD == "") { ClearFields(); }
+                    else if (CCCD == "" || CCCD == null) { ClearFields(); }
                 }
                 OnPropertyChanged();
             }
@@ -106,7 +106,7 @@ namespace HotelManagementApp.ViewModel
                             var IncomingCheckInTime = CheckInDate.Value.Date.Add(CheckInTime.Value.TimeOfDay);
                             var IncomingCheckOutTime = CheckOutDate.Value.Date.Add(CheckOutTime.Value.TimeOfDay);
                             var timespan = IncomingCheckOutTime.Subtract(IncomingCheckInTime).TotalDays;
-                            if(timespan == 0)
+                            if (timespan == 0)
                             {
                                 Total += SelectedRoom.RoomType.Price;
                             }
@@ -136,6 +136,7 @@ namespace HotelManagementApp.ViewModel
         public ICommand CancelReservationCommand { get; set; }
         public ICommand CCCDSelectionChangedCommand { get; set; }
         public ICommand CCCDTextChangedCommand { get; set; }
+        public ICommand RemoveBtn { get; set; }
         private bool windowShowed = false;
 
         public BookingViewModel()
@@ -226,6 +227,15 @@ namespace HotelManagementApp.ViewModel
                 DataProvider.Instance.DB.SaveChanges();
                 ClearFields();
                 PendingReservationsList.Clear();
+            });
+
+            RemoveBtn = new RelayCommand<object>((p) => { return true; }, (p) =>
+            {
+                var IncomingCheckInTime = CheckInDate.Value.Date.Add(CheckInTime.Value.TimeOfDay);
+                var IncomingCheckOutTime = CheckOutDate.Value.Date.Add(CheckOutTime.Value.TimeOfDay);
+                var timespan = IncomingCheckOutTime.Subtract(IncomingCheckInTime).TotalDays;
+                Total -= ((RoomsReservation)p).Room.RoomType.Price * (int)timespan;
+                PendingReservationsList.Remove((RoomsReservation)p);
             });
         }
        
