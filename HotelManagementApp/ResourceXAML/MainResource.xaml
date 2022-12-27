@@ -16,5 +16,6 @@
     <viewmodel:CustomersViewModel x:Key="CustomerVm"></viewmodel:CustomersViewModel>
     <viewmodel:OrderViewModel x:Key="OrderVm"></viewmodel:OrderViewModel>
     <viewmodel:BookingViewModel x:Key="BookingVm"></viewmodel:BookingViewModel>
+    <viewmodel:CheckOutViewModel x:Key="CheckOutVm"></viewmodel:CheckOutViewModel>
     <local:PathConverter x:Key="PathConverter"></local:PathConverter>
 </ResourceDictionary>

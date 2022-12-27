@@ -755,7 +755,7 @@
                         </Grid>
                     </Grid>
                 </TabItem>
-                <TabItem>
+                <TabItem DataContext="{StaticResource CheckOutVm}">
                     <TabItem.Header>
                         <StackPanel Width="auto"
                                     Height="auto">
@@ -904,6 +904,7 @@
 
 
                                 <DataGrid Margin="0,0,0,0"
+                                          Width="auto"
                                           AlternatingRowBackground="LightGray"
                                           AutoGenerateColumns="False"
                                           Background="Transparent"
@@ -911,21 +912,19 @@
                                           FontSize="16"
                                           HeadersVisibility="Column"
                                           IsReadOnly="True"
-                                          ItemsSource="{Binding ListCustomerInfo}">
+                                          ItemsSource="{Binding FilteredList}"
+                                          SelectedItem="{Binding SelectedReservation}">
                                     <DataGrid.Columns>
-                                        <DataGridTextColumn Binding="{Binding STT}"
-                                                            Header="  No" />
-                                        <DataGridTextColumn Binding="{Binding Baseinfo_CusName}"
+                                        <DataGridTextColumn Binding="{Binding ID}"
+                                                            Header="  ID" />
+                                        <DataGridTextColumn Binding="{Binding Room.RoomNum}"
+                                                            Header="Room Num" />
+                                        <DataGridTextColumn Binding="{Binding CheckInTime}"
+                                                            Header="Check In Time" />
+                                        <DataGridTextColumn Binding="{Binding CheckOutTime}"
+                                                            Header="Check Out Time" />
+                                        <DataGridTextColumn Binding="{Binding BillDetail.Customer.Name}"
                                                             Header="Customer Name" />
-                                        <DataGridTextColumn Binding="{Binding Baseinfo_CusPhoneNum}"
-                                                            Header="Customer Phone" />
-                                        <DataGridTextColumn Binding="{Binding Baseinfo_SumCusMoneyAmount}"
-                                                            Header="Money Achive" />
-                                        <DataGridTextColumn Binding="{Binding Baseinfo_SumBillAmount}"
-                                                            Header="Bill Achive" />
-                                        <DataGridTextColumn Binding="{Binding Baseinfo_TypeCus}"
-                                                            Header="Member type" />
-
                                     </DataGrid.Columns>
 
                                 </DataGrid>

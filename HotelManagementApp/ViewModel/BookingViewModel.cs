@@ -72,7 +72,7 @@ namespace HotelManagementApp.ViewModel
                     {
                         CustomerName = Sex = PhoneNum = Email = Nationality = null;
                     }
-                    else if (CCCD == "") { ClearFields(); }
+                    if (CCCD == "") { ClearFields(); }
                 }
                 OnPropertyChanged();
             }
@@ -106,7 +106,14 @@ namespace HotelManagementApp.ViewModel
                             var IncomingCheckInTime = CheckInDate.Value.Date.Add(CheckInTime.Value.TimeOfDay);
                             var IncomingCheckOutTime = CheckOutDate.Value.Date.Add(CheckOutTime.Value.TimeOfDay);
                             var timespan = IncomingCheckOutTime.Subtract(IncomingCheckInTime).TotalDays;
-                            Total += SelectedRoom.RoomType.Price * (int)timespan;
+                            if(timespan == 0)
+                            {
+                                Total += SelectedRoom.RoomType.Price;
+                            }
+                            else
+                            {
+                                Total += SelectedRoom.RoomType.Price * (int)timespan;
+                            }
                             var reservation = new RoomsReservation();
                             reservation.Room = SelectedRoom;
                             reservation.Deleted = false;
@@ -274,7 +281,7 @@ namespace HotelManagementApp.ViewModel
         }
         private void ClearFields()
         {
-            RoomNum = CustomerName = Sex = PhoneNum = Email = CCCD = Nationality = null;
+            RoomNum = CustomerName = Sex = PhoneNum = Email = CCCD = Nationality = "";
             CheckInDate = CheckOutDate = CheckInTime = CheckOutTime = null;
         }
 
@@ -302,7 +309,7 @@ namespace HotelManagementApp.ViewModel
 
         private void LoadSuggestionsList()
         {
-            if(CCCD != null)
+            if(CCCD != null && CCCD != "")
             {
                 SuggestionsList = new ObservableCollection<string>();
                 foreach (var item in Global.CustomersList)
@@ -329,15 +336,6 @@ namespace HotelManagementApp.ViewModel
                 }
             }
             return list;
-        }
-        // chạy khi nhấn vào 1 phòng
-        private void ShowAddReservationTimeWindow()
-        {
-            if (!windowShowed)
-            {
-                windowShowed = true;
-                reservationWindow.Show();
-            }
         }
     }
 }
