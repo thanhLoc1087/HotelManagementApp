@@ -762,7 +762,7 @@
                             <RowDefinition Height="60*" />
                             <RowDefinition Height="220*" />
                             <RowDefinition Height="220*" />
-                            <RowDefinition Height="220*" />
+                            <RowDefinition Height="70*" />
                         </Grid.RowDefinitions>
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="133*" />
@@ -770,117 +770,160 @@
                             <ColumnDefinition Width="133*" />
                         </Grid.ColumnDefinitions>
                         <Grid Grid.Row="1"
-                              Grid.Column="0">
-                            <Button x:Name="FB_Billbtb"
-                                    Width="200"
-                                    Height="150"
-                                    HorizontalAlignment="Center"
-                                    VerticalAlignment="Center"
-                                    Command="{Binding ShowWindowCommand_FB}">
+                              Grid.RowSpan="2"
+                              Grid.Column="3">
+                            <Border Grid.Column="0"
+                                    Width="auto"
+                                    Height="auto"
+                                    Margin="20,20,20,20"
+                                    Background="Snow"
+                                    BorderBrush="Black"
+                                    CornerRadius="20">
+                                <Border.BitmapEffect>
+                                    <DropShadowBitmapEffect Opacity="0.6"
+                                                            ShadowDepth="10"
+                                                            Softness="0.3"
+                                                            Color="Black" />
+                                </Border.BitmapEffect>
                                 <Grid>
+                                    <Grid.RowDefinitions>
+                                        <RowDefinition Height="auto"/>
+                                        <RowDefinition Height="auto"/>
+                                        <RowDefinition Height="auto"/>
+                                        <RowDefinition Height="*"/>
+                                        <RowDefinition Height="auto"/>
+                                        <RowDefinition Height="auto"/>
+                                    </Grid.RowDefinitions>
                                     <Grid.ColumnDefinitions>
-                                        <ColumnDefinition Width="16*" />
-                                        <ColumnDefinition Width="65*" />
+                                        <ColumnDefinition Width="auto" />
+                                        <ColumnDefinition Width="*"/>
                                     </Grid.ColumnDefinitions>
-                                    <Grid.RowDefinitions>
-                                        <RowDefinition Height="auto" />
-                                        <RowDefinition />
-                                    </Grid.RowDefinitions>
-                                    <materialDesign:PackIcon Grid.RowSpan="2"
-                                                             Grid.ColumnSpan="2"
-                                                             Width="82"
-                                                             Height="87"
-                                                             Margin="0,10,0,0"
-                                                             HorizontalAlignment="Center"
-                                                             VerticalAlignment="Center"
-                                                             Kind="BedSingle" />
-                                    <TextBlock Grid.RowSpan="2"
-                                               Grid.ColumnSpan="2"
-                                               Margin="13,105,13.8,3.4"
-                                               HorizontalAlignment="Center"
-                                               FontWeight="Bold">
-                                        Single Bedroom
-                                    </TextBlock>
+                                    <TextBlock Grid.Row="0"
+                                       Grid.Column="0"
+                                       Grid.ColumnSpan="2"
+                                       Margin="0,10"
+                                       HorizontalAlignment="Center"
+                                       VerticalAlignment="Top"
+                                       FontFamily="Bungee Inline"
+                                       FontSize="30"
+                                       FontWeight="Bold"
+                                       Text="BILL INFO" />
+                                    <TextBlock Grid.Row="1" Grid.Column="0"
+                                       Margin="20"
+                                       HorizontalAlignment="Left"
+                                       VerticalAlignment="Top"
+                                       FontFamily="Bungee Inline"
+                                       FontSize="25"
+                                       FontWeight="Bold"
+                                       Text="Name:" />
+                                    <TextBlock Grid.Row="1" Grid.Column="1"
+                                       Margin="20"
+                                       HorizontalAlignment="Left"
+                                       VerticalAlignment="Top"
+                                       FontFamily="Bungee Inline"
+                                       FontSize="25"
+                                       FontWeight="DemiBold"
+                                       Text="{Binding SelectedBill.Customer.Name}" />
+                                    <TextBlock Grid.Row="2" Grid.Column="0"
+                                       Margin="20"
+                                       HorizontalAlignment="Left"
+                                       VerticalAlignment="Top"
+                                       FontFamily="Bungee Inline"
+                                       FontSize="25"
+                                       FontWeight="Bold"
+                                       Text="CCCD:" />
+                                    <TextBlock Grid.Row="2" Grid.Column="1"
+                                       Margin="20"
+                                       HorizontalAlignment="Left"
+                                       VerticalAlignment="Top"
+                                       FontFamily="Bungee Inline"
+                                       FontSize="25"
+                                       FontWeight="DemiBold"
+                                       Text="{Binding SelectedBill.Customer.CCCD}" />
+                                    <DataGrid Grid.Row="3" Grid.ColumnSpan="2"
+                                              Margin="10"
+                                              Background="LightGreen" 
+                                              AutoGenerateColumns="False"
+                                              ItemsSource="{Binding SelectedBill.RoomsReservations}">
+                                        <DataGrid.Columns>
+                                            <DataGridTextColumn Binding="{Binding Room.RoomNum}"
+                                                            Header="Room Num" />
+                                            <DataGridTextColumn Binding="{Binding Room.RoomType.Name}"
+                                                            Header="Room Type" />
+                                            <DataGridTextColumn Binding="{Binding Room.RoomType.Price}"
+                                                            Header="Price"/>
+                                        </DataGrid.Columns>
+                                    </DataGrid>
+                                    <TextBlock Grid.Row="4"
+                                       Grid.Column="0"
+                                       Margin="20"
+                                       HorizontalAlignment="Left"
+                                       VerticalAlignment="Top"
+                                       FontFamily="Bungee Inline"
+                                       FontSize="25"
+                                       FontWeight="Bold"
+                                       Text="Nights:" />
+                                    <TextBlock Grid.Row="4"
+                                       Grid.Column="1"
+                                       Margin="20"
+                                       HorizontalAlignment="Left"
+                                       VerticalAlignment="Top"
+                                       FontFamily="Bungee Inline"
+                                       FontSize="25"
+                                       FontWeight="DemiBold"
+                                       Text="{Binding Nights}" />
+                                    <TextBlock Grid.Row="5"
+                                       Grid.Column="0"
+                                       Margin="20"
+                                       HorizontalAlignment="Left"
+                                       VerticalAlignment="Top"
+                                       FontFamily="Bungee Inline"
+                                       FontSize="25"
+                                       FontWeight="Bold"
+                                       Text="Total:" />
+                                    <TextBlock Grid.Row="5"
+                                       Grid.Column="1"
+                                       Margin="20"
+                                       HorizontalAlignment="Left"
+                                       VerticalAlignment="Top"
+                                       FontFamily="Bungee Inline"
+                                       FontSize="25"
+                                       FontWeight="DemiBold"
+                                       Text="{Binding SelectedBill.TotalMoney, StringFormat={}{0:N0} VND}" />
                                 </Grid>
-
-                            </Button>
+                            </Border>
                         </Grid>
-                        <Grid Grid.Row="2"
-                              Grid.Column="0">
-                            <Button x:Name="VL_billbtb"
-                                    Width="200"
-                                    Height="150"
-                                    HorizontalAlignment="Center"
-                                    VerticalAlignment="Center"
-                                    Command="{Binding ShowWindowCommand_VL}">
-                                <Grid>
-                                    <Grid.RowDefinitions>
-                                        <RowDefinition Height="auto" />
-                                        <RowDefinition />
-                                    </Grid.RowDefinitions>
-                                    <materialDesign:PackIcon Width="79"
-                                                             Height="109"
-                                                             FontSize="200"
-                                                             HorizontalAlignment="Center"
-                                                             VerticalAlignment="Center"
-                                                             Kind="BedDouble" />
-                                    <TextBlock Grid.RowSpan="2"
-                                               Margin="0,105,-0.338,4.277"
-                                               HorizontalAlignment="Center"
-                                               FontWeight="Bold">
-                                        Double Bedroom
-                                    </TextBlock>
-                                </Grid>
-                            </Button>
-                        </Grid>
+                        
                         <Grid Grid.Row="3"
-                              Grid.Column="0">
+                              Grid.Column="3"
+                              Margin="0,0,0,30">
                             <Button x:Name="Bk_billbtb"
-                                    Width="200"
-                                    Height="150"
+                                    Width="300"
+                                    Height="50"
                                     HorizontalAlignment="Center"
                                     VerticalAlignment="Center"
-                                    Command="{Binding ShowWindowCommand_BK}">
+                                    Command="{Binding CheckOutCommand}">
                                 <Grid>
-                                    <Grid.ColumnDefinitions>
-                                        <ColumnDefinition Width="27*" />
-                                        <ColumnDefinition Width="56*" />
-                                    </Grid.ColumnDefinitions>
-                                    <Grid.RowDefinitions>
-                                        <RowDefinition Height="auto" />
-                                        <RowDefinition Height="22*" />
-                                        <RowDefinition Height="91*" />
-                                    </Grid.RowDefinitions>
-                                    <materialDesign:PackIcon Grid.Row="0"
-                                                             Grid.RowSpan="3"
-                                                             Grid.ColumnSpan="2"
-                                                             Width="81"
-                                                             Height="109"
-                                                             FontSize="200"
-                                                             FontWeight="ExtraBold"
-                                                             HorizontalAlignment="Center"
-                                                             VerticalAlignment="Center"
-                                                             Kind="BedEmpty" />
                                     <TextBlock Grid.ColumnSpan="2"
-                                               Margin="15,74,0,0"
+                                               Margin="0"
                                                HorizontalAlignment="Center"
-                                               FontSize="14"
+                                               FontSize="25"
                                                FontWeight="Bold"
                                                Grid.Row="2">
-                                        Triple Bedroom
+                                        $ Check Out
                                     </TextBlock>
                                 </Grid>
                             </Button>
                         </Grid>
                         <Grid Grid.Row="1"
                               Grid.RowSpan="3"
-                              Grid.Column="1"
+                              Grid.Column="0"
                               Grid.ColumnSpan="2"
                               Margin="0,20,20,20">
                             <Border Grid.Column="0"
                                     Width="auto"
                                     Height="auto"
-                                    Margin="20,60,20,20"
+                                    Margin="20,0,20,20"
                                     Background="Snow"
                                     BorderBrush="Black"
                                     CornerRadius="20">
@@ -925,9 +968,9 @@
                                    Grid.Column="1"
                                    Margin="0,0,0,-20"
                                    HorizontalAlignment="Center"
-                                   VerticalAlignment="Top"
+                                   VerticalAlignment="Center"
                                    FontFamily="Bungee Inline"
-                                   FontSize="25"
+                                   FontSize="40"
                                    FontWeight="Bold"
                                    Text="PAYMENT" />
                     </Grid>
