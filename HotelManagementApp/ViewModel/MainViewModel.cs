@@ -19,6 +19,7 @@ namespace HotelManagementApp.ViewModel
 
     public class MainViewModel : BaseViewModel
     {
+
         public bool IsLoaded = false;
         public string _tbkStatError = "";
         public string tbkStatError { get => _tbkStatError; set { _tbkStatError = value; OnPropertyChanged(); } }
@@ -67,6 +68,7 @@ namespace HotelManagementApp.ViewModel
                 LoadStatistics();
             }
         }
+
 
         //Load View
         public ICommand LoadedWindowCommand { get; set; }

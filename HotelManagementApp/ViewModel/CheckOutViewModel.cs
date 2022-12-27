@@ -67,6 +67,7 @@ namespace HotelManagementApp.ViewModel
                     Global.RoomsList.Remove(item.Room);
                     item.Room.Status = "Available";
                     Global.RoomsList.Add(item.Room);
+                    Global.OnGoingReservationsList.Remove(item);
                 }
                 DataProvider.Instance.DB.SaveChanges();
                 SelectedReservation = null;
@@ -76,15 +77,7 @@ namespace HotelManagementApp.ViewModel
 
         private void LoadFilteredList()
         {
-            ObservableCollection<RoomsReservation> list = new ObservableCollection<RoomsReservation>();
-            foreach(var item in Global.ReservationsList)
-            {
-                if(item.BillDetail.Status == "On-Going")
-                {
-                    list.Add(item);
-                }
-            }
-            FilteredList = list;
+            FilteredList = Global.OnGoingReservationsList;
         }
     }
 }

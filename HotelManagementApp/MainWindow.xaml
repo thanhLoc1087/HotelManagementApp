@@ -57,7 +57,8 @@
                 <ColumnDefinition Width="99*" />
                 <ColumnDefinition Width="101*" />
             </Grid.ColumnDefinitions>
-            <TabControl Grid.ColumnSpan="2"
+            <TabControl Name="Tab"
+                        Grid.ColumnSpan="2"
                         Margin="0,0,0,0.2"
                         materialDesign:ColorZoneAssist.Mode="PrimaryMid"
                         materialDesign:ShadowAssist.ShadowDepth="Depth0"
@@ -66,7 +67,7 @@
                         BorderThickness="0"
                         SnapsToDevicePixels="True"
                         Style="{StaticResource MaterialDesignNavigatilRailTabControl}"
-                        TabStripPlacement="Left">
+                        TabStripPlacement="Left" >
                 <!--SelectionChanged="TabControl_SelectionChanged"-->
 
                 <TabItem>
@@ -944,7 +945,7 @@
                                           FontSize="16"
                                           HeadersVisibility="Column"
                                           IsReadOnly="True"
-                                          ItemsSource="{Binding FilteredList}"
+                                          ItemsSource="{Binding OnGoingReservationsList, Source={StaticResource Global}, UpdateSourceTrigger=PropertyChanged}"
                                           SelectedItem="{Binding SelectedReservation}">
                                     <DataGrid.Columns>
                                         <DataGridTextColumn Binding="{Binding ID}"

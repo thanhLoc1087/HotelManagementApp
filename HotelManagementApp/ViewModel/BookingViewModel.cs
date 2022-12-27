@@ -219,6 +219,7 @@ namespace HotelManagementApp.ViewModel
                     billDetail.TotalMoney = Total;
                     DataProvider.Instance.DB.RoomsReservations.Add(item);
                     Global.ReservationsList.Add(item);
+                    Global.OnGoingReservationsList.Add(item);
                     Global.OnStaticPropertyChanged("ReservationsList");
                 }
                 Global.BillsList.Add(billDetail);

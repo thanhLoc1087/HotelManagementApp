@@ -155,6 +155,23 @@ namespace HotelManagementApp
                 OnStaticPropertyChanged(nameof(ReservationsList));
             }
         }
+        private static ObservableCollection<RoomsReservation> _OnGoingReservationsList;
+        public static ObservableCollection<RoomsReservation> OnGoingReservationsList
+        {
+            get
+            {
+                if (_OnGoingReservationsList == null)
+                {
+                    LoadOnGoingReservationsList();
+                }
+                return _OnGoingReservationsList;
+            }
+            set
+            {
+                _ReservationsList = value;
+                OnStaticPropertyChanged(nameof(OnGoingReservationsList));
+            }
+        }
         private static void LoadRoomTypesList()
         {
             _Types = new ObservableCollection<RoomType>();
@@ -227,6 +244,18 @@ namespace HotelManagementApp
             foreach (var item in list)
             {
                 _ReservationsList.Add(item);
+            }
+        }
+        private static void LoadOnGoingReservationsList()
+        {
+            _OnGoingReservationsList = new ObservableCollection<RoomsReservation>();
+            var list = DataProvider.Instance.DB.RoomsReservations.Where(x => x.Deleted == false);
+            foreach (var item in list)
+            {
+                if (item.BillDetail.Status == "On-Going")
+                {
+                    _OnGoingReservationsList.Add(item);
+                }
             }
         }
     }
