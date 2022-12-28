@@ -1609,7 +1609,7 @@
                                                      Margin="4" Height="auto" Width="auto">
                                                             <ListBox.ItemContainerStyle>
                                                                 <Style TargetType="ListBoxItem">
-                                                                    <Setter Property="IsEnabled" Value="False"/>
+                                                                    <Setter Property="IsEnabled" Value="True"/>
                                                                 </Style>
                                                             </ListBox.ItemContainerStyle>
                                                             <ListBox.ItemsPanel>
