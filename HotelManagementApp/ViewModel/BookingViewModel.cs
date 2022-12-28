@@ -9,6 +9,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Input;
+using System.Windows.Media.TextFormatting;
 using System.Xml.Schema;
 
 namespace HotelManagementApp.ViewModel
@@ -344,7 +345,10 @@ namespace HotelManagementApp.ViewModel
                 var temp = item.RoomsReservations.Where(x => !(x.CheckOutTime <= IncomingCheckInTime || x.CheckInTime >= IncomingCheckOutTime) && x.Deleted == false && x.BillDetail.Status == "On-Going");
                 if (temp == null || temp.Count() == 0)
                 {
-                    list.Add(item);
+                    if(item.Status == "Available")
+                    {
+                        list.Add(item);
+                    }
                 }
             }
             return list;
