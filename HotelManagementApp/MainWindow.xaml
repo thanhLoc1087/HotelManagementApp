@@ -927,22 +927,49 @@
                               Grid.Column="0"
                               Grid.ColumnSpan="2"
                               Margin="0,20,20,20">
-                            <Border Grid.Column="0"
+                            <Grid>
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="auto"/>
+                                    <RowDefinition Height="*" />
+                                </Grid.RowDefinitions>
+                                <StackPanel Grid.Row="0" Orientation="Horizontal" HorizontalAlignment="Left" Margin="12,0,0,10">
+                                    <TextBox
+                                                    Width="150"
+                                                    Height="40"
+                                                    Margin="15,0,0,0"
+                                                    BorderBrush="#6C63FF"
+                                                    Background="White"
+                                                    Foreground="Black"
+                                                    FontSize="14"
+                                                    FontWeight="SemiBold"
+                                                    materialDesign:HintAssist.Hint="Room"
+                                                    materialDesign:HintAssist.FontFamily="{StaticResource MaterialDesignFont}"
+                                                    materialDesign:HintAssist.Foreground="White"
+                                                    materialDesign:TextFieldAssist.TextBoxViewMargin="10,7,0,0"
+                                                    materialDesign:TextFieldAssist.TextFieldCornerRadius="15"
+                                                    materialDesign:TextFieldAssist.DecorationVisibility="Hidden"
+                                                    BorderThickness="3"
+                                                    VerticalAlignment="Center"
+                                                    CaretBrush="Gray"
+                                                    Text="{Binding SearchString, UpdateSourceTrigger=PropertyChanged}"
+                                                    />
+                                </StackPanel>
+                                <Border Grid.Row="1"
                                     Width="auto"
                                     Height="auto"
                                     Margin="20,0,20,20"
                                     Background="Snow"
                                     BorderBrush="Black"
                                     CornerRadius="20">
-                                <Border.BitmapEffect>
-                                    <DropShadowBitmapEffect Opacity="0.6"
+                                    <Border.BitmapEffect>
+                                        <DropShadowBitmapEffect Opacity="0.6"
                                                             ShadowDepth="10"
                                                             Softness="0.3"
                                                             Color="Black" />
-                                </Border.BitmapEffect>
+                                    </Border.BitmapEffect>
 
 
-                                <DataGrid Margin="0,0,0,0"
+                                    <DataGrid Margin="0,0,0,0"
                                           Width="auto"
                                           AlternatingRowBackground="LightGray"
                                           AutoGenerateColumns="False"
@@ -953,21 +980,22 @@
                                           IsReadOnly="True"
                                           ItemsSource="{Binding FilteredList}"
                                           SelectedItem="{Binding SelectedReservation}">
-                                    <DataGrid.Columns>
-                                        <DataGridTextColumn Binding="{Binding ID}"
+                                        <DataGrid.Columns>
+                                            <DataGridTextColumn Binding="{Binding ID}"
                                                             Header="  ID" />
-                                        <DataGridTextColumn Binding="{Binding Room.RoomNum}"
+                                            <DataGridTextColumn Binding="{Binding Room.RoomNum}"
                                                             Header="Room Num" />
-                                        <DataGridTextColumn Binding="{Binding CheckInTime, StringFormat='dd/MM/yyyy'}"
+                                            <DataGridTextColumn Binding="{Binding CheckInTime, StringFormat='dd/MM/yyyy HH:mm'}"
                                                             Header="Check In Time" />
-                                        <DataGridTextColumn Binding="{Binding CheckOutTime, StringFormat='dd/MM/yyyy'}"
+                                            <DataGridTextColumn Binding="{Binding CheckOutTime, StringFormat='dd/MM/yyyy HH:mm'}"
                                                             Header="Check Out Time" />
-                                        <DataGridTextColumn Binding="{Binding BillDetail.Customer.Name}"
+                                            <DataGridTextColumn Binding="{Binding BillDetail.Customer.Name}"
                                                             Header="Customer Name" />
-                                    </DataGrid.Columns>
+                                        </DataGrid.Columns>
 
-                                </DataGrid>
-                            </Border>
+                                    </DataGrid>
+                                </Border>
+                            </Grid>
                         </Grid>
 
 
@@ -1552,11 +1580,11 @@
                                                             <StackPanel Orientation="Vertical" Grid.Column="0">
                                                                 <StackPanel Orientation="Horizontal">
 
-                                                                    <Label Width="auto"
+                                                                    <Label Width="100"
                                                                    Margin="0,10,0,0"
                                                                    VerticalAlignment="Center"
                                                                    Content="Check In Date: " />
-                                                                    <DatePicker Width="auto" Height="auto"
+                                                                    <DatePicker Width="110" Height="auto"
                                                                         DisplayDateStart="{x:Static sys:DateTime.Today}"
                                                                         materialDesign:HintAssist.Hint="Check In Date"
                                                                         SelectedDate="{Binding CheckInDate, StringFormat='dd MMM yyyy'}"
@@ -1564,12 +1592,12 @@
                                                                     </DatePicker>
                                                                 </StackPanel>
                                                                 <StackPanel Grid.Row="1" Orientation="Horizontal">
-                                                                    <Label Width="auto"
+                                                                    <Label Width="100"
                                                                        Margin="0,10,0,0"
                                                                    VerticalAlignment="Center"
                                                                    Content="Check Out Date: " />
                                                                     <DatePicker
-                                                                    Width="auto"
+                                                                    Width="110"
                                                                     DisplayDateStart="{Binding CheckInDate}"                                   
                                                                     VerticalAlignment="Center"
                                                                     materialDesign:HintAssist.Hint="Check Out Date"
@@ -2001,6 +2029,11 @@
                                                                                    ElementStyle="{StaticResource MaterialDesignDataGridTextColumnStyle}"
                                                                                    Header="CCCD" />
                                                 <materialDesign:DataGridTextColumn Width="3*"
+                                                                                   Binding="{Binding BillDate,StringFormat='dd/MM/yyyy HH:mm'}"
+                                                                                   EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnPopupEditingStyle}"
+                                                                                   ElementStyle="{StaticResource MaterialDesignDataGridTextColumnStyle}"
+                                                                                   Header="Bill Date" />
+                                                <materialDesign:DataGridTextColumn Width="2*"
                                                                                    Binding="{Binding TotalMoney, StringFormat=C0, ConverterCulture=vi-VN}"
                                                                                    EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnPopupEditingStyle}"
                                                                                    ElementStyle="{StaticResource MaterialDesignDataGridTextColumnStyle}"
@@ -3159,8 +3192,7 @@
                     </Grid>
 
                 </TabItem>
-                <TabItem DataContext="{StaticResource AddRoomForAdminVm}"
-                         Visibility="{Binding AdminVisibility, Source={StaticResource Const}}">
+                <TabItem DataContext="{StaticResource AddRoomForAdminVm}">
                     <TabItem.Header>
                         <StackPanel Width="auto"
                                     Height="auto">

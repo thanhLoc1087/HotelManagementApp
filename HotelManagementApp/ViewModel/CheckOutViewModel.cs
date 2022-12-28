@@ -107,6 +107,7 @@ namespace HotelManagementApp.ViewModel
                     Global.RoomsList.Add(item.Room);
                     Global.OnGoingReservationsList.Remove(item);
                 }
+                Global.BillsList.Where(x => x.ID == Bill.ID).FirstOrDefault().Status = "Completed";
                 DataProvider.Instance.DB.SaveChanges();
                 SelectedReservation = null;
                 SelectedBill = null;

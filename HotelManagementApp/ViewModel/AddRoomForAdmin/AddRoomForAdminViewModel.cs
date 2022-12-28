@@ -69,7 +69,7 @@ namespace HotelManagementApp.ViewModel
             LoadFilteredList();
             addCommand = new RelayCommand<object>((p) =>
             {
-                if (string.IsNullOrEmpty(RoomNum) || Type == null || string.IsNullOrEmpty(Status) || string.IsNullOrEmpty(Type.Name))
+                if (string.IsNullOrEmpty(RoomNum) || Type == null || Type.Name == null || string.IsNullOrEmpty(Status) || string.IsNullOrEmpty(Type.Name))
                 {
                     return false;
                 }
@@ -104,7 +104,7 @@ namespace HotelManagementApp.ViewModel
 
             editCommand = new RelayCommand<object>((p) =>
             {
-                if (string.IsNullOrEmpty(RoomNum) || Type == null || string.IsNullOrEmpty(Status) || SelectedItem == null)
+                if (string.IsNullOrEmpty(RoomNum) || Type == null || Type.Name == null || string.IsNullOrEmpty(Status) || string.IsNullOrEmpty(Type.Name))
                 {
                     return false;
                 }

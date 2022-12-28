@@ -40,21 +40,13 @@ namespace HotelManagementApp.ViewModel
         private string _Nationality;
         public string Nationality { get => _Nationality; set { _Nationality = value; OnPropertyChanged(); } }
         private DateTime? _CheckInDate = null;
-        public DateTime? CheckInDate { get => _CheckInDate; set { _CheckInDate = value; LoadFilteredList(); OnPropertyChanged(); } }
+        public DateTime? CheckInDate { get => _CheckInDate; set { _CheckInDate = value; UpdateTotal(); LoadFilteredList(); OnPropertyChanged(); } }
         private DateTime? _CheckInTime = null;
-        public DateTime? CheckInTime { get => _CheckInTime; set { _CheckInTime = value; LoadFilteredList(); OnPropertyChanged(); } }
+        public DateTime? CheckInTime { get => _CheckInTime; set { _CheckInTime = value; UpdateTotal(); LoadFilteredList(); OnPropertyChanged(); } }
         private DateTime? _CheckOutDate = null;
-        public DateTime? CheckOutDate { get => _CheckOutDate; set { _CheckOutDate = value; LoadFilteredList(); OnPropertyChanged(); } }
+        public DateTime? CheckOutDate { get => _CheckOutDate; set { _CheckOutDate = value; UpdateTotal(); LoadFilteredList(); OnPropertyChanged(); } }
         private DateTime? _CheckOutTime = null;
-        public DateTime? CheckOutTime { get => _CheckOutTime; set {
-                _CheckOutTime = value;
-                if (CheckOutDate == CheckInDate && value > CheckInTime)
-                {
-                    _CheckOutTime = value;
-                    LoadFilteredList();
-                    OnPropertyChanged();
-                }
-            } }
+        public DateTime? CheckOutTime { get => _CheckOutTime; set { _CheckOutTime = value; UpdateTotal(); LoadFilteredList(); OnPropertyChanged(); } }
         private decimal? _Total = 0;
         public decimal? Total {get => _Total; set { _Total = value; OnPropertyChanged(); } }
         private string _CCCD = "";
@@ -111,21 +103,11 @@ namespace HotelManagementApp.ViewModel
                     {
                         if (temp == null)
                         {
-                            var IncomingCheckInTime = CheckInDate.Value.Date.Add(CheckInTime.Value.TimeOfDay);
-                            var IncomingCheckOutTime = CheckOutDate.Value.Date.Add(CheckOutTime.Value.TimeOfDay);
-                            var timespan = IncomingCheckOutTime.Subtract(IncomingCheckInTime).TotalDays;
-                            if (timespan == 0)
-                            {
-                                Total += SelectedRoom.RoomType.Price;
-                            }
-                            else
-                            {
-                                Total += SelectedRoom.RoomType.Price * (int)timespan;
-                            }
                             var reservation = new RoomsReservation();
                             reservation.Room = SelectedRoom;
                             reservation.Deleted = false;
                             PendingReservationsList.Add(reservation);
+                            UpdateTotal();
                         }
                     }
                 }
@@ -164,7 +146,7 @@ namespace HotelManagementApp.ViewModel
             BookingCommand = new RelayCommand<object>((p) =>
             {
 
-                if (PendingReservationsList == null || PendingReservationsList.Count() ==0 || string.IsNullOrEmpty(CustomerName) || string.IsNullOrEmpty(PhoneNum) || string.IsNullOrEmpty(CCCD) || CheckInDate == null || CheckInTime == null || CheckInDate == null || CheckOutDate == null)
+                if (PendingReservationsList == null || PendingReservationsList.Count() ==0 || string.IsNullOrEmpty(CustomerName) || string.IsNullOrEmpty(PhoneNum) || string.IsNullOrEmpty(CCCD) || CheckInDate == null || CheckInTime == null || CheckOutTime == null || CheckOutDate == null)
                 {
                     return false;
                 }
@@ -172,7 +154,7 @@ namespace HotelManagementApp.ViewModel
                 {
                     return false;
                 }
-                if (CheckInDate == CheckOutDate && CheckInTime > CheckOutTime)
+                if (CheckInDate == CheckOutDate && CheckInTime >= CheckOutTime)
                 {
                     return false;
                 }
@@ -242,11 +224,8 @@ namespace HotelManagementApp.ViewModel
 
             RemoveBtn = new RelayCommand<object>((p) => true, (p) =>
             {
-                var IncomingCheckInTime = CheckInDate.Value.Date.Add(CheckInTime.Value.TimeOfDay);
-                var IncomingCheckOutTime = CheckOutDate.Value.Date.Add(CheckOutTime.Value.TimeOfDay);
-                var timespan = IncomingCheckOutTime.Subtract(IncomingCheckInTime).TotalDays;
-                Total -= ((RoomsReservation)p).Room.RoomType.Price * (int)timespan;
                 PendingReservationsList.Remove((RoomsReservation)p);
+                UpdateTotal();
             });
         }
        
@@ -261,7 +240,7 @@ namespace HotelManagementApp.ViewModel
             }
             foreach (var item in Global.RoomsList)
             {
-                if (string.IsNullOrEmpty(Sort) && string.IsNullOrEmpty(SearchString) && (TypeFilter == null))
+                if (string.IsNullOrEmpty(Sort) && string.IsNullOrEmpty(SearchString) && (TypeFilter == null || TypeFilter.Name ==null))
                 {
                     if (availables.Count() == 0)
                     {
@@ -357,6 +336,28 @@ namespace HotelManagementApp.ViewModel
                 }
             }
             return list;
+        }
+        private void UpdateTotal()
+        {
+            if (CheckInDate == null || CheckInTime == null || CheckOutDate == null || CheckOutTime == null)
+            {
+                return;
+            }
+            Total = 0;
+            foreach(var item in PendingReservationsList)
+            {
+                var IncomingCheckInTime = CheckInDate.Value.Date.Add(CheckInTime.Value.TimeOfDay);
+                var IncomingCheckOutTime = CheckOutDate.Value.Date.Add(CheckOutTime.Value.TimeOfDay);
+                var timespan = IncomingCheckOutTime.Subtract(IncomingCheckInTime).TotalDays;
+                if (timespan <= 1)
+                {
+                    Total += item.Room.RoomType.Price;
+                }
+                else
+                {
+                    Total += item.Room.RoomType.Price * (int)timespan;
+                }
+            }
         }
     }
 }
