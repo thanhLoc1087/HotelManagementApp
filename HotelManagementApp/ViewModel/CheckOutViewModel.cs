@@ -1,4 +1,4 @@
-﻿using HotelManagementApp.Model;
+using HotelManagementApp.Model;
 using HotelManagementApp.View;
 using System;
 using System.Collections.Generic;
@@ -18,6 +18,8 @@ namespace HotelManagementApp.ViewModel
     {
         private ObservableCollection<RoomsReservation> _FilteredList;
         public ObservableCollection<RoomsReservation> FilteredList { get => _FilteredList; set { _FilteredList = value; OnPropertyChanged(); } }
+        private string _SearchString;
+        public string SearchString { get => _SearchString; set { _SearchString = value; LoadFilteredList(); OnPropertyChanged(); } }
         private ObservableCollection<RoomsReservation> _roomRevsCheckOut;
         public ObservableCollection<RoomsReservation> RoomRevsCheckOut { get => _roomRevsCheckOut; set { _roomRevsCheckOut = value; OnPropertyChanged(); } }
         private int? _Nights;
@@ -108,13 +110,30 @@ namespace HotelManagementApp.ViewModel
                 DataProvider.Instance.DB.SaveChanges();
                 SelectedReservation = null;
                 SelectedBill = null;
+                SearchString = null;
                 PaymentWindow.Close();
+                LoadFilteredList();
             });
         }
 
         private void LoadFilteredList()
         {
-           FilteredList = Global.OnGoingReservationsList;
+            var list = new ObservableCollection<RoomsReservation>();
+            if (string.IsNullOrEmpty(SearchString))
+            {
+                list = Global.OnGoingReservationsList;
+            }
+            else
+            {
+                foreach(var item in Global.OnGoingReservationsList)
+                {
+                    if(item.Room.RoomNum.StartsWith(SearchString))
+                    {
+                        list.Add(item);
+                    }
+                }
+            }
+            FilteredList = list;
         }
     }
 }
