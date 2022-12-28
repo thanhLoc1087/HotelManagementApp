@@ -114,15 +114,7 @@ namespace HotelManagementApp.ViewModel
 
         private void LoadFilteredList()
         {
-            ObservableCollection<RoomsReservation> list = new ObservableCollection<RoomsReservation>();
-            foreach(var item in Global.ReservationsList)
-            {
-                if(item.BillDetail.Status == "On-Going")
-                {
-                    list.Add(item);
-                }
-            }
-            FilteredList = list;
+           FilteredList = Global.OnGoingReservationsList;
         }
     }
 }
