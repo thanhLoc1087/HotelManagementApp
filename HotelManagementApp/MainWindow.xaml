@@ -794,7 +794,7 @@
                                         <RowDefinition Height="*"/>
                                         <RowDefinition Height="*"/>
                                         <RowDefinition Height="3.2*"/>
-                                        <RowDefinition Height="*"/>
+                                        <RowDefinition Height="1.2*"/>
                                         <RowDefinition Height="1.2*"/>
                                     </Grid.RowDefinitions>
                                     <Grid.ColumnDefinitions>
@@ -845,7 +845,6 @@
                                        Text="{Binding SelectedBill.Customer.CCCD}" />
                                     <DataGrid Grid.Row="3" Grid.ColumnSpan="2"
                                               Margin="10" 
-                                              Background="LightGreen" 
                                               AutoGenerateColumns="False"
                                               ItemsSource="{Binding SelectedBill.RoomsReservations}">
                                         <DataGrid.RowStyle>
@@ -2056,7 +2055,7 @@
                                             <StackPanel Margin="40,20,40,12">
                                                 <TextBlock Text="Bill details" FontSize="16" Foreground="#FF4F00FF" FontWeight="DemiBold" Margin="0,0,0,8"/>
                                                 <TextBlock Text="{Binding SelectedItem.ID, StringFormat='ID: {0}'}" FontSize="14" Margin="4,0,0,4"/>
-                                                <TextBlock Text="{Binding SelectedItem.TotalMoney, StringFormat='Total: {0}'}" FontSize="14" Margin="4,0,0,4" Foreground="#FF4F00FF"/>
+                                                <TextBlock Text="{Binding SelectedItem.TotalMoney, StringFormat='Total: {0:C0}',ConverterCulture=vi-VN}" FontSize="14" Margin="4,0,0,4" Foreground="#FF4F00FF"/>
                                                 <TextBlock Text="{Binding SelectedItem.Status, StringFormat='Status: {0}'}" FontSize="14" Margin="4,0,0,4"/>
                                             </StackPanel>
                                         </Grid>
