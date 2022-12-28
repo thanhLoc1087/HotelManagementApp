@@ -1,4 +1,4 @@
-﻿using HotelManagementApp.Model;
+using HotelManagementApp.Model;
 using HotelManagementApp.View;
 using System;
 using System.Collections.Generic;
