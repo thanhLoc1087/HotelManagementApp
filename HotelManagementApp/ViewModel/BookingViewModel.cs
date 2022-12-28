@@ -1,4 +1,4 @@
-﻿using HotelManagementApp.Model;
+﻿﻿using HotelManagementApp.Model;
 using HotelManagementApp.View.Reservation;
 using System;
 using System.Collections.Generic;
@@ -9,7 +9,6 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Input;
-using System.Windows.Media.TextFormatting;
 using System.Xml.Schema;
 
 namespace HotelManagementApp.ViewModel
@@ -47,10 +46,18 @@ namespace HotelManagementApp.ViewModel
         private DateTime? _CheckOutDate = null;
         public DateTime? CheckOutDate { get => _CheckOutDate; set { _CheckOutDate = value; LoadFilteredList(); OnPropertyChanged(); } }
         private DateTime? _CheckOutTime = null;
-        public DateTime? CheckOutTime { get => _CheckOutTime; set { _CheckOutTime = value; LoadFilteredList(); OnPropertyChanged(); } }
+        public DateTime? CheckOutTime { get => _CheckOutTime; set {
+                _CheckOutTime = null;
+                if (CheckOutDate == CheckInDate && value > CheckInTime)
+                {
+                    _CheckOutTime = value;
+                    LoadFilteredList();
+                    OnPropertyChanged();
+                }
+            } }
         private decimal? _Total = 0;
-        public decimal? Total { get => _Total; set { _Total = value; OnPropertyChanged(); } }
-        private string _CCCD;
+        public decimal? Total {get => _Total; set { _Total = value; OnPropertyChanged(); } }
+        private string _CCCD = "";
         public string CCCD
         {
             get => _CCCD;
@@ -91,14 +98,14 @@ namespace HotelManagementApp.ViewModel
         }
 
         private Room _SelectedRoom;
-        public Room SelectedRoom
-        {
+        public Room SelectedRoom 
+        { 
             get => _SelectedRoom;
-            set
+            set 
             {
                 _SelectedRoom = value;
                 var temp = PendingReservationsList.Where(x => x.Room == value).FirstOrDefault();
-                if (CheckInTime != null && CheckInDate != null && CheckOutDate != null && CheckOutTime != null)
+                if(CheckInTime != null && CheckInDate != null && CheckOutDate != null && CheckOutTime != null)
                 {
                     if (_SelectedRoom != null)
                     {
@@ -122,9 +129,9 @@ namespace HotelManagementApp.ViewModel
                         }
                     }
                 }
-
+                
                 OnPropertyChanged();
-            }
+            } 
         }
         AddReservationWindow reservationWindow = new AddReservationWindow();
 
@@ -157,7 +164,7 @@ namespace HotelManagementApp.ViewModel
             BookingCommand = new RelayCommand<object>((p) =>
             {
 
-                if (PendingReservationsList == null || PendingReservationsList.Count() == 0 || string.IsNullOrEmpty(CustomerName) || string.IsNullOrEmpty(PhoneNum) || string.IsNullOrEmpty(CCCD) || CheckInDate == null || CheckInTime == null || CheckInDate == null || CheckOutDate == null)
+                if (PendingReservationsList == null || PendingReservationsList.Count() ==0 || string.IsNullOrEmpty(CustomerName) || string.IsNullOrEmpty(PhoneNum) || string.IsNullOrEmpty(CCCD) || CheckInDate == null || CheckInTime == null || CheckInDate == null || CheckOutDate == null)
                 {
                     return false;
                 }
@@ -205,12 +212,13 @@ namespace HotelManagementApp.ViewModel
                     Deleted = false,
                     Status = "On-Going",
                     TotalMoney = Total,
+                    BillDate = DateTime.Now,
                 };
 
                 // Create & save new room reservation
                 foreach (var item in PendingReservationsList)
                 {
-                    var room = DataProvider.Instance.DB.Rooms.Where(x => x.ID == item.Room.ID);
+                    var room = DataProvider.Instance.DB.Rooms.Where( x=> x.ID == item.Room.ID);
                     Global.RoomsList.Remove(item.Room);
                     item.Room.Status = "Booked";
                     Global.RoomsList.Add(item.Room);
@@ -219,8 +227,8 @@ namespace HotelManagementApp.ViewModel
                     item.CheckOutTime = CheckOutDate.Value.Date.Add(CheckOutTime.Value.TimeOfDay);
                     billDetail.TotalMoney = Total;
                     DataProvider.Instance.DB.RoomsReservations.Add(item);
-                    Global.OnGoingReservationsList.Add(item);
                     Global.ReservationsList.Add(item);
+                    Global.OnGoingReservationsList.Add(item);
                     Global.OnStaticPropertyChanged("ReservationsList");
                 }
                 Global.BillsList.Add(billDetail);
@@ -232,7 +240,7 @@ namespace HotelManagementApp.ViewModel
                 PendingReservationsList.Clear();
             });
 
-            RemoveBtn = new RelayCommand<object>((p) => { return true; }, (p) =>
+            RemoveBtn = new RelayCommand<object>((p) => true, (p) =>
             {
                 var IncomingCheckInTime = CheckInDate.Value.Date.Add(CheckInTime.Value.TimeOfDay);
                 var IncomingCheckOutTime = CheckOutDate.Value.Date.Add(CheckOutTime.Value.TimeOfDay);
@@ -241,7 +249,7 @@ namespace HotelManagementApp.ViewModel
                 PendingReservationsList.Remove((RoomsReservation)p);
             });
         }
-
+       
         void LoadFilteredList()
         {
             FilteredList = Global.RoomsList;
@@ -322,7 +330,7 @@ namespace HotelManagementApp.ViewModel
 
         private void LoadSuggestionsList()
         {
-            if (CCCD != null)
+            if(CCCD != null)
             {
                 SuggestionsList = new ObservableCollection<string>();
                 foreach (var item in Global.CustomersList)
@@ -347,7 +355,7 @@ namespace HotelManagementApp.ViewModel
                 {
                     if(item.Status == "Available")
                     {
-                        list.Add(item);
+                        list.Add(item);                        
                     }
                 }
             }

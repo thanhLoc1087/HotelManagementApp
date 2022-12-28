@@ -20,8 +20,26 @@ namespace HotelManagementApp.ViewModel
         public string NewPassword { get => _NewPassword; set { _NewPassword = value; OnPropertyChanged(); } }
         private string _ConfirmPassword;
         public string ConfirmPassword { get => _ConfirmPassword; set { _ConfirmPassword = value; OnPropertyChanged(); } }
+        private string _hotelName = Const.hotelName;
+        public string HotelName { get => _hotelName; set { _hotelName = value; OnPropertyChanged(); } }
+        private string _hotelMoto = Const.hotelMoto;
+        public string HotelMoto { get => _hotelMoto; set { _hotelMoto = value; OnPropertyChanged(); } }
+        private string _hotelPhone = Const.hotelPhone;
+        public string HotelPhone { get => _hotelPhone; set { _hotelPhone = value; OnPropertyChanged(); } }
+        private string _hotelMail = Const.hotelMail;
+        public string HotelEmail { get => _hotelMail; set { _hotelMail = value; OnPropertyChanged(); } }
+        private string _hotelAddress = Const.hotelAddress;
+        public string HotelAddress { get => _hotelAddress; set { _hotelAddress = value; OnPropertyChanged(); } }
+        private string _loginFailed = Const.loginMsg;
+        public string LoginFailed { get => _loginFailed; set { _loginFailed = value; OnPropertyChanged(); } }
+        private string _chartFailed = Const.statErrorMsg;
+        public string ChartFailed { get => _chartFailed; set { _chartFailed = value; OnPropertyChanged(); } }
+        private string _successMsg;
+        public string SuccessMsg { get => _successMsg; set { _successMsg = value; OnPropertyChanged(); } }
         public ICommand LogoutCommand { get; set; }
         public ICommand ChangePasswordCommand { get; set; }
+        public ICommand SaveChanges { get; set; }
+        public ICommand CancelChanges { get; set; }
 
         public SettingsViewModel()
         {
@@ -32,7 +50,7 @@ namespace HotelManagementApp.ViewModel
                 Application.Current.Shutdown();
             }
             );
-
+            
             ChangePasswordCommand = new RelayCommand<object>((p) =>
             {
                 var hashedPassword = MD5Hash(Base64Encode(CurrentPassword));
@@ -55,6 +73,69 @@ namespace HotelManagementApp.ViewModel
                 CurrentPassword = NewPassword = ConfirmPassword = null;
             }
             );
+            SaveChanges = new RelayCommand<object>((p) =>
+            {
+                if (string.IsNullOrEmpty(HotelAddress) ||
+                string.IsNullOrEmpty(HotelEmail) ||
+                string.IsNullOrEmpty(HotelMoto) ||
+                string.IsNullOrEmpty(HotelName) ||
+                string.IsNullOrEmpty(HotelPhone) ||
+                string.IsNullOrEmpty(LoginFailed) ||
+                string.IsNullOrEmpty(ChartFailed)) 
+                {
+                    SuccessMsg = "All fields must not be empty.";
+                    return false;
+                }
+                if (
+                HotelAddress == Const.hotelName ||
+                HotelMoto == Const.hotelMoto ||
+                HotelPhone == Const.hotelPhone ||
+                HotelEmail == Const.hotelMail ||
+                HotelAddress == Const.hotelAddress ||
+                LoginFailed == Const.loginMsg ||
+                ChartFailed == Const.statErrorMsg)
+                {
+                    SuccessMsg = "";
+                    return false;
+                }
+                return true;
+            }, (p) =>
+            {
+                Const.hotelName = HotelAddress;
+                Const.hotelMoto = HotelMoto;
+                Const.hotelPhone = HotelPhone;
+                Const.hotelMail = HotelEmail;
+                Const.hotelAddress = HotelAddress;
+                Const.loginMsg = LoginFailed;
+                Const.statErrorMsg = ChartFailed;
+                SuccessMsg = "Successfully save changes!";
+            });
+            CancelChanges = new RelayCommand<object>((p) =>
+            {
+                if (
+                HotelAddress == Const.hotelName ||
+                HotelMoto == Const.hotelMoto ||
+                HotelPhone == Const.hotelPhone ||
+                HotelEmail == Const.hotelMail ||
+                HotelAddress == Const.hotelAddress ||
+                LoginFailed == Const.loginMsg ||
+                ChartFailed == Const.statErrorMsg)
+                {
+                    SuccessMsg = "";
+                    return false;
+                }
+                return true;
+            }, (p) =>
+            {
+                HotelAddress = Const.hotelName;
+                HotelMoto = Const.hotelMoto;
+                HotelPhone = Const.hotelPhone;
+                HotelEmail = Const.hotelMail;
+                HotelAddress = Const.hotelAddress;
+                LoginFailed = Const.loginMsg;
+                ChartFailed = Const.statErrorMsg;
+                SuccessMsg = "";
+            });
         }
 
         private string MD5Hash(string input)

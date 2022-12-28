@@ -15,6 +15,8 @@ namespace HotelManagementApp
             StaticPropertyChanged?.Invoke(null, new PropertyChangedEventArgs(propertyName));
         }
         public static Account ActiveAccount;
+        static private bool _isAdmin;
+        static public bool IsAdmin { get => _isAdmin; set { _isAdmin = value; OnStaticPropertyChanged(); } }
         static public Visibility _adminVisibility = Visibility.Visible;
         static public Visibility AdminVisibility
         {
