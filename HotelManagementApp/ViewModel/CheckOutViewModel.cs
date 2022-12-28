@@ -111,9 +111,10 @@ namespace HotelManagementApp.ViewModel
                 PaymentWindow.Close();
             });
         }
+
         private void LoadFilteredList()
         {
-            FilteredList = Global.OnGoingReservationsList;
+           FilteredList = Global.OnGoingReservationsList;
         }
     }
 }

@@ -216,18 +216,12 @@
                                             </LinearGradientBrush>
                                         </materialDesign:Card.Background>
                                     </materialDesign:Card>
-                                    <Label Content="ID" 
-                                           Margin="59,78,407,139"
+                                    <TextBlock  Text="{Binding bestSeller.ID, StringFormat='Mã {0}'}"
+                                           Margin="56,80,360,140"
                                        FontSize="22"
                                        Foreground="#DDF9F9F9"
-                                       RenderTransformOrigin="0.5,0.5"
-                                           HorizontalContentAlignment="Center"/>
-                                    <Label Content="{Binding bestSeller.ID}" 
-                                           Margin="59,100,407,110"
-                                       FontSize="22"
-                                       Foreground="#DDF9F9F9"
-                                       RenderTransformOrigin="0.5,0.5"
-                                           HorizontalContentAlignment="Center"/>
+                                       RenderTransformOrigin="0.5,0.5">
+                                    </TextBlock>
                                     <Label Width="326"
                                        Height="33"
                                        Margin="175,78,0,0"
@@ -244,11 +238,13 @@
                                        FontSize="22"
                                        Foreground="#DDF9F9F9"
                                        RenderTransformOrigin="0.5,0.5"/>
-                                    <Label Content="{Binding bestSeller.Unit}" 
+                                    <TextBlock 
                                            Margin="175,157,206,53"
                                        FontSize="22"
                                        Foreground="#DDF9F9F9"
-                                       RenderTransformOrigin="0.5,0.5"/>
+                                       RenderTransformOrigin="0.5,0.5">
+                                        <Run Text="{Binding bestSellerQuantity}"/> <Run Text="{Binding bestSeller.Unit}" />
+                                    </TextBlock>
                                     <TextBlock Text="{Binding bestSeller.Price, StringFormat=C0, ConverterCulture=vi-VN}" 
                                            Margin="175,116,33,96"
                                            FontWeight="DemiBold"
@@ -305,7 +301,7 @@
                                         Margin="263,30,-117,10"
                                         Hoverable="True"
                                         InnerRadius="5"
-                                        FontSize="12"
+                                        FontSize="12" 
                                         LegendLocation="Bottom"
                                         Series="{Binding SeriesCollectionPie}" 
                                         StartingRotationAngle="0"/>
@@ -323,12 +319,19 @@
                                         <ComboBoxItem Content="Month"/>
                                         <ComboBoxItem Content="Year"/>
                                     </ComboBox>
-                                    <Calendar Margin="2,54,168,0"
+                                    <StackPanel Orientation="Vertical" Margin="2,54,168,0">
+                                        <Calendar Visibility="{Binding isDate}"
                                               VerticalAlignment="Top"
                                               materialDesign:HintAssist.Hint="Filter"
                                               Style="{StaticResource MaterialDesignCalendarPortraitBase}"
                                               SelectedDate="{Binding caSelectedDate, UpdateSourceTrigger=PropertyChanged}"
-                                              DisplayMode="{Binding caDisplayMode, UpdateSourceTrigger=PropertyChanged}"/>
+                                              DisplayDateEnd="{x:Static sys:DateTime.Today}" >
+                                        </Calendar>
+                                        <StackPanel Margin="16, 4,64,0" Visibility="{Binding isNotDate}">
+                                            <ComboBox ItemsSource="{Binding months}" Text="{Binding selectedMonth}" Visibility="{Binding isMonth}"/>
+                                            <ComboBox ItemsSource="{Binding years}" Text="{Binding selectedYear}" Margin="0,4,0,0"/>
+                                        </StackPanel>
+                                    </StackPanel>
                                     <TextBlock Text="{Binding tbkStatError, UpdateSourceTrigger=PropertyChanged}" 
                                                Margin="263,13,-117,318"
                                                Foreground="Red"
@@ -1129,10 +1132,10 @@
                                                         <DataTemplate>
                                                             <Border x:Name="RoomBorder" Height="210" Width="180"
                                                                 Background="White"
-                                                                BorderThickness="1" BorderBrush="Bisque"
+                                                                BorderThickness="2" BorderBrush="Bisque"
                                                                 CornerRadius="4" Padding="8" Cursor="Hand">
                                                                 <Border.Effect>
-                                                                    <DropShadowEffect BlurRadius="12" ShadowDepth="0" Color="#FFD8AFF4" />
+                                                                    <DropShadowEffect BlurRadius="12" ShadowDepth="0" Color="#bdbdbd" />
                                                                 </Border.Effect>
                                                                 <StackPanel>
                                                                     <Image Stretch="Uniform"
@@ -1557,7 +1560,7 @@
                                                                     <DatePicker Width="auto" Height="auto"
                                                                         DisplayDateStart="{x:Static sys:DateTime.Today}"
                                                                         materialDesign:HintAssist.Hint="Check In Date"
-                                                                        SelectedDate="{Binding CheckInDate}"
+                                                                        SelectedDate="{Binding CheckInDate, StringFormat='dd/MM/yyyy'}"
                                                                         Style="{StaticResource MaterialDesignFloatingHintDatePicker}" />
                                                                 </StackPanel>
                                                                 <StackPanel Grid.Row="1" Orientation="Horizontal">
@@ -1570,7 +1573,7 @@
                                                                     DisplayDateStart="{Binding CheckInDate}"                                   
                                                                     VerticalAlignment="Center"
                                                                     materialDesign:HintAssist.Hint="Check In Date"
-                                                                    SelectedDate="{Binding CheckOutDate}"
+                                                                    SelectedDate="{Binding CheckOutDate, StringFormat='dd/MM/yyyy'}"
                                                                     Style="{StaticResource MaterialDesignFloatingHintDatePicker}" />
                                                                 </StackPanel>
                                                             </StackPanel>
@@ -1609,7 +1612,7 @@
                                                      Margin="4" Height="auto" Width="auto">
                                                             <ListBox.ItemContainerStyle>
                                                                 <Style TargetType="ListBoxItem">
-                                                                    <Setter Property="IsEnabled" Value="False"/>
+                                                                    <Setter Property="IsEnabled" Value="True"/>
                                                                 </Style>
                                                             </ListBox.ItemContainerStyle>
                                                             <ListBox.ItemsPanel>
@@ -1621,7 +1624,7 @@
                                                                 <DataTemplate>
                                                                     <Border MaxHeight="150" Width="300" Grid.Row="1" Background="White" BorderThickness="1" BorderBrush="Bisque" Cursor="Hand" CornerRadius="4">
                                                                         <Border.Effect>
-                                                                            <DropShadowEffect BlurRadius="12" ShadowDepth="0" Color="#FFD8AFF4" />
+                                                                            <DropShadowEffect BlurRadius="12" ShadowDepth="0" Color="#bdbdbd" />
                                                                         </Border.Effect>
                                                                         <Grid>
                                                                             <Grid.ColumnDefinitions>
@@ -1646,7 +1649,10 @@
                                                                                 </TextBlock>
                                                                             </StackPanel>
                                                                             <Grid Grid.Column="2">
-                                                                                <Button Grid.Column="5" VerticalAlignment="Center" Command="{Binding Path=DataContext.RemoveBtn, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type ItemsControl}}}" CommandParameter="{Binding}" Margin="0" Padding="0" Style="{StaticResource MaterialDesignToolButton}">
+                                                                                <Button Grid.Column="5" VerticalAlignment="Center" 
+                                                                                        Command="{Binding Path=DataContext.RemoveBtn, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type ItemsControl}}}" 
+                                                                                        CommandParameter="{Binding}" Margin="0" Padding="0" 
+                                                                                        Style="{StaticResource MaterialDesignToolButton}">
                                                                                     <materialDesign:PackIcon Width="24" Height="36" HorizontalAlignment="Left" VerticalAlignment="Center" Foreground="Red" Kind="DeleteOutline" />
                                                                                 </Button>
                                                                             </Grid>
@@ -4392,9 +4398,9 @@
 
                             </Grid>
                             <Grid Grid.Column="0"
-                                  Margin="35">
+                                  Margin="36,60,36,60">
                                 <GroupBox Background="AliceBlue"
-                                          Header="Hotel Management"
+                                          Header="Managing"
                                           Style="{DynamicResource MaterialDesignCardGroupBox}">
                                     <GroupBox.HeaderTemplate>
                                         <DataTemplate>
@@ -4410,9 +4416,57 @@
                                             </StackPanel>
                                         </DataTemplate>
                                     </GroupBox.HeaderTemplate>
-                                    <Image HorizontalAlignment="Center"
-                                           VerticalAlignment="Center" />
-                                    <!--Source="Image/Screenshot 2022-01-03 175325.png"-->
+                                    <Grid>
+                                        <Grid.ColumnDefinitions>
+                                                <ColumnDefinition/>
+                                                <ColumnDefinition/>
+                                            </Grid.ColumnDefinitions>
+                                            <StackPanel Grid.Column="0" Orientation="Vertical" Margin="8">
+                                                <Label Content="Hotel information" Foreground="{DynamicResource PrimaryHueDarkBrush}" FontSize="16" FontWeight="Bold" Margin="0,0,0,16"/>
+                                                <StackPanel Orientation="Horizontal">
+                                                    <Label Content="Name: " Width="80"/>
+                                                <TextBox Text="{Binding HotelName, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource MaterialDesignTextBox}" Width="240" Margin="0,0,0,12" Focusable="{Binding IsAdmin, Source={StaticResource Const}}"/>
+                                                </StackPanel>
+                                                <StackPanel Orientation="Horizontal">
+                                                    <Label Content="Tagline: " Width="80"/>
+                                                <TextBox Text="{Binding HotelMoto, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource MaterialDesignTextBox}" Width="240" Margin="0,0,0,12" Focusable="{Binding IsAdmin, Source={StaticResource Const}}"/>
+                                                </StackPanel>
+                                                <StackPanel Orientation="Horizontal">
+                                                    <Label Content="Phone: " Width="80"/>
+                                                <TextBox Text="{Binding HotelPhone, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource MaterialDesignTextBox}" Width="240" Margin="0,0,0,12" Focusable="{Binding IsAdmin, Source={StaticResource Const}}"/>
+                                                </StackPanel>
+                                                <StackPanel Orientation="Horizontal">
+                                                    <Label Content="Email: " Width="80"/>
+                                                <TextBox Text="{Binding HotelEmail, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource MaterialDesignTextBox}" Width="240" Margin="0,0,0,12" Focusable="{Binding IsAdmin, Source={StaticResource Const}}"/>
+                                                </StackPanel>
+                                                <StackPanel Orientation="Horizontal">
+                                                    <Label Content="Address: " Width="80"/>
+                                                <TextBox Text="{Binding HotelAddress, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource MaterialDesignTextBox}" Width="240" Margin="0,0,0,12" TextWrapping="WrapWithOverflow" Focusable="{Binding IsAdmin, Source={StaticResource Const}}"/>
+                                                </StackPanel>
+                                            </StackPanel>
+                                        <StackPanel Grid.Column="1" Orientation="Vertical" Margin="8">
+                                            <Label Content="Messages" Foreground="{DynamicResource PrimaryHueDarkBrush}" FontSize="16" FontWeight="Bold" Margin="0,0,0,16"/>
+                                            <StackPanel Orientation="Horizontal"  Margin="0,0,0,24">
+                                                <Label Content="Login failed: " Width="100"/>
+                                                <TextBox Text="{Binding LoginFailed, Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource MaterialDesignTextBox}" Width="240" 
+                                                             materialDesign:HintAssist.HelperText="Show this when user enters wrong Username or Password"
+                                                             materialDesign:HintAssist.HelperTextFontSize="9" Focusable="{Binding IsAdmin, Source={StaticResource Const}}"/>
+                                            </StackPanel>
+                                            <StackPanel Orientation="Horizontal"  Margin="0,0,0,24">
+                                                <Label Content="Statistic failed: " Width="100"/>
+                                                <TextBox Text="{Binding ChartFailed, Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource MaterialDesignTextBox}" Width="240" 
+                                                             materialDesign:HintAssist.HelperText="Show this when there is no data to be shown in the charts"
+                                                             materialDesign:HintAssist.HelperTextFontSize="9" Focusable="{Binding IsAdmin, Source={StaticResource Const}}"/>
+                                            </StackPanel>
+                                        </StackPanel>
+                                        <StackPanel Grid.Column="1" Orientation="Vertical" VerticalAlignment="Bottom" HorizontalAlignment="Right" Margin="0,0,16,12" Visibility="{Binding AdminVisibility, Source={StaticResource Const}}">
+                                            <TextBlock VerticalAlignment="Bottom" Text="{Binding SuccessMsg}" Foreground="IndianRed"/>
+                                            <StackPanel Orientation="Horizontal">
+                                                <Button Content="Save changes" Width="120" Command="{Binding SaveChanges}"/>
+                                                <Button Content="Cancel" Width="120" Command="{Binding CancelChanges}" Margin="16,0,0,0" Background="Red"/>
+                                            </StackPanel>
+                                        </StackPanel>
+                                    </Grid>
                                 </GroupBox>
                             </Grid>
 
