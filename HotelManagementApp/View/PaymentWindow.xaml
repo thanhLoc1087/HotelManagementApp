@@ -423,7 +423,7 @@
                     Grid.Column="1"
                     Width="100"
                     Height="25"
-                    Margin="0,0,0,20"
+                    Margin="0,0,50,20"
                     Padding="0"
                     HorizontalAlignment="Right"
                     VerticalAlignment="Bottom"
@@ -435,11 +435,23 @@
             <Button Grid.Column="1"
                     Width="100"
                     Height="25"
-                    Margin="10,0,0,20"
+                    Margin="0,0,0,20"
                     HorizontalAlignment="Left"
                     VerticalAlignment="Bottom"
                     CommandParameter="{Binding ElementName=PaymentView}"
                     Content="CANCEL">
+            <Button x:Name="btnExportPdf"
+                    Grid.Column="1"
+                    Width="32"
+                    Height="25"
+                    Margin="0,0,0,20"
+                    Padding="0"
+                    HorizontalAlignment="Right"
+                    VerticalAlignment="Bottom"
+                    Background="OrangeRed"
+                    Command="{Binding ExportPdfBtn}"
+                    Content="PDF">
+             </Button>
                 <i1:Interaction.Triggers>
                     <i1:EventTrigger EventName="Click">
                         <i2:CallMethodAction MethodName="Close"
