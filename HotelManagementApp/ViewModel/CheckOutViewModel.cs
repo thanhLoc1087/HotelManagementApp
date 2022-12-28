@@ -103,6 +103,7 @@ namespace HotelManagementApp.ViewModel
                     Global.RoomsList.Remove(item.Room);
                     item.Room.Status = "Available";
                     Global.RoomsList.Add(item.Room);
+                    Global.OnGoingReservationsList.Remove(item);
                 }
                 DataProvider.Instance.DB.SaveChanges();
                 SelectedReservation = null;
