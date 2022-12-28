@@ -145,7 +145,7 @@ namespace HotelManagementApp.ViewModel
                 {
                     return false;
                 }
-                var list = DataProvider.Instance.DB.RoomsReservations.Where(x => x.BillDetail.Status == "On-Going" && x.Room.RoomNum == RoomNum);
+                var list = Global.RoomsList.Where(x => x.RoomNum == RoomNum);
                 if (list == null || list.Count() == 0)
                 {
                     return false;
@@ -157,10 +157,13 @@ namespace HotelManagementApp.ViewModel
                 var Sbill = Global.BillsList.Where(x => x.ID == DBbill.ID).FirstOrDefault();
                 foreach (var item in PendingOrdersList)
                 {
+                    //some logic
                     DataProvider.Instance.DB.Orders.Add(item);
                     DBbill.Orders.Add(item);
                     DBbill.TotalMoney += item.TotalPrice;
                     Global.OrdersList.Add(item);
+                    Sbill.Orders.Add(item);
+                    Sbill.TotalMoney += item.TotalPrice;
                 }
                 DataProvider.Instance.DB.SaveChanges();
                 RoomNum = null;
