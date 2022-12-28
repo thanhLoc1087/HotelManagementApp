@@ -57,7 +57,8 @@
                 <ColumnDefinition Width="99*" />
                 <ColumnDefinition Width="101*" />
             </Grid.ColumnDefinitions>
-            <TabControl Grid.ColumnSpan="2"
+            <TabControl Name="Tab"
+                        Grid.ColumnSpan="2"
                         Margin="0,0,0,0.2"
                         materialDesign:ColorZoneAssist.Mode="PrimaryMid"
                         materialDesign:ShadowAssist.ShadowDepth="Depth0"
@@ -854,7 +855,7 @@
                                                             Header="Room Num" />
                                             <DataGridTextColumn Binding="{Binding Room.RoomType.Name}"
                                                             Header="Room Type" />
-                                            <DataGridTextColumn Binding="{Binding Room.RoomType.Price}"
+                                            <DataGridTextColumn Binding="{Binding Room.RoomType.Price, StringFormat=C0, ConverterCulture=vi-VN}"
                                                             Header="Price"/>
                                         </DataGrid.Columns>
                                     </DataGrid>
