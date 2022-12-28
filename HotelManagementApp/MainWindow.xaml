@@ -959,9 +959,9 @@
                                                             Header="  ID" />
                                         <DataGridTextColumn Binding="{Binding Room.RoomNum}"
                                                             Header="Room Num" />
-                                        <DataGridTextColumn Binding="{Binding CheckInTime}"
+                                        <DataGridTextColumn Binding="{Binding CheckInTime, StringFormat='dd/MM/yyyy'}"
                                                             Header="Check In Time" />
-                                        <DataGridTextColumn Binding="{Binding CheckOutTime}"
+                                        <DataGridTextColumn Binding="{Binding CheckOutTime, StringFormat='dd/MM/yyyy'}"
                                                             Header="Check Out Time" />
                                         <DataGridTextColumn Binding="{Binding BillDetail.Customer.Name}"
                                                             Header="Customer Name" />
@@ -1560,19 +1560,20 @@
                                                                     <DatePicker Width="auto" Height="auto"
                                                                         DisplayDateStart="{x:Static sys:DateTime.Today}"
                                                                         materialDesign:HintAssist.Hint="Check In Date"
-                                                                        SelectedDate="{Binding CheckInDate, StringFormat='dd/MM/yyyy'}"
-                                                                        Style="{StaticResource MaterialDesignFloatingHintDatePicker}" />
+                                                                        SelectedDate="{Binding CheckInDate, StringFormat='dd MMM yyyy'}"
+                                                                        Style="{StaticResource MaterialDesignFloatingHintDatePicker}">
+                                                                    </DatePicker>
                                                                 </StackPanel>
                                                                 <StackPanel Grid.Row="1" Orientation="Horizontal">
                                                                     <Label Width="auto"
                                                                        Margin="0,10,0,0"
                                                                    VerticalAlignment="Center"
-                                                                   Content="Check In Date: " />
+                                                                   Content="Check Out Date: " />
                                                                     <DatePicker
                                                                     Width="auto"
                                                                     DisplayDateStart="{Binding CheckInDate}"                                   
                                                                     VerticalAlignment="Center"
-                                                                    materialDesign:HintAssist.Hint="Check In Date"
+                                                                    materialDesign:HintAssist.Hint="Check Out Date"
                                                                     SelectedDate="{Binding CheckOutDate, StringFormat='dd/MM/yyyy'}"
                                                                     Style="{StaticResource MaterialDesignFloatingHintDatePicker}" />
                                                                 </StackPanel>

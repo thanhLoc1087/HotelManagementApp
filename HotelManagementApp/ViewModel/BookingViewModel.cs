@@ -47,7 +47,7 @@ namespace HotelManagementApp.ViewModel
         public DateTime? CheckOutDate { get => _CheckOutDate; set { _CheckOutDate = value; LoadFilteredList(); OnPropertyChanged(); } }
         private DateTime? _CheckOutTime = null;
         public DateTime? CheckOutTime { get => _CheckOutTime; set {
-                _CheckOutTime = null;
+                _CheckOutTime = value;
                 if (CheckOutDate == CheckInDate && value > CheckInTime)
                 {
                     _CheckOutTime = value;
@@ -107,7 +107,7 @@ namespace HotelManagementApp.ViewModel
                 var temp = PendingReservationsList.Where(x => x.Room == value).FirstOrDefault();
                 if(CheckInTime != null && CheckInDate != null && CheckOutDate != null && CheckOutTime != null)
                 {
-                    if (_SelectedRoom != null)
+                    if (_SelectedRoom != null && (_SelectedRoom.Status == "Booked" || _SelectedRoom.Status == "Available"))
                     {
                         if (temp == null)
                         {
@@ -353,10 +353,7 @@ namespace HotelManagementApp.ViewModel
                 var temp = item.RoomsReservations.Where(x => !(x.CheckOutTime <= IncomingCheckInTime || x.CheckInTime >= IncomingCheckOutTime) && x.Deleted == false && x.BillDetail.Status == "On-Going");
                 if (temp == null || temp.Count() == 0)
                 {
-                    if(item.Status == "Available")
-                    {
-                        list.Add(item);                        
-                    }
+                    list.Add(item);                        
                 }
             }
             return list;
