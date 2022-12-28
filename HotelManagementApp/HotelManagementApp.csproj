@@ -170,6 +170,7 @@
     <Compile Include="ViewModel\AddRoomTypes\AddRoomTypes.cs" />
     <Compile Include="ViewModel\AddRoom\AddRoomViewModel.cs" />
     <Compile Include="ViewModel\BaseViewModel.cs" />
+    <Compile Include="ViewModel\BillReportViewModel.cs" />
     <Compile Include="ViewModel\BookingViewModel.cs" />
     <Compile Include="ViewModel\CheckOutViewModel.cs" />
     <Compile Include="ViewModel\CustomersViewModel.cs" />

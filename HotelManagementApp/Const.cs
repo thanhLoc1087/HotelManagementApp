@@ -53,5 +53,39 @@ namespace HotelManagementApp
             get => _statErrorMsg;
             set { _statErrorMsg = value; OnStaticPropertyChanged("statErrorMsg"); }
         }
+        static public string _hotelName = "Hotel";
+        static public string hotelName
+        {
+            get => _hotelName;
+            set { _hotelName = value; OnStaticPropertyChanged("hotelName"); }
+        }
+        static public string _hotelMoto = "One of the hotels";
+        static public string hotelMoto
+        {
+            get => _hotelMoto;
+            set { _hotelMoto = value; OnStaticPropertyChanged("hotelMoto"); }
+        }
+        static public string _hotelAddress = "123 St. Street, Ward 12, District 10,   Ho Chi Minh City";
+        static public string hotelAddress
+        {
+            get => _hotelAddress;
+            set
+            {
+                _hotelAddress = value; OnStaticPropertyChanged("hotelAddress");
+            }
+        }
+        static public string _hotelPhone = "0987654321";
+        static public string hotelPhone
+        {
+            get => _hotelPhone;
+            set { _hotelPhone = value; OnStaticPropertyChanged("hotelPhone"); }
+        }
+        static public string _hotelMail = "contact@hotel.com";
+        static public string hotelMail
+        {
+            get => _hotelMail;
+            set { _hotelMail = value; OnStaticPropertyChanged("hotelMail"); }
+        }
+        
     }
 }

@@ -49,7 +49,7 @@ namespace HotelManagementApp.ViewModel
         public DateTime? CheckOutTime { get => _CheckOutTime; set { _CheckOutTime = value; LoadFilteredList(); OnPropertyChanged(); } }
         private decimal? _Total = 0;
         public decimal? Total {get => _Total; set { _Total = value; OnPropertyChanged(); } }
-        private string _CCCD;
+        private string _CCCD = "";
         public string CCCD
         {
             get => _CCCD;
@@ -204,6 +204,7 @@ namespace HotelManagementApp.ViewModel
                     Deleted = false,
                     Status = "On-Going",
                     TotalMoney = Total,
+                    BillDate = DateTime.Now,
                 };
 
                 // Create & save new room reservation
@@ -219,7 +220,6 @@ namespace HotelManagementApp.ViewModel
                     billDetail.TotalMoney = Total;
                     DataProvider.Instance.DB.RoomsReservations.Add(item);
                     Global.ReservationsList.Add(item);
-                    Global.OnGoingReservationsList.Add(item);
                     Global.OnStaticPropertyChanged("ReservationsList");
                 }
                 Global.BillsList.Add(billDetail);

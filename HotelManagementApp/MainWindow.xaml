@@ -57,8 +57,7 @@
                 <ColumnDefinition Width="99*" />
                 <ColumnDefinition Width="101*" />
             </Grid.ColumnDefinitions>
-            <TabControl Name="Tab"
-                        Grid.ColumnSpan="2"
+            <TabControl Grid.ColumnSpan="2"
                         Margin="0,0,0,0.2"
                         materialDesign:ColorZoneAssist.Mode="PrimaryMid"
                         materialDesign:ShadowAssist.ShadowDepth="Depth0"
@@ -67,7 +66,7 @@
                         BorderThickness="0"
                         SnapsToDevicePixels="True"
                         Style="{StaticResource MaterialDesignNavigatilRailTabControl}"
-                        TabStripPlacement="Left" >
+                        TabStripPlacement="Left">
                 <!--SelectionChanged="TabControl_SelectionChanged"-->
 
                 <TabItem>
@@ -303,7 +302,6 @@
                                                      UniformCornerRadius="10" Margin="263,10,-117,-10" />
                                     <Wpf:PieChart
                                         Margin="263,30,-117,10"
-                                        DataTooltip="{x:Null}"
                                         Hoverable="True"
                                         InnerRadius="5"
                                         FontSize="12"
@@ -766,9 +764,9 @@
                             <RowDefinition Height="70*" />
                         </Grid.RowDefinitions>
                         <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="133*" />
-                            <ColumnDefinition Width="133*" />
-                            <ColumnDefinition Width="133*" />
+                            <ColumnDefinition Width="*" />
+                            <ColumnDefinition Width="*" />
+                            <ColumnDefinition Width="*" />
                         </Grid.ColumnDefinitions>
                         <Grid Grid.Row="1"
                               Grid.RowSpan="2"
@@ -788,12 +786,12 @@
                                 </Border.BitmapEffect>
                                 <Grid>
                                     <Grid.RowDefinitions>
-                                        <RowDefinition Height="auto"/>
-                                        <RowDefinition Height="auto"/>
-                                        <RowDefinition Height="auto"/>
                                         <RowDefinition Height="*"/>
-                                        <RowDefinition Height="auto"/>
-                                        <RowDefinition Height="auto"/>
+                                        <RowDefinition Height="*"/>
+                                        <RowDefinition Height="*"/>
+                                        <RowDefinition Height="3.2*"/>
+                                        <RowDefinition Height="*"/>
+                                        <RowDefinition Height="1.2*"/>
                                     </Grid.RowDefinitions>
                                     <Grid.ColumnDefinitions>
                                         <ColumnDefinition Width="auto" />
@@ -806,7 +804,7 @@
                                        HorizontalAlignment="Center"
                                        VerticalAlignment="Top"
                                        FontFamily="Bungee Inline"
-                                       FontSize="30"
+                                       FontSize="24"
                                        FontWeight="Bold"
                                        Text="BILL INFO" />
                                     <TextBlock Grid.Row="1" Grid.Column="0"
@@ -814,7 +812,7 @@
                                        HorizontalAlignment="Left"
                                        VerticalAlignment="Top"
                                        FontFamily="Bungee Inline"
-                                       FontSize="25"
+                                       FontSize="18"
                                        FontWeight="Bold"
                                        Text="Name:" />
                                     <TextBlock Grid.Row="1" Grid.Column="1"
@@ -822,7 +820,7 @@
                                        HorizontalAlignment="Left"
                                        VerticalAlignment="Top"
                                        FontFamily="Bungee Inline"
-                                       FontSize="25"
+                                       FontSize="18"
                                        FontWeight="DemiBold"
                                        Text="{Binding SelectedBill.Customer.Name}" />
                                     <TextBlock Grid.Row="2" Grid.Column="0"
@@ -830,7 +828,7 @@
                                        HorizontalAlignment="Left"
                                        VerticalAlignment="Top"
                                        FontFamily="Bungee Inline"
-                                       FontSize="25"
+                                       FontSize="18"
                                        FontWeight="Bold"
                                        Text="CCCD:" />
                                     <TextBlock Grid.Row="2" Grid.Column="1"
@@ -838,14 +836,19 @@
                                        HorizontalAlignment="Left"
                                        VerticalAlignment="Top"
                                        FontFamily="Bungee Inline"
-                                       FontSize="25"
+                                       FontSize="18"
                                        FontWeight="DemiBold"
                                        Text="{Binding SelectedBill.Customer.CCCD}" />
                                     <DataGrid Grid.Row="3" Grid.ColumnSpan="2"
-                                              Margin="10"
+                                              Margin="10" 
                                               Background="LightGreen" 
                                               AutoGenerateColumns="False"
                                               ItemsSource="{Binding SelectedBill.RoomsReservations}">
+                                        <DataGrid.RowStyle>
+                                            <Style TargetType="DataGridRow">
+                                                <Setter Property="IsHitTestVisible" Value="False"/>
+                                            </Style>
+                                        </DataGrid.RowStyle>
                                         <DataGrid.Columns>
                                             <DataGridTextColumn Binding="{Binding Room.RoomNum}"
                                                             Header="Room Num" />
@@ -861,7 +864,7 @@
                                        HorizontalAlignment="Left"
                                        VerticalAlignment="Top"
                                        FontFamily="Bungee Inline"
-                                       FontSize="25"
+                                       FontSize="18"
                                        FontWeight="Bold"
                                        Text="Nights:" />
                                     <TextBlock Grid.Row="4"
@@ -870,7 +873,7 @@
                                        HorizontalAlignment="Left"
                                        VerticalAlignment="Top"
                                        FontFamily="Bungee Inline"
-                                       FontSize="25"
+                                       FontSize="18"
                                        FontWeight="DemiBold"
                                        Text="{Binding Nights}" />
                                     <TextBlock Grid.Row="5"
@@ -879,7 +882,7 @@
                                        HorizontalAlignment="Left"
                                        VerticalAlignment="Top"
                                        FontFamily="Bungee Inline"
-                                       FontSize="25"
+                                       FontSize="20"
                                        FontWeight="Bold"
                                        Text="Total:" />
                                     <TextBlock Grid.Row="5"
@@ -888,7 +891,7 @@
                                        HorizontalAlignment="Left"
                                        VerticalAlignment="Top"
                                        FontFamily="Bungee Inline"
-                                       FontSize="25"
+                                       FontSize="20"
                                        FontWeight="DemiBold"
                                        Text="{Binding SelectedBill.TotalMoney, StringFormat={}{0:N0} VND}" />
                                 </Grid>
@@ -945,7 +948,7 @@
                                           FontSize="16"
                                           HeadersVisibility="Column"
                                           IsReadOnly="True"
-                                          ItemsSource="{Binding OnGoingReservationsList, Source={StaticResource Global}, UpdateSourceTrigger=PropertyChanged}"
+                                          ItemsSource="{Binding FilteredList}"
                                           SelectedItem="{Binding SelectedReservation}">
                                     <DataGrid.Columns>
                                         <DataGridTextColumn Binding="{Binding ID}"
@@ -1474,11 +1477,11 @@
                                             <Grid Grid.Row="1">
                                                 <Grid>
                                                     <Grid.RowDefinitions>
-                                                        <RowDefinition Height="auto"></RowDefinition>
-                                                        <RowDefinition Height="*"></RowDefinition>
-                                                        <RowDefinition Height="auto"></RowDefinition>
+                                                        <RowDefinition Height="auto"/>
+                                                        <RowDefinition Height="*"/>
+                                                        <RowDefinition Height="auto"/>
                                                     </Grid.RowDefinitions>
-                                                    <Border Height="auto" Grid.Row="0" Margin="10,20,20,0" Padding="8"
+                                                    <Border Height="auto" Grid.Row="2" Margin="10,0,20,0" Padding="8"
                                                     Background="White"
                                                     CornerRadius="20">
                                                         <Grid Margin="10,-15,0,0">
@@ -1535,7 +1538,7 @@
                                                             </StackPanel>
                                                         </Grid>
                                                     </Border>
-                                                    <Border Height="80" Grid.Row="2" Margin="10,0,20,0"
+                                                    <Border Height="80" Grid.Row="0" Margin="10,20,20,0"
                                                     Background="White"
                                                     CornerRadius="20">
                                                         <Grid VerticalAlignment="Center" Margin="10,-10,0,0">
@@ -1603,6 +1606,11 @@
                                                         <ListBox ItemsSource="{Binding PendingReservationsList, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" 
                                                      SelectedItem="{Binding Path=SelectedReservation, Mode=TwoWay}"
                                                      Margin="4" Height="auto" Width="auto">
+                                                            <ListBox.ItemContainerStyle>
+                                                                <Style TargetType="ListBoxItem">
+                                                                    <Setter Property="IsEnabled" Value="False"/>
+                                                                </Style>
+                                                            </ListBox.ItemContainerStyle>
                                                             <ListBox.ItemsPanel>
                                                                 <ItemsPanelTemplate>
                                                                     <WrapPanel IsItemsHost="True" Orientation="Vertical"/>
@@ -4260,144 +4268,16 @@
                         </Grid>
                         <Grid Grid.Row="1">
                             <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="400" />
-                                <ColumnDefinition Width="400" />
-                                <ColumnDefinition Width="400" />
-
+                                <ColumnDefinition Width="2*" />
+                                <ColumnDefinition Width="*" />
                             </Grid.ColumnDefinitions>
-                            <Grid Grid.Column="0">
+                            <Grid Grid.Column="1">
                                 <Grid.RowDefinitions>
-                                    <RowDefinition />
-                                    <RowDefinition />
+                                    <RowDefinition Height="2*"/>
                                     <RowDefinition />
                                 </Grid.RowDefinitions>
-                                <Grid Grid.Row="0">
-                                    <materialDesign:Flipper Visibility="{Binding AdminVisibility, Source={StaticResource Const}}">
-                                        <materialDesign:Flipper.FrontContent>
-                                            <Button Width="100"
-                                                    Height="auto"
-                                                    HorizontalAlignment="Center"
-                                                    VerticalAlignment="Center"
-                                                    Command="{x:Static materialDesign:Flipper.FlipCommand}">
-
-                                                <Grid>
-                                                    <Grid.ColumnDefinitions>
-                                                        <ColumnDefinition Width="16*" />
-                                                        <ColumnDefinition Width="65*" />
-                                                    </Grid.ColumnDefinitions>
-                                                    <Grid.RowDefinitions>
-                                                        <RowDefinition Height="50" />
-                                                        <RowDefinition />
-                                                    </Grid.RowDefinitions>
-                                                    <materialDesign:PackIcon Grid.RowSpan="2"
-                                                                             Grid.ColumnSpan="2"
-                                                                             Width="40"
-                                                                             Height="40"
-                                                                             HorizontalAlignment="Center"
-                                                                             VerticalAlignment="Bottom"
-                                                                             Kind="DeleteAlert" />
-                                                    <TextBlock Grid.RowSpan="2"
-                                                               Grid.ColumnSpan="2"
-                                                               HorizontalAlignment="Center"
-                                                               FontSize="12"
-                                                               FontWeight="Bold">
-                                                        CLEAR DATA
-                                                    </TextBlock>
-                                                </Grid>
-
-                                            </Button>
-                                        </materialDesign:Flipper.FrontContent>
-                                        <materialDesign:Flipper.BackContent>
-                                            <Button Width="184"
-                                                    Margin="8"
-                                                    Command="{Binding DeleteAllBillCommand}"
-                                                    Content="CONFIRM DELETE"
-                                                    Style="{StaticResource MaterialDesignFlatButton}" />
-                                        </materialDesign:Flipper.BackContent>
-                                    </materialDesign:Flipper>
-                                </Grid>
-                                <Grid Grid.Row="1">
-
-                                    <Button Width="225"
-                                            Height="105"
-                                            HorizontalAlignment="Center"
-                                            VerticalAlignment="Center"
-                                            materialDesign:ButtonAssist.CornerRadius="5"
-                                            Command="{Binding OpenBillReportWindow}">
-
-                                        <Grid>
-                                            <Grid.ColumnDefinitions>
-                                                <ColumnDefinition Width="20" />
-                                                <ColumnDefinition Width="150" />
-                                            </Grid.ColumnDefinitions>
-                                            <Grid.RowDefinitions>
-                                                <RowDefinition Height="60" />
-                                                <RowDefinition />
-                                            </Grid.RowDefinitions>
-                                            <materialDesign:PackIcon Grid.RowSpan="2"
-                                                                     Grid.ColumnSpan="2"
-                                                                     Width="65"
-                                                                     Height="65"
-                                                                     HorizontalAlignment="Center"
-                                                                     VerticalAlignment="Bottom"
-                                                                     FontWeight="Bold"
-                                                                     Kind="FileDocument" />
-                                            <TextBlock Grid.RowSpan="2"
-                                                       Grid.ColumnSpan="2"
-                                                       Width="150"
-                                                       HorizontalAlignment="Center"
-                                                       VerticalAlignment="Top"
-                                                       FontSize="25"
-                                                       FontWeight="Bold">
-                                                BILL REPORT
-                                            </TextBlock>
-                                        </Grid>
-
-                                    </Button>
-                                </Grid>
-                                <Grid Grid.Row="2">
-                                    <Button Width="225"
-                                            Height="105"
-                                            HorizontalAlignment="Center"
-                                            VerticalAlignment="Center"
-                                            materialDesign:ButtonAssist.CornerRadius="5"
-                                            Command="{Binding LogoutCommand}"
-                                            CommandParameter="{Binding ElementName=mainWindow}">
-
-                                        <Grid>
-                                            <Grid.ColumnDefinitions>
-                                                <ColumnDefinition Width="20" />
-                                                <ColumnDefinition Width="65*" />
-                                            </Grid.ColumnDefinitions>
-                                            <Grid.RowDefinitions>
-                                                <RowDefinition Height="60" />
-                                                <RowDefinition />
-                                            </Grid.RowDefinitions>
-                                            <materialDesign:PackIcon Grid.RowSpan="2"
-                                                                     Grid.ColumnSpan="2"
-                                                                     Width="65"
-                                                                     Height="65"
-                                                                     HorizontalAlignment="Center"
-                                                                     VerticalAlignment="Bottom"
-                                                                     FontWeight="Bold"
-                                                                     Kind="Logout" />
-                                            <TextBlock Grid.RowSpan="2"
-                                                       Grid.ColumnSpan="2"
-                                                       Width="108"
-                                                       HorizontalAlignment="Center"
-                                                       VerticalAlignment="Top"
-                                                       FontSize="25"
-                                                       FontWeight="Bold">
-                                                LOG OUT
-                                            </TextBlock>
-                                        </Grid>
-
-                                    </Button>
-                                </Grid>
-
-
-                            </Grid>
-                            <Grid Grid.Column="1">
+                                
+                            <Grid Grid.Row="0">
                                 <materialDesign:Flipper HorizontalAlignment="Center"
                                                         VerticalAlignment="Center">
                                     <materialDesign:Flipper.FrontContent>
@@ -4468,7 +4348,49 @@
                                     </materialDesign:Flipper.BackContent>
                                 </materialDesign:Flipper>
                             </Grid>
-                            <Grid Grid.Column="2"
+                                <Grid Grid.Row="1">
+                                    <Button Width="225"
+                                            Height="105"
+                                            HorizontalAlignment="Center"
+                                            VerticalAlignment="Center"
+                                            materialDesign:ButtonAssist.CornerRadius="5"
+                                            Command="{Binding LogoutCommand}"
+                                            CommandParameter="{Binding ElementName=mainWindow}">
+
+                                        <Grid>
+                                            <Grid.ColumnDefinitions>
+                                                <ColumnDefinition Width="20" />
+                                                <ColumnDefinition Width="65*" />
+                                            </Grid.ColumnDefinitions>
+                                            <Grid.RowDefinitions>
+                                                <RowDefinition Height="60" />
+                                                <RowDefinition />
+                                            </Grid.RowDefinitions>
+                                            <materialDesign:PackIcon Grid.RowSpan="2"
+                                                                     Grid.ColumnSpan="2"
+                                                                     Width="65"
+                                                                     Height="65"
+                                                                     HorizontalAlignment="Center"
+                                                                     VerticalAlignment="Bottom"
+                                                                     FontWeight="Bold"
+                                                                     Kind="Logout" />
+                                            <TextBlock Grid.RowSpan="2"
+                                                       Grid.ColumnSpan="2"
+                                                       Width="108"
+                                                       HorizontalAlignment="Center"
+                                                       VerticalAlignment="Top"
+                                                       FontSize="25"
+                                                       FontWeight="Bold">
+                                                LOG OUT
+                                            </TextBlock>
+                                        </Grid>
+
+                                    </Button>
+                                </Grid>
+
+
+                            </Grid>
+                            <Grid Grid.Column="0"
                                   Margin="35">
                                 <GroupBox Background="AliceBlue"
                                           Header="Hotel Management"
