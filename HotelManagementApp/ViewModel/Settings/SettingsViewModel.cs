@@ -87,15 +87,14 @@ namespace HotelManagementApp.ViewModel
                     return false;
                 }
                 if (
-                HotelAddress == Const.hotelName ||
-                HotelMoto == Const.hotelMoto ||
-                HotelPhone == Const.hotelPhone ||
-                HotelEmail == Const.hotelMail ||
-                HotelAddress == Const.hotelAddress ||
-                LoginFailed == Const.loginMsg ||
+                HotelAddress == Const.hotelName &&
+                HotelMoto == Const.hotelMoto &&
+                HotelPhone == Const.hotelPhone &&
+                HotelEmail == Const.hotelMail &&
+                HotelAddress == Const.hotelAddress &&
+                LoginFailed == Const.loginMsg &&
                 ChartFailed == Const.statErrorMsg)
                 {
-                    SuccessMsg = "";
                     return false;
                 }
                 return true;
@@ -121,7 +120,6 @@ namespace HotelManagementApp.ViewModel
                 LoginFailed == Const.loginMsg ||
                 ChartFailed == Const.statErrorMsg)
                 {
-                    SuccessMsg = "";
                     return false;
                 }
                 return true;

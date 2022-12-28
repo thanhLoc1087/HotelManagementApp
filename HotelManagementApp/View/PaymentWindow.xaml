@@ -303,15 +303,17 @@
                         </DataGrid.RowStyle>
                         <DataGrid.Columns>
                             <DataGridTextColumn Binding="{Binding FoodsAndService.Name}"
-                                                            Header="Name" Width="180"/>
+                                                            Header="Name" Width="1.2*"/>
                             <DataGridTextColumn Binding="{Binding FoodsAndService.Type}"
-                                                            Header="Type" Width="100"/>
+                                                            Header="Type" Width="1*"/>
+                            <DataGridTextColumn Binding="{Binding Time, StringFormat='dd/MM/yyyy HH:mm'}"
+                                                            Header="Time" Width="1.8*"/>
                             <DataGridTextColumn Binding="{Binding Quantity}"
-                                                            Header="Quantity" Width="80"/>
+                                                            Header="Quantity" Width="1*"/>
                             <DataGridTextColumn Binding="{Binding FoodsAndService.Unit}"
-                                                            Header="Unit" Width="100"/>
+                                                            Header="Unit" Width="0.8*"/>
                             <DataGridTextColumn Binding="{Binding FoodsAndService.Price, StringFormat=C0, ConverterCulture=vi-VN}"
-                                                            Header="Price"/>
+                                                            Header="Price" Width="1.2*"/>
                         </DataGrid.Columns>
                     </DataGrid>
                 </Grid>
