@@ -440,6 +440,13 @@
                     VerticalAlignment="Bottom"
                     CommandParameter="{Binding ElementName=PaymentView}"
                     Content="CANCEL">
+                <i1:Interaction.Triggers>
+                    <i1:EventTrigger EventName="Click">
+                        <i2:CallMethodAction MethodName="Close"
+                                             TargetObject="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=Window}}" />
+                    </i1:EventTrigger>
+                </i1:Interaction.Triggers>
+            </Button>
             <Button x:Name="btnExportPdf"
                     Grid.Column="1"
                     Width="32"
@@ -452,13 +459,6 @@
                     Command="{Binding ExportPdfBtn}"
                     Content="PDF">
              </Button>
-                <i1:Interaction.Triggers>
-                    <i1:EventTrigger EventName="Click">
-                        <i2:CallMethodAction MethodName="Close"
-                                             TargetObject="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=Window}}" />
-                    </i1:EventTrigger>
-                </i1:Interaction.Triggers>
-            </Button>
             <Grid Grid.Column="1"
                   Width="235"
                   Margin="0,15,0,0"
