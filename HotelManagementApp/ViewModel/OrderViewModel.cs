@@ -162,6 +162,8 @@ namespace HotelManagementApp.ViewModel
                     DBbill.Orders.Add(item);
                     DBbill.TotalMoney += item.TotalPrice;
                     Global.OrdersList.Add(item);
+                    Sbill.Orders.Add(item);
+                    Sbill.TotalMoney += item.TotalPrice;
                 }
                 DataProvider.Instance.DB.SaveChanges();
                 RoomNum = null;

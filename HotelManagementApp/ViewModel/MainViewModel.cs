@@ -13,6 +13,7 @@ using System.Threading;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
+using System.Windows.Media;
 
 namespace HotelManagementApp.ViewModel
 {
@@ -26,6 +27,8 @@ namespace HotelManagementApp.ViewModel
         public string dateFormat = "dd/MM/yyyy";
         private FoodsAndService _bestSeller;
         public FoodsAndService bestSeller { get => _bestSeller; set { _bestSeller = value; OnPropertyChanged(); } }
+        private int? _bestSellerQuantity = null;
+        public int? bestSellerQuantity { get => _bestSellerQuantity; set { _bestSellerQuantity = value; OnPropertyChanged(); } }
         private string alltimerevenue = "0";
         public string Alltimerevenue { get => alltimerevenue; set { alltimerevenue = value; OnPropertyChanged(); } }
         private string alltimerevenueUSD = "0";
@@ -34,8 +37,35 @@ namespace HotelManagementApp.ViewModel
         public string SelectedDateRevenue { get => selectedDateRevenue; set { selectedDateRevenue = value; OnPropertyChanged(); } }
         private string _lblDateFilter;
         public string lblDateFilter { get => _lblDateFilter; set { _lblDateFilter = value; OnPropertyChanged(); } }
-        private CalendarMode _caDisplayMode = CalendarMode.Month;
-        public CalendarMode caDisplayMode { get => _caDisplayMode; set { _caDisplayMode = value; OnPropertyChanged("caDisplayMode"); } }
+        private Visibility _isDate = Visibility.Visible;
+        public Visibility isDate { get => _isDate; set { _isDate = value; OnPropertyChanged(); } }
+        private Visibility _isNotDate = Visibility.Collapsed;
+        public Visibility isNotDate { get => _isNotDate; set { _isNotDate = value; OnPropertyChanged(); } }
+        private Visibility _isMonth = Visibility.Collapsed;
+        public Visibility isMonth { get => _isMonth; set { _isMonth = value; OnPropertyChanged(); } }
+        private List<int> _months = new List<int>{ 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12 };
+        public List<int> months { get => _months; set { _months = value; OnPropertyChanged(); } }
+        private List<int> _years = new List<int>();
+        public List<int> years { get => _years; set { _years = value; OnPropertyChanged(); } }
+        private int _selectedMonth = DateTime.Now.Month;
+        public int selectedMonth { 
+            get => _selectedMonth; 
+            set 
+            { 
+                _selectedMonth = value; OnPropertyChanged();
+                caSelectedDate = DateTime.Parse(String.Format("1/{0}/{1}", value, selectedYear));
+            } 
+        }
+        private int _selectedYear = DateTime.Now.Year;
+        public int selectedYear { 
+            get => _selectedYear; 
+            set 
+            { 
+                _selectedYear = value; OnPropertyChanged();
+                caSelectedDate = DateTime.Parse(String.Format("1/1/{0}", value));
+            }
+        }
+        
         //PieChart
         private SeriesCollection _SeriesCollectionPie;
         public SeriesCollection SeriesCollectionPie { get => _SeriesCollectionPie; set { _SeriesCollectionPie = value; OnPropertyChanged(); } }
@@ -125,6 +155,11 @@ namespace HotelManagementApp.ViewModel
                 LoadStatistics();
             });
 
+            int oldest = int.Parse(((DateTime)Global.BillsList.Min(x => x.BillDate)).ToString("yyyy"));
+            for (int i = oldest; i <= DateTime.Now.Year; i++)
+            {
+                years.Add(i);
+            }
             LoadStatistics();
         }
         public void Authorise()
@@ -132,11 +167,13 @@ namespace HotelManagementApp.ViewModel
             Staff activeStaff = DataProvider.Instance.DB.Staffs.Single(x => x.ID == Const.ActiveAccount.IDStaff);
             if (activeStaff.Role == "Admin")
             {
+                Const.IsAdmin = true;
                 Const.AdminVisibility = Visibility.Visible;
                 Const.StaffVisibility = Visibility.Collapsed;
             }
             else if (activeStaff.Role == "Staff")
             {
+                Const.IsAdmin = false;
                 Const.AdminVisibility = Visibility.Collapsed;
                 Const.StaffVisibility = Visibility.Visible;
             }
@@ -147,15 +184,21 @@ namespace HotelManagementApp.ViewModel
             {
                 case "System.Windows.Controls.ComboBoxItem: Date":
                     dateFormat = "dd/MM/yyyy";
-                    caDisplayMode = CalendarMode.Month;
+                    isDate = Visibility.Visible;
+                    isMonth = Visibility.Collapsed;
+                    isNotDate = Visibility.Collapsed;
                     break;
                 case "System.Windows.Controls.ComboBoxItem: Month":
                     dateFormat = "MM/yyyy";
-                    caDisplayMode = CalendarMode.Year;
+                    isDate = Visibility.Collapsed;
+                    isMonth = Visibility.Visible;
+                    isNotDate = Visibility.Visible;
                     break;
                 case "System.Windows.Controls.ComboBoxItem: Year":
                     dateFormat = "yyyy";
-                    caDisplayMode = CalendarMode.Decade;
+                    isDate = Visibility.Collapsed;
+                    isMonth = Visibility.Collapsed;
+                    isNotDate = Visibility.Visible;
                     break;
             }
         }
@@ -171,10 +214,31 @@ namespace HotelManagementApp.ViewModel
                             join c in Global.FoodsAndServicesList on b.IDFoodsAndServices equals c.ID
                             where ((DateTime)a.BillDate).ToString(dateFormat) == selectedTime.ToString(dateFormat)
                             select new { c, b };
-                decimal? besSellerPrice = query.Max(x => x.b.TotalPrice);
-                bestSeller = (query.Single(x => x.b.TotalPrice >= besSellerPrice)).c;
+                var temp = query.GroupBy(a => a.c);
+                int? bestSellerID = null;
+                decimal? bestSellerPrice = 0;
+                bestSellerQuantity = 0;
+                foreach (var fns in temp ) {
+                    decimal? income = 0;
+                    int? quantity = 0;
+                    foreach(var order in fns)
+                    {
+                        income += order.b.TotalPrice;
+                        quantity += order.b.Quantity;
+                        bestSellerID = order.c.ID;
+                    }
+                    if (bestSellerPrice < income)
+                    {
+                        bestSellerPrice = income;
+                        bestSellerQuantity = (int)quantity;
+                        break;
+                    }
+                }
+                bestSeller = Global.FoodsAndServicesList.Single(x => x.ID == bestSellerID);
             }
-            catch { }
+            catch { 
+                bestSeller = null; bestSellerQuantity = null;
+            }
 
             decimal? allIncome = 0;
             decimal? selectedDateIncome = 0;
@@ -211,12 +275,16 @@ namespace HotelManagementApp.ViewModel
                 ////    PIE STATISTIC   ////    
                 // Room monthly income
                 var roomBills = from a in Global.BillsList
-                                join roomRevs in Global.ReservationsList on a.ID equals roomRevs.IDBillDetail
-                                join c in Global.RoomsList on roomRevs.IDRoom equals c.ID
-                                join types in Global.Types on c.IDRoomType equals types.ID
+                                join rr in Global.ReservationsList on a.ID equals rr.IDBillDetail
+                                join c in Global.RoomsList on rr.IDRoom equals c.ID
+                                join rt in Global.Types on c.IDRoomType equals rt.ID
                                 where ((DateTime)a.BillDate).ToString(dateFormat) == selectedTime.ToString(dateFormat)
-                                select new { roomRevs, types };
-                roomIncome = roomBills.Select(x => (decimal)x.types.Price * (decimal)((TimeSpan)(x.roomRevs.CheckOutTime - x.roomRevs.CheckInTime)).TotalDays).Sum();
+                                select new { rr, rt };
+                foreach (var r in roomBills)
+                {
+                    int nights = (int)r.rr.CheckOutTime.Value.Subtract(r.rr.CheckInTime.Value).TotalDays;
+                    roomIncome += r.rt.Price * (nights > 0 ? nights : 1);
+                }
                 // Food monthly income
                 IEnumerable<Order> foodBills = from a in Global.BillsList
                                                join b in Global.OrdersList on a.ID equals b.IDBillDetail
@@ -236,41 +304,57 @@ namespace HotelManagementApp.ViewModel
 
                 ////    CARTESAN STATTISTIC     ////
                 ///Imcome for room quarter 1 
-                IEnumerable<RoomType> roomBillsQ1 = from a in Global.BillsList
-                                                    join b in Global.ReservationsList on a.ID equals b.IDBillDetail
-                                                    join c in Global.RoomsList on b.IDRoom equals c.ID
-                                                    join d in Global.Types on c.IDRoomType equals d.ID
-                                                    where quart1.Contains(((DateTime)a.BillDate).ToString("MM"))
-                                                    where ((DateTime)a.BillDate).ToString("yyyy") == selectedTime.ToString("yyyy")
-                                                    select d;
-                roomIncomeQ1 = roomBillsQ1.Select(y => y.Price).Sum();
+                var roomBillsQ1 = from a in Global.BillsList
+                                  join rr in Global.ReservationsList on a.ID equals rr.IDBillDetail
+                                  join c in Global.RoomsList on rr.IDRoom equals c.ID
+                                  join rt in Global.Types on c.IDRoomType equals rt.ID
+                                  where ((DateTime)a.BillDate).ToString("yyyy") == selectedTime.ToString("yyyy")
+                                  where quart1.Contains(((DateTime)rr.CheckOutTime).ToString("MM"))
+                                  select new { rr, rt };
+                foreach (var rr in roomBillsQ1)
+                {
+                    int nights = (int)rr.rr.CheckOutTime.Value.Subtract(rr.rr.CheckInTime.Value).TotalDays;
+                    roomIncomeQ1 += rr.rt.Price * (nights > 0 ? nights : 1);
+                }
                 ///Imcome for room quarter 2 
-                IEnumerable<RoomType> roomBillsQ2 = from a in Global.BillsList
-                                                    join b in Global.ReservationsList on a.ID equals b.IDBillDetail
-                                                    join c in Global.RoomsList on b.IDRoom equals c.ID
-                                                    join d in Global.Types on c.IDRoomType equals d.ID
-                                                    where quart2.Contains(((DateTime)a.BillDate).ToString("MM"))
-                                                    where ((DateTime)a.BillDate).ToString("yyyy") == selectedTime.ToString("yyyy")
-                                                    select d;
-                roomIncomeQ2 = roomBillsQ2.Select(y => y.Price).Sum();
+                var roomBillsQ2 = from a in Global.BillsList
+                                  join rr in Global.ReservationsList on a.ID equals rr.IDBillDetail
+                                  join c in Global.RoomsList on rr.IDRoom equals c.ID
+                                  join rt in Global.Types on c.IDRoomType equals rt.ID
+                                  where ((DateTime)a.BillDate).ToString("yyyy") == selectedTime.ToString("yyyy")
+                                  where quart2.Contains(((DateTime)rr.CheckOutTime).ToString("MM"))
+                                  select new { rr, rt };
+                foreach (var rr in roomBillsQ2)
+                {
+                    int nights = (int)rr.rr.CheckOutTime.Value.Subtract(rr.rr.CheckInTime.Value).TotalDays;
+                    roomIncomeQ2 += rr.rt.Price * (nights > 0 ? nights : 1);
+                }
                 ///Imcome for room quarter 3
-                IEnumerable<RoomType> roomBillsQ3 = from a in Global.BillsList
-                                                    join b in Global.ReservationsList on a.ID equals b.IDBillDetail
-                                                    join c in Global.RoomsList on b.IDRoom equals c.ID
-                                                    join d in Global.Types on c.IDRoomType equals d.ID
-                                                    where quart3.Contains(((DateTime)a.BillDate).ToString("MM"))
-                                                    where ((DateTime)a.BillDate).ToString("yyyy") == selectedTime.ToString("yyyy")
-                                                    select d;
-                roomIncomeQ3 = roomBillsQ3.Select(y => y.Price).Sum();
+                var roomBillsQ3 = from a in Global.BillsList
+                                  join rr in Global.ReservationsList on a.ID equals rr.IDBillDetail
+                                  join c in Global.RoomsList on rr.IDRoom equals c.ID
+                                  join rt in Global.Types on c.IDRoomType equals rt.ID
+                                  where ((DateTime)a.BillDate).ToString("yyyy") == selectedTime.ToString("yyyy")
+                                  where quart3.Contains(((DateTime)rr.CheckOutTime).ToString("MM"))
+                                  select new { rr, rt };
+                foreach (var rr in roomBillsQ3)
+                {
+                    int nights = (int)rr.rr.CheckOutTime.Value.Subtract(rr.rr.CheckInTime.Value).TotalDays;
+                    roomIncomeQ3 += rr.rt.Price * (nights > 0 ? nights : 1);
+                }
                 ///Imcome for room quarter 4
-                IEnumerable<RoomType> roomBillsQ4 = from a in Global.BillsList
-                                                    join b in Global.ReservationsList on a.ID equals b.IDBillDetail
-                                                    join c in Global.RoomsList on b.IDRoom equals c.ID
-                                                    join d in Global.Types on c.IDRoomType equals d.ID
-                                                    where quart4.Contains(((DateTime)a.BillDate).ToString("MM"))
-                                                    where ((DateTime)a.BillDate).ToString("yyyy") == selectedTime.ToString("yyyy")
-                                                    select d;
-                roomIncomeQ4 = roomBillsQ4.Select(y => y.Price).Sum();
+                var roomBillsQ4 = from a in Global.BillsList
+                                  join rr in Global.ReservationsList on a.ID equals rr.IDBillDetail
+                                  join c in Global.RoomsList on rr.IDRoom equals c.ID
+                                  join rt in Global.Types on c.IDRoomType equals rt.ID
+                                  where ((DateTime)a.BillDate).ToString("yyyy") == selectedTime.ToString("yyyy")
+                                  where quart4.Contains(((DateTime)rr.CheckOutTime).ToString("MM"))
+                                  select new { rr, rt };
+                foreach (var rr in roomBillsQ4)
+                {
+                    int nights = (int)rr.rr.CheckOutTime.Value.Subtract(rr.rr.CheckInTime.Value).TotalDays;
+                    roomIncomeQ4 += rr.rt.Price * (nights > 0 ? nights : 1);
+                }
                 ///Imcome for FOOD quarter 1        
                 IEnumerable<Order> foodBillsQ1 = from a in Global.BillsList
                                                  join b in Global.OrdersList on a.ID equals b.IDBillDetail
@@ -354,33 +438,21 @@ namespace HotelManagementApp.ViewModel
                 var roomSeries = new PieSeries
                 {
                     Title = "Room Reservations",
-                    //Values = new ChartValues<ObservableValue> { new ObservableValue(100) },
                     Values = new ChartValues<ObservableValue> { new ObservableValue((double)roomIncome) },
-                    DataLabels = true,
-                    FontSize = 16,
-                    LabelPoint = ChartPoint => string.Format("{0} ({1:P})", ChartPoint.Y, ChartPoint.Participation)
-                };
+                }; 
                 SeriesCollectionPie.Add(roomSeries);
 
                 var foodSeries = new PieSeries
                 {
                     Title = "Food",
-                    //Values = new ChartValues<ObservableValue> { new ObservableValue(200) },
                     Values = new ChartValues<ObservableValue> { new ObservableValue((double)foodIncome) },
-                    DataLabels = true,
-                    FontSize = 16,
-                    LabelPoint = ChartPoint => string.Format("{0} ({1:P})", ChartPoint.Y, ChartPoint.Participation)
-                };
+                }; 
                 SeriesCollectionPie.Add(foodSeries);
 
                 var serviceSeries = new PieSeries
                 {
                     Title = "Services",
-                    //Values = new ChartValues<ObservableValue> { new ObservableValue(300) },
                     Values = new ChartValues<ObservableValue> { new ObservableValue((double)serviceIncome) },
-                    DataLabels = true,
-                    FontSize = 16,
-                    LabelPoint = ChartPoint => string.Format("{0} ({1:P})", ChartPoint.Y, ChartPoint.Participation)
                 };
                 SeriesCollectionPie.Add(serviceSeries);
             }
@@ -404,8 +476,11 @@ namespace HotelManagementApp.ViewModel
             };
             SeriesCollectionCart.Add(serviceLine);
 
+            var culture = CultureInfo.CurrentCulture;
+            var mutableNfi = (NumberFormatInfo)culture.NumberFormat.Clone();
+            mutableNfi.CurrencySymbol = "";
             XFormatter = new[] { "Quarter 1", "Quarter 2", "Quarter 3", "Quarter 4" };
-            YFormatter = value => value.ToString("C");
+            YFormatter = value => value.ToString("C0", mutableNfi);
             if (foodIncome == 0 && serviceIncome == 0 && roomIncome == 0)
             {
                 tbkStatError = Const.statErrorMsg;

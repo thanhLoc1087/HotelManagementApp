@@ -283,9 +283,9 @@
                                                             Header="Num" Width="80"/>
                             <DataGridTextColumn Binding="{Binding Room.RoomType.Name}"
                                                             Header="Type" Width="100"/>
-                            <DataGridTextColumn Binding="{Binding CheckInTime, StringFormat='g'}"
+                            <DataGridTextColumn Binding="{Binding CheckInTime, StringFormat='dd/MM/yyyy HH:mmtt'}"
                                                             Header="Check-in" Width="140"/>
-                            <DataGridTextColumn Binding="{Binding CheckOutTime, StringFormat='g'}"
+                            <DataGridTextColumn Binding="{Binding CheckOutTime, StringFormat='dd/MM/yyyy HH:mmtt'}"
                                                             Header="Check-out" Width="140"/>
                             <DataGridTextColumn Binding="{Binding Room.RoomType.Price, StringFormat=C0, ConverterCulture=vi-VN}"
                                                             Header="Price"/>
@@ -303,9 +303,13 @@
                         </DataGrid.RowStyle>
                         <DataGrid.Columns>
                             <DataGridTextColumn Binding="{Binding FoodsAndService.Name}"
-                                                            Header="Name" Width="320"/>
+                                                            Header="Name" Width="180"/>
+                            <DataGridTextColumn Binding="{Binding FoodsAndService.Type}"
+                                                            Header="Type" Width="100"/>
                             <DataGridTextColumn Binding="{Binding Quantity}"
-                                                            Header="Quantity" Width="140"/>
+                                                            Header="Quantity" Width="80"/>
+                            <DataGridTextColumn Binding="{Binding FoodsAndService.Unit}"
+                                                            Header="Unit" Width="100"/>
                             <DataGridTextColumn Binding="{Binding FoodsAndService.Price, StringFormat=C0, ConverterCulture=vi-VN}"
                                                             Header="Price"/>
                         </DataGrid.Columns>
