@@ -45,21 +45,24 @@ namespace HotelManagementApp
                     this.DataContext = new BookingViewModel();
                     break;
                 case 4:
-                    this.DataContext = new FoodViewModel();
+                    this.DataContext = new BillsViewModel();
                     break;
                 case 5:
-                    this.DataContext = new StaffViewModel();
+                    this.DataContext = new FoodViewModel();
                     break;
                 case 6:
-                    this.DataContext = new AddRoomForAdminViewModel();
+                    this.DataContext = new StaffViewModel();
                     break;
                 case 7:
-                    this.DataContext = new AddRoomTypes();
+                    this.DataContext = new AddRoomForAdminViewModel();
                     break;
                 case 8:
-                    this.DataContext = new CustomersViewModel();
+                    this.DataContext = new AddRoomTypes();
                     break;
                 case 9:
+                    this.DataContext = new CustomersViewModel();
+                    break;
+                case 10:
                     this.DataContext = new SettingsViewModel();
                     break;
             }
