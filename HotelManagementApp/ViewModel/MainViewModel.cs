@@ -35,7 +35,7 @@ namespace HotelManagementApp.ViewModel
         public string AlltimerevenueUSD { get => alltimerevenueUSD; set { alltimerevenueUSD = value; OnPropertyChanged(); } }
         private string selectedDateRevenue = "0";
         public string SelectedDateRevenue { get => selectedDateRevenue; set { selectedDateRevenue = value; OnPropertyChanged(); } }
-        public DateTime oldest = (DateTime)Global.BillsList.Min(x => x.BillDate);
+        public DateTime oldest;
         public DateTime Oldest { get => oldest; set { oldest = value; OnPropertyChanged(); } }
         private string _lblDateFilter;
         public string lblDateFilter { get => _lblDateFilter; set { _lblDateFilter = value; OnPropertyChanged(); } }
@@ -156,11 +156,15 @@ namespace HotelManagementApp.ViewModel
                 caSelectedDate = DateTime.Now;
                 LoadStatistics();
             });
-
-            for (int i = oldest.Year; i <= DateTime.Now.Year; i++)
+            if(Global.BillsList != null && Global.BillsList.Count != 0)
             {
-                years.Add(i);
-            }
+                Oldest = (DateTime)Global.BillsList.Min(x => x.BillDate);
+                for (int i = Oldest.Year; i <= DateTime.Now.Year; i++)
+                {
+                    years.Add(i);
+                }
+            } 
+            
             LoadStatistics();
         }
         public void Authorise()
