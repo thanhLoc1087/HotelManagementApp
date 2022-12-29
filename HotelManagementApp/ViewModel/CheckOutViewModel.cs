@@ -126,6 +126,7 @@ namespace HotelManagementApp.ViewModel
                 string destinationDirectory = Directory.GetParent(Directory.GetCurrentDirectory()).Parent.FullName;
                 var imageFile = destinationDirectory + $"\\Bills\\bill{Bill.ID}.png";
                 RenderTargetBitmap render = new RenderTargetBitmap((int)this.PaymentWindow.ActualWidth, (int)this.PaymentWindow.ActualHeight-60, 96, 96, PixelFormats.Pbgra32);
+                render.Render(this.PaymentWindow);
                 string pdfFile = destinationDirectory + $"\\Bills\\bill{Bill.ID}.pdf";
                 using (FileStream stream = File.Create(imageFile))
                 {
