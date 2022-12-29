@@ -154,13 +154,15 @@ namespace HotelManagementApp.ViewModel
                 caSelectedDate = DateTime.Now;
                 LoadStatistics();
             });
-
-            int oldest = int.Parse(((DateTime)Global.BillsList.Min(x => x.BillDate)).ToString("yyyy"));
-            for (int i = oldest; i <= DateTime.Now.Year; i++)
+            if(Global.BillsList != null && Global.BillsList.Count != 0)
             {
-                years.Add(i);
-            }
-            LoadStatistics();
+                int oldest = int.Parse(((DateTime)Global.BillsList.Min(x => x.BillDate)).ToString("yyyy"));
+                for (int i = oldest; i <= DateTime.Now.Year; i++)
+                {
+                    years.Add(i);
+                }
+                LoadStatistics();
+            } 
         }
         public void Authorise()
         {

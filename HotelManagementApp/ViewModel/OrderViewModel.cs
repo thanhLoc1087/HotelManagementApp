@@ -141,11 +141,15 @@ namespace HotelManagementApp.ViewModel
             });
             OrderCommand = new RelayCommand<object>((p) =>
             {
+
                 if (string.IsNullOrEmpty(RoomNum) || TargetBillDetail == null || PendingOrdersList.Count == 0 || PendingOrdersList == null)
                 {
                     return false;
                 }
                 var list = Global.RoomsList.Where(x => x.RoomNum == RoomNum);
+                var list2 = Global.ReservationsList.Where(x => x.BillDetail.Status == "On-Going" && x.Room.RoomNum == RoomNum);
+                if(list2 == null || list2.Count() == 0)
+                { return false; }
                 if (list == null || list.Count() == 0)
                 {
                     return false;

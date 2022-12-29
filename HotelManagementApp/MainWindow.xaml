@@ -696,9 +696,9 @@
                                 </Grid>
                                 <Grid Grid.Row="3">
                                     <StackPanel Orientation="Horizontal">
-                                        <Button Grid.Column="0"
+                                        <Button Grid.ColumnSpan="2"
                                                 Margin="0,0,20,0"
-                                            Width="160"
+                                            Width="342"
                                             Height="45"
                                             materialDesign:ButtonAssist.CornerRadius="5"
                                             Command="{Binding OrderCommand}"
@@ -714,27 +714,6 @@
                                                        VerticalAlignment="Center"
                                                        FontWeight="Bold"
                                                        Text="ORDER" />
-
-
-                                            </StackPanel>
-                                        </Button>
-                                        <Button
-                                            Width="160"
-                                            Height="45"
-                                            materialDesign:ButtonAssist.CornerRadius="5"
-                                            Command="{Binding EditOrderCommand}"
-                                            Style="{StaticResource MaterialDesignRaisedButton}"
-                                            ToolTip="MaterialDesignRaisedButton with Round Corners">
-                                            <StackPanel HorizontalAlignment="Stretch"
-                                                    VerticalAlignment="Stretch"
-                                                    Orientation="Horizontal">
-                                                <materialDesign:PackIcon Width="auto"
-                                                                     Height="20"
-                                                                     Kind="Pen" />
-                                                <TextBlock HorizontalAlignment="Center"
-                                                       VerticalAlignment="Center"
-                                                       FontWeight="Bold"
-                                                       Text="EDIT" />
 
 
                                             </StackPanel>

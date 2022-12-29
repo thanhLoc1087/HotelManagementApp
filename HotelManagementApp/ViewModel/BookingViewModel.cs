@@ -200,7 +200,7 @@ namespace HotelManagementApp.ViewModel
                 // Create & save new room reservation
                 foreach (var item in PendingReservationsList)
                 {
-                    var room = DataProvider.Instance.DB.Rooms.Where( x=> x.ID == item.Room.ID);
+                    var room = DataProvider.Instance.DB.Rooms.Where(x => x.ID == item.Room.ID);
                     Global.RoomsList.Remove(item.Room);
                     item.Room.Status = "Booked";
                     Global.RoomsList.Add(item.Room);
