@@ -35,6 +35,8 @@ namespace HotelManagementApp.ViewModel
         public string AlltimerevenueUSD { get => alltimerevenueUSD; set { alltimerevenueUSD = value; OnPropertyChanged(); } }
         private string selectedDateRevenue = "0";
         public string SelectedDateRevenue { get => selectedDateRevenue; set { selectedDateRevenue = value; OnPropertyChanged(); } }
+        public DateTime oldest = (DateTime)Global.BillsList.Min(x => x.BillDate);
+        public DateTime Oldest { get => oldest; set { oldest = value; OnPropertyChanged(); } }
         private string _lblDateFilter;
         public string lblDateFilter { get => _lblDateFilter; set { _lblDateFilter = value; OnPropertyChanged(); } }
         private Visibility _isDate = Visibility.Visible;
@@ -154,15 +156,12 @@ namespace HotelManagementApp.ViewModel
                 caSelectedDate = DateTime.Now;
                 LoadStatistics();
             });
-            if(Global.BillsList != null && Global.BillsList.Count != 0)
+
+            for (int i = oldest.Year; i <= DateTime.Now.Year; i++)
             {
-                int oldest = int.Parse(((DateTime)Global.BillsList.Min(x => x.BillDate)).ToString("yyyy"));
-                for (int i = oldest; i <= DateTime.Now.Year; i++)
-                {
-                    years.Add(i);
-                }
-                LoadStatistics();
-            } 
+                years.Add(i);
+            }
+            LoadStatistics();
         }
         public void Authorise()
         {
@@ -280,6 +279,7 @@ namespace HotelManagementApp.ViewModel
                                 join rr in Global.ReservationsList on a.ID equals rr.IDBillDetail
                                 join c in Global.RoomsList on rr.IDRoom equals c.ID
                                 join rt in Global.Types on c.IDRoomType equals rt.ID
+                                where a.Status == "Completed"
                                 where ((DateTime)a.BillDate).ToString(dateFormat) == selectedTime.ToString(dateFormat)
                                 select new { rr, rt };
                 foreach (var r in roomBills)
@@ -291,6 +291,7 @@ namespace HotelManagementApp.ViewModel
                 IEnumerable<Order> foodBills = from a in Global.BillsList
                                                join b in Global.OrdersList on a.ID equals b.IDBillDetail
                                                join c in Global.FoodsAndServicesList on b.IDFoodsAndServices equals c.ID
+                                               where a.Status == "Completed"
                                                where ((DateTime)a.BillDate).ToString(dateFormat) == selectedTime.ToString(dateFormat)
                                                where c.Type == "Food"
                                                select b;
@@ -300,6 +301,7 @@ namespace HotelManagementApp.ViewModel
                                                   join b in Global.OrdersList on a.ID equals b.IDBillDetail
                                                   join c in Global.FoodsAndServicesList on b.IDFoodsAndServices equals c.ID
                                                   where c.Type == "Service"
+                                                  where a.Status == "Completed"
                                                   where ((DateTime)a.BillDate).ToString(dateFormat) == selectedTime.ToString(dateFormat)
                                                   select b;
                 serviceIncome = serviceBills.Select(x => x.TotalPrice).Sum();
@@ -310,6 +312,7 @@ namespace HotelManagementApp.ViewModel
                                   join rr in Global.ReservationsList on a.ID equals rr.IDBillDetail
                                   join c in Global.RoomsList on rr.IDRoom equals c.ID
                                   join rt in Global.Types on c.IDRoomType equals rt.ID
+                                  where a.Status == "Completed"
                                   where ((DateTime)a.BillDate).ToString("yyyy") == selectedTime.ToString("yyyy")
                                   where quart1.Contains(((DateTime)rr.CheckOutTime).ToString("MM"))
                                   select new { rr, rt };
@@ -323,6 +326,7 @@ namespace HotelManagementApp.ViewModel
                                   join rr in Global.ReservationsList on a.ID equals rr.IDBillDetail
                                   join c in Global.RoomsList on rr.IDRoom equals c.ID
                                   join rt in Global.Types on c.IDRoomType equals rt.ID
+                                  where a.Status == "Completed"
                                   where ((DateTime)a.BillDate).ToString("yyyy") == selectedTime.ToString("yyyy")
                                   where quart2.Contains(((DateTime)rr.CheckOutTime).ToString("MM"))
                                   select new { rr, rt };
@@ -337,6 +341,7 @@ namespace HotelManagementApp.ViewModel
                                   join c in Global.RoomsList on rr.IDRoom equals c.ID
                                   join rt in Global.Types on c.IDRoomType equals rt.ID
                                   where ((DateTime)a.BillDate).ToString("yyyy") == selectedTime.ToString("yyyy")
+                                  where a.Status == "Completed"
                                   where quart3.Contains(((DateTime)rr.CheckOutTime).ToString("MM"))
                                   select new { rr, rt };
                 foreach (var rr in roomBillsQ3)
@@ -350,6 +355,7 @@ namespace HotelManagementApp.ViewModel
                                   join c in Global.RoomsList on rr.IDRoom equals c.ID
                                   join rt in Global.Types on c.IDRoomType equals rt.ID
                                   where ((DateTime)a.BillDate).ToString("yyyy") == selectedTime.ToString("yyyy")
+                                  where a.Status == "Completed"
                                   where quart4.Contains(((DateTime)rr.CheckOutTime).ToString("MM"))
                                   select new { rr, rt };
                 foreach (var rr in roomBillsQ4)
@@ -362,6 +368,7 @@ namespace HotelManagementApp.ViewModel
                                                  join b in Global.OrdersList on a.ID equals b.IDBillDetail
                                                  join c in Global.FoodsAndServicesList on b.IDFoodsAndServices equals c.ID
                                                  where quart1.Contains(((DateTime)a.BillDate).ToString("MM"))
+                                                 where a.Status == "Completed"
                                                  where ((DateTime)a.BillDate).ToString("yyyy") == selectedTime.ToString("yyyy")
                                                  where c.Type == "Food"
                                                  select b;
@@ -372,6 +379,7 @@ namespace HotelManagementApp.ViewModel
                                                  join c in Global.FoodsAndServicesList on b.IDFoodsAndServices equals c.ID
                                                  where quart2.Contains(((DateTime)a.BillDate).ToString("MM"))
                                                  where ((DateTime)a.BillDate).ToString("yyyy") == selectedTime.ToString("yyyy")
+                                                 where a.Status == "Completed"
                                                  where c.Type == "Food"
                                                  select b;
                 foodIncomeQ2 = foodBillsQ2.Select(y => y.TotalPrice).Sum();
@@ -381,6 +389,7 @@ namespace HotelManagementApp.ViewModel
                                                  join c in Global.FoodsAndServicesList on b.IDFoodsAndServices equals c.ID
                                                  where quart3.Contains(((DateTime)a.BillDate).ToString("MM"))
                                                  where ((DateTime)a.BillDate).ToString("yyyy") == selectedTime.ToString("yyyy")
+                                                 where a.Status == "Completed"
                                                  where c.Type == "Food"
                                                  select b;
                 foodIncomeQ3 = foodBillsQ3.Select(y => y.TotalPrice).Sum();
@@ -390,6 +399,7 @@ namespace HotelManagementApp.ViewModel
                                                  join c in Global.FoodsAndServicesList on b.IDFoodsAndServices equals c.ID
                                                  where quart4.Contains(((DateTime)a.BillDate).ToString("MM"))
                                                  where ((DateTime)a.BillDate).ToString("yyyy") == selectedTime.ToString("yyyy")
+                                                 where a.Status == "Completed"
                                                  where c.Type == "Food"
                                                  select b;
                 foodIncomeQ4 = foodBillsQ4.Select(y => y.TotalPrice).Sum();
@@ -400,6 +410,7 @@ namespace HotelManagementApp.ViewModel
                                                     where c.Type == "Service"
                                                     where quart1.Contains(((DateTime)a.BillDate).ToString("MM"))
                                                     where ((DateTime)a.BillDate).ToString("yyyy") == selectedTime.ToString("yyyy")
+                                                    where a.Status == "Completed"
                                                     select b;
                 serviceIncomeQ1 = serviceBillsQ1.Select(x => x.TotalPrice).Sum();
                 ///Imcome for SERVICE quarter 2
@@ -409,6 +420,7 @@ namespace HotelManagementApp.ViewModel
                                                     where c.Type == "Service"
                                                     where quart2.Contains(((DateTime)a.BillDate).ToString("MM"))
                                                     where ((DateTime)a.BillDate).ToString("yyyy") == selectedTime.ToString("yyyy")
+                                                    where a.Status == "Completed"
                                                     select b;
                 serviceIncomeQ2 = serviceBillsQ2.Select(x => x.TotalPrice).Sum();
                 ///Imcome for SERVICE quarter 3
@@ -418,6 +430,7 @@ namespace HotelManagementApp.ViewModel
                                                     where c.Type == "Service"
                                                     where quart3.Contains(((DateTime)a.BillDate).ToString("MM"))
                                                     where ((DateTime)a.BillDate).ToString("yyyy") == selectedTime.ToString("yyyy")
+                                                    where a.Status == "Completed"
                                                     select b;
                 serviceIncomeQ3 = serviceBillsQ3.Select(x => x.TotalPrice).Sum();
                 ///Imcome for SERVICE quarter 4
@@ -427,6 +440,7 @@ namespace HotelManagementApp.ViewModel
                                                     where c.Type == "Service"
                                                     where quart4.Contains(((DateTime)a.BillDate).ToString("MM"))
                                                     where ((DateTime)a.BillDate).ToString("yyyy") == selectedTime.ToString("yyyy")
+                                                    where a.Status == "Completed"
                                                     select b;
                 serviceIncomeQ4 = serviceBillsQ4.Select(x => x.TotalPrice).Sum();
             }
