@@ -1882,7 +1882,7 @@
 
                     <Grid Background="Transparent">
                         <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="2*" />
+                            <ColumnDefinition Width="1.8*" />
                             <ColumnDefinition Width="1*" />
                         </Grid.ColumnDefinitions>
                         <Grid Grid.Column="0">
@@ -2011,7 +2011,7 @@
                                                         </Style>
                                                     </DataGridTextColumn.ElementStyle>
                                                 </DataGridTextColumn>
-                                                <materialDesign:DataGridTextColumn Width="1*"
+                                                <materialDesign:DataGridTextColumn Width="1.5*"
                                                                                    Binding="{Binding ID}"
                                                                                    EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnPopupEditingStyle}"
                                                                                    ElementStyle="{StaticResource MaterialDesignDataGridTextColumnStyle}"
@@ -2033,12 +2033,12 @@
                                                                                    EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnPopupEditingStyle}"
                                                                                    ElementStyle="{StaticResource MaterialDesignDataGridTextColumnStyle}"
                                                                                    Header="Bill Date" />
-                                                <materialDesign:DataGridTextColumn Width="2*"
+                                                <materialDesign:DataGridTextColumn Width="1.8*"
                                                                                    Binding="{Binding TotalMoney, StringFormat=C0, ConverterCulture=vi-VN}"
                                                                                    EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnPopupEditingStyle}"
                                                                                    ElementStyle="{StaticResource MaterialDesignDataGridTextColumnStyle}"
                                                                                    Header="Total" />
-                                                <materialDesign:DataGridTextColumn Width="2*"
+                                                <materialDesign:DataGridTextColumn Width="1.9*"
                                                                                    Binding="{Binding Status}"
                                                                                    EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnPopupEditingStyle}"
                                                                                    ElementStyle="{StaticResource MaterialDesignDataGridTextColumnStyle}"
@@ -2106,10 +2106,10 @@
                                                             Header="Num" Width="1*"/>
                                                     <DataGridTextColumn Binding="{Binding Room.RoomType.Name}"
                                                             Header="Type" Width="1*"/>
-                                                    <DataGridTextColumn Binding="{Binding CheckInTime, StringFormat='dd/MM/yyyy HH:mmtt'}"
-                                                            Header="Check-in" Width="2.5*"/>
-                                                    <DataGridTextColumn Binding="{Binding CheckOutTime, StringFormat='dd/MM/yyyy HH:mmtt'}"
-                                                            Header="Check-out" Width="2.5*"/>
+                                                    <DataGridTextColumn Binding="{Binding CheckInTime, StringFormat='dd/MM/yyyy HH:mm'}"
+                                                            Header="Check-in" Width="2*"/>
+                                                    <DataGridTextColumn Binding="{Binding CheckOutTime, StringFormat='dd/MM/yyyy HH:mm'}"
+                                                            Header="Check-out" Width="2*"/>
                                                 </DataGrid.Columns>
                                             </DataGrid>
                                             <DataGrid ItemsSource="{Binding SelectedItem.Orders}"
@@ -2123,12 +2123,14 @@
                                                 <DataGrid.Columns>
                                                     <DataGridTextColumn Binding="{Binding FoodsAndService.Name}"
                                                             Header="Name" Width="1.5*"/>
+                                                    <DataGridTextColumn Binding="{Binding Time, StringFormat='dd/MM HH:mm'}"
+                                                            Header="Time" Width="1.5*"/>
                                                     <DataGridTextColumn Binding="{Binding FoodsAndService.Type}"
-                                                            Header="Type" Width="1*"/>
+                                                            Header="Type" Width="1.1*"/>
                                                     <DataGridTextColumn Binding="{Binding Quantity}"
-                                                            Header="Quantity" Width="1*"/>
+                                                            Header="Quantity" Width="1.1*"/>
                                                     <DataGridTextColumn Binding="{Binding FoodsAndService.Price, StringFormat=C0, ConverterCulture=vi-VN}"
-                                                            Header="Price" Width="1.5*"/>
+                                                            Header="Price" Width="1.2*"/>
                                                 </DataGrid.Columns>
                                             </DataGrid>
                                         </StackPanel>
