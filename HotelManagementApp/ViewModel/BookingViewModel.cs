@@ -194,7 +194,7 @@ namespace HotelManagementApp.ViewModel
                     Deleted = false,
                     Status = "On-Going",
                     TotalMoney = Total,
-                    BillDate = DateTime.Now,
+                    BillDate = CheckInDate,
                 };
 
                 // Create & save new room reservation

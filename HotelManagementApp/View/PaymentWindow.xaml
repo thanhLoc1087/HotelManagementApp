@@ -338,9 +338,9 @@
             <Grid Grid.Column="0">
                 <TextBlock Grid.Column="1" 
                            HorizontalAlignment="Center"
-                           Margin="0,24,0,0" 
+                           Margin="0,8,0,0" 
                            FontWeight="DemiBold"
-                           Text="Sustomer Signature."/>
+                           Text="Customer Signature."/>
                 <Rectangle Width="188"
                            Height="29"
                        Margin="0"
@@ -429,7 +429,6 @@
                     Padding="0"
                     HorizontalAlignment="Right"
                     VerticalAlignment="Bottom"
-                    Background="OrangeRed"
                     Command="{Binding ConfirmBillBtn}"
                     Content="CONFIRM">
             </Button>
@@ -441,7 +440,7 @@
                     HorizontalAlignment="Left"
                     VerticalAlignment="Bottom"
                     CommandParameter="{Binding ElementName=PaymentView}"
-                    Content="CANCEL">
+                    Content="CANCEL" Background="Red">
                 <i1:Interaction.Triggers>
                     <i1:EventTrigger EventName="Click">
                         <i2:CallMethodAction MethodName="Close"
@@ -451,13 +450,12 @@
             </Button>
             <Button x:Name="btnExportPdf"
                     Grid.Column="1"
-                    Width="32"
+                    Width="40"
                     Height="25"
-                    Margin="0,0,0,20"
+                    Margin="-4,0,0,20"
                     Padding="0"
                     HorizontalAlignment="Right"
                     VerticalAlignment="Bottom"
-                    Background="OrangeRed"
                     Command="{Binding ExportPdfBtn}"
                     Content="PDF">
              </Button>
