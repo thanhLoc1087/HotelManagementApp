@@ -325,7 +325,7 @@
                                               materialDesign:HintAssist.Hint="Filter"
                                               Style="{StaticResource MaterialDesignCalendarPortraitBase}"
                                               SelectedDate="{Binding caSelectedDate, UpdateSourceTrigger=PropertyChanged}"
-                                              DisplayDateEnd="{x:Static sys:DateTime.Today}" >
+                                              DisplayDateStart="{Binding Oldest}" DisplayDateEnd="{x:Static sys:DateTime.Today}" >
                                         </Calendar>
                                         <StackPanel Margin="16, 4,64,0" Visibility="{Binding isNotDate}">
                                             <ComboBox ItemsSource="{Binding months}" Text="{Binding selectedMonth}" Visibility="{Binding isMonth}"/>
@@ -696,9 +696,9 @@
                                 </Grid>
                                 <Grid Grid.Row="3">
                                     <StackPanel Orientation="Horizontal">
-                                        <Button Grid.ColumnSpan="2"
+                                        <Button Grid.Column="0"
                                                 Margin="0,0,20,0"
-                                            Width="342"
+                                            Width="160"
                                             Height="45"
                                             materialDesign:ButtonAssist.CornerRadius="5"
                                             Command="{Binding OrderCommand}"
@@ -714,6 +714,27 @@
                                                        VerticalAlignment="Center"
                                                        FontWeight="Bold"
                                                        Text="ORDER" />
+
+
+                                            </StackPanel>
+                                        </Button>
+                                        <Button
+                                            Width="160"
+                                            Height="45"
+                                            materialDesign:ButtonAssist.CornerRadius="5"
+                                            Command="{Binding EditOrderCommand}"
+                                            Style="{StaticResource MaterialDesignRaisedButton}"
+                                            ToolTip="MaterialDesignRaisedButton with Round Corners">
+                                            <StackPanel HorizontalAlignment="Stretch"
+                                                    VerticalAlignment="Stretch"
+                                                    Orientation="Horizontal">
+                                                <materialDesign:PackIcon Width="auto"
+                                                                     Height="20"
+                                                                     Kind="Pen" />
+                                                <TextBlock HorizontalAlignment="Center"
+                                                       VerticalAlignment="Center"
+                                                       FontWeight="Bold"
+                                                       Text="EDIT" />
 
 
                                             </StackPanel>
