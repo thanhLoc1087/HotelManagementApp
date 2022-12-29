@@ -313,7 +313,7 @@
                             <DataGridTextColumn Binding="{Binding FoodsAndService.Unit}"
                                                             Header="Unit" Width="0.8*"/>
                             <DataGridTextColumn Binding="{Binding FoodsAndService.Price, StringFormat=C0, ConverterCulture=vi-VN}"
-                                                            Header="Price" Width="1.2*"/>
+                                                            Header="Price"/>
                         </DataGrid.Columns>
                     </DataGrid>
                 </Grid>
@@ -425,7 +425,7 @@
                     Grid.Column="1"
                     Width="100"
                     Height="25"
-                    Margin="0,0,0,20"
+                    Margin="0,0,50,20"
                     Padding="0"
                     HorizontalAlignment="Right"
                     VerticalAlignment="Bottom"
@@ -437,7 +437,7 @@
             <Button Grid.Column="1"
                     Width="100"
                     Height="25"
-                    Margin="10,0,0,20"
+                    Margin="0,0,0,20"
                     HorizontalAlignment="Left"
                     VerticalAlignment="Bottom"
                     CommandParameter="{Binding ElementName=PaymentView}"
@@ -449,6 +449,18 @@
                     </i1:EventTrigger>
                 </i1:Interaction.Triggers>
             </Button>
+            <Button x:Name="btnExportPdf"
+                    Grid.Column="1"
+                    Width="32"
+                    Height="25"
+                    Margin="0,0,0,20"
+                    Padding="0"
+                    HorizontalAlignment="Right"
+                    VerticalAlignment="Bottom"
+                    Background="OrangeRed"
+                    Command="{Binding ExportPdfBtn}"
+                    Content="PDF">
+             </Button>
             <Grid Grid.Column="1"
                   Width="235"
                   Margin="0,15,0,0"
@@ -507,3 +519,4 @@
         </Grid>
     </Grid>
 </Window>
+

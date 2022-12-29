@@ -11,6 +11,11 @@ using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
+using System.IO;
+using System.Windows.Media;
+using System.Windows.Media.Imaging;
+using iTextSharp.text.pdf;
+using System.Diagnostics;
 
 namespace HotelManagementApp.ViewModel
 {
@@ -76,6 +81,7 @@ namespace HotelManagementApp.ViewModel
 
         public ICommand CheckOutCommand { get; set; }
         public ICommand ConfirmBillBtn { get; set; }
+        public ICommand ExportPdfBtn { get; set; }
         public CheckOutViewModel()
         {
             LoadFilteredList();
@@ -114,6 +120,36 @@ namespace HotelManagementApp.ViewModel
                 SearchString = null;
                 PaymentWindow.Close();
                 LoadFilteredList();
+            });
+            ExportPdfBtn = new RelayCommand<object>((p) => true, (p) =>
+            {
+                string destinationDirectory = Directory.GetParent(Directory.GetCurrentDirectory()).Parent.FullName;
+                var imageFile = destinationDirectory + $"\\Bills\\bill{Bill.ID}.png";
+                RenderTargetBitmap render = new RenderTargetBitmap((int)this.PaymentWindow.ActualWidth, (int)this.PaymentWindow.ActualHeight-60, 96, 96, PixelFormats.Pbgra32);
+                render.Render(this.PaymentWindow);
+                string pdfFile = destinationDirectory + $"\\Bills\\bill{Bill.ID}.pdf";
+                using (FileStream stream = File.Create(imageFile))
+                {
+                    using (var ms = new MemoryStream())
+                    {
+                        PngBitmapEncoder pngImage = new PngBitmapEncoder();
+                        pngImage.Frames.Add(BitmapFrame.Create(render));
+                        pngImage.Save(stream);
+                        var document = new iTextSharp.text.Document(iTextSharp.text.PageSize.LETTER.Rotate(), 0, 0, 0, 0);
+                        PdfWriter.GetInstance(document, new FileStream(pdfFile, FileMode.Create));
+                        iTextSharp.text.pdf.PdfWriter.GetInstance(document, ms).SetFullCompression();
+                        document.Open();
+                        stream.Dispose();
+                        FileStream fs = new FileStream(imageFile, FileMode.Open);
+                        var image = iTextSharp.text.Image.GetInstance(fs);
+                        image.ScaleToFit(document.PageSize.Width, document.PageSize.Height);
+                        document.Add(image);
+                        document.Close();
+                        fs.Dispose();
+                    }
+                }
+                Process.Start("explorer.exe", pdfFile);
+                System.IO.File.Delete(imageFile);
             });
         }
 
