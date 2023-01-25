@@ -166,6 +166,7 @@ namespace HotelManagementApp.ViewModel
 
         void addImage(FoodsAndService food)
         {
+            food.ImageData = $"\\Images\\background.jpg";
             string destinationDirectory = Directory.GetParent(Directory.GetCurrentDirectory()).Parent.FullName;
             if (Image != null)
             {
@@ -177,7 +178,7 @@ namespace HotelManagementApp.ViewModel
             }
             else
             {
-                ImageSource = null;
+                ImageSource = $"\\Images\\background.jpg";
             }
             OnPropertyChanged();
         }
