@@ -1,5 +1,4 @@
 ﻿using HotelManagementApp.Model;
-using iTextSharp.text;
 using Microsoft.Win32;
 using System;
 using System.Collections.Generic;
@@ -180,7 +179,7 @@ namespace HotelManagementApp.ViewModel
             }
             else
             {
-                ImageSource = $"\\Images\\background.jpg";
+                ImageSource = null;
             }
             OnPropertyChanged();
         }

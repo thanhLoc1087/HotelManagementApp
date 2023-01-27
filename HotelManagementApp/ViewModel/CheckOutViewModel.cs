@@ -1,21 +1,15 @@
 using HotelManagementApp.Model;
 using HotelManagementApp.View;
+using iTextSharp.text.pdf;
 using System;
-using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.Linq;
-using System.Runtime.InteropServices;
-using System.Security.Cryptography.Xml;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Input;
+using System.Diagnostics;
+using System.Drawing;
 using System.IO;
+using System.Linq;
+using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
-using iTextSharp.text.pdf;
-using System.Diagnostics;
 
 namespace HotelManagementApp.ViewModel
 {
@@ -48,7 +42,7 @@ namespace HotelManagementApp.ViewModel
             set
             {
                 _SelectedReservation = value;
-                if(value != null)
+                if (value != null)
                 {
                     SelectedBill = Global.BillsList.Where(x => x.ID == _SelectedReservation.IDBillDetail).FirstOrDefault();
                     Nights = (int)_SelectedReservation.CheckOutTime.Value.Subtract(_SelectedReservation.CheckInTime.Value).TotalDays;
@@ -77,7 +71,7 @@ namespace HotelManagementApp.ViewModel
                 _bill = value;
                 OnPropertyChanged();
             }
-        } 
+        }
 
         public ICommand CheckOutCommand { get; set; }
         public ICommand ConfirmBillBtn { get; set; }
@@ -100,7 +94,7 @@ namespace HotelManagementApp.ViewModel
                 CheckInDate = ((DateTime)Bill.RoomsReservations.FirstOrDefault().CheckInTime).ToString("G");
                 CheckOutDate = ((DateTime)Bill.RoomsReservations.FirstOrDefault().CheckOutTime).ToString("G");
                 RoomsTotal = Bill.RoomsReservations.Select(x => x.Room.RoomType.Price * Nights).Sum();
-                FnSTotal = Bill.Orders.Select(x=>x.TotalPrice).Sum();
+                FnSTotal = Bill.Orders.Select(x => x.TotalPrice).Sum();
                 PaymentWindow.ShowDialog();
             });
             ConfirmBillBtn = new RelayCommand<object>((p) => true, (p) =>
@@ -127,31 +121,39 @@ namespace HotelManagementApp.ViewModel
             {
                 string destinationDirectory = Directory.GetParent(Directory.GetCurrentDirectory()).Parent.FullName;
                 var imageFile = destinationDirectory + $"\\Bills\\bill{Bill.ID}.png";
-                RenderTargetBitmap render = new RenderTargetBitmap((int)this.PaymentWindow.ActualWidth, (int)this.PaymentWindow.ActualHeight-60, 96, 96, PixelFormats.Pbgra32);
+
+                RenderTargetBitmap render = new RenderTargetBitmap((int)this.PaymentWindow.ActualWidth, (int)this.PaymentWindow.ActualHeight, 96, 96, PixelFormats.Pbgra32);
                 render.Render(this.PaymentWindow);
+
+                MemoryStream cropStream = new MemoryStream();
+                BitmapEncoder encoder = new BmpBitmapEncoder();
+                encoder.Frames.Add(BitmapFrame.Create(render));
+                encoder.Save(cropStream);
+                Bitmap cropImage = new Bitmap(cropStream);
+                RectangleF crop = new RectangleF(0, 30, (float)PaymentWindow.ActualWidth, (float)PaymentWindow.ActualHeight - 80);
+                cropImage = cropImage.Clone(crop, cropImage.PixelFormat);
+                cropImage.Save(imageFile);
+
                 string pdfFile = destinationDirectory + $"\\Bills\\bill{Bill.ID}.pdf";
-                using (FileStream stream = File.Create(imageFile))
+
+                using (var ms = new MemoryStream())
                 {
-                    using (var ms = new MemoryStream())
-                    {
-                        PngBitmapEncoder pngImage = new PngBitmapEncoder();
-                        pngImage.Frames.Add(BitmapFrame.Create(render));
-                        pngImage.Save(stream);
-                        var document = new iTextSharp.text.Document(iTextSharp.text.PageSize.LETTER.Rotate(), 0, 0, 0, 0);
-                        PdfWriter.GetInstance(document, new FileStream(pdfFile, FileMode.Create));
-                        iTextSharp.text.pdf.PdfWriter.GetInstance(document, ms).SetFullCompression();
-                        document.Open();
-                        stream.Dispose();
-                        FileStream fs = new FileStream(imageFile, FileMode.Open);
-                        var image = iTextSharp.text.Image.GetInstance(fs);
-                        image.ScaleToFit(document.PageSize.Width, document.PageSize.Height);
-                        document.Add(image);
-                        document.Close();
-                        fs.Dispose();
-                    }
+                    var document = new iTextSharp.text.Document(iTextSharp.text.PageSize.LETTER.Rotate(), 0, 0, 0, 0);
+                    PdfWriter.GetInstance(document, new FileStream(pdfFile, FileMode.Create));
+                    iTextSharp.text.pdf.PdfWriter.GetInstance(document, ms).SetFullCompression();
+                    document.Open();
+
+                    FileStream fs = new FileStream(imageFile, FileMode.Open);
+                    var image = iTextSharp.text.Image.GetInstance(fs);
+                    image.ScaleToFit(document.PageSize.Width, document.PageSize.Height);
+                    image.Alignment = iTextSharp.text.Image.ALIGN_CENTER;
+
+                    document.Add(image);
+                    document.Close();
+                    fs.Dispose();
                 }
-                Process.Start("explorer.exe", pdfFile);
                 System.IO.File.Delete(imageFile);
+                Process.Start("explorer.exe", pdfFile);
             });
         }
 
@@ -164,9 +166,9 @@ namespace HotelManagementApp.ViewModel
             }
             else
             {
-                foreach(var item in Global.OnGoingReservationsList)
+                foreach (var item in Global.OnGoingReservationsList)
                 {
-                    if(item.Room.RoomNum.StartsWith(SearchString))
+                    if (item.Room.RoomNum.StartsWith(SearchString))
                     {
                         list.Add(item);
                     }

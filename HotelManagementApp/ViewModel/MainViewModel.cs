@@ -166,6 +166,28 @@ namespace HotelManagementApp.ViewModel
             } 
             
             LoadStatistics();
+            int count = DataProvider.Instance.DB.Consts.Where(x => x.Name == nameof(Const.hotelName)).Count();
+            if (count <= 0)
+            {
+                DataProvider.Instance.DB.Consts.Add(new Model.Const(nameof(Const.hotelName), Const.hotelName));
+                DataProvider.Instance.DB.Consts.Add(new Model.Const(nameof(Const.hotelMoto), Const.hotelMoto));
+                DataProvider.Instance.DB.Consts.Add(new Model.Const(nameof(Const.hotelPhone), Const.hotelPhone));
+                DataProvider.Instance.DB.Consts.Add(new Model.Const(nameof(Const.hotelMail), Const.hotelMail));
+                DataProvider.Instance.DB.Consts.Add(new Model.Const(nameof(Const.hotelAddress), Const.hotelAddress));
+                DataProvider.Instance.DB.Consts.Add(new Model.Const(nameof(Const.loginMsg), Const.loginMsg));
+                DataProvider.Instance.DB.Consts.Add(new Model.Const(nameof(Const.statErrorMsg), Const.statErrorMsg));
+                DataProvider.Instance.DB.SaveChanges();
+            }
+            else
+            {
+                Const.hotelName = Global.ConstsList.Single(x => x.Name == nameof(Const.hotelName)).Value;
+                Const.hotelMoto = Global.ConstsList.Single(x => x.Name == nameof(Const.hotelMoto)).Value;
+                Const.hotelPhone = Global.ConstsList.Single(x => x.Name == nameof(Const.hotelPhone)).Value;
+                Const.hotelMail = Global.ConstsList.Single(x => x.Name == nameof(Const.hotelMail)).Value;
+                Const.hotelAddress = Global.ConstsList.Single(x => x.Name == nameof(Const.hotelAddress)).Value;
+                Const.loginMsg = Global.ConstsList.Single(x => x.Name == nameof(Const.loginMsg)).Value;
+                Const.statErrorMsg = Global.ConstsList.Single(x => x.Name == nameof(Const.statErrorMsg)).Value;
+            }
         }
         public void Authorise()
         {

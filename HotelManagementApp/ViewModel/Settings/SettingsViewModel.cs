@@ -20,6 +20,8 @@ namespace HotelManagementApp.ViewModel
         public string NewPassword { get => _NewPassword; set { _NewPassword = value; OnPropertyChanged(); } }
         private string _ConfirmPassword;
         public string ConfirmPassword { get => _ConfirmPassword; set { _ConfirmPassword = value; OnPropertyChanged(); } }
+        private string _ChangePasswordMsg = "";
+        public string ChangePasswordMsg { get => _ChangePasswordMsg; set { _ChangePasswordMsg = value; OnPropertyChanged(); } }
         private string _hotelName = Const.hotelName;
         public string HotelName { get => _hotelName; set { _hotelName = value; OnPropertyChanged(); } }
         private string _hotelMoto = Const.hotelMoto;
@@ -43,6 +45,7 @@ namespace HotelManagementApp.ViewModel
 
         public SettingsViewModel()
         {
+            
             LogoutCommand = new RelayCommand<object>((p) => { if (IsLoggedOut) return false; return true; }, (p) =>
             {
                 IsLoggedOut = true;
@@ -53,16 +56,28 @@ namespace HotelManagementApp.ViewModel
             
             ChangePasswordCommand = new RelayCommand<object>((p) =>
             {
-                var hashedPassword = MD5Hash(Base64Encode(CurrentPassword));
+                if (string.IsNullOrEmpty(CurrentPassword) || string.IsNullOrEmpty(NewPassword) || string.IsNullOrEmpty(ConfirmPassword))
+                {
+                    return false;
+                }
                 if (ConfirmPassword != NewPassword)
                 {
+                    if (!string.IsNullOrEmpty(ConfirmPassword))
+                    {
+                        ChangePasswordMsg = "Mật khẩu không trùng khớp.";
+                    }
                     return false;
                 }
+                var hashedPassword = MD5Hash(Base64Encode(CurrentPassword));
                 if (hashedPassword != Const.ActiveAccount.PasswordHash)
                 {
+                    if (!string.IsNullOrEmpty(CurrentPassword))
+                    {
+                        ChangePasswordMsg = "Sai mật khẩu.";
+                    }
                     return false;
                 }
-
+                ChangePasswordMsg = "";
                 return true;
             }, (p) =>
             {
@@ -70,6 +85,7 @@ namespace HotelManagementApp.ViewModel
                 var hashedPassword = MD5Hash(Base64Encode(NewPassword));
                 account.PasswordHash = hashedPassword;
                 DataProvider.Instance.DB.SaveChanges();
+                ChangePasswordMsg = "Thay đổi mật khẩu thành công!";
                 CurrentPassword = NewPassword = ConfirmPassword = null;
             }
             );
@@ -87,7 +103,7 @@ namespace HotelManagementApp.ViewModel
                     return false;
                 }
                 if (
-                HotelAddress == Const.hotelName &&
+                HotelName == Const.hotelName &&
                 HotelMoto == Const.hotelMoto &&
                 HotelPhone == Const.hotelPhone &&
                 HotelEmail == Const.hotelMail &&
@@ -97,10 +113,11 @@ namespace HotelManagementApp.ViewModel
                 {
                     return false;
                 }
+                SuccessMsg = "";
                 return true;
             }, (p) =>
             {
-                Const.hotelName = HotelAddress;
+                Const.hotelName = HotelName;
                 Const.hotelMoto = HotelMoto;
                 Const.hotelPhone = HotelPhone;
                 Const.hotelMail = HotelEmail;
@@ -112,12 +129,12 @@ namespace HotelManagementApp.ViewModel
             CancelChanges = new RelayCommand<object>((p) =>
             {
                 if (
-                HotelAddress == Const.hotelName ||
-                HotelMoto == Const.hotelMoto ||
-                HotelPhone == Const.hotelPhone ||
-                HotelEmail == Const.hotelMail ||
-                HotelAddress == Const.hotelAddress ||
-                LoginFailed == Const.loginMsg ||
+                HotelName == Const.hotelName && 
+                HotelMoto == Const.hotelMoto && 
+                HotelPhone == Const.hotelPhone && 
+                HotelEmail == Const.hotelMail && 
+                HotelAddress == Const.hotelAddress && 
+                LoginFailed == Const.loginMsg &&
                 ChartFailed == Const.statErrorMsg)
                 {
                     return false;
@@ -125,7 +142,7 @@ namespace HotelManagementApp.ViewModel
                 return true;
             }, (p) =>
             {
-                HotelAddress = Const.hotelName;
+                HotelName = Const.hotelName;
                 HotelMoto = Const.hotelMoto;
                 HotelPhone = Const.hotelPhone;
                 HotelEmail = Const.hotelMail;

@@ -7,6 +7,7 @@ using System.Data;
 using System.IO;
 using System.Linq;
 using System.Text;
+using System.Windows;
 using System.Windows.Input;
 using System.Windows.Media.Imaging;
 
@@ -166,7 +167,6 @@ namespace HotelManagementApp.ViewModel
 
         void addImage(FoodsAndService food)
         {
-            food.ImageData = $"\\Images\\background.jpg";
             string destinationDirectory = Directory.GetParent(Directory.GetCurrentDirectory()).Parent.FullName;
             if (Image != null)
             {
@@ -178,7 +178,7 @@ namespace HotelManagementApp.ViewModel
             }
             else
             {
-                ImageSource = $"\\Images\\background.jpg";
+                ImageSource = null;
             }
             OnPropertyChanged();
         }

@@ -172,6 +172,23 @@ namespace HotelManagementApp
                 OnStaticPropertyChanged(nameof(OnGoingReservationsList));
             }
         }
+        private static ObservableCollection<Model.Const> _ConstsList;
+        public static ObservableCollection<Model.Const> ConstsList
+        {
+            get
+            {
+                if (_ConstsList == null)
+                {
+                    LoadConstsList();
+                }
+                return _ConstsList;
+            }
+            set
+            {
+                _ConstsList = value;
+                OnStaticPropertyChanged(nameof(ConstsList));
+            }
+        }
         private static void LoadRoomTypesList()
         {
             _Types = new ObservableCollection<RoomType>();
@@ -256,6 +273,15 @@ namespace HotelManagementApp
                 {
                     _OnGoingReservationsList.Add(item);
                 }
+            }
+        }
+        private static void LoadConstsList()
+        {
+            _ConstsList = new ObservableCollection<Model.Const>();
+            var list = DataProvider.Instance.DB.Consts;
+            foreach (var item in list)
+            {
+                _ConstsList.Add(item);
             }
         }
     }

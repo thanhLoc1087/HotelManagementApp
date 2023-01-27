@@ -35,5 +35,6 @@ namespace HotelManagementApp.Model
         public virtual DbSet<RoomType> RoomTypes { get; set; }
         public virtual DbSet<Staff> Staffs { get; set; }
         public virtual DbSet<sysdiagram> sysdiagrams { get; set; }
+        public virtual DbSet<Const> Consts { get; set; }
     }
 }

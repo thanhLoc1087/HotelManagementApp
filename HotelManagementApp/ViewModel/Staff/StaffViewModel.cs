@@ -200,7 +200,6 @@ namespace HotelManagementApp.ViewModel
 
         void addImage(Staff staff)
         {
-            staff.ImageData = $"\\Images\\background.jpg";
             string destinationDirectory = Directory.GetParent(Directory.GetCurrentDirectory()).Parent.FullName;
             if (EmployeeImage != null)
             {
@@ -212,7 +211,7 @@ namespace HotelManagementApp.ViewModel
             }
             else
             {
-                ImageSource = $"\\Images\\background.jpg";
+                ImageSource = null;
             }
             OnPropertyChanged();
         }

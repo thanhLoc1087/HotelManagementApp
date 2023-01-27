@@ -24,8 +24,6 @@ namespace HotelManagementApp.ViewModel
         public ObservableCollection<Order> PendingOrdersList { get => _PendingOrdersList; set { _PendingOrdersList = value; OnPropertyChanged(); } }
         private ObservableCollection<FoodsAndService> _FilteredList;
         public ObservableCollection<FoodsAndService> FilteredList { get => _FilteredList; set { _FilteredList = value; OnPropertyChanged(); } }
-        private ObservableCollection<string> _SuggestionsList;
-        public ObservableCollection<string> SuggestionsList { get => _SuggestionsList; set { _SuggestionsList = value; OnPropertyChanged(); } }
         private int? _Quantity;
         public int? Quantity { get => _Quantity; set { _Quantity = value; OnPropertyChanged(); } }
         private decimal? _Total = 0;
@@ -36,14 +34,13 @@ namespace HotelManagementApp.ViewModel
         private string _SearchString;
         public string SearchString { get => _SearchString; set { _SearchString = value; LoadFilteredList(); OnPropertyChanged(); } }
         public decimal? Total { get => _Total; set { _Total = value; OnPropertyChanged(); } }
-        private string _RoomNum = "";
+        private string _RoomNum;
         public string RoomNum
         {
             get => _RoomNum;
             set
             {
                 _RoomNum = value;
-                LoadSuggestionsList();
                 TargetBillDetail = new BillDetail();
                 var billDetail = Global.BillsList.Where(x => x.Status == "On-Going" && x.RoomsReservations.Where(y => y.Room.RoomNum == RoomNum).FirstOrDefault() != null).FirstOrDefault();
                 if (billDetail != null)
@@ -239,19 +236,7 @@ namespace HotelManagementApp.ViewModel
             }
             FilteredList = list;
         }
-        private void LoadSuggestionsList()
-        {
-            if (RoomNum != null)
-            {
-                SuggestionsList = new ObservableCollection<string>();
-                foreach (var item in Global.ReservationsList.Where(x=>x.BillDetail.Status=="On-Going"))
-                {
-                    if (item.Room.RoomNum.StartsWith(RoomNum))
-                    {
-                        SuggestionsList.Add(item.Room.RoomNum);
-                    }
-                }
-            }
-        }
+
+        
     }
 }
