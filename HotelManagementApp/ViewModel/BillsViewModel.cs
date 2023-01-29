@@ -84,7 +84,6 @@ namespace HotelManagementApp.ViewModel
                     }
                 }
             }
-            
             FilteredList = list;
         }
     }

@@ -4610,24 +4610,25 @@
                                                     <TextBox Margin="0,12,0,0"
                                                          materialDesign:HintAssist.Hint="Enter current password"
                                                          materialDesign:HintAssist.IsFloating="True"
-                                                         Text="{Binding CurrentPassword}" />
+                                                         Text="{Binding CurrentPassword, Mode=TwoWay}" />
                                                     <TextBox Grid.Row="1"
                                                          Margin="0,12,0,0"
                                                          materialDesign:HintAssist.Hint="Enter new password"
                                                          materialDesign:HintAssist.IsFloating="True"
-                                                         Text="{Binding NewPassword}" />
+                                                         Text="{Binding NewPassword,Mode=TwoWay}" />
                                                     <TextBox Grid.Row="2"
                                                          Margin="0,12,0,0"
                                                          materialDesign:HintAssist.Hint="Confirm new password"
                                                          materialDesign:HintAssist.IsFloating="True"
-                                                         Text="{Binding ConfirmPassword}" />
-                                                    <Button Grid.Row="3"
-                                                        Margin="0,12,0,0"
-                                                        Command="{Binding ChangePasswordCommand}"
-                                                        Content="CONFIRM"
-                                                        IsEnabled="{Binding DataContext.ControlsEnabled, RelativeSource={RelativeSource FindAncestor, AncestorType=Window}}"
-                                                        Style="{StaticResource MaterialDesignFlatDarkBgButton}"
-                                                        ToolTip="MaterialDesignFlatDarkButton" />
+                                                         Text="{Binding ConfirmPassword, Mode=TwoWay}" />
+                                                    <StackPanel Grid.Row="3">
+                                                        <TextBlock  Margin="0,4,0,0" Text="{Binding ChangePasswordMsg}" Foreground="Red" FontSize="12"/>
+                                                        <Button Command="{Binding ChangePasswordCommand}"
+                                                                Content="CONFIRM"
+                                                                IsEnabled="{Binding DataContext.ControlsEnabled, RelativeSource={RelativeSource FindAncestor, AncestorType=Window}}"
+                                                                Style="{StaticResource MaterialDesignFlatDarkBgButton}"
+                                                                ToolTip="MaterialDesignFlatDarkButton" />
+                                                    </StackPanel>
                                                 </Grid>
                                             </Grid>
                                         </materialDesign:Flipper.BackContent>

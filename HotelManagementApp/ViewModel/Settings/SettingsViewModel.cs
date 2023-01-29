@@ -56,7 +56,18 @@ namespace HotelManagementApp.ViewModel
             
             ChangePasswordCommand = new RelayCommand<object>((p) =>
             {
-                if (string.IsNullOrEmpty(CurrentPassword) || string.IsNullOrEmpty(NewPassword) || string.IsNullOrEmpty(ConfirmPassword))
+                if (string.IsNullOrEmpty(CurrentPassword))
+                {
+                    return false;
+                }
+                var hashedPassword = MD5Hash(Base64Encode(CurrentPassword));
+                if (hashedPassword != Const.ActiveAccount.PasswordHash)
+                {
+                    ChangePasswordMsg = "Sai mật khẩu.";
+                    return false;
+                }
+                ChangePasswordMsg = "";
+                if (string.IsNullOrEmpty(NewPassword) || string.IsNullOrEmpty(ConfirmPassword))
                 {
                     return false;
                 }
@@ -64,16 +75,7 @@ namespace HotelManagementApp.ViewModel
                 {
                     if (!string.IsNullOrEmpty(ConfirmPassword))
                     {
-                        ChangePasswordMsg = "Mật khẩu không trùng khớp.";
-                    }
-                    return false;
-                }
-                var hashedPassword = MD5Hash(Base64Encode(CurrentPassword));
-                if (hashedPassword != Const.ActiveAccount.PasswordHash)
-                {
-                    if (!string.IsNullOrEmpty(CurrentPassword))
-                    {
-                        ChangePasswordMsg = "Sai mật khẩu.";
+                        ChangePasswordMsg = "Mật khẩu mới không trùng khớp.";
                     }
                     return false;
                 }
