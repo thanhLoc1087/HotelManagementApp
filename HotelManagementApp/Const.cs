@@ -1,6 +1,8 @@
 ﻿using HotelManagementApp.Model;
 using System;
+using System.Collections.Generic;
 using System.ComponentModel;
+using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Windows;
 
@@ -47,46 +49,118 @@ namespace HotelManagementApp
         static public string loginMsg
         {
             get => _loginMsg;
-            set { _loginMsg = value; OnStaticPropertyChanged("loginMsg"); }
+            set {
+                int count = DataProvider.Instance.DB.Consts.Where(x => x.Name == nameof(Const.loginMsg)).Count();
+                if (count > 0)
+                {
+                    var name = DataProvider.Instance.DB.Consts.Single(x => x.Name == nameof(Const.loginMsg));
+                    name.Value = value;
+                    DataProvider.Instance.DB.SaveChanges();
+                }
+                _loginMsg = value; 
+                OnStaticPropertyChanged("loginMsg"); 
+            }
         }
         static public string _statErrorMsg = "Không có dữ liệu trong giai đoạn này.";
         static public string statErrorMsg
         {
             get => _statErrorMsg;
-            set { _statErrorMsg = value; OnStaticPropertyChanged("statErrorMsg"); }
+            set
+            {
+                int count = DataProvider.Instance.DB.Consts.Where(x => x.Name == nameof(Const.statErrorMsg)).Count();
+                if (count > 0)
+                {
+                    var name = DataProvider.Instance.DB.Consts.Single(x => x.Name == nameof(Const.statErrorMsg));
+                    name.Value = value;
+                    DataProvider.Instance.DB.SaveChanges();
+                }
+                _statErrorMsg = value; 
+                OnStaticPropertyChanged("statErrorMsg"); 
+            }
         }
-        static public string _hotelName = "Hotel";
+        static public string _hotelName = "Hotel Name";
         static public string hotelName
         {
             get => _hotelName;
-            set { _hotelName = value; OnStaticPropertyChanged("hotelName"); }
+            set {
+                int count = DataProvider.Instance.DB.Consts.Where(x => x.Name == nameof(Const.hotelName)).Count();
+                if (count > 0)
+                {
+                    var name = DataProvider.Instance.DB.Consts.Single(x => x.Name == nameof(Const.hotelName));
+                    name.Value = value;
+                    DataProvider.Instance.DB.SaveChanges();
+                }
+                _hotelName = value; 
+                OnStaticPropertyChanged("hotelName");
+            }
         }
-        static public string _hotelMoto = "One of the hotels";
+        static public string _hotelMoto = "This is a slogan";
         static public string hotelMoto
         {
             get => _hotelMoto;
-            set { _hotelMoto = value; OnStaticPropertyChanged("hotelMoto"); }
+            set
+            {
+                int count = DataProvider.Instance.DB.Consts.Where(x => x.Name == nameof(Const.hotelMoto)).Count();
+                if (count > 0)
+                {
+                    var name = DataProvider.Instance.DB.Consts.Single(x => x.Name == nameof(Const.hotelMoto));
+                    name.Value = value;
+                    DataProvider.Instance.DB.SaveChanges();
+                }
+                _hotelMoto = value; 
+                OnStaticPropertyChanged("hotelMoto");
+            }
         }
-        static public string _hotelAddress = "123 St. Street, Ward 12, District 10,   Ho Chi Minh City";
+        static public string _hotelAddress = "123, This is, the hotel's, Address";
         static public string hotelAddress
         {
             get => _hotelAddress;
             set
             {
-                _hotelAddress = value; OnStaticPropertyChanged("hotelAddress");
+                int count = DataProvider.Instance.DB.Consts.Where(x => x.Name == nameof(Const.hotelAddress)).Count();
+                if (count > 0)
+                {
+                    var name = DataProvider.Instance.DB.Consts.Single(x => x.Name == nameof(Const.hotelAddress));
+                    name.Value = value;
+                    DataProvider.Instance.DB.SaveChanges();
+                }
+                _hotelAddress = value; 
+                OnStaticPropertyChanged("hotelAddress");
             }
         }
-        static public string _hotelPhone = "0987654321";
+        static public string _hotelPhone = "0xxxxxxxxx";
         static public string hotelPhone
         {
             get => _hotelPhone;
-            set { _hotelPhone = value; OnStaticPropertyChanged("hotelPhone"); }
+            set
+            {
+                int count = DataProvider.Instance.DB.Consts.Where(x => x.Name == nameof(Const.hotelPhone)).Count();
+                if (count > 0)
+                {
+                    var name = DataProvider.Instance.DB.Consts.Single(x => x.Name == nameof(Const.hotelPhone));
+                    name.Value = value;
+                    DataProvider.Instance.DB.SaveChanges();
+                }
+                _hotelPhone = value; 
+                OnStaticPropertyChanged("hotelPhone"); 
+            }
         }
         static public string _hotelMail = "contact@hotel.com";
         static public string hotelMail
         {
             get => _hotelMail;
-            set { _hotelMail = value; OnStaticPropertyChanged("hotelMail"); }
+            set
+            {
+                int count = DataProvider.Instance.DB.Consts.Where(x => x.Name == nameof(Const.hotelMail)).Count();
+                if (count > 0)
+                {
+                    var name = DataProvider.Instance.DB.Consts.Single(x => x.Name == nameof(Const.hotelMail));
+                    name.Value = value;
+                    DataProvider.Instance.DB.SaveChanges();
+                }
+                _hotelMail = value; 
+                OnStaticPropertyChanged("hotelMail"); 
+            }
         }
         
     }
